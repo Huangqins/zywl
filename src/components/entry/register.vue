@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="entry">
        <Form :model="formItem" :label-width="80" :rules="ruleValidate" ref="formItem">
           <FormItem label="用户名" prop="username">
             <Input v-model="formItem.username" placeholder="请输入用户名" />
@@ -26,8 +26,8 @@
               <Input v-model="formItem.company" placeholder="请输入公司"/>
           </FormItem>
           <FormItem>
-              <Button type="primary" @click="handleSubmit('formItem')">提交</Button>
-              <Button type="ghost" @click="handleReset('formItem')">重置</Button>
+              <Button type="info" @click="handleSubmit('formItem')">注册账号</Button>
+              <Button type="success" @click="goToLogin" style="float: right">已有账号？去登陆</Button>
           </FormItem>
       </Form>
   </div>
@@ -168,13 +168,20 @@ export default {
         }
       });
     },
-    handleReset(username) {
-      this.$refs[username].resetFields();
+    goToLogin() {
+      this.$router.push({path: '/login'})
     }
   }
 };
 </script>
-<style scoped>
-
+<style>
+.entry {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 350px;
+  height: 600px;
+  transform: translate3d(-50%, -50%, 0);
+}
 </style>
 
