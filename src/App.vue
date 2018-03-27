@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -17,12 +16,15 @@ export default {
 </script>
 
 <style>
+html, body {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  min-width: 1200px;
 }
 </style>
