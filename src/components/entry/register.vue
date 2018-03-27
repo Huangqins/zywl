@@ -33,6 +33,8 @@
   </div>
 </template>
 <script>
+import register from 'api/register'
+
 export default {
   name: "register",
   data() {
@@ -163,6 +165,11 @@ export default {
       this.$refs[username].validate(valid => {
         if (valid) {
           this.$Message.success("Success!");
+          register(this.formItem).then(res => {
+            if (res.result === 0) {
+              this.$router.push({path: '/login'})
+            }
+          })
         } else {
           this.$Message.error("Fail!");
         }

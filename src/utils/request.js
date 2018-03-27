@@ -5,14 +5,13 @@ import { Message } from 'iview'
 // 请求拦截器
 // 创建axios实例
 const service = axios.create({
-    baseURL: process.env.BASE_API, // api的base_url
+    baseURL: process.env.BASE_API,
     timeout: 15000 // 请求超时时间
 })
 
 service.interceptors.request.use(config => {
     return config
 }, error => {
-    console.log(error)
     Promise.reject(error)
 })
 //   response拦截器
@@ -27,7 +26,7 @@ service.interceptors.response.use(response => {
         })
         return response.data
     } else {
-        return Promise.reject('error')
+        return response.data
     }
 }, error => {
     console.log('err' + error)// for debug
