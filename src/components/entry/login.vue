@@ -1,5 +1,6 @@
 <template>
-  <div class="entry">
+  <div>
+      <div class="entry">
      <Form :model="formItem" :label-width="80"  ref="formItem">
         <FormItem label="用户名" prop="username">
             <Input v-model="formItem.username" placeholder="请输入用户名" />
@@ -11,9 +12,10 @@
             
           </FormItem>
           <FormItem >
-            <Button type="primary" @click="handleSubmit('formItem')">确认登陆</Button>
+            <Button type="primary" @click="handleSubmit">确认登陆</Button>
           </FormItem>
      </Form>
+  </div>
   </div>
 </template>
 <script>
@@ -28,12 +30,17 @@ export default {
     };
   },
   methods: {
-      handleSubmit(){}
+    handleSubmit() {
+        // 登录成功需要存储用户信息
+        this.$store.dispatch('Login', this.formItem).then(() => {
+            this.$router.push({ path: '/welcome' })
+        }).catch(() => {
+            
+        })
+    }
   }
 };
 </script>
-<style scoped>
 
-</style>
 
 

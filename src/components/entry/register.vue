@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="entry">
        <Form :model="formItem" :label-width="80" :rules="ruleValidate" ref="formItem">
           <FormItem label="用户名" prop="username">
@@ -31,9 +32,10 @@
           </FormItem>
       </Form>
   </div>
+  </div>
 </template>
 <script>
-import register from 'api/register'
+import register from "api/register";
 
 export default {
   name: "register",
@@ -164,31 +166,27 @@ export default {
     handleSubmit(username) {
       this.$refs[username].validate(valid => {
         if (valid) {
-          this.$Message.success("Success!");
+          this.$Message.success("填写成功!");
           register(this.formItem).then(res => {
             if (res.result === 0) {
-              this.$router.push({path: '/login'})
+              this.$router.push({ path: "/login" });
             }
-          })
+          });
         } else {
           this.$Message.error("Fail!");
         }
       });
     },
     goToLogin() {
-      this.$router.push({path: '/login'})
+      this.$router.push({ path: "/login" });
     }
   }
 };
 </script>
 <style>
-.entry {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 350px;
-  height: 600px;
-  transform: translate3d(-50%, -50%, 0);
-}
+
+/* .entry .ivu-form .ivu-form-item-label {
+    color: #fff;
+} */
 </style>
 
