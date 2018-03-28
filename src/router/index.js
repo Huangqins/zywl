@@ -23,7 +23,21 @@ const Login = (resolve) => {
         resolve(module)
     })
 }
-
+const Welcome = (resolve) => {
+    import('components/guide/welcome').then(module => {
+        resolve(module)
+    })
+}
+const Assetadd = (resolve) => {
+    import('components/guide/assetAdd').then(module => {
+        resolve(module)
+    })
+}
+const Assetset = (resolve) => {
+    import('components/guide/assetSet').then(module => {
+        resolve(module)
+    })
+}
 export default new VueRouter({
     routes: [
         {
@@ -37,6 +51,19 @@ export default new VueRouter({
         {
             path: '/login',
             component: Login
+        },
+        {
+            path: '/welcome',
+            component: Welcome
+        },
+        {
+            path: '/assetAdd',
+            component: Assetadd
+        },
+        {
+            path: '/assetSet',
+            component: Assetset
         }
+
     ]
 })
