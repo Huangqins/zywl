@@ -20,16 +20,17 @@ const user = {
     actions: {
         // 登录
         Login({commit}, userInfo) {
-            console.log(userInfo)
+            // console.log(userInfo)
             const username = userInfo.username.trim()
             return new Promise((resolve, reject) => {
                 login(userInfo).then(response => {
-                    const data = response.data
+                    const data = response
+                    console.log(data)
                     // 设置token，保留
                     commit('SET_USER_NAME', data.username)
                     commit('SET_TRUE_NAME', data.true_name)
                     commit('SET_PHONE', data.phone)
-                    resolve()
+                    resolve(response)
                 })
             }).catch(error => {
                 reject(error)
