@@ -4,7 +4,6 @@ import iview from 'iview';
 import router from './router'
 import 'normalize.css'
 import 'iview/dist/styles/iview.css'
-import 'animate.css'
 import '@/permission' // 路由权限 control,预留
 import echarts from 'echarts'
 import store from '@/store'
