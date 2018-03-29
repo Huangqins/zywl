@@ -1893,6 +1893,12 @@ ecc-jsbn@~0.1.1:
   dependencies:
     jsbn "~0.1.0"
 
+echarts@^4.0.4:
+  version "4.0.4"
+  resolved "http://registry.npm.taobao.org/echarts/download/echarts-4.0.4.tgz#36aa8a47d33543d3dfe6a7bc1228ddc3a1e41157"
+  dependencies:
+    zrender "4.0.3"
+
 ee-first@1.1.1:
   version "1.1.1"
   resolved "http://registry.npm.taobao.org/ee-first/download/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
@@ -3737,6 +3743,10 @@ npmlog@^4.0.2:
     console-control-strings "~1.1.0"
     gauge "~2.7.3"
     set-blocking "~2.0.0"
+
+nprogress@^0.2.0:
+  version "0.2.0"
+  resolved "http://registry.npm.taobao.org/nprogress/download/nprogress-0.2.0.tgz#cb8f34c53213d895723fcbab907e9422adbcafb1"
 
 nth-check@~1.0.1:
   version "1.0.1"
@@ -5940,3 +5950,7 @@ yargs@~3.10.0:
     cliui "^2.1.0"
     decamelize "^1.0.0"
     window-size "0.1.0"
+
+zrender@4.0.3:
+  version "4.0.3"
+  resolved "http://registry.npm.taobao.org/zrender/download/zrender-4.0.3.tgz#801ef001101750a61857f84e64c4d5fb3c88cca7"
