@@ -32,10 +32,11 @@ export default {
   methods: {
     handleSubmit() {
         // 登录成功需要存储用户信息
-        this.$store.dispatch('Login', this.formItem).then(() => {
+        this.$store.dispatch('Login', this.formItem).then((res) => {
+          // console.log(res)
             this.$router.push({ path: '/welcome' })
-        }).catch(() => {
-            
+        }).catch((err) => {
+            console.log(err)
         })
     }
   }

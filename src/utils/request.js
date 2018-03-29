@@ -17,8 +17,7 @@ service.interceptors.request.use(config => {
 //   response拦截器
 service.interceptors.response.use(response => {
     const res = response.data
-    //   code为200 成功
-    if (res.code === 200) {
+    if (res.result === 0) {
         Message.success({
             top: 50,
             duration: 3,
