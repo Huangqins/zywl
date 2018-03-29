@@ -1,6 +1,6 @@
 const getters = {
-    username: state => state.user.username,
-    true_name: state => state.user.true_name,
+    username: state => state.user.userName,
+    true_name: state => state.user.trueName,
     phone: state => state.user.phone
 }
 

@@ -2,8 +2,8 @@
 <div>
   <div class="entry">
        <Form :model="formItem" :label-width="80" :rules="ruleValidate" ref="formItem">
-          <FormItem label="用户名" prop="username">
-            <Input v-model="formItem.username" placeholder="请输入用户名" />
+          <FormItem label="用户名" prop="userName">
+            <Input v-model="formItem.userName" placeholder="请输入用户名" />
           </FormItem>
           <FormItem label="密码" prop="password">
               <Input v-model="formItem.password" type="password" placeholder="请输入密码"/>
@@ -106,7 +106,7 @@ export default {
     };
     return {
       formItem: {
-        username: "",
+        userName: "",
         password: "",
         confirm_password: "",
         email: "",
@@ -116,7 +116,7 @@ export default {
         company: ""
       },
       ruleValidate: {
-        username: [
+        userName: [
           {
             required: true,
             validator: validateuesrName,
@@ -163,8 +163,8 @@ export default {
     };
   },
   methods: {
-    handleSubmit(username) {
-      this.$refs[username].validate(valid => {
+    handleSubmit(userName) {
+      this.$refs[userName].validate(valid => {
         if (valid) {
           this.$Message.success("填写成功!");
           register(this.formItem).then(res => {

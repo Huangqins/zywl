@@ -2,8 +2,8 @@
   <div>
       <div class="entry">
      <Form :model="formItem" :label-width="80"  ref="formItem">
-        <FormItem label="用户名" prop="username">
-            <Input v-model="formItem.username" placeholder="请输入用户名" />
+        <FormItem label="用户名" prop="userName">
+            <Input v-model="formItem.userName" placeholder="请输入用户名" />
           </FormItem>
           <FormItem label="密码" prop="password">
               <Input v-model="formItem.password" type="password" placeholder="请输入密码"/>
@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       formItem: {
-        username: "",
+        userName: "",
         password: ""
       }
     };
@@ -34,7 +34,7 @@ export default {
         // 登录成功需要存储用户信息
         this.$store.dispatch('Login', this.formItem).then((res) => {
           // console.log(res)
-            this.$router.push({ path: '/welcome' })
+            // this.$router.push({ path: '/welcome' })
         }).catch((err) => {
             console.log(err)
         })

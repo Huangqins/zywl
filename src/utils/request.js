@@ -5,7 +5,8 @@ import { Message } from 'iview'
 // 请求拦截器
 // 创建axios实例
 const service = axios.create({
-    baseURL: process.env.BASE_API,
+    // baseURL: process.env.BASE_API,
+    // baseURL: 'http://192.168.0.107/ZY/',
     timeout: 15000 // 请求超时时间
 })
 

@@ -1,10 +1,10 @@
 import request from '@/utils/request'
 
-function login({ username, password }) {
+function login({ userName, password }) {
     return request({
-        url: '/user/userRegister',
+        url: '/user/userRegister.do',
         method: 'post',
-        data: { username, password }
+        data: { userName, password }
     })
 }
 

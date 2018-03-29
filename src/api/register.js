@@ -1,11 +1,11 @@
 import request from '@/utils/request'
 
-function register({username, password, confirm_password, email, phone, trueName, IDCard, company}) {
+function register({userName, password, email, phone, trueName, IDCard, company}) {
     return request({
-        url: '/user/userRegister',
+        url: '/ZY/user/userRegister.do',
         method: 'post',
         data: {
-            username, password, confirm_password, email, phone, trueName, IDCard, company
+            userName, password, email, phone, trueName, IDCard, company
         }
     })
 }

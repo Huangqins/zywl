@@ -2,16 +2,16 @@ import login from 'api/login'
 // 展示需要的用户信息
 const user = {
     state: {
-        username: '',
-        true_name: '',
+        userName: '',
+        trueName: '',
         phone: 0
     },
     mutations: {
-        SET_USER_NAME: (state, username) => {
-            state.username = username
+        SET_USER_NAME: (state, userName) => {
+            state.userName = userName
         },
-        SET_TRUE_NAME: (state, true_name) => {
-            state.true_name = true_name
+        SET_trueName: (state, trueName) => {
+            state.trueName = trueName
         },
         SET_PHONE: (state, phone) => {
             state.phone = phone
@@ -21,15 +21,14 @@ const user = {
         // 登录
         Login({commit}, userInfo) {
             // console.log(userInfo)
-            const username = userInfo.username.trim()
+            const userName = userInfo.userName.trim()
             return new Promise((resolve, reject) => {
                 login(userInfo).then(response => {
                     const data = response
-                    console.log(data)
                     // 设置token，保留
-                    commit('SET_USER_NAME', data.username)
-                    commit('SET_TRUE_NAME', data.true_name)
-                    commit('SET_PHONE', data.phone)
+                    // commit('SET_USER_NAME', data.userName)
+                    // commit('SET_trueName', data.trueName)
+                    // commit('SET_PHONE', data.phone)
                     resolve(response)
                 })
             }).catch(error => {
