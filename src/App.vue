@@ -82,4 +82,14 @@ body {
 .ivu-form .ivu-form-item-label{
   color: #F6FBFB; 
 }
+.ivu-card-bordered .ivu-card-head{
+  border-bottom:1px solid #56B5D3 !important;
+}
+.ivu-btn-ghost{
+  color: white;
+}
+.ivu-tabs-nav .ivu-tabs-tab{
+  color: white;
+}
+
 </style>

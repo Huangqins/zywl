@@ -13,7 +13,7 @@
           </FormItem>
           <FormItem label="开始时间" prop="startTime">
             <Row>
-                <DatePicker type="datetime" placeholder="Select date and time" style="width:270px;" :value="formItem.startTime"></DatePicker>
+                <DatePicker type="datetime" placeholder="Select date and time" style="width:420px;" :value="formItem.startTime"></DatePicker>
             </Row>
         </FormItem>
           <FormItem label="周期" prop="cycle">
