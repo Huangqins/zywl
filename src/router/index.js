@@ -58,6 +58,12 @@ const Taskexecution = (resolve) => {
         resolve(module)
     })
 }
+
+const Cloud = (resolve) => {
+    import('components/taskpage/cloud').then(module => {
+        resolve(module)
+    })
+}
 export default new VueRouter({
     routes: [
         {
@@ -99,6 +105,10 @@ export default new VueRouter({
         {
             path: '/taskexecution',
             component: Taskexecution
+        },
+        {
+            path: '/cloud',
+            component: Cloud
         }
     ]
 })

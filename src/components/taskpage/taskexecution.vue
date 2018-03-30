@@ -3,7 +3,8 @@
    <section class="section1">
      <div class="taskSchedule">
        <h2>任务已执行:</h2>
-       <chart width="400px" height="400px" :option="option"></chart>
+       <chart width="400px" height="400px" :option="optipns"></chart>
+       <div></div>
      </div>
      <div class="taskExtPicture"></div>
      <div class="holeclassify"></div>
@@ -37,7 +38,7 @@ export default {
             name: "业务指标",
             type: "gauge",
             detail: { formatter: "{value}%" },
-            data: [{ value: 9, name: "完成率" }]
+            data: [{ value: 50, name: "完成率" }]
           }
         ]
       }
@@ -45,7 +46,10 @@ export default {
   },
   computed: {
     optipns() {
-
+      setInterval(() => {
+        this.option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
+      }, 2000);
+      return this.option
     }
   }
 };
