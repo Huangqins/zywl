@@ -1,4 +1,7 @@
 <template>
+<div>
+
+
   <div class="assetSet">
        <Form :model="formItem" :label-width="80" ref="formItem" :rules="ruleValidate" >
           <FormItem label="选择资产" prop="assets">
@@ -26,6 +29,7 @@
               <Button type="success" @click="goToIndex('formItem')" style="float: right">提交</Button>
           </FormItem>
       </Form>
+  </div>
   </div>
 </template>
 <script>

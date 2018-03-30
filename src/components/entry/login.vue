@@ -33,8 +33,9 @@ export default {
     handleSubmit() {
         // 登录成功需要存储用户信息
         this.$store.dispatch('Login', this.formItem).then((res) => {
-          // console.log(res)
-            // this.$router.push({ path: '/welcome' })
+          if (res.result === 0 ) {
+            this.$router.push({ path: '/welcome' })
+          }
         }).catch((err) => {
             console.log(err)
         })

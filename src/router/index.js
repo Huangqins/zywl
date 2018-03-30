@@ -7,6 +7,11 @@ VueRouter.prototype.goBack = function () {
     window.history.go(-1)
 }
 
+// const Entry = (resolve) => {
+//     import('components/entry/index').then(module => {
+//         resolve(module)
+//     })
+// }
 
 const Regitser = (resolve) => {
     import('components/entry/register').then(module => {
@@ -33,9 +38,18 @@ const Assetset = (resolve) => {
         resolve(module)
     })
 }
-
-const taskPanel = (resolve) => {
-    import('views/panel/taskPanel').then(module => {
+const Sysinfo = (resolve) => {
+    import('components/guide/sysInfo').then(module => {
+        resolve(module)
+    })
+}
+const Taskhomepage = (resolve) => {
+    import('components/taskpage/taskhomepage').then(module => {
+        resolve(module)
+    })
+}
+const Editpassword = (resolve) => {
+    import('components/entry/editpassword').then(module => {
         resolve(module)
     })
 }
@@ -43,7 +57,7 @@ export default new VueRouter({
     routes: [
         {
             path: '/',
-            component: taskPanel
+            component: Regitser
         },
         {
             path: '/register',
@@ -64,6 +78,18 @@ export default new VueRouter({
         {
             path: '/assetSet',
             component: Assetset
+        },
+        {
+            path: '/sysInfo',
+            component: Sysinfo
+        },
+        {
+            path: '/taskhomepage',
+            component: Taskhomepage
+        },
+        {
+            path: '/editpassword',
+            component: Editpassword
         }
 
     ]
