@@ -7,11 +7,6 @@ VueRouter.prototype.goBack = function () {
     window.history.go(-1)
 }
 
-// const Entry = (resolve) => {
-//     import('components/entry/index').then(module => {
-//         resolve(module)
-//     })
-// }
 
 const Regitser = (resolve) => {
     import('components/entry/register').then(module => {
@@ -38,11 +33,17 @@ const Assetset = (resolve) => {
         resolve(module)
     })
 }
+
+const taskPanel = (resolve) => {
+    import('views/panel/taskPanel').then(module => {
+        resolve(module)
+    })
+}
 export default new VueRouter({
     routes: [
         {
             path: '/',
-            component: Regitser
+            component: taskPanel
         },
         {
             path: '/register',
