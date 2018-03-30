@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "d3": "3.5.16",
+    "d3-cloud": "^1.2.5",
     "echarts": "^4.0.4",
     "iview": "^2.11.0",
     "normalize.css": "^8.0.0",
