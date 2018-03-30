@@ -14,11 +14,7 @@ export default {
     return {
     };
   },
-  created() {
-    console.log(111);
-  },
   mounted() {
-    console.log(111);
     var fill = d3.scale.category20();
 
     var layout = cloud()

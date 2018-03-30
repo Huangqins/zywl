@@ -12,7 +12,7 @@
    <section class="section2">
            <div class="wordClouds"></div>
            <div class="holeProportion">
-
+              <chart width="400px" height="400px" :option="optionHole" id="holeproportion"></chart>
            </div>
            <div class="timeAxis"></div>
    </section>
@@ -43,15 +43,52 @@ export default {
             data: [{ value: 50, name: "完成率" }]
           }
         ]
+      },
+      optionHole: {
+        title: {
+          text: "某站点用户访问来源",
+          subtext: "纯属虚构",
+          x: "center"
+        },
+        tooltip: {
+          trigger: "item",
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+          orient: "vertical",
+          left: "left",
+          data: ["直接访问", "邮件营销", "联盟广告"]
+        },
+        series: [
+          {
+            name: "访问来源",
+            type: "pie",
+            radius: "55%",
+            center: ["50%", "60%"],
+            data: [
+              { value: 335, name: "直接访问" },
+              { value: 310, name: "邮件营销" },
+              { value: 234, name: "联盟广告" }
+            ],
+            itemStyle: {
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: "rgba(0, 0, 0, 0.5)"
+              }
+            }
+          }
+        ]
       }
     };
   },
   computed: {
     optipns() {
       setInterval(() => {
-        this.option.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
+        this.option.series[0].data[0].value =
+          (Math.random() * 100).toFixed(2) - 0;
       }, 2000);
-      return this.option
+      return this.option;
     }
   }
 };
@@ -69,15 +106,15 @@ export default {
 .holeclassify {
   width: 400px;
 }
-.section2{
+.section2 {
   width: 100%;
   height: 600px;
   display: flex;
 }
-.section2 div{
+.section2 div {
   flex: 1;
 }
-.holeProportion{
+.holeProportion {
   height: 600px;
 }
 </style>
