@@ -71,6 +71,7 @@ name:'assetSet',
   methods:{
       cancel(){
         //    跳到任务管理页面
+        this.$router.push({path:"/taskhomepage"})
       },
    //点击提交跳到首页
    goToIndex (assets) {
