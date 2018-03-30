@@ -58,6 +58,7 @@ const Taskexecution = (resolve) => {
         resolve(module)
     })
 }
+
 export default new VueRouter({
     routes: [
         {

@@ -10,7 +10,9 @@
    </section>
    <section class="section2">
            <div class="wordClouds"></div>
-           <div class="holeProportion"></div>
+           <div class="holeProportion">
+
+           </div>
            <div class="timeAxis"></div>
    </section>
    <section class="section3">
@@ -62,5 +64,16 @@ export default {
 }
 .holeclassify {
   width: 400px;
+}
+.section2{
+  width: 100%;
+  height: 600px;
+  display: flex;
+}
+.section2 div{
+  flex: 1;
+}
+.holeProportion{
+  height: 600px;
 }
 </style>
