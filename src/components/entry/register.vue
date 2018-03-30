@@ -188,8 +188,9 @@ export default {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 400px;
-  height: 600px;
+  width: 460px;
+  height: 490px;
+  padding-right: 60px;
   transform: translate3d(-50%,-50%,0);
 }
 .ivu-form .ivu-form-item-label{

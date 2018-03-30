@@ -11,7 +11,7 @@
       </div>
   </div> -->
   <div class='welcome'>
-  <div class='col'>
+  <div class='col' @click="go">
     <a href="#"></a>
     <a href="#"></a>
     <a href="#"></a>
@@ -61,6 +61,11 @@ export default {
   name: "taskhomepage",
   data() {
     return {};
+  },
+  methods: {
+    go () {
+      this.$router.push({path: '/'})
+    }
   }
 };
 </script>
