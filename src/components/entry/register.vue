@@ -28,7 +28,7 @@
           </FormItem>
           <FormItem>
               <Button type="info" @click="handleSubmit('formItem')">注册账号</Button>
-              <Button type="success" @click="goToLogin" style="float: right">已有账号？去登陆</Button>
+              <Button type="success" @click="goToLogin" style="float: right;">已有账号？去登陆</Button>
           </FormItem>
       </Form>
   </div>
@@ -190,10 +190,10 @@ export default {
   top: 50%;
   width: 400px;
   height: 600px;
-  transform: translate3d(-50%,-50%,0)
+  transform: translate3d(-50%,-50%,0);
 }
-/* .entry .ivu-form .ivu-form-item-label {
-    color: #fff;
-} */
+.ivu-form .ivu-form-item-label{
+  color: #F6FBFB; 
+}
 </style>
 

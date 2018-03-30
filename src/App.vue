@@ -38,14 +38,18 @@ html,
 body {
   width: 100%;
   height: 100%;
-  position: relative;
+  position: relative;   
+  background: url("./assets/background.jpg");
+  background-size:cover;
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-width: 1200px;
-  height: 100%;
+  height: 100%;  
+  color: white;
+ 
 }
 .Router {
   position: absolute;

@@ -11,7 +11,7 @@
           <FormItem label="验证码" >
             
           </FormItem>
-          <FormItem >
+          <FormItem class="login">
             <Button type="primary" @click="handleSubmit">确认登陆</Button>
           </FormItem>
      </Form>
@@ -44,5 +44,11 @@ export default {
 };
 </script>
 
+<style>
+.login{
+  display: flex;
+  justify-content: center;
+}
+</style>
 
 

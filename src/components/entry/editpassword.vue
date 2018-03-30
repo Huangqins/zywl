@@ -8,8 +8,12 @@
             <FormItem label="新密码" prop="newPassword">
                 <Input v-model="formItem.newPassword" type="password" placeholder="请输入密码"/>
             </FormItem>
-            <FormItem >
-                <Button type="primary" @click="save">保存</Button>
+            <FormItem label="确认新密码" prop="confirmNewPassword">
+                <Input v-model="formItem.confirmNewPassword" type="password" placeholder="请输入密码"/>
+            </FormItem>
+            <FormItem class="handle">
+                <Button type="error" @click="cancel" class="save">取消</Button>
+                <Button type="success" @click="save" class="save">保存</Button>
             </FormItem>
         </Form>
       </div>
@@ -21,8 +25,9 @@ export default {
   data(){
       return{
           formItem:{
-              password:'',
-          newPassword:''
+            password:'',
+            newPassword:'',
+            confirmNewPassword:''
           }
           
 
@@ -31,12 +36,15 @@ export default {
   methods:{
       save(){
 
+      },
+      cancel(){
+          
       }
   }
 
 }
 </script>
-<style>
+<style scoped>
 .welcome {
   position: absolute;
   top: 50%;
@@ -44,5 +52,9 @@ export default {
   width: 410px;
   height: 600px;
   transform: translate3d(-50%, -50%, 0);
+}
+.handle{
+ display: flex;
+ justify-content:center;
 }
 </style>
