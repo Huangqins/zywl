@@ -53,6 +53,11 @@ const Editpassword = (resolve) => {
         resolve(module)
     })
 }
+const Taskexecution = (resolve) => {
+    import('components/taskpage/taskexecution').then(module => {
+        resolve(module)
+    })
+}
 export default new VueRouter({
     routes: [
         {
@@ -90,7 +95,10 @@ export default new VueRouter({
         {
             path: '/editpassword',
             component: Editpassword
+        },
+        {
+            path: '/taskexecution',
+            component: Taskexecution
         }
-
     ]
 })
