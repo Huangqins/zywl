@@ -1,8 +1,7 @@
 <template>
 <div>
 
-
-  <div class="assetSet">
+  <div class="entry">
        <Form :model="formItem" :label-width="80" ref="formItem" :rules="ruleValidate" >
           <FormItem label="选择资产" prop="assets">
             <Select v-model="formItem.assets" filterable>
@@ -89,12 +88,4 @@ name:'assetSet',
 }
 </script>
 <style scoped>
-.assetSet{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 350px;
-  height: 600px;
-  transform: translate3d(-50%, -50%, 0);
-}
 </style>

@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="welcome">
+  <div class="entry">
     <!-- <div>
          <Row>
           <Col span="24">
@@ -66,14 +66,6 @@ export default {
 };
 </script>
 <style scoped>
-.welcome {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 408px;
-  height: 600px;
-  transform: translate3d(-50%, -50%, 0);
-}
 .go {
   font-size: 30px;
   position: absolute;

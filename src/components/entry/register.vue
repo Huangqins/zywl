@@ -183,18 +183,7 @@ export default {
   }
 };
 </script>
-<style>
-.entry {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 460px;
-  height: 490px;
-  padding-right: 60px;
-  transform: translate3d(-50%,-50%,0);
-}
-.ivu-form .ivu-form-item-label{
-  color: #F6FBFB; 
-}
+<style scoped>
+
 </style>
 
