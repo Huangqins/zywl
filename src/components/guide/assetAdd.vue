@@ -45,14 +45,14 @@ export default {
 };
 </script>
 <style scoped>
-.entry {
+/* .entry {
   position: absolute;
   top: 50%;
   left: 50%;
   width: 500px;
   height: 600px;
   transform: translate3d(-50%, -50%, 0);
-}
+} */
 .header {
   height: 40px;
   margin-bottom: 5px;

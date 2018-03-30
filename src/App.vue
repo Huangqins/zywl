@@ -51,6 +51,14 @@ body {
   color: white;
  
 }
+.entry {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 500px;
+  height: 600px;
+  transform: translate3d(-50%,-50%,0);
+}
 .Router {
   position: absolute;
   width: 100%;
@@ -70,5 +78,8 @@ body {
   opacity: 0;
   -webkit-transform: translate(-100%, 0);
   transform: translate(-100% 0);
+}
+.ivu-form .ivu-form-item-label{
+  color: #F6FBFB; 
 }
 </style>
