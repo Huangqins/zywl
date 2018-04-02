@@ -3,7 +3,7 @@
    <section class="section1">
      <div class="taskSchedule">
        <h2>任务已执行:</h2>
-       <chart width="350px" height="350px" :option="optipns"></chart>
+       <chart width="266px" height="266px" :option="optipns"></chart>
        <div></div>
      </div>
      <div class="taskExtPicture"></div>
@@ -16,21 +16,18 @@
            </div>
            <div class="timeAxis"></div>
    </section>
-   <section class="section3">
-     <Row :gutter="16">
+   <section class="section3">     
+    <Row>
         <Col span="12">
-            <div class="holeright">
+             <div class="holeright">
               <h2>漏洞列表</h2>
-              <Table border :columns="columns1" :data="data1"  :loading="loading" @on-row-click="godetail"></Table>
+              <Table border :columns="columns1" :data="data1"  :loading="loading" @on-row-click="godetail" :row-class-name="rowClassName"></Table>
             </div>
         </Col>
-        <Col span="12">
-           <div class="assetList">
-             <h2>资产列表</h2>
-            <Table border :columns="columns1" :data="data1"  :loading="loading"></Table>
-          </div>
+        <Col span="11" offset="1">
+          <h2>资产列表</h2>
+          <Table border :columns="columns1" :data="data1"  :loading="loading" :row-class-name="rowClassName"></Table>
         </Col>
-        
     </Row>
             
           
@@ -84,6 +81,13 @@ export default {
           riskRating: "3",
           time: "2016-10-01",
           utilization: "80%"
+        },
+        {
+          name: "Joe Black",
+          type: 30,
+          riskRating: "4",
+          time: "2016-10-02",
+          utilization: "89%"
         },
         {
           name: "Joe Black",
@@ -145,7 +149,10 @@ export default {
     };
   },
   methods: {
-    godetail() {}
+    godetail() {},
+    rowClassName(row, index) {
+      return "demo-table-info-row";
+    }
   },
   computed: {
     optipns() {
@@ -158,7 +165,7 @@ export default {
   }
 };
 </script>
- <style scoped>
+ <style >
 .section1 {
   display: flex;
 }
@@ -183,5 +190,34 @@ export default {
 }
 .section3 div {
   flex: 1;
+}
+.ivu-table .demo-table-info-row td {
+  background-color: rgba(18, 62, 101);
+  color: #fff;
+}
+.ivu-table-header th {
+  background-color: rgba(18, 62, 101);
+  color: #fff;
+}
+.ivu-table-border td,
+.ivu-table-border th {
+  border-right: 1px solid rgb(81, 179, 218);
+}
+.ivu-table-wrapper {
+  border: 1px solid rgb(81, 179, 218);
+  /* border-right: 0;
+   border-left: 0; */
+  border-bottom: 0;
+  /* border-right: 0; */
+}
+.ivu-table td,
+.ivu-table th {
+  border-bottom: 1px solid rgb(81, 179, 218);
+}
+.ivu-table::before {
+  background-color: transparent;
+}
+.ivu-table::after {
+  background-color: transparent;
 }
 </style>
