@@ -64,6 +64,11 @@ const Cloud = (resolve) => {
         resolve(module)
     })
 }
+const Piechart = (resolve) => {
+    import('components/taskpage/piechart').then(module => {
+        resolve(module)
+    })
+}
 export default new VueRouter({
     routes: [
         {
@@ -109,6 +114,10 @@ export default new VueRouter({
         {
             path: '/cloud',
             component: Cloud
-        }
+        },
+        {
+            path: '/piechart',
+            component:  Piechart
+        },
     ]
 })
