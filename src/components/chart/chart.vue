@@ -35,7 +35,7 @@ export default {
     style() {
       return {
         height: this.height,
-        width: this.width
+        width: this.width,
       };
     }
   },

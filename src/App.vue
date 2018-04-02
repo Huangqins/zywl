@@ -91,5 +91,7 @@ body {
 .ivu-tabs-nav .ivu-tabs-tab{
   color: white;
 }
-
+/* #canvas{
+  color: lightsteelblue;
+} */
 </style>

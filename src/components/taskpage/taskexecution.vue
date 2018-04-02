@@ -3,7 +3,7 @@
    <section class="section1">
      <div class="taskSchedule">
        <h2>任务已执行:</h2>
-       <chart width="400px" height="400px" :option="optipns"></chart>
+       <chart width="350px" height="350px" :option="optipns"></chart>
        <div></div>
      </div>
      <div class="taskExtPicture"></div>
@@ -12,14 +12,30 @@
    <section class="section2">
            <div class="wordClouds"></div>
            <div class="holeProportion">
-              <chart width="400px" height="400px" :option="optionHole" id="holeproportion"></chart>
+              <chart width="350px" height="350px"  :option="optionHole" id="holeproportion"></chart>
            </div>
            <div class="timeAxis"></div>
    </section>
    <section class="section3">
-          <div class="holeList"></div>
-          <div class="assetList"></div>
+     <Row :gutter="16">
+        <Col span="12">
+            <div class="holeright">
+              <h2>漏洞列表</h2>
+              <Table border :columns="columns1" :data="data1"  :loading="loading" @on-row-click="godetail"></Table>
+            </div>
+        </Col>
+        <Col span="12">
+           <div class="assetList">
+             <h2>资产列表</h2>
+            <Table border :columns="columns1" :data="data1"  :loading="loading"></Table>
+          </div>
+        </Col>
+        
+    </Row>
+            
+          
    </section>
+
   </div>
 </template>
 <script>
@@ -31,6 +47,52 @@ export default {
   },
   data() {
     return {
+      loading: false,
+      columns1: [
+        {
+          title: "漏洞名称",
+          key: "name"
+        },
+        {
+          title: "类型",
+          key: "type"
+        },
+        {
+          title: "风险等级",
+          key: "riskRating"
+        },
+        {
+          title: "发现时间",
+          key: "time"
+        },
+        {
+          title: "利用情况",
+          key: "utilization"
+        }
+      ],
+      data1: [
+        {
+          name: "John Brown",
+          type: 18,
+          riskRating: "3",
+          time: "2016-10-03",
+          utilization: "80%"
+        },
+        {
+          name: "Jim Green",
+          type: 24,
+          riskRating: "3",
+          time: "2016-10-01",
+          utilization: "80%"
+        },
+        {
+          name: "Joe Black",
+          type: 30,
+          riskRating: "4",
+          time: "2016-10-02",
+          utilization: "89%"
+        }
+      ],
       option: {
         tooltip: {
           formatter: "{a} <br/>{b} : {c}%"
@@ -82,6 +144,9 @@ export default {
       }
     };
   },
+  methods: {
+    godetail() {}
+  },
   computed: {
     optipns() {
       setInterval(() => {
@@ -108,13 +173,15 @@ export default {
 }
 .section2 {
   width: 100%;
-  height: 600px;
   display: flex;
 }
 .section2 div {
   flex: 1;
 }
-.holeProportion {
-  height: 600px;
+.section3 {
+  display: flex;
+}
+.section3 div {
+  flex: 1;
 }
 </style>

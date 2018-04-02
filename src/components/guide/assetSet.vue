@@ -76,7 +76,7 @@ name:'assetSet',
    goToIndex (assets) {
                 this.$refs[assets].validate((valid) => {
                     if (valid) {
-                        this.$Message.success('Success!');
+                        this.$router.push({path:"/taskexecution"})
                     } else {
                         this.$Message.error('Fail!');
                     }
