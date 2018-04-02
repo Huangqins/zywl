@@ -56,7 +56,7 @@ body {
   left: 50%;
   top: 50%;
   width: 500px;
-  height: 600px;
+  height: auto;
   transform: translate3d(-50%,-50%,0);
 }
 .Router {
