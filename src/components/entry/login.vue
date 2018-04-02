@@ -15,9 +15,13 @@
           <FormItem label="验证码" >
               <Input v-model="formItem.code"  placeholder="请填写手机验证码"/>
           </FormItem>
+          <FormItem label="验证码"  >
+              <Input v-model="formItem.code"  placeholder="请输入验证码" style="width: 45%;" />
+              <img width="200" height="38" style="float:right;" src="../../assets/test.jpg" >
+          </FormItem>
           <FormItem class="login" style="text-align:center;">
             <Button type="primary" @click="handleSubmit" style="text-align:center;">确认登陆</Button>
-          </FormItem>
+          </FormItem>    
      </Form>
   </div>
   </div>
@@ -35,7 +39,7 @@ export default {
       passCodeTime: 60,
       passCodeSign: false,
       passCodeText: "获取验证码",
-      timer: ''
+      timer: ""
     };
   },
   computed: {
@@ -58,9 +62,9 @@ export default {
     passCode() {
       // 调用发送手机验证码,修改文字
       // 图片验证码,修改图片
-     this.timer = setInterval(() => {
-        this.passCodeStatus()
-     },1000)
+      this.timer = setInterval(() => {
+        this.passCodeStatus();
+      }, 1000);
     },
     passCodeStatus() {
       if (this.passCodeTime === 0) {
@@ -70,13 +74,13 @@ export default {
         this.passCodeTime = 60;
       } else {
         this.passCodeTime--;
-        this.passCodeText = this.passCodeTime + '秒后重新获取';
+        this.passCodeText = this.passCodeTime + "秒后重新获取";
         this.passCodeSign = true;
       }
     }
   },
   destroyed() {
-   clearInterval(this.timer)
+    clearInterval(this.timer);
   }
 };
 </script>
