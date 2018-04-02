@@ -7,11 +7,12 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "build:dll": "webpack --config build/webpack.dll.config.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "d3": "3.5.16",
+    "d3": "^5.0.0",
     "d3-cloud": "^1.2.5",
     "echarts": "^4.0.4",
     "iview": "^2.11.0",

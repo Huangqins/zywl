@@ -14,13 +14,11 @@ export default {
     return {
     };
   },
-  created() {
-    console.log(111);
-  },
   mounted() {
-    console.log(111);
-    var fill = d3.scale.category20();
-
+    const fill  = d3.scaleOrdinal(d3.schemeCategory10);
+    // var fill = color(d3.schemeCategory20)
+   
+    console.log(d3.schemeCategory10)
     var layout = cloud()
       .size([500, 500])
       .words(
@@ -40,7 +38,7 @@ export default {
       )
       .padding(5)
       .rotate(function() {
-        return ~~(Math.random() * 2) * 90;
+        return (Math.random() * 2) * 90;
       })
       .font("Impact")
       .fontSize(function(d) {
