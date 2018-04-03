@@ -69,6 +69,11 @@ const Piechart = (resolve) => {
         resolve(module)
     })
 }
+const Holedetail = (resolve) => {
+    import('components/hole/holedetail').then(module => {
+        resolve(module)
+    })
+}
 export default new VueRouter({
     routes: [
         {
@@ -119,5 +124,9 @@ export default new VueRouter({
             path: '/piechart',
             component:  Piechart
         },
+        {
+            path: '/holedetail/:id',
+            component: Holedetail
+        }
     ]
 })

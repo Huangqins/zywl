@@ -12,12 +12,13 @@ export default {
   name: "cloud",
   data() {
     return {
+      cloud:''
     };
   },
   mounted() {
     const fill  = d3.scaleOrdinal(d3.schemeCategory10);
     var layout = cloud()
-      .size([500, 500])
+      .size([400, 400])
       .words(
         [
           "Hello",

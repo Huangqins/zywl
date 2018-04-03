@@ -10,7 +10,10 @@
      <div class="holeclassify"></div>
    </section>
    <section class="section2">
-           <div class="wordClouds"></div>
+           <div class="wordClouds">
+             <h2>漏洞文字云:</h2>
+             <cloud></cloud>
+           </div>
            <div class="holeProportion">
               <chart width="350px" height="350px"  :option="optionHole" id="holeproportion"></chart>
            </div>
@@ -37,10 +40,12 @@
 </template>
 <script>
 import chart from "components/chart/chart";
+import cloud from "components/d3/wordCloud";
 export default {
   name: "taskexecution",
   components: {
-    chart
+    chart,
+    cloud
   },
   data() {
     return {
@@ -106,15 +111,23 @@ export default {
             name: "业务指标",
             type: "gauge",
             detail: { formatter: "{value}%" },
-            data: [{ value: 50, name: "完成率" }]
+            data: [{ value: 50, name: "完成率" }],
+            title: { color: "#fff" },
+            axisLine: {
+              lineStyle: {
+                color: [[0.2, "#41C23C"], [0.8, "#FFCE44"], [1, "#DD4C40"]]
+              }
+            }
           }
         ]
       },
       optionHole: {
         title: {
-          text: "某站点用户访问来源",
-          subtext: "纯属虚构",
-          x: "center"
+          text: "漏洞等级",
+          x: "center",
+          textStyle: {
+            color: "white"
+          }
         },
         tooltip: {
           trigger: "item",
@@ -123,7 +136,10 @@ export default {
         legend: {
           orient: "vertical",
           left: "left",
-          data: ["直接访问", "邮件营销", "联盟广告"]
+          data: ["高", "中", "低"],
+          textStyle: {
+            color: "white"
+          }
         },
         series: [
           {
@@ -132,9 +148,9 @@ export default {
             radius: "55%",
             center: ["50%", "60%"],
             data: [
-              { value: 335, name: "直接访问" },
-              { value: 310, name: "邮件营销" },
-              { value: 234, name: "联盟广告" }
+              { value: 335, name: "高", itemStyle: { color: "#DD4F43" } },
+              { value: 310, name: "中", itemStyle: { color: "#FFCE43" } },
+              { value: 234, name: "低", itemStyle: { color: "#41C23C" } }
             ],
             itemStyle: {
               emphasis: {
@@ -219,5 +235,8 @@ export default {
 }
 .ivu-table::after {
   background-color: transparent;
+}
+canvas {
+  color: #fff !important;
 }
 </style>
