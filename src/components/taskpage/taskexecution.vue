@@ -3,7 +3,7 @@
    <section class="section1">
      <div class="taskSchedule">
        <h2>任务已执行:</h2>
-       <chart width="350px" height="350px" :option="optipns"></chart>
+       <chart width="350px" height="350px" :option="option" ref="chart"></chart>
        <div></div>
      </div>
      <div class="taskExtPicture"></div>
@@ -147,14 +147,12 @@ export default {
   methods: {
     godetail() {}
   },
-  computed: {
-    optipns() {
-      setInterval(() => {
-        this.option.series[0].data[0].value =
-          (Math.random() * 100).toFixed(2) - 0;
-      }, 2000);
-      return this.option;
-    }
+  mounted() {
+    setInterval(() => {
+      this.option.series[0].data[0].value =
+        (Math.random() * 100).toFixed(2) - 0;
+      this.$refs.chart.refresh();
+    }, 2000);
   }
 };
 </script>

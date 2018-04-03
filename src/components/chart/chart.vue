@@ -51,6 +51,9 @@ export default {
     init() {
       this.chart = this.$echarts.init(document.getElementById(this.id));
       this.chart.setOption(this.option);
+    },
+    refresh() {
+       this.chart.setOption(this.option);
     }
   }
 };
