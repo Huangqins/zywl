@@ -10,13 +10,15 @@ const whiteList = ['/login'] // 不重定向白名单
 router.beforeEach((to, from, next) => {
     NProgress.start()
     if (getToken()) {
+        console.log('存在')
         // if (to.path === '/login') {
         //     next({ path: '/' })
         // }
+        next()
     } 
     else {
-        // next({ path: '/login' })
-        next()
+        next({ path: '/login' })
+        // next()
         console.log()
     }
     NProgress.done()

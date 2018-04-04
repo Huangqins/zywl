@@ -13,10 +13,10 @@ const service = axios.create({
 })
 
 service.interceptors.request.use(config => {
-    // if (store.getters.token) {
-    //     config.headers['X-Token'] = getToken()
-    //     config.headers['X-UserName'] = getUserName()
-    // }
+    if (store.getters.token && store.getters.userName) {
+        config.headers['token'] = getToken()
+        config.headers['userName'] = getUserName()
+    }
     return config
 }, error => {
     console.log(error) // for debug
@@ -24,7 +24,6 @@ service.interceptors.request.use(config => {
 })
 //   response拦截器
 service.interceptors.response.use(response => {
-    console.log(response)
     return response.data
     // if (res.result === 0) {
     //     Message.success({

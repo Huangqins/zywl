@@ -1,10 +1,10 @@
 import request from '@/utils/request'
 
-function login({ userName, password, VerifyCodeID, VerifyCode }) {
+function login({ userName, password, verifyCodeID, verifyCode }) {
     return request({
         url: '/ZY/user/userLogin',
         method: 'post',
-        data: { userName, password, VerifyCodeID: VerifyCodeID.toLowerCase(), VerifyCode: VerifyCode.toLowerCase() }
+        data: { userName, password, verifyCodeID, verifyCode }
     })
 }
 

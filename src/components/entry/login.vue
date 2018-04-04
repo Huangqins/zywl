@@ -8,15 +8,15 @@
           <FormItem label="密码" prop="password">
               <Input v-model="formItem.password" type="password" placeholder="请输入密码"/>
           </FormItem>
-          <FormItem label="手机号码" >
+          <!-- <FormItem label="手机号码" >
               <Input v-model="phone"  placeholder="请输入手机号" style="width: 65%"/>
               <Button type="error" @click="passCode" :disabled="passCodeSign" style="width: 34%">{{passCodeText}}</Button>
-          </FormItem>
+          </FormItem> -->
           <!-- <FormItem label="验证码" >
               <Input v-model="formItem.code"  placeholder="请填写手机验证码"/>
           </FormItem> -->
           <FormItem label="验证码" >
-              <Input v-model="formItem.VerifyCode"  placeholder="请输入验证码" style="width: 45%;" />
+              <Input v-model="formItem.verifyCode"  placeholder="请输入验证码" style="width: 45%;" />
               <img width="200" height="38" style="float:right;" :src="codeSrc"  @click="changeImg">
           </FormItem>
           <FormItem class="login" style="text-align:center;">
@@ -38,8 +38,8 @@ export default {
       formItem: {
         userName: "",
         password: "",
-        VerifyCode: "",
-        VerifyCodeID: "",
+        verifyCode: "",
+        verifyCodeID: "",
         phone: 0
       },
       passCodeTime: 60,
@@ -65,7 +65,7 @@ export default {
     changeImg() {
       getIdentifyCode(this.formItem).then(res => {
         this.codeSrc = host + `${res.code}`;
-        this.formItem.VerifyCodeID = res.codeID;
+        this.formItem.verifyCodeID = res.codeID;
       });
     },
     handleSubmit() {
