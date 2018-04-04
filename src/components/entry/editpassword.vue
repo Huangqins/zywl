@@ -2,11 +2,11 @@
   <div>
       <div class="welcome">
         <Form :model="formItem" :label-width="80"  ref="formItem">
-            <FormItem label="旧密码" prop="password">
-                <Input v-model="formItem.password" type="password" placeholder="请输入密码"/>
+            <FormItem label="旧密码" prop="oldPassword">
+                <Input v-model="formItem.oldPassword" type="password" placeholder="请输入密码"/>
             </FormItem>
-            <FormItem label="新密码" prop="newPassword">
-                <Input v-model="formItem.newPassword" type="password" placeholder="请输入密码"/>
+            <FormItem label="新密码" prop="password">
+                <Input v-model="formItem.password" type="password" placeholder="请输入密码"/>
             </FormItem>
             <FormItem label="确认新密码" prop="confirmNewPassword">
                 <Input v-model="formItem.confirmNewPassword" type="password" placeholder="请输入密码"/>
@@ -20,29 +20,40 @@
   </div>
 </template>
 <script>
+import changePassWord from "api/changePassWord";
+import { mapGetters } from 'vuex'
+
 export default {
-    name:'editpassword',
-  data(){
-      return{
-          formItem:{
-            password:'',
-            newPassword:'',
-            confirmNewPassword:''
-          }
-          
-
+  name: "editpassword",
+  data() {
+    return {
+      formItem: {
+        password: "",
+        oldPassword: "",
+        confirmNewPassword: "",
+        token: "",
+        userName: ""
       }
+    };
   },
-  methods:{
-      save(){
-
-      },
-      cancel(){
-          
-      }
+  computed: {
+      ...mapGetters([
+          'token',
+          'userName'
+      ])
+  },
+  methods: {
+    save() {
+        // console.log(this.token)
+      this.formItem.token = this.token;
+      this.formItem.userName = this.userName;
+      changePassWord(this.formItem).then(res => {
+        console.log(res);
+      });
+    },
+    cancel() {}
   }
-
-}
+};
 </script>
 <style scoped>
 .welcome {
@@ -53,8 +64,8 @@ export default {
   height: 600px;
   transform: translate3d(-50%, -50%, 0);
 }
-.handle{
- display: flex;
- justify-content:center;
+.handle {
+  display: flex;
+  justify-content: center;
 }
 </style>

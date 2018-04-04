@@ -8,16 +8,16 @@
           <FormItem label="密码" prop="password">
               <Input v-model="formItem.password" type="password" placeholder="请输入密码"/>
           </FormItem>
-          <FormItem label="手机号码" >
-              <Input v-model="formItem.phone"  placeholder="请输入手机号" style="width: 65%"/>
+          <!-- <FormItem label="手机号码" >
+              <Input v-model="phone"  placeholder="请输入手机号" style="width: 65%"/>
               <Button type="error" @click="passCode" :disabled="passCodeSign" style="width: 34%">{{passCodeText}}</Button>
-          </FormItem>
-          <FormItem label="验证码" >
+          </FormItem> -->
+          <!-- <FormItem label="验证码" >
               <Input v-model="formItem.code"  placeholder="请填写手机验证码"/>
-          </FormItem>
-          <FormItem label="验证码"  >
-              <Input v-model="formItem.code"  placeholder="请输入验证码" style="width: 45%;" />
-              <img width="200" height="38" style="float:right;" src="../../assets/test.jpg" >
+          </FormItem> -->
+          <FormItem label="验证码" >
+              <Input v-model="formItem.verifyCode"  placeholder="请输入验证码" style="width: 45%;" />
+              <img width="200" height="38" style="float:right;" :src="codeSrc"  @click="changeImg">
           </FormItem>
           <FormItem class="login" style="text-align:center;">
             <Button type="primary" @click="handleSubmit" style="text-align:center;">确认登陆</Button>
@@ -27,6 +27,10 @@
   </div>
 </template>
 <script>
+import getIdentifyCode from "api/getIdentifyCode";
+const host =
+  process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
+
 export default {
   name: "login",
   data() {
@@ -34,18 +38,36 @@ export default {
       formItem: {
         userName: "",
         password: "",
-        code: ""
+        verifyCode: "",
+        verifyCodeID: "",
+        phone: 0
       },
       passCodeTime: 60,
       passCodeSign: false,
       passCodeText: "获取验证码",
-      timer: ""
+      timer: "",
+      imgCode: "",
+      codeID: "",
+      code: "",
+      phoneCode: "",
+      phone: "",
+      codeSrc: ""
     };
   },
   computed: {
     passCodeDes() {}
   },
+  created() {
+    this.changeImg();
+    console.log(host);
+  },
   methods: {
+    changeImg() {
+      getIdentifyCode(this.formItem).then(res => {
+        this.codeSrc = host + `${res.code}`;
+        this.formItem.verifyCodeID = res.codeID;
+      });
+    },
     handleSubmit() {
       // 登录成功需要存储用户信息
       this.$store
