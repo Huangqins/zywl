@@ -17,8 +17,8 @@ router.beforeEach((to, from, next) => {
         next()
     } 
     else {
-        next({ path: '/login' })
-        // next()
+        // next({ path: '/login' })
+        next()
         console.log()
     }
     NProgress.done()

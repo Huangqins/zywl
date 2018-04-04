@@ -12,12 +12,13 @@ export default {
   name: "cloud",
   data() {
     return {
+      cloud:''
     };
   },
   mounted() {
     const fill  = d3.scaleOrdinal(d3.schemeCategory10);
     var layout = cloud()
-      .size([500, 500])
+      .size([400, 400])
       .words(
         [
           "Hello",
@@ -29,43 +30,23 @@ export default {
           "words",
           "than",
           "this"
-        ];
-      }
-    }
-  },
-  data() {
-    return {};
-  },
-  mounted() {
-    const fill = d3.scaleOrdinal(d3.schemeCategory10);
-    // var fill = color(d3.schemeCategory20)
-
-    console.log(d3.schemeCategory10);
-    var layout = cloud()
-      .size([500, 500])
-      .words(
-        this.words.map(function(d) {
+        ].map(function(d) {
           return { text: d, size: 10 + Math.random() * 90, test: "haha" };
         })
       )
       .padding(5)
       .rotate(function() {
-        return Math.random() * 2 * 90;
+        return (Math.random() * 2) * 90;
       })
       .font("Impact")
       .fontSize(function(d) {
         return d.size;
       })
-      .on("end", this.draw);
+      .on("end", draw);
 
     layout.start();
 
-    // function draw(words) {
-
-    // }
-  },
-  methods: {
-    draw(words) {
+    function draw(words) {
       d3
         .select("#vis")
         .append("svg")
