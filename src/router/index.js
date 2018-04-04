@@ -74,6 +74,11 @@ const Holedetail = (resolve) => {
         resolve(module)
     })
 }
+const Zhexiantu = (resolve) => {
+    import('components/taskpage/zhexiantu').then(module => {
+        resolve(module)
+    })
+}
 export default new VueRouter({
     routes: [
         {
@@ -127,6 +132,10 @@ export default new VueRouter({
         {
             path: '/holedetail/:id',
             component: Holedetail
+        },
+        {
+            path: '/zhexiantu',
+            component: Zhexiantu
         }
     ]
 })

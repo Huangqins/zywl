@@ -12,19 +12,6 @@
                         <div class="riskRating">
                             高风险
                         </div>
-                        <!-- <Row>
-                            <Col span="24">
-                                <Card style="background:rgba(18,62,101,0.7);border:1px solid #51B3DA;">
-                                    <p slot="title" style="color:white;font-size:25px">漏洞状态</p>
-                                    <Col span="12">
-                                    <div class="holeimg"><img src="../../assets/hole.jpg" ></div>
-                                    </Col>
-                                    <Col span="12"> 
-                                    <div class="riskRating">高风险</div>                             
-                                    </Col>
-                                </Card>
-                            </Col>
-                        </Row> -->
                     </section>
                     <section class="resultPicture">
                        <p>漏洞后果截图</p>
@@ -66,8 +53,7 @@
                                 <Card style="background:rgba(18,62,101,0.7);border:1px solid #51B3DA;">
                                     <p slot="title" style="color:white;font-size:25px">修复方案</p>
                                     <p>欢迎使用智刃安全攻防平台,目前网络空间安全等级为XXX，安全情报监控显示，XXX资产暴露XXX问题，可能存在问题的资产有XXX。</p>
-                                    <p>是否要进行安全测试？</p>                                    
-                                    
+                                    <p>是否要进行安全测试？</p>  
                                 </Card>
                             </Col>
                         </Row>

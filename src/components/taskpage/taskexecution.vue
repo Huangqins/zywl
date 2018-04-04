@@ -19,21 +19,15 @@
            </div>
            <div class="timeAxis"></div>
    </section>
-   <section class="section3">     
-    <Row>
-        <Col span="12">
-             <div class="holeright">
-              <h2>漏洞列表</h2>
-              <Table border :columns="columns1" :data="data1"  :loading="loading" @on-row-click="godetail" :row-class-name="rowClassName"></Table>
-            </div>
-        </Col>
-        <Col span="11" offset="1">
+   <section class="section3">  
+        <div style="width:45%" class="list">
+          <h2>漏洞列表</h2>
+            <Table border  :columns="columns1" :data="data1"  :loading="loading" @on-row-click="godetail" :row-class-name="rowClassName"></Table>
+        </div>
+       <div  style="width:45%" class="list">
           <h2>资产列表</h2>
           <Table border :columns="columns1" :data="data1"  :loading="loading" :row-class-name="rowClassName"></Table>
-        </Col>
-    </Row>
-            
-          
+      </div>    
    </section>
 
   </div>
@@ -204,8 +198,10 @@ export default {
 .section3 {
   display: flex;
 }
-.section3 div {
+.section3 .list {
   flex: 1;
+  margin: 5px;
+  padding:5px;
 }
 .ivu-table .demo-table-info-row td {
   background-color: rgba(18, 62, 101);
@@ -235,6 +231,9 @@ export default {
 }
 .ivu-table::after {
   background-color: transparent;
+}
+.ivu-table-body {
+  overflow: hidden;
 }
 canvas {
   color: #fff !important;
