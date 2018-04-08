@@ -39,8 +39,8 @@ body {
   width: 100%;
   height: 100%;
   position: relative;   
-  background: url("./assets/background.jpg");
-  background-size:cover;
+  /* background: url("./assets/background.jpg");
+  background-size:cover; */
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;

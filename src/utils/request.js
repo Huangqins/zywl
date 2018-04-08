@@ -32,7 +32,7 @@ service.interceptors.response.use(response => {
     //         content: '操作成功'
     //     })
     //     return response.data
-    // } else {
+    // } else if (res.result === 2) {
     //     return response.data
     // }
 }, error => {

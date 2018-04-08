@@ -80,6 +80,7 @@ const Zhexiantu = (resolve) => {
     })
 }
 export default new VueRouter({
+    // mode: 'history',
     routes: [
         {
             path: '/',

@@ -11,7 +11,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/ZY': {
-        target: 'http://192.168.10.175/'
+        target: 'http://192.168.10.104:8080/'
       }
     },
 
