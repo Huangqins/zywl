@@ -1,12 +1,19 @@
 <template>
-  <div id="container"></div>
+   <div>
+     <chart :option="option" ref="chart" height="800px"></chart>
+   </div>
 </template>
+
 <script>
+import chart from "components/chart/chart";
+
 export default {
   name: "zhexiantu",
+  components: {
+    chart
+  },
   data() {
     return {
-      chart: "",
       data: [],
       option: {
         title: {
@@ -50,44 +57,14 @@ export default {
             type: "line",
             showSymbol: false,
             hoverAnimation: false,
-            data: this.data
+            data: []
           }
         ]
       }
     };
   },
   mounted() {
-   
-    for (var i = 0; i < 1000; i++) {
-      this.data.push(this.randomData());
-    }
-    setInterval(() => {
-      for (var i = 0; i < 5; i++) {
-        this.data.shift();
-        this.data.push(this.randomData());
-      }
-
-    //   this.chart.setOption({
-    //     series: [
-    //       {
-    //         data: this.data
-    //       }
-    //     ]
-    //   });
-    this.option.series[0].data = this.data
-    this.init();
-    }, 2000);
-     
-  },
-  methods: {
-    init() {
-      this.chart = this.$echarts.init(document.getElementById("container"));
-      this.chart.setOption(this.option);
-    },
-    randomData() {
-      var now = new Date();
-      var oneDay = 24 * 3600 * 1000;
-      var value = Math.random() * 1000;
+    function randomData() {
       now = new Date(+now + oneDay);
       value = value + Math.random() * 21 - 10;
       return {
@@ -98,10 +75,23 @@ export default {
         ]
       };
     }
-  }
+
+    var now = +new Date(1997, 9, 3);
+    var oneDay = 24 * 3600 * 1000;
+    var value = Math.random() * 1000;
+    for (var i = 0; i < 1000; i++) {
+      this.data.push(randomData());
+    }
+    setInterval(() => {
+      for (var i = 0; i < 5; i++) {
+        this.data.shift();
+        this.data.push(randomData());
+      }
+      this.option.series[0].data = this.data;
+      this.$refs.chart.refresh();
+    }, 1000);
+  },
+  methods: {}
 };
 </script>
- 
-<style>
 
-</style>

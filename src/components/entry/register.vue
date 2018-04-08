@@ -36,6 +36,7 @@
 </template>
 <script>
 import register from "api/register";
+import checkUserName from "api/checkUserName";
 
 export default {
   name: "register",
@@ -81,7 +82,13 @@ export default {
       } else if (!reg.test(value)) {
         callback(new Error("请输入合法用户名"));
       } else {
-        callback();
+        checkUserName(this.formItem).then(res => {
+          if (res.result === 1) {
+            callback(new Error("您申请的用户名已存在"));
+          } else {
+            callback();
+          }
+        });
       }
     };
     const validatetrueName = (rule, value, callback) => {

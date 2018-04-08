@@ -12,11 +12,11 @@ export default {
   name: "cloud",
   data() {
     return {
-      cloud:''
+      cloud: ""
     };
   },
   mounted() {
-    const fill  = d3.scaleOrdinal(d3.schemeCategory10);
+    const fill = d3.scaleOrdinal(d3.schemeCategory10);
     var layout = cloud()
       .size([400, 400])
       .words(
@@ -36,7 +36,7 @@ export default {
       )
       .padding(5)
       .rotate(function() {
-        return (Math.random() * 2) * 90;
+        return Math.random() * 2 * 90;
       })
       .font("Impact")
       .fontSize(function(d) {

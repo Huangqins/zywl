@@ -30,7 +30,8 @@ module.exports = {
       'api': resolve('src/api'),
       'views': resolve('src/components/views'),
       'icon': resolve('src/assets/css/icon'),
-      'static': resolve('static')
+      'static': resolve('static'),
+      'utils': resolve('src/utils')
     }
   },
   module: {

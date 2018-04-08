@@ -28,8 +28,11 @@
 </template>
 <script>
 import getIdentifyCode from "api/getIdentifyCode";
+import message from "utils/message";
 const host =
-  process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
+  process.env.NODE_ENV === "development"
+    ? "http://192.168.10.104:8080/ZY/"
+    : "";
 
 export default {
   name: "login",
@@ -75,6 +78,12 @@ export default {
         .then(res => {
           if (res.result === 0) {
             this.$router.push({ path: "/welcome" });
+          } else if (res.result === 2) {
+            message("error", "密码错误");
+          } else if (res.result === 3) {
+            message("error", "验证码错误");
+          } else {
+            message("error", "用户名不存在");
           }
         })
         .catch(err => {
