@@ -4,7 +4,7 @@
      <div class="taskSchedule">
        <h2>任务已执行:</h2>
        <chart width="266px" height="266px" :option="optipns"></chart>
-       <div></div>
+       
      </div>
      <div class="taskExtPicture"></div>
      <div class="holeclassify">
@@ -36,9 +36,12 @@
              <cloud></cloud>
            </div>
            <div class="holeProportion">
-              <chart width="350px" height="350px"  :option="optionHole" id="holeproportion"></chart>
+              <chart width="450px" height="400px"  :option="optionHole" id="holeproportion"></chart>
            </div>
-           <div class="timeAxis"></div>
+           <div class="timeAxis">
+             <h2 >时间轴折线图</h2>
+            <zhexiantu></zhexiantu>
+           </div>
    </section>
    <section class="section3">  
         <div style="width:45%" class="list">
@@ -55,11 +58,13 @@
 <script>
 import chart from "components/chart/chart";
 import cloud from "components/d3/wordCloud";
+import zhexiantu from "./zhexiantu";
 export default {
   name: "taskexecution",
   components: {
     chart,
-    cloud
+    cloud,
+    zhexiantu
   },
   data() {
     return {
@@ -209,7 +214,8 @@ export default {
             }
           }
         ]
-      }
+      },
+
     };
   },
   methods: {
@@ -330,5 +336,10 @@ vertical-align: middle;
 .holeHeader{
   font-size: 14px;
   font-weight: bold;
+}
+.timeAxis h2{
+  /* width: 400px; */
+  height: auto;
+  float: right;
 }
 </style>
