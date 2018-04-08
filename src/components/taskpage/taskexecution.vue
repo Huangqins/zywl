@@ -7,7 +7,28 @@
        <div></div>
      </div>
      <div class="taskExtPicture"></div>
-     <div class="holeclassify"></div>
+     <div class="holeclassify">
+      <h2>漏洞Top10榜单</h2>
+      <span><Icon type="chevron-right"></Icon>目前已有XXX个漏洞进行排行</span>
+      <div class="holeList">
+       <ul>
+         <li class="listOne">
+           <span class="holeHeader">漏洞排行</span>
+           <span class="holeHeader">漏洞名称</span>
+           <span class="holeHeader">漏洞数量</span>
+         </li>
+         <li v-for="(item,index) in holes" :key="index">
+           <span v-if="index===0"><img src="../../../static/top1.png" ></span>
+           <span v-else-if="index===1"><img src="../../../static/top2.png" ></span>
+           <span v-else-if="index===2"><img src="../../../static/top3.png"/></span>
+           <span v-else-if="index>=3">{{index}}</span>
+           <span>{{item.holeName}}</span>
+           <span style="">{{item.holeNum}}</span>
+           </li>
+         
+       </ul>
+      </div>
+     </div>
    </section>
    <section class="section2">
            <div class="wordClouds">
@@ -29,7 +50,6 @@
           <Table border :columns="columns1" :data="data1"  :loading="loading" :row-class-name="rowClassName"></Table>
       </div>    
    </section>
-
   </div>
 </template>
 <script>
@@ -64,6 +84,40 @@ export default {
         {
           title: "利用情况",
           key: "utilization"
+        }
+      ],
+      holes:[
+        {
+         holeName:"XSS",holeNum:"12"
+        },
+        {
+         holeName:"WEB",holeNum:"10"
+        },
+        {
+          holeName:"CSRF",holeNum:"9"
+        },{
+          holeName:"CSRF",holeNum:"8"
+        },
+        {
+          holeName:"CSRF",holeNum:"7"
+        },
+        {
+          holeName:"CSRF",holeNum:"6"
+        },
+        {
+          holeName:"CSRF",holeNum:"5"
+        },
+        {
+          holeName:"CSRF",holeNum:"4"
+        },
+        {
+          holeName:"CSRF",holeNum:"3"
+        },
+        {
+          holeName:"CSRF",holeNum:"2"
+        },
+        {
+          holeName:"CSRF",holeNum:"1"
         }
       ],
       data1: [
@@ -187,6 +241,7 @@ export default {
 }
 .holeclassify {
   width: 400px;
+  margin-right: 3px;
 }
 .section2 {
   width: 100%;
@@ -201,7 +256,7 @@ export default {
 .section3 .list {
   flex: 1;
   margin: 5px;
-  padding:5px;
+  padding: 5px;
 }
 .ivu-table .demo-table-info-row td {
   background-color: rgba(18, 62, 101);
@@ -217,10 +272,7 @@ export default {
 }
 .ivu-table-wrapper {
   border: 1px solid rgb(81, 179, 218);
-  /* border-right: 0;
-   border-left: 0; */
   border-bottom: 0;
-  /* border-right: 0; */
 }
 .ivu-table td,
 .ivu-table th {
@@ -237,5 +289,46 @@ export default {
 }
 canvas {
   color: #fff !important;
+}
+.holeclassify span{
+  display: inline-block;
+  height: 19px;
+}
+.ivu-icon{
+  margin-right: 4px;
+}
+.holeList{
+  width: 100%;
+  height: 100%;
+}
+.holeList ul{
+  width: 100%;
+  height: auto;
+  border: 1px solid #0F5B95;
+}
+.holeList ul li{
+list-style-type: none;
+height: 23px;
+font-size: 12px;
+line-height: 23px;
+}
+.listOne{
+display: inline-block;
+width: 100%;
+border-bottom: 2px solid #0F5B95;
+}
+.holeList ul li span{ 
+width: 30%;
+text-align: center;
+}
+.holeList ul li span img{
+width:20px;
+height:20px;
+display: inline-block;
+vertical-align: middle;
+}
+.holeHeader{
+  font-size: 14px;
+  font-weight: bold;
 }
 </style>
