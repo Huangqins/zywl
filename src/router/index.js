@@ -7,11 +7,11 @@ VueRouter.prototype.goBack = function () {
     window.history.go(-1)
 }
 
-// const Entry = (resolve) => {
-//     import('components/entry/index').then(module => {
-//         resolve(module)
-//     })
-// }
+const Historydata = (resolve) => {
+    import('components/historydata/datamanage').then(module => {
+        resolve(module)
+    })
+}
 
 const Regitser = (resolve) => {
     import('components/entry/register').then(module => {
@@ -137,6 +137,10 @@ export default new VueRouter({
         {
             path: '/zhexiantu',
             component: Zhexiantu
-        }
+        },
+        {
+            path: '/datamanage',
+            component: Historydata
+        },
     ]
 })

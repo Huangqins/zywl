@@ -3,7 +3,7 @@
    <section class="section1">
      <div class="taskSchedule">
        <h2>任务已执行:</h2>
-       <chart width="266px" height="266px" :option="optipns"></chart>
+       <chart width="235px" height="235px" :option="optipns"></chart>
        
      </div>
      <div class="taskExtPicture"></div>
@@ -24,8 +24,7 @@
            <span v-else-if="index>=3">{{index}}</span>
            <span>{{item.holeName}}</span>
            <span style="">{{item.holeNum}}</span>
-           </li>
-         
+           </li>         
        </ul>
       </div>
      </div>
@@ -36,21 +35,20 @@
              <cloud></cloud>
            </div>
            <div class="holeProportion">
-              <chart width="450px" height="400px"  :option="optionHole" id="holeproportion"></chart>
+              <chart width="350px" height="350px"  :option="optionHole" id="holeproportion"></chart>
            </div>
            <div class="timeAxis">
-             <h2 >时间轴折线图</h2>
             <zhexiantu></zhexiantu>
            </div>
    </section>
    <section class="section3">  
-        <div style="width:45%" class="list">
+        <div class="list" style="padding-right:10px;">
           <h2>漏洞列表</h2>
-            <Table border  :columns="columns1" :data="data1"  :loading="loading" @on-row-click="godetail" :row-class-name="rowClassName"></Table>
+            <Table border :columns="columns1" :data="data1"  :loading="loading" @on-row-click="godetail" :row-class-name="rowClassName" ></Table>
         </div>
-       <div  style="width:45%" class="list">
+       <div   class="list" style="padding-left:10px;">
           <h2>资产列表</h2>
-          <Table border :columns="columns1" :data="data1"  :loading="loading" :row-class-name="rowClassName"></Table>
+          <Table border  :columns="columns1" :data="data1"  :loading="loading" :row-class-name="rowClassName"></Table>
       </div>    
    </section>
   </div>
@@ -72,23 +70,28 @@ export default {
       columns1: [
         {
           title: "漏洞名称",
-          key: "name"
+          key: "name",
+          align:"center"
         },
         {
           title: "类型",
-          key: "type"
+          key: "type",
+          align:"center"
         },
         {
           title: "风险等级",
-          key: "riskRating"
+          key: "riskRating",
+          align:"center"
         },
         {
           title: "发现时间",
-          key: "time"
+          key: "time",
+          align:"center"
         },
         {
           title: "利用情况",
-          key: "utilization"
+          key: "utilization",
+          align:"center"
         }
       ],
       holes:[
@@ -163,9 +166,10 @@ export default {
           {
             name: "业务指标",
             type: "gauge",
-            detail: { formatter: "{value}%" },
+            radius:"85%",
+            detail: { formatter: "{value}%",fontSize: 18 },
             data: [{ value: 50, name: "完成率" }],
-            title: { color: "#fff" },
+            title: { color: "#fff" ,fontSize:12},
             axisLine: {
               lineStyle: {
                 color: [[0.2, "#41C23C"], [0.8, "#FFCE44"], [1, "#DD4C40"]]
@@ -189,7 +193,7 @@ export default {
         legend: {
           orient: "vertical",
           left: "left",
-          data: ["高", "中", "低"],
+          data: ["一级", "二级", "三级"],
           textStyle: {
             color: "white"
           }
@@ -201,9 +205,9 @@ export default {
             radius: "55%",
             center: ["50%", "60%"],
             data: [
-              { value: 335, name: "高", itemStyle: { color: "#DD4F43" } },
-              { value: 310, name: "中", itemStyle: { color: "#FFCE43" } },
-              { value: 234, name: "低", itemStyle: { color: "#41C23C" } }
+              { value: 335, name: "一级", itemStyle: { color: "#DD4F43" } },
+              { value: 310, name: "二级", itemStyle: { color: "#FFCE43" } },
+              { value: 234, name: "三级", itemStyle: { color: "#41C23C" } }
             ],
             itemStyle: {
               emphasis: {
@@ -239,6 +243,9 @@ export default {
 .section1 {
   display: flex;
 }
+.section1 div{
+  padding:5px 5px 0 5px;
+}
 .taskSchedule {
   width: 400px;
 }
@@ -255,14 +262,15 @@ export default {
 }
 .section2 div {
   flex: 1;
+  padding:0 5px;
 }
 .section3 {
   display: flex;
 }
 .section3 .list {
   flex: 1;
-  margin: 5px;
-  padding: 5px;
+  width: 40%;
+  padding:0px 5px;
 }
 .ivu-table .demo-table-info-row td {
   background-color: rgba(18, 62, 101);
@@ -310,18 +318,22 @@ canvas {
 .holeList ul{
   width: 100%;
   height: auto;
-  border: 1px solid #0F5B95;
+  border: 1px solid #3C9DC7;
 }
 .holeList ul li{
 list-style-type: none;
 height: 23px;
 font-size: 12px;
 line-height: 23px;
+border-bottom: 1px solid #3C9DC7;
+}
+.holeList ul li:nth-child(12){  
+border:none;
 }
 .listOne{
 display: inline-block;
 width: 100%;
-border-bottom: 2px solid #0F5B95;
+/* border-bottom: 2px solid #034D6B; */
 }
 .holeList ul li span{ 
 width: 30%;

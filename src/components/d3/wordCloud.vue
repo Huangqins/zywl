@@ -18,7 +18,7 @@ export default {
   mounted() {
     const fill  = d3.scaleOrdinal(d3.schemeCategory10);
     var layout = cloud()
-      .size([400, 400])
+      .size([350, 350])
       .words(
         [
           "Hello",
