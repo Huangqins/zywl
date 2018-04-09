@@ -1,6 +1,6 @@
 <template>
    <div>
-     <chart :option="option" ref="chart" height="800px"></chart>
+     <chart :option="option" ref="chart" height="400px" width="400px" id="wjj" style="float:right"></chart>
    </div>
 </template>
 
@@ -75,13 +75,12 @@ export default {
         ]
       };
     }
-
     var now = +new Date(1997, 9, 3);
     var oneDay = 24 * 3600 * 1000;
     var value = Math.random() * 1000;
-    for (var i = 0; i < 1000; i++) {
+    for (var i = 0; i < 80; i++) {
       this.data.push(randomData());
-    }
+    };    
     setInterval(() => {
       for (var i = 0; i < 5; i++) {
         this.data.shift();
