@@ -32,7 +32,7 @@ const user = {
                     setToken(data.token)
                     commit('SET_USER_NAME', data.userName)
                     setUserName(data.userName)
-                    // commit('SET_TRUE_NAME', data.trueName)
+                    commit('SET_TRUE_NAME', data.trueName)
                     resolve(response)
                 })
             }).catch(error => {

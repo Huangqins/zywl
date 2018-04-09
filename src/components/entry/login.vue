@@ -31,7 +31,7 @@ import getIdentifyCode from "api/getIdentifyCode";
 import message from "utils/message";
 const host =
   process.env.NODE_ENV === "development"
-    ? "http://192.168.10.104:8080/ZY/"
+    ? "http://192.168.10.104:8080/ZY"
     : "";
 
 export default {
@@ -77,7 +77,11 @@ export default {
         .dispatch("Login", this.formItem)
         .then(res => {
           if (res.result === 0) {
-            this.$router.push({ path: "/welcome" });
+            if (res.isAsset === 0) {
+              this.$router.push({ path: "/welcome" });
+            } else if (res.isAsset === 1) {
+              this.$router.push({ path: "/sysinfo" });
+            }
           } else if (res.result === 2) {
             message("error", "密码错误");
           } else if (res.result === 3) {

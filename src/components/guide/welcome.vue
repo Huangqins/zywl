@@ -3,7 +3,7 @@
   <div class="welcome">
      <Card style="width:100%;background:#3399FF" >
         <div style="text-align:center">
-            <h2>欢迎{{trueName}}来到智刃攻防平台,您尚未添加资产,请先导入资产</h2>      
+            <h2>欢迎您!{{trueName}}来到智刃攻防平台,您尚未添加资产,请先导入资产</h2>      
         </div>
     </Card>
      <i-button type="text" class="go" @click="go">去导入<Icon type="arrow-right-c"></Icon></i-button>

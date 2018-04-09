@@ -79,6 +79,11 @@ const Zhexiantu = (resolve) => {
         resolve(module)
     })
 }
+const Force = (resolve) => {
+    import('components/chart/force').then(module => {
+        resolve(module)
+    })
+}
 export default new VueRouter({
     // mode: 'history',
     routes: [
@@ -128,7 +133,7 @@ export default new VueRouter({
         },
         {
             path: '/piechart',
-            component:  Piechart
+            component: Piechart
         },
         {
             path: '/holedetail/:id',
@@ -137,6 +142,10 @@ export default new VueRouter({
         {
             path: '/zhexiantu',
             component: Zhexiantu
+        },
+        {
+            path: '/force',
+            component: Force
         }
     ]
 })
