@@ -12,6 +12,7 @@ module.exports = {
     proxyTable: {
       '/ZY': {
         target: 'http://192.168.10.104:8080/'
+        // target: 'http://192.168.10.175/'
       }
     },
 
