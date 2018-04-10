@@ -1,12 +1,13 @@
 <template>
 <div>
   <div class="welcome">
-     <Card style="width:100%;background:#3399FF" >
-        <div style="text-align:center">
-            <h2>欢迎您!{{trueName}}来到智刃攻防平台,您尚未添加资产,请先导入资产</h2>      
-        </div>
-    </Card>
-     <i-button type="text" class="go" @click="go">去导入<Icon type="arrow-right-c"></Icon></i-button>
+        <div class="card">
+            <h2>欢迎您!{{trueName}}来到智刃攻防平台,<br/>您尚未添加资产,请先导入资产</h2>      
+        </div> 
+        <div class="arrow">
+          <i-button type="text" class="go" @click="go">去导入<Icon type="arrow-right-c"></Icon></i-button>
+        </div>  
+     
   </div>
   </div>
 </template>
@@ -29,18 +30,29 @@ export default {
 };
 </script>
 <style scoped>
-.welcome {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 408px;
-  height: 600px;
-  transform: translate3d(-50%, -50%, 0);
+.arrow{
+  width:600px;
+  height:  60px;
+  margin: 0 auto;
 }
 .go {
+  float: right;
   font-size: 30px;
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
+  color:#E2B163;
+}
+.card{
+  font-size: 20px;
+  font-family: serif;
+  width:600px;
+  height: 200px;
+  text-align: center;
+  border: 2px solid #2E375E;
+  margin: 100px auto;
+  background:rgba(84,107,219,0.1);
+  padding: 45px 0;
+  border-radius: 6px;
+  -moz-box-shadow:-2px -3px 20px #3889D9, 1px 6px 20px #3889D9, 4px -2px 20px #3889D9, -2px 6px 20px #3889D9;
+  -webkit-box-shadow:-2px -3px 20px #3889D9, 1px 6px 20px #3889D9, 4px -2px 20px #3889D9, -2px 6px 20px #3889D9;
+  box-shadow:-2px -3px 20px #3889D9, 1px 6px 20px #3889D9, 4px -2px 20px #3889D9, -2px 6px 20px #3889D9;
 }
 </style>
