@@ -79,6 +79,11 @@ const Zhexiantu = (resolve) => {
         resolve(module)
     })
 }
+const Panel = (resolve) => {
+    import('components/layout/panel').then(module => {
+        resolve(module)
+    })
+}
 export default new VueRouter({
     // mode: 'history',
     routes: [
@@ -142,5 +147,9 @@ export default new VueRouter({
             path: '/datamanage',
             component: Historydata
         },
+        {
+            path: '/panel',
+            component: Panel
+        }
     ]
 })

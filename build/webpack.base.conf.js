@@ -34,7 +34,8 @@ module.exports = {
       'static': resolve('static'),
       'utils': resolve('src/utils'),
       'jquery': 'jquery',
-      'assets': resolve('src/assets')
+      'assets': resolve('src/assets'),
+      'styles': resolve('src/styles')
     }
   },
   plugins: [

@@ -1,0 +1,56 @@
+// 布局
+//panel,包含颜色,边框，标题，背景，位置,宽高
+// 四个角
+@mixin horn($color: #5A93C0) {
+    position: absolute;
+    border: 5px solid #5A93C0;
+    width: 20px;
+    height: 20px;
+}
+
+@mixin panel($borderColor:rgba(31, 45, 90), $background: transparent, $width: 100%, $height:auto, $position: relative,$title:true) {
+    box-sizing: border-box;
+    position: $position;
+    width: $width;
+    height: $height;
+    border: 2px solid $color;
+    &::after {
+        @include horn;
+        content: '';
+        left: -2px;
+        bottom: -2px;
+        border-left: none;
+        border-bottom: none;
+    }
+    &::before {
+        @include horn;
+        content: '';
+        left: -2px;
+        top: -2px;
+        border-right: none;
+        border-bottom: none;
+    }
+    & .panel-horn-left {
+        @include horn;
+        left: -2px;
+        bottom: -2px;
+        border-right: none;
+        border-top: none;
+    }
+    & .panel-horn-right {
+        @include horn;
+        right: -2px;
+        bottom: -2px;
+        border-left: none;
+        border-top: none;
+    }
+   @if $title {
+     & .panel-body-title {
+       background-color: rgba(49,56,110,0.2);
+       height: 46px;
+       text-align: center;
+       line-height: 46px;
+       color:rgba(49,190,207);
+     }
+   }
+}
