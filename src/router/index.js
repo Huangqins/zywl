@@ -84,6 +84,11 @@ const Panel = (resolve) => {
         resolve(module)
     })
 }
+const Dong = (resolve) => {
+    import('components/other/dong').then(module => {
+        resolve(module)
+    })
+}
 export default new VueRouter({
     // mode: 'history',
     routes: [
@@ -150,6 +155,10 @@ export default new VueRouter({
         {
             path: '/panel',
             component: Panel
+        },
+        {
+            path: '/dong',
+            component: Dong
         }
     ]
 })

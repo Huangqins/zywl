@@ -41,6 +41,7 @@ body {
   position: relative;   
   background: url("../static/background.png");
   background-size:cover;
+  z-index: -9999;
 }
 #app {
   font-family: sans-serif;
@@ -61,6 +62,7 @@ body {
   border: 1px solid #3889D9;
   padding: 30px 45px 30px 30px;
   border-radius: 9px;
+  /* z-index: 9999; */
 }
 .Router {
   position: absolute;
