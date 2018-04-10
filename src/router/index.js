@@ -7,11 +7,11 @@ VueRouter.prototype.goBack = function () {
     window.history.go(-1)
 }
 
-// const Entry = (resolve) => {
-//     import('components/entry/index').then(module => {
-//         resolve(module)
-//     })
-// }
+const Historydata = (resolve) => {
+    import('components/historydata/datamanage').then(module => {
+        resolve(module)
+    })
+}
 
 const Regitser = (resolve) => {
     import('components/entry/register').then(module => {
@@ -79,11 +79,6 @@ const Zhexiantu = (resolve) => {
         resolve(module)
     })
 }
-const Force = (resolve) => {
-    import('components/chart/force').then(module => {
-        resolve(module)
-    })
-}
 export default new VueRouter({
     // mode: 'history',
     routes: [
@@ -133,7 +128,7 @@ export default new VueRouter({
         },
         {
             path: '/piechart',
-            component: Piechart
+            component:  Piechart
         },
         {
             path: '/holedetail/:id',
@@ -144,8 +139,8 @@ export default new VueRouter({
             component: Zhexiantu
         },
         {
-            path: '/force',
-            component: Force
-        }
+            path: '/datamanage',
+            component: Historydata
+        },
     ]
 })

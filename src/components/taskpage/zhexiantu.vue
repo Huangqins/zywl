@@ -1,6 +1,6 @@
 <template>
    <div>
-     <chart :option="option" ref="chart" height="400px" width="400px" id="wjj" style="float:right"></chart>
+     <chart :option="option" ref="chart" height="350px" width="400px" id="wjj" style="float:right"></chart>
    </div>
 </template>
 
@@ -17,7 +17,10 @@ export default {
       data: [],
       option: {
         title: {
-          text: "动态数据 + 时间坐标轴"
+          text: "动态数据 + 时间坐标轴",
+          textStyle:{
+            color:"white"
+          }
         },
         tooltip: {
           trigger: "axis",
@@ -42,14 +45,25 @@ export default {
           type: "time",
           splitLine: {
             show: false
+          },
+          axisLine: {
+            lineStyle: {
+                color: 'white'
           }
+        }
+
         },
         yAxis: {
           type: "value",
           boundaryGap: [0, "100%"],
           splitLine: {
             show: false
+          },
+          axisLine: {
+            lineStyle: {
+                color: 'white'
           }
+        }
         },
         series: [
           {
