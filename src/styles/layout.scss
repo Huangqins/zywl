@@ -30,27 +30,26 @@
         border-right: none;
         border-bottom: none;
     }
-    & .panel-horn-left {
-        @include horn;
-        left: -2px;
-        bottom: -2px;
-        border-right: none;
-        border-top: none;
-    }
-    & .panel-horn-right {
-        @include horn;
-        right: -2px;
-        bottom: -2px;
-        border-left: none;
-        border-top: none;
-    }
-   @if $title {
-     & .panel-body-title {
-       background-color: rgba(49,56,110,0.2);
-       height: 46px;
-       text-align: center;
-       line-height: 46px;
-       color:rgba(49,190,207,1);
-     }
-   }
 }
+
+@mixin panel-horn-left {
+    @include horn;
+    left: -2px;
+    bottom: -2px;
+    border-right: none;
+    border-top: none;
+}
+@mixin panel-horn-right {
+    @include horn;
+    right: -2px;
+    bottom: -2px;
+    border-left: none;
+    border-top: none;
+}
+@mixin panel-content-title {
+    background-color: rgba(49,56,110,0.2);
+    height: 46px;
+    text-align: center;
+    line-height: 46px;
+    color:rgba(49,190,207,1);
+  }
