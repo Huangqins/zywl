@@ -1,7 +1,7 @@
 <template>
 <div>
-  <div class="entry">  
-              <Card style="background:rgba(18,62,101,0.7);border:1px solid #51B3DA;color:white">
+  <div class="whole">  
+              <Card class="card" tyle="">
                   <h2 slot="title" style="color:white;">请选择您的导入方式</h2>
                   <Row>
                     <Tabs  :animated="false">
@@ -53,7 +53,7 @@
                     </Tabs>
                     <Row class="primary" type="flex" align='middle' justify="center" >
                         <Col >
-                            <i-button type="primary" @click="assetSubmit">提交</i-button> 
+                            <i-button type="primary"  @click="assetSubmit">提交</i-button> 
                         </Col>
                         
                     </Row>
@@ -108,6 +108,12 @@ export default {
 };
 </script>
 <style scoped>
+.whole{
+    width:525px;
+    height: auto;
+    margin: 100px auto 0px auto;
+    font-family: sans-serif;
+}
 .header {
   height: 40px;
   margin-bottom: 5px;
@@ -120,4 +126,13 @@ export default {
 .ivu-btn-ghost:hover {
   color: white;
 }
+.card{
+background:rgba(46,59,93,0.1);
+border:1px solid #3889D9;
+color:white;
+-moz-box-shadow:-5px 4px 20px #3889D9, 1px 4px 20px #3889D9, 4px 1px 20px #3889D9, -2px -1px 20px #3889D9;
+ -webkit-box-shadow:-5px 4px 20px #3889D9, 1px 4px 20px #3889D9, 4px 1px 20px #3889D9, -2px -1px 20px #3889D9;
+ box-shadow:-5px 4px 20px #3889D9, 1px 4px 20px #3889D9, 4px 1px 20px #3889D9, -2px -1px 20px #3889D9;
+}
 </style>
+       
