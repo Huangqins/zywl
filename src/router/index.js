@@ -89,6 +89,16 @@ const Dong = (resolve) => {
         resolve(module)
     })
 }
+const Force = (resolve) => {
+    import('components/chart/force').then(module => {
+        resolve(module)
+    })
+}
+const Particles = (resolve) => {
+    import('components/layout/particles').then(module => {
+        resolve(module)
+    })
+}
 export default new VueRouter({
     // mode: 'history',
     routes: [
@@ -159,6 +169,14 @@ export default new VueRouter({
         {
             path: '/dong',
             component: Dong
+        },
+        {
+            path: '/force',
+            component: Force
+        },
+        {
+            path: '/particles',
+            component: Particles
         }
     ]
 })

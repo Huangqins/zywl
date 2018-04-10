@@ -1,5 +1,6 @@
 <template>
 <div>
+  <particles>
   <div class="entry">
        <Form :model="formItem" :label-width="80" :rules="ruleValidate" ref="formItem">
           <FormItem label="用户名" prop="userName">
@@ -32,14 +33,19 @@
           </FormItem>
       </Form>
   </div>
+  </particles>
   </div>
 </template>
 <script>
 import register from "api/register";
 import checkUserName from "api/checkUserName";
+import particles from "components/layout/particles";
 
 export default {
   name: "register",
+  components: {
+    particles
+  },
   data() {
     const validatePass = (rule, value, callback) => {
       const val = value.replace(/\s+/g, "");
