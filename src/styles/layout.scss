@@ -8,7 +8,7 @@
     height: 20px;
 }
 
-@mixin panel($borderColor:rgba(31, 45, 90), $background: transparent, $width: 100%, $height:auto, $position: relative,$title:true) {
+@mixin panel($color: #5A93C0,$borderColor:rgba(31, 45, 90,1), $background: transparent, $width: 100%, $height:auto, $position: relative,$title:true) {
     box-sizing: border-box;
     position: $position;
     width: $width;
@@ -17,8 +17,8 @@
     &::after {
         @include horn;
         content: '';
-        left: -2px;
-        bottom: -2px;
+        right: -2px;
+        top: -2px;
         border-left: none;
         border-bottom: none;
     }
@@ -50,7 +50,7 @@
        height: 46px;
        text-align: center;
        line-height: 46px;
-       color:rgba(49,190,207);
+       color:rgba(49,190,207,1);
      }
    }
 }

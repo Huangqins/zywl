@@ -1,16 +1,25 @@
 <template>
     <div :class="$style.panel">
-        测试
+        <div :class="$style.panel-horn-left"></div>
+        <div :class="$style.panel-horn-right"></div>
     </div>
 </template>
 <script>
 export default {};
 </script>
 <style lang="scss" module>
-@import "styles/panel.scss";
+@import "../../styles/layout.scss";
 .panel {
-  @include panel;
+  @include panel($width: 400px,$height: 400px);
+  & .panel-horn-left {
+       @include panel($width: 400px,$height: 400px);
+  }
+  & .panel-horn-right {
+       @include panel($width: 400px,$height: 400px);
+  }
 }
+
+
 </style>
 
 
