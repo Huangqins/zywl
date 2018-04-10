@@ -99,9 +99,12 @@ const Particles = (resolve) => {
         resolve(module)
     })
 }
+
 export default new VueRouter({
     // mode: 'history',
     routes: [
+        { path: '*', redirect: '/404' },
+        { path: '/404', component: () => import('components/views/404') },
         {
             path: '/',
             component: Regitser
@@ -148,7 +151,7 @@ export default new VueRouter({
         },
         {
             path: '/piechart',
-            component:  Piechart
+            component: Piechart
         },
         {
             path: '/holedetail/:id',
