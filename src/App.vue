@@ -57,7 +57,7 @@ body {
   top: 50%;
   width: 500px;
   height: auto;
-  transform: translate3d(-50%,-50%,0);
+  transform: translateX(-50%) translateY(-50%) ;
 }
 .Router {
   position: absolute;

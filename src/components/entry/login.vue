@@ -16,7 +16,7 @@
               <Input v-model="formItem.code"  placeholder="请填写手机验证码"/>
           </FormItem> -->
           <FormItem label="验证码" >
-              <Input v-model="formItem.verifyCode"  placeholder="请输入验证码" style="width: 45%;" />
+              <Input v-model="formItem.verifyCode"  placeholder="请输入验证码" style="width: 45%;" @keyup.enter="handleSubmit"/>
               <img width="200" height="38" style="float:right;" :src="codeSrc"  @click="changeImg">
           </FormItem>
           <FormItem class="login" style="text-align:center;">
