@@ -1,7 +1,9 @@
 <template>
   <div>
-      <div class="entry">
-     <Form :model="formItem" :label-width="80"  ref="formItem">
+
+      <div class="entry" style="border:none;width:306px;">
+      
+      <Form :model="formItem" :label-width="60"  ref="formItem">
         <FormItem label="用户名" prop="userName">
             <Input v-model="formItem.userName" placeholder="请输入用户名" />
           </FormItem>
@@ -16,23 +18,36 @@
               <Input v-model="formItem.code"  placeholder="请填写手机验证码"/>
           </FormItem> -->
           <FormItem label="验证码" >
-              <Input v-model="formItem.verifyCode"  placeholder="请输入验证码" style="width: 45%;" @on-enter="handleSubmit"/>
-              <img width="200" height="38" style="float:right;" :src="codeSrc"  @click="changeImg">
+              <Input v-model="formItem.verifyCode"  placeholder="请输入验证码" style="width: 52%;" @on-enter="handleSubmit"/>
+              <img width="80" height="32" style="float:right;margin-top:2px;" :src="codeSrc"  @click="changeImg">
           </FormItem>
           <FormItem class="login" style="text-align:center;">
             <Button type="primary" @click="handleSubmit" style="text-align:center;">确认登陆</Button>
           </FormItem>    
      </Form>
-  </div>
+   </div> 
+    <div  id="header" class="entry whole">
+           <div class="hero-logo-circles">
+               <img src="../../assets/svg/1.svg" class="hero-logo-circle"/>
+               <img src="../../assets/svg/2.svg" alt="" class="hero-logo-circle">
+               <img src="../../assets/svg/3.svg" alt="" class="hero-logo-circle">
+               <img src="../../assets/svg/4.svg" alt="" class="hero-logo-circle">
+               <img src="../../assets/svg/5.svg" alt="" class="hero-logo-circle">
+               <img src="../../assets/svg/6.svg" alt="" class="hero-logo-circle">
+               <img src="../../assets/svg/7.svg" alt="" class="hero-logo-circle">
+               <img src="../../assets/svg/8.svg" alt="" class="hero-logo-circle">
+               <img src="../../assets/svg/9.svg" alt="" class="hero-logo-circle">
+               <img src="../../assets/svg/10.svg" alt="" class="hero-logo-circle">
+
+           </div>
+       </div>
   </div>
 </template>
 <script>
 import getIdentifyCode from "api/getIdentifyCode";
 import message from "utils/message";
 const host =
-  process.env.NODE_ENV === "development"
-    ? "http://192.168.10.104:8080/ZY"
-    : "";
+  process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
 
 export default {
   name: "login",
@@ -120,6 +135,74 @@ export default {
 };
 </script>
 
+<style scoped>
+.whole {
+  width: auto;
+  padding: none;
+  border: none;
+  z-index: -9998;
+}
+#header {
+  /* width: 500px;
+  height: 500px; */
+  margin: 0 auto;
+}
+.hero-logo-circles {
+  width: 366px;
+  height: 366px;
+  margin: auto;
+  position: relative;
+  margin-top: -75px;
+  margin-left: -15px;
+}
+.hero-logo-circle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  -webkit-animation: hero-logo-circle 1s linear infinite;
+  animation: hero-logo-circle 1s linear infinite;
+  will-change: transform;
+  width: 400px;
+}
+.hero-logo-circle:nth-child(1) {
+  animation-duration: 30s;
+}
+.hero-logo-circle:nth-child(2) {
+  animation-duration: 40s;
+}
+.hero-logo-circle:nth-child(3) {
+  animation-duration: 50s;
+}
+.hero-logo-circle:nth-child(4) {
+  animation-duration: 60s;
+}
+.hero-logo-circle:nth-child(5) {
+  animation-duration: 70s;
+}
+.hero-logo-circle:nth-child(6) {
+  animation-duration: 80s;
+}
+.hero-logo-circle:nth-child(7) {
+  animation-duration: 90s;
+}
+.hero-logo-circle:nth-child(8) {
+  animation-duration: 100s;
+}
+.hero-logo-circle:nth-child(9) {
+  animation-duration: 110s;
+}
+.hero-logo-circle:nth-child(10) {
+  animation-duration: 110s;
+}
+@keyframes hero-logo-circle {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
 
 
 
