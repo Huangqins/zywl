@@ -1,12 +1,13 @@
 <template>
   <div>
       <div class="entry" style="border:none;width:306px;"> 
-      <Form :model="formItem" :label-width="60"  ref="formItem">
-        <FormItem label="用户名" prop="userName">
-            <Input v-model="formItem.userName" placeholder="请输入用户名" />
+      <Form :model="formItem" :label-width="60"  ref="formItem" :label-position="left">
+        <FormItem  prop="userName">
+            <Input v-model="formItem.userName" placeholder="请输入用户名"/>
           </FormItem>
-          <FormItem label="密码" prop="password">
+          <FormItem  prop="password">
               <Input v-model="formItem.password" type="password" placeholder="请输入密码"/>
+              
           </FormItem>
           <!-- <FormItem label="手机号码" >
               <Input v-model="phone"  placeholder="请输入手机号" style="width: 65%"/>
@@ -15,12 +16,14 @@
           <!-- <FormItem label="验证码" >
               <Input v-model="formItem.code"  placeholder="请填写手机验证码"/>
           </FormItem> -->
-          <FormItem label="验证码" >
+          <FormItem  >
               <Input v-model="formItem.verifyCode"  placeholder="请输入验证码" style="width: 52%;" @on-enter="handleSubmit"/>
               <img width="80" height="32" style="float:right;margin-top:2px;" :src="codeSrc"  @click="changeImg">
           </FormItem>
           <FormItem class="login" style="text-align:center;">
             <Button type="primary" @click="cancle" style="text-align:center;float:left">注册</Button>
+            <!-- 暂时隐藏注销按钮 -->
+            <!-- <Button type="primary" @click="cancle" style="text-align:center;float:left">注销</Button> -->
             <Button type="primary" @click="handleSubmit" style="text-align:center;float:right">登陆</Button>
           </FormItem>    
      </Form>
@@ -149,8 +152,8 @@ export default {
   height: 366px;
   margin: auto;
   position: relative;
-  margin-top: -75px;
-  margin-left: -5px;
+  margin-top: -55px;
+  margin-left: 20px;
 }
 .hero-logo-circle {
   position: absolute;
@@ -199,6 +202,11 @@ export default {
     transform: rotate(360deg);
   }
 }
+.ivu-btn-primary{
+  background:rgba(45,140,240,0);
+  border:1px solid #5D90BB;
+}
+
 </style>
 
 
