@@ -40,7 +40,6 @@
                <img src="../../assets/svg/8.svg" alt="" class="hero-logo-circle">
                <img src="../../assets/svg/9.svg" alt="" class="hero-logo-circle">
                <img src="../../assets/svg/10.svg" alt="" class="hero-logo-circle">
-
            </div>
        </div>
   </div>
