@@ -1,8 +1,6 @@
 <template>
   <div>
-      <particles>
-      <div class="entry" style="border:none;width:306px;">
-      
+      <div class="entry" style="border:none;width:306px;"> 
       <Form :model="formItem" :label-width="60"  ref="formItem">
         <FormItem label="用户名" prop="userName">
             <Input v-model="formItem.userName" placeholder="请输入用户名" />
@@ -41,20 +39,16 @@
 
            </div>
        </div>
-       </particles>
   </div>
 </template>
 <script>
 import getIdentifyCode from "api/getIdentifyCode";
 import message from "utils/message";
-import particles from "components/layout/particles";
+
 const host = process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
 
 export default {
   name: "login",
-  components: {
-    particles
-  },
   data() {
     return {
       formItem: {

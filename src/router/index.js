@@ -107,12 +107,12 @@ export default new VueRouter({
         { path: '/404', component: () => import('components/views/404') },
         {
             path: '/',
-            component: Regitser
+            redirect: '/login'
         },
-        {
-            path: '/register',
-            component: Regitser
-        },
+        // {
+        //     path: '/register',
+        //     component: Regitser
+        // },
         {
             path: '/login',
             component: Login

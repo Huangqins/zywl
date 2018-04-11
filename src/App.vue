@@ -1,19 +1,17 @@
 <template>
   <div id="app">
-    <transition :name="transitionName"> 
+    <!-- <transition :name="transitionName"> 
 　　　　　　<router-view class="Router"></router-view>
+　　　　</transition> -->
+<transition > 
+　　　　　　<router-view ></router-view>
 　　　　</transition>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
-
 export default {
   name: "App",
-  components: {
-    HelloWorld
-  },
   data() {
     return {
       transitionName: "slide-right" // 默认动态路由变化为slide-right

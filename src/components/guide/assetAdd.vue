@@ -55,12 +55,9 @@
                         <Col >
                             <i-button type="primary"  @click="assetSubmit">提交</i-button> 
                         </Col>
-                        
                     </Row>
-                  </Row>  
-                  
-              </Card>
-     
+                  </Row>                 
+              </Card> 
   </div>
 </div>
 </template>
