@@ -41,6 +41,7 @@ export default {
   color:#E2B163;
 }
 .card{
+
   font-size: 20px;
   font-family: serif;
   width:600px;
@@ -49,6 +50,7 @@ export default {
   border: 2px solid #2E375E;
   margin: 100px auto;
   background:rgba(84,107,219,0.1);
+  /* background-image: url("../assets/card.svg") */
   padding: 45px 0;
   border-radius: 6px;
   -moz-box-shadow:-2px -3px 20px #3889D9, 1px 6px 20px #3889D9, 4px -2px 20px #3889D9, -2px 6px 20px #3889D9;
