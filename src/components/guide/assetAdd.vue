@@ -10,38 +10,38 @@
                                 <Input v-model="password" placeholder="请输入初始资产信息（IP段/域名）"/>
                             </span>  -->
                             <Form ref="handAdd" :model="handAddForm"  :label-width="90">
-                               <FormItem label="资产名称">
-                                    <Input type="text" v-model="handAddForm.assetsName"></Input>
+                               <FormItem>
+                                    <Input type="text" v-model="handAddForm.assetsName" placeholder="资产名称"></Input>
                                 </FormItem>
-                                <FormItem label="URL地址">
-                                    <Input type="text" v-model="handAddForm.assetsURL"></Input>
+                                <FormItem>
+                                    <Input type="text" v-model="handAddForm.assetsURL" placeholder="URL地址"></Input>
                                 </FormItem>
-                                 <FormItem label="IP">
-                                    <Input type="text" v-model="handAddForm.assetsIP"></Input>
+                                 <FormItem>
+                                    <Input type="text" v-model="handAddForm.assetsIP" placeholder="IP"></Input>
                                 </FormItem>
-                                <FormItem label="端口">
-                                    <Input type="text" v-model="handAddForm.assetsPort"></Input>
+                                <FormItem>
+                                    <Input type="text" v-model="handAddForm.assetsPort" placeholder="端口"></Input>
                                 </FormItem>
-                                <FormItem label="通讯协议">
-                                    <Input type="text" v-model="handAddForm.assetsProto"></Input>
+                                <FormItem>
+                                    <Input type="text" v-model="handAddForm.assetsProto" placeholder="通讯协议"></Input>
                                 </FormItem>
-                                <FormItem label="开放服务信息">
-                                    <Input type="text" v-model="handAddForm.assetsServers"></Input>
+                                <FormItem >
+                                    <Input type="text" v-model="handAddForm.assetsServers" placeholder="开放服务信息"></Input>
                                 </FormItem>
-                               <FormItem label="所属区域">
-                                    <Input type="text" v-model="handAddForm.assetsRegion"></Input>
+                               <FormItem >
+                                    <Input type="text" v-model="handAddForm.assetsRegion" placeholder="所属区域"></Input>
                                 </FormItem>
-                                <FormItem label="资产类型">
-                                    <Input type="text" v-model="handAddForm.assetsType"></Input>
+                                <FormItem>
+                                    <Input type="text" v-model="handAddForm.assetsType" placeholder="资产类型"></Input>
                                 </FormItem>
-                                 <FormItem label="资产重要度">
-                                    <Input type="text" v-model="handAddForm.assetsImportant"></Input>
+                                 <FormItem >
+                                    <Input type="text" v-model="handAddForm.assetsImportant" placeholder="资产重要度"></Input>
                                 </FormItem>
-                                <FormItem label="OS类型">
-                                    <Input type="text" v-model="handAddForm.assetsOS"></Input>
+                                <FormItem >
+                                    <Input type="text" v-model="handAddForm.assetsOS" placeholder="OS类型"></Input>
                                 </FormItem>
-                                <FormItem label="负责人">
-                                    <Input type="text" v-model="handAddForm.assetsManger"></Input>
+                                <FormItem>
+                                    <Input type="text" v-model="handAddForm.assetsManger" placeholder="负责人"></Input>
                                 </FormItem>
                             </Form>
                         </Tab-pane>
