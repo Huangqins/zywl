@@ -1,7 +1,7 @@
 <template>
   <div>
-      <div class="entry" style="border:none;width:306px;"> 
-      <Form :model="formItem" :label-width="60"  ref="formItem">
+      <div class="entry" style="border:none;width:260px;margin-top:10px;"> 
+      <Form :model="formItem"  ref="formItem">
         <FormItem  prop="userName">
             <Input v-model="formItem.userName" placeholder="请输入用户名"/>
           </FormItem>
@@ -20,10 +20,10 @@
               <img width="80" height="32" style="float:right;margin-top:2px;" :src="codeSrc"  @click="changeImg">
           </FormItem>
           <FormItem class="login" style="text-align:center;">
-            <Button type="primary" @click="register" style="text-align:center;float:left">注册</Button>
+            <Button type="ghost" @click="register" style="text-align:center;float:left">注册</Button>
             <!-- 暂时隐藏注销按钮 -->
             <!-- <Button type="primary" @click="cancle" style="text-align:center;float:left">注销</Button> -->
-            <Button type="primary" @click="handleSubmit" style="text-align:center;float:right">登陆</Button>
+            <Button type="ghost" @click="handleSubmit" style="text-align:center;float:right">登陆</Button>
           </FormItem>    
      </Form>
    </div> 
@@ -31,13 +31,12 @@
         <animation-circle></animation-circle>
        </div>
        <Modal
-        v-model="modal1"
-        title="Common Modal dialog box title"
-        @on-ok="ok"
-        @on-cancel="cancel">
-        <p>Content of dialog</p>
-        <p>Content of dialog</p>
-        <p>Content of dialog</p>
+        v-model="registerModal"
+        title="注册账号"
+        width="335"
+        @on-visible-change="cancel">
+       <registers ref="register"></registers>
+       <div slot="footer"></div>
     </Modal>
   </div>
 </template>
@@ -45,6 +44,7 @@
 import getIdentifyCode from "api/getIdentifyCode";
 import message from "utils/message";
 import animationCircle from "./animationCircle";
+import registers from "./register";
 
 const host =
   process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
@@ -52,11 +52,12 @@ const host =
 export default {
   name: "login",
   components: {
-    animationCircle
+    animationCircle,
+    registers
   },
   data() {
     return {
-      modal1: false,
+      registerModal: false,
       formItem: {
         userName: "",
         password: "",
@@ -83,11 +84,12 @@ export default {
     this.changeImg();
   },
   methods: {
-    ok() {
-      this.$Message.info("Clicked ok");
+    register() {
+      this.refs.register.handleSubmit();
+      // this.$Message.info("Clicked ok");
     },
     cancel() {
-      this.$Message.info("Clicked cancel");
+      this.$refs.register.handleReset();
     },
     changeImg() {
       getIdentifyCode(this.formItem).then(res => {
@@ -138,7 +140,7 @@ export default {
       }
     },
     register() {
-      this.modal1 = true;
+      this.registerModal = true;
     }
   },
   destroyed() {
@@ -154,6 +156,10 @@ export default {
   padding: none;
   border: none;
   z-index: -9998;
+}
+.ivu-modal-footer {
+  border-top: none;
+  padding: none;
 }
 </style>
 
