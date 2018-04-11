@@ -1,5 +1,23 @@
 /* input样式 */
-.ivu-input{
-    background: rgba(45,140,240,0);
-    border:1px solid #5D90BB;
+
+.ivu-input {
+    background: rgba(45, 140, 240, 0);
+    border: 1px solid #5D90BB;
+    color: #fff;
+}
+
+/* 按钮样式 */
+
+.ivu-btn-primary {
+    background: rgba(45, 140, 240, 0);
+    border: 1px solid #5d90bb;
+}
+
+.ivu-btn-primary:hover {
+    background-color: #5d90bb;
+}
+/* modal样式 */
+.ivu-modal {
+    padding: 50px;
+    /* background-image: url('../svg/') */
 }
