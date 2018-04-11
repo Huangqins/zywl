@@ -19,5 +19,6 @@ export default {
   width: 500px;
   height: 50px;
   background-size: contain;
+  text-align: center;
 }
 </style>

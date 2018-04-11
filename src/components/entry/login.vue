@@ -20,7 +20,7 @@
               <img width="80" height="32" style="float:right;margin-top:2px;" :src="codeSrc"  @click="changeImg">
           </FormItem>
           <FormItem class="login" style="text-align:center;">
-            <Button type="primary" @click="cancle" style="text-align:center;float:left">取消</Button>
+            <Button type="primary" @click="cancle" style="text-align:center;float:left">注册</Button>
             <Button type="primary" @click="handleSubmit" style="text-align:center;float:right">登陆</Button>
           </FormItem>    
      </Form>
