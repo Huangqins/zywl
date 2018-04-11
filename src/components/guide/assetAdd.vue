@@ -105,11 +105,11 @@ export default {
 };
 </script>
 <style scoped>
-.whole{
-    width:525px;
-    height: auto;
-    margin: 100px auto 0px auto;
-    font-family: sans-serif;
+.whole {
+  width: 525px;
+  height: auto;
+  margin: 100px auto 0px auto;
+  font-family: sans-serif;
 }
 .header {
   height: 40px;
@@ -123,13 +123,12 @@ export default {
 .ivu-btn-ghost:hover {
   color: white;
 }
-.card{
-background:rgba(46,59,93,0.1);
-border:1px solid #3889D9;
-color:white;
--moz-box-shadow:-5px 4px 20px #3889D9, 1px 4px 20px #3889D9, 4px 1px 20px #3889D9, -2px -1px 20px #3889D9;
- -webkit-box-shadow:-5px 4px 20px #3889D9, 1px 4px 20px #3889D9, 4px 1px 20px #3889D9, -2px -1px 20px #3889D9;
- box-shadow:-5px 4px 20px #3889D9, 1px 4px 20px #3889D9, 4px 1px 20px #3889D9, -2px -1px 20px #3889D9;
+.card {
+  background: rgba(46, 59, 93, 0.1);
+  border: 1px solid #3889d9;
+  color: white;
+  box-shadow: -5px 4px 20px #3889d9, 1px 4px 20px #3889d9, 4px 1px 20px #3889d9,
+    -2px -1px 20px #3889d9;
 }
 </style>
        
