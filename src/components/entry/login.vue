@@ -6,8 +6,7 @@
             <Input v-model="formItem.userName" placeholder="请输入用户名"/>
           </FormItem>
           <FormItem  prop="password">
-              <Input v-model="formItem.password" type="password" placeholder="请输入密码"/>
-              
+              <Input v-model="formItem.password" type="password" placeholder="请输入密码"/>              
           </FormItem>
           <!-- <FormItem label="手机号码" >
               <Input v-model="phone"  placeholder="请输入手机号" style="width: 65%"/>
