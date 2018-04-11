@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="entry" style="border:none;width:306px;"> 
-      <Form :model="formItem" :label-width="60"  ref="formItem" :label-position="left">
+      <Form :model="formItem" :label-width="60"  ref="formItem">
         <FormItem  prop="userName">
             <Input v-model="formItem.userName" placeholder="请输入用户名"/>
           </FormItem>
@@ -20,39 +20,43 @@
               <img width="80" height="32" style="float:right;margin-top:2px;" :src="codeSrc"  @click="changeImg">
           </FormItem>
           <FormItem class="login" style="text-align:center;">
-            <Button type="primary" @click="cancle" style="text-align:center;float:left">注册</Button>
+            <Button type="primary" @click="register" style="text-align:center;float:left">注册</Button>
             <!-- 暂时隐藏注销按钮 -->
             <!-- <Button type="primary" @click="cancle" style="text-align:center;float:left">注销</Button> -->
             <Button type="primary" @click="handleSubmit" style="text-align:center;float:right">登陆</Button>
           </FormItem>    
      </Form>
    </div> 
-    <div  id="header" class="entry whole">
-           <div class="hero-logo-circles">
-               <img src="../../assets/svg/1.svg" class="hero-logo-circle"/>
-               <img src="../../assets/svg/2.svg" alt="" class="hero-logo-circle">
-               <img src="../../assets/svg/3.svg" alt="" class="hero-logo-circle">
-               <img src="../../assets/svg/4.svg" alt="" class="hero-logo-circle">
-               <img src="../../assets/svg/5.svg" alt="" class="hero-logo-circle">
-               <img src="../../assets/svg/6.svg" alt="" class="hero-logo-circle">
-               <img src="../../assets/svg/7.svg" alt="" class="hero-logo-circle">
-               <img src="../../assets/svg/8.svg" alt="" class="hero-logo-circle">
-               <img src="../../assets/svg/9.svg" alt="" class="hero-logo-circle">
-               <img src="../../assets/svg/10.svg" alt="" class="hero-logo-circle">
-           </div>
+    <div  class="entry circle-wrapper">
+        <animation-circle></animation-circle>
        </div>
+       <Modal
+        v-model="modal1"
+        title="Common Modal dialog box title"
+        @on-ok="ok"
+        @on-cancel="cancel">
+        <p>Content of dialog</p>
+        <p>Content of dialog</p>
+        <p>Content of dialog</p>
+    </Modal>
   </div>
 </template>
 <script>
 import getIdentifyCode from "api/getIdentifyCode";
 import message from "utils/message";
+import animationCircle from "./animationCircle";
 
-const host = process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
+const host =
+  process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
 
 export default {
   name: "login",
+  components: {
+    animationCircle
+  },
   data() {
     return {
+      modal1: false,
       formItem: {
         userName: "",
         password: "",
@@ -77,9 +81,14 @@ export default {
   },
   created() {
     this.changeImg();
-    console.log(host);
   },
   methods: {
+    ok() {
+      this.$Message.info("Clicked ok");
+    },
+    cancel() {
+      this.$Message.info("Clicked cancel");
+    },
     changeImg() {
       getIdentifyCode(this.formItem).then(res => {
         this.codeSrc = host + `${res.code}`;
@@ -127,6 +136,9 @@ export default {
         this.passCodeText = this.passCodeTime + "秒后重新获取";
         this.passCodeSign = true;
       }
+    },
+    register() {
+      this.modal1 = true;
     }
   },
   destroyed() {
@@ -136,75 +148,13 @@ export default {
 </script>
 
 <style scoped>
-.whole {
+.circle-wrapper {
+  margin: 0 auto;
   width: auto;
   padding: none;
   border: none;
   z-index: -9998;
 }
-#header {
-  margin: 0 auto;
-}
-.hero-logo-circles {
-  width: 366px;
-  height: 366px;
-  margin: auto;
-  position: relative;
-  margin-top: -55px;
-  margin-left: 20px;
-}
-.hero-logo-circle {
-  position: absolute;
-  left: 0;
-  top: 0;
-  -webkit-animation: hero-logo-circle 1s linear infinite;
-  animation: hero-logo-circle 1s linear infinite;
-  will-change: transform;
-  width: 400px;
-}
-.hero-logo-circle:nth-child(1) {
-  animation-duration: 30s;
-}
-.hero-logo-circle:nth-child(2) {
-  animation-duration: 40s;
-}
-.hero-logo-circle:nth-child(3) {
-  animation-duration: 50s;
-}
-.hero-logo-circle:nth-child(4) {
-  animation-duration: 60s;
-}
-.hero-logo-circle:nth-child(5) {
-  animation-duration: 70s;
-}
-.hero-logo-circle:nth-child(6) {
-  animation-duration: 80s;
-}
-.hero-logo-circle:nth-child(7) {
-  animation-duration: 90s;
-}
-.hero-logo-circle:nth-child(8) {
-  animation-duration: 100s;
-}
-.hero-logo-circle:nth-child(9) {
-  animation-duration: 110s;
-}
-.hero-logo-circle:nth-child(10) {
-  animation-duration: 110s;
-}
-@keyframes hero-logo-circle {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-.ivu-btn-primary{
-  background:rgba(45,140,240,0);
-  border:1px solid #5D90BB;
-}
-
 </style>
 
 
