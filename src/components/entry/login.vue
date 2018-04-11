@@ -22,7 +22,8 @@
               <img width="80" height="32" style="float:right;margin-top:2px;" :src="codeSrc"  @click="changeImg">
           </FormItem>
           <FormItem class="login" style="text-align:center;">
-            <Button type="primary" @click="handleSubmit" style="text-align:center;">确认登陆</Button>
+            <Button type="primary" @click="cancle" style="text-align:center;float:left">取消</Button>
+            <Button type="primary" @click="handleSubmit" style="text-align:center;float:right">登陆</Button>
           </FormItem>    
      </Form>
    </div> 
@@ -147,8 +148,6 @@ export default {
   z-index: -9998;
 }
 #header {
-  /* width: 500px;
-  height: 500px; */
   margin: 0 auto;
 }
 .hero-logo-circles {
@@ -157,7 +156,7 @@ export default {
   margin: auto;
   position: relative;
   margin-top: -75px;
-  margin-left: -15px;
+  margin-left: -5px;
 }
 .hero-logo-circle {
   position: absolute;

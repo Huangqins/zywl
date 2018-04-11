@@ -84,11 +84,6 @@ const Panel = (resolve) => {
         resolve(module)
     })
 }
-const Dong = (resolve) => {
-    import('components/other/dong').then(module => {
-        resolve(module)
-    })
-}
 const Force = (resolve) => {
     import('components/chart/force').then(module => {
         resolve(module)
@@ -168,10 +163,6 @@ export default new VueRouter({
         {
             path: '/panel',
             component: Panel
-        },
-        {
-            path: '/dong',
-            component: Dong
         },
         {
             path: '/force',
