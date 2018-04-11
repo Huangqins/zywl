@@ -49,7 +49,7 @@ export default {
   border-radius: 30px;
 }
 .go:hover{
-  transform: scale(1.5,1.5)
+transform: scale(1.5,1.5)
 }
 .card{
   font-size: 20px;
