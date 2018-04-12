@@ -48,7 +48,7 @@
         </div>
        <div   class="list" style="padding-left:10px;">
           <h2>资产列表</h2>
-          <Table border  :columns="columns1" :data="assetsList"  :loading="loading" :row-class-name="rowClassName"></Table>
+          <Table border  :columns="assetsColums" :data="assetsList"  :loading="loading" :row-class-name="rowClassName"></Table>
       </div>    
    </section>
   </div>
@@ -57,12 +57,16 @@
 import chart from "components/chart/chart";
 import cloud from "components/d3/wordCloud";
 import zhexiantu from "./zhexiantu";
+import assetsInfo from "api/assetsInfo";
 export default {
   name: "taskexecution",
   components: {
     chart,
     cloud,
     zhexiantu
+  },
+  created() {
+    this._assetsInfo();
   },
   data() {
     return {
@@ -71,61 +75,100 @@ export default {
         {
           title: "漏洞名称",
           key: "name",
-          align:"center"
+          align: "center"
         },
         {
           title: "类型",
           key: "type",
-          align:"center"
+          align: "center"
         },
         {
           title: "风险等级",
           key: "riskRating",
-          align:"center"
+          align: "center"
         },
         {
           title: "发现时间",
           key: "time",
-          align:"center"
+          align: "center"
         },
         {
           title: "利用情况",
           key: "utilization",
-          align:"center"
+          align: "center"
         }
       ],
-      holes:[
+      assetsColums: [
         {
-         holeName:"XSS",holeNum:"12"
+          title: '资产名称',
+          key: 'assets_name',
+          align: 'center'
         },
         {
-         holeName:"WEB",holeNum:"10"
+          title: 'ip',
+          key: 'assets_ip',
+          align:'center'
         },
         {
-          holeName:"CSRF",holeNum:"9"
-        },{
-          holeName:"CSRF",holeNum:"8"
+          title: '端口',
+          key: 'assets_url',
+          align:'center'
         },
         {
-          holeName:"CSRF",holeNum:"7"
+          title: '端口',
+          key: 'assets_network_ports',
+          align: 'center'
         },
         {
-          holeName:"CSRF",holeNum:"6"
+          title: '创建人',
+          key: 'assets_creatuser',
+          align: 'center'
+        }
+      ],
+      holes: [
+        {
+          holeName: "XSS",
+          holeNum: "12"
         },
         {
-          holeName:"CSRF",holeNum:"5"
+          holeName: "WEB",
+          holeNum: "10"
         },
         {
-          holeName:"CSRF",holeNum:"4"
+          holeName: "CSRF",
+          holeNum: "9"
         },
         {
-          holeName:"CSRF",holeNum:"3"
+          holeName: "CSRF",
+          holeNum: "8"
         },
         {
-          holeName:"CSRF",holeNum:"2"
+          holeName: "CSRF",
+          holeNum: "7"
         },
         {
-          holeName:"CSRF",holeNum:"1"
+          holeName: "CSRF",
+          holeNum: "6"
+        },
+        {
+          holeName: "CSRF",
+          holeNum: "5"
+        },
+        {
+          holeName: "CSRF",
+          holeNum: "4"
+        },
+        {
+          holeName: "CSRF",
+          holeNum: "3"
+        },
+        {
+          holeName: "CSRF",
+          holeNum: "2"
+        },
+        {
+          holeName: "CSRF",
+          holeNum: "1"
         }
       ],
       data1: [
@@ -166,10 +209,10 @@ export default {
           {
             name: "业务指标",
             type: "gauge",
-            radius:"85%",
-            detail: { formatter: "{value}%",fontSize: 18 },
+            radius: "85%",
+            detail: { formatter: "{value}%", fontSize: 18 },
             data: [{ value: 50, name: "完成率" }],
-            title: { color: "#fff" ,fontSize:12},
+            title: { color: "#fff", fontSize: 12 },
             axisLine: {
               lineStyle: {
                 color: [[0.2, "#41C23C"], [0.8, "#FFCE44"], [1, "#DD4C40"]]
@@ -178,7 +221,7 @@ export default {
           }
         ]
       },
-      assetsList:[],
+      assetsList: [],
       optionHole: {
         title: {
           text: "漏洞等级",
@@ -219,14 +262,20 @@ export default {
             }
           }
         ]
-      },
-
+      }
     };
   },
   methods: {
     godetail() {},
     rowClassName(row, index) {
       return "demo-table-info-row";
+    },
+    async _assetsInfo() {
+      const params = { area: 1 };
+      const res = await assetsInfo(params);
+      if(res.result === 0) {
+        this.assetsList = res.list;
+      }
     }
   },
   computed: {
@@ -244,8 +293,8 @@ export default {
 .section1 {
   display: flex;
 }
-.section1 div{
-  padding:5px 5px 0 5px;
+.section1 div {
+  padding: 5px 5px 0 5px;
 }
 .taskSchedule {
   width: 400px;
@@ -263,7 +312,7 @@ export default {
 }
 .section2 div {
   flex: 1;
-  padding:0 5px;
+  padding: 0 5px;
 }
 .section3 {
   display: flex;
@@ -271,86 +320,58 @@ export default {
 .section3 .list {
   flex: 1;
   width: 40%;
-  padding:0px 5px;
+  padding: 0px 5px;
 }
-.ivu-table .demo-table-info-row td {
-  background-color: rgba(18, 62, 101);
-  color: #fff;
-}
-.ivu-table-header th {
-  background-color: rgba(18, 62, 101);
-  color: #fff;
-}
-.ivu-table-border td,
-.ivu-table-border th {
-  border-right: 1px solid rgb(81, 179, 218);
-}
-.ivu-table-wrapper {
-  border: 1px solid rgb(81, 179, 218);
-  border-bottom: 0;
-}
-.ivu-table td,
-.ivu-table th {
-  border-bottom: 1px solid rgb(81, 179, 218);
-}
-.ivu-table::before {
-  background-color: transparent;
-}
-.ivu-table::after {
-  background-color: transparent;
-}
-.ivu-table-body {
-  overflow: hidden;
-}
+
 canvas {
   color: #fff !important;
 }
-.holeclassify span{
+.holeclassify span {
   display: inline-block;
   height: 19px;
 }
-.ivu-icon{
+.ivu-icon {
   margin-right: 4px;
 }
-.holeList{
+.holeList {
   width: 100%;
   height: 100%;
 }
-.holeList ul{
+.holeList ul {
   width: 100%;
   height: auto;
-  border: 1px solid #3C9DC7;
+  border: 1px solid #3c9dc7;
 }
-.holeList ul li{
-list-style-type: none;
-height: 23px;
-font-size: 12px;
-line-height: 23px;
-border-bottom: 1px solid #3C9DC7;
+.holeList ul li {
+  list-style-type: none;
+  height: 23px;
+  font-size: 12px;
+  line-height: 23px;
+  border-bottom: 1px solid #3c9dc7;
 }
-.holeList ul li:nth-child(12){  
-border:none;
+.holeList ul li:nth-child(12) {
+  border: none;
 }
-.listOne{
-display: inline-block;
-width: 100%;
-/* border-bottom: 2px solid #034D6B; */
+.listOne {
+  display: inline-block;
+  width: 100%;
+  /* border-bottom: 2px solid #034D6B; */
 }
-.holeList ul li span{ 
-width: 30%;
-text-align: center;
+.holeList ul li span {
+  width: 30%;
+  text-align: center;
 }
-.holeList ul li span img{
-width:20px;
-height:20px;
-display: inline-block;
-vertical-align: middle;
+.holeList ul li span img {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: middle;
 }
-.holeHeader{
+.holeHeader {
   font-size: 14px;
   font-weight: bold;
 }
-.timeAxis h2{
+.timeAxis h2 {
   /* width: 400px; */
   height: auto;
   float: right;

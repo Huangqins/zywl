@@ -1,7 +1,9 @@
 import axios from 'axios'
 import { Message } from 'iview'
 import store from '../store'
+import router from '../router'
 import { getUserName, getToken } from '@/utils/auth'
+
 
 // 拦截器
 // 请求拦截器
@@ -24,17 +26,16 @@ service.interceptors.request.use(config => {
 })
 //   response拦截器
 service.interceptors.response.use(response => {
+    // if ()
+    if (response.data.result === 1 || response.data.result === 3) {
+        Message.error({
+            top: 50,
+            duration: 3,
+            content: '登录超时或登录重复请重新登录'
+        })
+        router.push({ path:'/login' })
+    }
     return response.data
-    // if (res.result === 0) {
-    //     Message.success({
-    //         top: 50,
-    //         duration: 3,
-    //         content: '操作成功'
-    //     })
-    //     return response.data
-    // } else if (res.result === 2) {
-    //     return response.data
-    // }
 }, error => {
     console.log('err' + error)// for debug
     Message.error({

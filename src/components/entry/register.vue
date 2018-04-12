@@ -1,4 +1,5 @@
 <template>
+<particles>
 <div class="entry">
        <Form :model="formItem"  :rules="ruleValidate" ref="formItem" style="border:none;width:306px;">
           <FormItem  prop="userName">
@@ -31,6 +32,7 @@
           </FormItem>
       </Form>
   </div>
+</particles>
 </template>
 <script>
 import register from "api/register";
