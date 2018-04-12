@@ -16,8 +16,4 @@
 .ivu-btn-primary:hover {
     background-color: #5d90bb;
 }
-/* modal样式 */
-.ivu-modal {
-    padding: 50px;
-    /* background-image: url('../svg/') */
-}
+

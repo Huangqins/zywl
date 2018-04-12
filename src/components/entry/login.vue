@@ -32,9 +32,30 @@
        </div>
        <Modal
         v-model="modal1"
-        title="Common Modal dialog box title"
         @on-ok="ok"
-        @on-cancel="cancel">
+        @on-cancel="cancel" width="620">
+        <img src="../../assets/card.svg" alt="">
+        <p>Content of dialog</p>
+        <p>Content of dialog</p>
+        <p>Content of dialog</p>
+        <p>Content of dialog</p>
+        <p>Content of dialog</p>
+        <p>Content of dialog</p>
+        <p>Content of dialog</p>
+        <p>Content of dialog</p>
+        <p>Content of dialog</p>
+        <p>Content of dialog</p>
+        <p>Content of dialog</p>
+        <p>Content of dialog</p>
+        <p>Content of dialog</p>
+        <p>Content of dialog</p>
+        <p>Content of dialog</p>
+        <p>Content of dialog</p>
+        <p>Content of dialog</p>
+        <p>Content of dialog</p>
+        <p>Content of dialog</p>
+        <p>Content of dialog</p>
+        <p>Content of dialog</p>
         <p>Content of dialog</p>
         <p>Content of dialog</p>
         <p>Content of dialog</p>
