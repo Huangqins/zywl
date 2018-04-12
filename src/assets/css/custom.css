@@ -22,3 +22,9 @@
     /* padding: 50px; */
     /* background-image: url('../svg/') */
 }
+.ivu-form-item-error-tip{
+padding-top: 1px;
+}
+.ivu-form-item{
+    margin-bottom: 16px;
+}

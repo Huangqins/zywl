@@ -9,7 +9,7 @@
                             <!-- <span>
                                 <Input v-model="password" placeholder="请输入初始资产信息（IP段/域名）"/>
                             </span>  -->
-                            <Form ref="handAdd" :model="handAddForm"  :label-width="90">
+                            <Form ref="handAdd" :model="handAddForm" >
                                <FormItem>
                                     <Input type="text" v-model="handAddForm.assetsName" placeholder="资产名称"></Input>
                                 </FormItem>
@@ -106,7 +106,7 @@ export default {
 </script>
 <style scoped>
 .whole {
-  width: 525px;
+  width: 410px;
   height: auto;
   margin: 100px auto 0px auto;
   font-family: sans-serif;
@@ -127,8 +127,8 @@ export default {
   background: rgba(46, 59, 93, 0.1);
   border: 1px solid #3889d9;
   color: white;
-  box-shadow: -5px 4px 20px #3889d9, 1px 4px 20px #3889d9, 4px 1px 20px #3889d9,
-    -2px -1px 20px #3889d9;
+  /* box-shadow: -5px 4px 20px #3889d9, 1px 4px 20px #3889d9, 4px 1px 20px #3889d9,
+    -2px -1px 20px #3889d9; */
 }
 </style>
        
