@@ -43,7 +43,7 @@ export default {
 .go {
   font-size: 25px;
   color:white;
-  margin-top:10px;
+  margin-top:24px;
   margin-left: 330px;
   background: #43B8EA; 
   border-radius: 30px;
@@ -60,7 +60,7 @@ transform: scale(1.5,1.5)
   /* background:rgba(84,107,219,0.1); */
   background: url("../../assets/card.svg") no-repeat 100%;
   background-size: contain;
-  padding: 80px 0 0 140px;
+  padding: 80px 0 0 200px;
   /* -moz-box-shadow:-2px -3px 20px #3889D9, 1px 6px 20px #3889D9, 4px -2px 20px #3889D9, -2px 6px 20px #3889D9;
   -webkit-box-shadow:-2px -3px 20px #3889D9, 1px 6px 20px #3889D9, 4px -2px 20px #3889D9, -2px 6px 20px #3889D9;
   box-shadow:-2px -3px 20px #3889D9, 1px 6px 20px #3889D9, 4px -2px 20px #3889D9, -2px 6px 20px #3889D9; */
