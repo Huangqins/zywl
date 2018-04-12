@@ -5,9 +5,11 @@
     border: 1px solid #5D90BB;
     color: #fff;
 }
-.ivu-form-item{
+
+.ivu-form-item {
     margin-bottom: 16px;
 }
+
 /* 按钮样式 */
 
 .ivu-btn-ghost {
@@ -19,13 +21,60 @@
     background-color: #5d90bb;
     color: #fff;
 }
+
 /* modal样式 */
+
 .ivu-modal {
     /* padding: 50px; */
     /* background-image: url('../svg/') */
 }
+
 /* 验证提示信息的样式 */
-.ivu-form-item-error-tip{
-padding-top: 1px;
+
+.ivu-form-item-error-tip {
+    padding-top: 1px;
 }
 
+/* table */
+
+.ivu-table .demo-table-info-row td {
+    background-color: rgba(18, 62, 101);
+    color: #fff;
+}
+
+.ivu-table-header th {
+    background-color: rgba(18, 62, 101);
+    color: #fff;
+}
+
+.ivu-table-border td,
+.ivu-table-border th {
+    border-right: 1px solid rgb(81, 179, 218);
+}
+
+.ivu-table-wrapper {
+    border: 1px solid rgb(81, 179, 218);
+    border-bottom: 0;
+    border-right: 0px;
+}
+
+.ivu-table td,
+.ivu-table th {
+    border-bottom: 1px solid rgb(81, 179, 218);
+}
+
+.ivu-table::before {
+    background-color: transparent;
+}
+
+.ivu-table::after {
+    background-color: transparent;
+}
+
+.ivu-table-body {
+    overflow: hidden;
+}
+.ivu-table-tip table td {
+    background-color: rgba(18, 62, 101);
+    color: #fff;
+}
