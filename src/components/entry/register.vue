@@ -1,39 +1,35 @@
 <template>
 <div>
-  <particles>
-  <div class="entry">
-       <Form :model="formItem" :label-width="80" :rules="ruleValidate" ref="formItem">
-          <FormItem label="用户名" prop="userName">
+       <Form :model="formItem"  :rules="ruleValidate" ref="formItem" style="border:none;width:306px;">
+          <FormItem  prop="userName">
             <Input v-model="formItem.userName" placeholder="请输入用户名" />
           </FormItem>
-          <FormItem label="密码" prop="password">
+          <FormItem  prop="password">
               <Input v-model="formItem.password" type="password" placeholder="请输入密码"/>
           </FormItem>
-          <FormItem label="确认密码" prop="confirm_password">
+          <FormItem  prop="confirm_password">
               <Input v-model="formItem.confirm_password" type="password" placeholder="请输入确认密码"/>
           </FormItem>
-          <FormItem label="邮箱" prop="email">
+          <FormItem  prop="email">
               <Input v-model="formItem.email" placeholder="请输入邮箱"/>
           </FormItem>
-          <FormItem label="手机号" prop="phone">
+          <FormItem  prop="phone">
               <Input v-model="formItem.phone" placeholder="请输入手机号"/>
           </FormItem>
-          <FormItem label="真实姓名" prop="trueName">
+          <FormItem  prop="trueName">
               <Input v-model="formItem.trueName" placeholder="请输入真实姓名"/>
           </FormItem>
-          <FormItem label="身份证号" prop="IDCard">
+          <FormItem  prop="IDCard">
               <Input v-model="formItem.IDCard" placeholder="请输入身份证号"/>
           </FormItem>
-          <FormItem label="公司">
+          <FormItem>
               <Input v-model="formItem.company" placeholder="请输入公司"/>
           </FormItem>
           <FormItem>
               <Button type="info" @click="handleSubmit('formItem')">注册账号</Button>
-              <Button type="success" @click="goToLogin" style="float: right;">已有账号？去登陆</Button>
+              <Button type="success" @click="handleReset" style="float: right;">重置</Button>
           </FormItem>
       </Form>
-  </div>
-  </particles>
   </div>
 </template>
 <script>
@@ -192,6 +188,9 @@ export default {
     },
     goToLogin() {
       this.$router.push({ path: "/login" });
+    },
+    handleReset() {
+       this.$refs.formItem.resetFields();
     }
   }
 };

@@ -17,12 +17,12 @@ export default {};
 </script>
 <style scoped>
 .hero-logo-circles {
-  width: 366px;
-  height: 366px;
+  width: 400px;
+  height: 400px;
   margin: auto;
   position: relative;
-  margin-top: -55px;
-  margin-left: 20px;
+  /* margin-top: -55px;
+  margin-left: 20px; */
 }
 .hero-logo-circle {
   position: absolute;
