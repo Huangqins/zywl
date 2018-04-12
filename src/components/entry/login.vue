@@ -15,7 +15,7 @@
           <!-- <FormItem label="验证码" >
               <Input v-model="formItem.code"  placeholder="请填写手机验证码"/>
           </FormItem> -->
-          <FormItem  >
+          <FormItem>
               <Input v-model="formItem.verifyCode"  placeholder="请输入验证码" style="width: 52%;" @on-enter="handleSubmit"/>
               <img width="80" height="32" style="float:right;margin-top:2px;" :src="codeSrc"  @click="changeImg">
           </FormItem>

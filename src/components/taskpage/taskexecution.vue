@@ -48,7 +48,7 @@
         </div>
        <div   class="list" style="padding-left:10px;">
           <h2>资产列表</h2>
-          <Table border  :columns="columns1" :data="data1"  :loading="loading" :row-class-name="rowClassName"></Table>
+          <Table border  :columns="columns1" :data="assetsList"  :loading="loading" :row-class-name="rowClassName"></Table>
       </div>    
    </section>
   </div>
@@ -178,6 +178,7 @@ export default {
           }
         ]
       },
+      assetsList:[],
       optionHole: {
         title: {
           text: "漏洞等级",
