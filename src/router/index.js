@@ -1,12 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import assetsRoutes from './module/assets'
 
 Vue.use(VueRouter)
-VueRouter.prototype.goBack = function () {
-    this.isBack = true
-    window.history.go(-1)
-}
-
 const Historydata = (resolve) => {
     import('components/historydata/datamanage').then(module => {
         resolve(module)
@@ -109,7 +105,7 @@ const   Holecloud = (resolve) => {
         resolve(module)
     })
 }
-export default new VueRouter({
+const router = new VueRouter({
     // mode: 'history',
     routes: [
         { path: '*', redirect: '/404' },
@@ -200,5 +196,7 @@ export default new VueRouter({
                 }
             ]
         }
-    ]
+    ].concat(assetsRoutes)
 })
+
+export default router

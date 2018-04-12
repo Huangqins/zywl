@@ -1,33 +1,13 @@
 <template>
   <div id="app">
-    <!-- <transition :name="transitionName"> 
-　　　　　　<router-view class="Router"></router-view>
-　　　　</transition> -->
-<transition > 
-　　　　　　<router-view ></router-view>
-　　　　</transition>
+        <transition > 
+　　　　<router-view ></router-view>
+　　 </transition>
   </div>
 </template>
-
 <script>
 export default {
-  name: "App",
-  data() {
-    return {
-      transitionName: "slide-right" // 默认动态路由变化为slide-right
-    };
-  },
-  watch: {
-    $route(to, from) {
-      let isBack = this.$router.isBack; //  监听路由变化时的状态为前进还是后退
-      if (isBack) {
-        this.transitionName = "slide-right";
-      } else {
-        this.transitionName = "slide-left";
-      }
-      this.$router.isBack = false;
-    }
-  }
+  name: "App"
 };
 </script>
 
@@ -36,11 +16,9 @@ html,
 body {
   width: 100%;
   height: 100%;
-  position: relative;   
-  /* background: url("../static/background.png"); */
-  
-  background:rgba(25,31,42);
-  background-size:cover;
+  position: relative;
+  background: url("../static/background.png");
+  background-size: cover;
   z-index: -9999;
 }
 #app {
@@ -48,7 +26,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-width: 1200px;
-  height: 100%;  
+  height: 100%;
   color: white;
   overflow: hidden;
 }
@@ -57,44 +35,27 @@ body {
   position: absolute;
   left: 50%;
   top: 50%;
+  /* width: 525px; */
   height: auto;
-  transform: translateX(-50%) translateY(-50%) ;
+  transform: translateX(-50%) translateY(-50%);
   border-radius: 9px;
+  /* z-index: 9999; */
 }
-.Router {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  transition: all 0.8s ease;
+.ivu-form .ivu-form-item-label {
+  color: #f6fbfb;
+  font-size: 13px;
 }
-
-.slide-left-enter,
-.slide-right-leave-active {
-  opacity: 0;
-  -webkit-transform: translate(100%, 0);
-  transform: translate(100%, 0);
+.ivu-card-bordered .ivu-card-head {
+  border-bottom: 1px solid #3889d9 !important;
 }
-
-.slide-left-leave-active,
-.slide-right-enter {
-  opacity: 0;
-  -webkit-transform: translate(-100%, 0);
-  transform: translate(-100% 0);
-}
-.ivu-form .ivu-form-item-label{
-  color: #F6FBFB;
-  font-size: 13px; 
-}
-.ivu-card-bordered .ivu-card-head{
-  border-bottom:1px solid #3889D9 !important;
-}
-.ivu-btn-ghost{
+.ivu-btn-ghost {
   color: white;
 }
-.ivu-tabs-nav .ivu-tabs-tab{
+.ivu-tabs-nav .ivu-tabs-tab {
   color: white;
 }
-.ivu-table td, .ivu-table th{
+.ivu-table td,
+.ivu-table th {
   height: 28px !important;
 }
 </style>
