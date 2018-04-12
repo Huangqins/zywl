@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="entry">
        <Form :model="formItem"  :rules="ruleValidate" ref="formItem" style="border:none;width:306px;">
           <FormItem  prop="userName">
             <Input v-model="formItem.userName" placeholder="请输入用户名" />

@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div class="entry" style="border:none;width:260px;margin-top:10px;"> 
+      <div class="entry" style="border:none;width:180px;margin-top:10px;"> 
       <Form :model="formItem"  ref="formItem">
         <FormItem  prop="userName">
             <Input v-model="formItem.userName" placeholder="请输入用户名"/>
@@ -30,14 +30,14 @@
     <div  class="entry circle-wrapper">
         <animation-circle></animation-circle>
        </div>
-       <Modal
+       <!-- <Modal
         v-model="registerModal"
         title="注册账号"
         width="335"
         @on-visible-change="cancel">
        <registers ref="register"></registers>
        <div slot="footer"></div>
-    </Modal>
+    </Modal> -->
   </div>
 </template>
 <script>
@@ -140,7 +140,8 @@ export default {
       }
     },
     register() {
-      this.registerModal = true;
+      // this.registerModal = true;
+      this.$router.push('/register')
     }
   },
   destroyed() {

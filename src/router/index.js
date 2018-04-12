@@ -104,10 +104,10 @@ export default new VueRouter({
             path: '/',
             redirect: '/login'
         },
-        // {
-        //     path: '/register',
-        //     component: Regitser
-        // },
+        {
+            path: '/register',
+            component: Regitser
+        },
         {
             path: '/login',
             component: Login

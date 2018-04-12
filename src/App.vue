@@ -54,11 +54,11 @@ body {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 525px;
+  /* width: 525px; */
   height: auto;
   transform: translateX(-50%) translateY(-50%) ;
-  border: 1px solid #3889D9;
-  padding: 30px 45px 30px 30px;
+  /* border: 1px solid #3889D9; */
+  /* padding: 30px 45px 30px 30px; */
   border-radius: 9px;
   /* z-index: 9999; */
 }
