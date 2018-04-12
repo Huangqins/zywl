@@ -1,6 +1,8 @@
 <template>
+<particles>
+
 <div class="entry">
-       <Form :model="formItem"  :rules="ruleValidate" ref="formItem" style="border:none;width:306px;">
+       <Form :model="formItem"  :rules="ruleValidate" ref="formItem" style="border:none;">
           <FormItem  prop="userName">
             <Input v-model="formItem.userName" placeholder="请输入用户名" />
           </FormItem>
@@ -31,6 +33,7 @@
           </FormItem>
       </Form>
   </div>
+</particles>
 </template>
 <script>
 import register from "api/register";
@@ -196,3 +199,17 @@ export default {
 };
 </script>
 
+<style scoped>
+.entry {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 360px;
+  height: auto;
+  transform: translateX(-50%) translateY(-50%) ;
+  border-radius: 9px;
+  background:rgba(65,67,79,0.4) ;
+  padding:20px 20px 5px 20px;
+}
+  
+</style>

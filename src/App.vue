@@ -37,7 +37,9 @@ body {
   width: 100%;
   height: 100%;
   position: relative;   
-  background: url("../static/background.png");
+  /* background: url("../static/background.png"); */
+  
+  background:rgba(25,31,42);
   background-size:cover;
   z-index: -9999;
 }
@@ -54,13 +56,9 @@ body {
   position: absolute;
   left: 50%;
   top: 50%;
-  /* width: 525px; */
   height: auto;
   transform: translateX(-50%) translateY(-50%) ;
-  /* border: 1px solid #3889D9; */
-  /* padding: 30px 45px 30px 30px; */
   border-radius: 9px;
-  /* z-index: 9999; */
 }
 .Router {
   position: absolute;

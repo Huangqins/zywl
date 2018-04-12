@@ -5,7 +5,9 @@
     border: 1px solid #5D90BB;
     color: #fff;
 }
-
+.ivu-form-item{
+    margin-bottom: 16px;
+}
 /* 按钮样式 */
 
 .ivu-btn-ghost {
@@ -22,9 +24,8 @@
     /* padding: 50px; */
     /* background-image: url('../svg/') */
 }
+/* 验证提示信息的样式 */
 .ivu-form-item-error-tip{
 padding-top: 1px;
 }
-.ivu-form-item{
-    margin-bottom: 16px;
-}
+
