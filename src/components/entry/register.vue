@@ -206,10 +206,23 @@ export default {
   top: 50%;
   width: 360px;
   height: auto;
-  transform: translateX(-50%) translateY(-50%) ;
+  /* transform: translateX(-50%) translateY(-50%) ; */
   border-radius: 9px;
   background:rgba(65,67,79,0.4) ;
   padding:20px 20px 5px 20px;
+  animation-name: slideUp;
+  animation-duration: 1.5s;
+  /* animation-delay: 0.5s; */
+  animation-fill-mode: forwards;
 }
-  
+@keyframes slideUp {
+      0% {
+        transform:translateX(-50%) translateY(20%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateX(-50%) translateY(-50%) ;
+        opacity: 1;
+      }
+}
 </style>

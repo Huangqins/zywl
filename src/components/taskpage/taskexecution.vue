@@ -331,11 +331,7 @@ border-bottom: 1px solid #3C9DC7;
 .holeList ul li:nth-child(12){  
 border:none;
 }
-.listOne{
-display: inline-block;
-width: 100%;
-/* border-bottom: 2px solid #034D6B; */
-}
+
 .holeList ul li span{ 
 width: 30%;
 text-align: center;
@@ -345,6 +341,10 @@ width:20px;
 height:20px;
 display: inline-block;
 vertical-align: middle;
+}
+.listOne{
+display: inline-block;
+width: 100%;
 }
 .holeHeader{
   font-size: 14px;

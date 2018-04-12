@@ -94,7 +94,21 @@ const Particles = (resolve) => {
         resolve(module)
     })
 }
-
+const Taskexecution2= (resolve) => {
+    import('components/taskpage/taskexecution2').then(module => {
+        resolve(module)
+    })
+}
+const   Process = (resolve) => {
+    import('components/views/task/process').then(module => {
+        resolve(module)
+    })
+}
+const   Holecloud = (resolve) => {
+    import('components/views/task/holecloud').then(module => {
+        resolve(module)
+    })
+}
 export default new VueRouter({
     // mode: 'history',
     routes: [
@@ -171,6 +185,20 @@ export default new VueRouter({
         {
             path: '/particles',
             component: Particles
+        },
+        {
+            path: '/taskexecution2',
+            component: Taskexecution2,
+            children: [
+                {
+                    path: 'process',
+                    component: Process
+                },
+                {
+                    path: 'holecloud',
+                    component: Holecloud
+                }
+            ]
         }
     ]
 })

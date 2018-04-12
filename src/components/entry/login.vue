@@ -157,6 +157,19 @@ export default {
   padding: none;
   border: none;
   z-index: -9998;
+  animation-name: slideUp;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+}
+ @keyframes slideUp {
+      0% {
+       
+        opacity: 0;
+      }
+      100% {
+       
+        opacity: 1;
+      }
 }
 .ivu-modal-footer {
   border-top: none;
