@@ -1,13 +1,17 @@
 <template>
   <div>
-      <Table border  :columns="assetsColums" :data="assetsList"  :row-class-name="rowClassName"></Table>
-
+      <topology height="300px" width="600px"></topology>
+      <Table border  :columns="assetsColums" :data="assetsList"  :row-class-name="rowClassName" height="200"></Table>
   </div>
 </template>
 <script>
 import assetsInfo from "api/assetsInfo";
+import topology from 'components/chart/topology';
 export default {
   name: "assetsManage",
+  components: {
+    topology
+  },
   data() {
     return {
       assetsList: [],

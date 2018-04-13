@@ -208,9 +208,6 @@ export default {
 };
 </script>
 <style scoped>
-.content-left{
- 
-}
 .dynamic{
   margin-left:128px;
   margin-left:170px;
@@ -309,18 +306,26 @@ export default {
 .content {
   display: flex;
 }
+.content div {
+  flex-grow: 1;
+  padding: 10px;
+}
 .content ul li {
   list-style-type: none;
 }
 .content ul li a {
-  color: white;
+  height: 15%;
+  display: block;
+  padding: 14px 18px 14px 24px;
+  border-left: 2px solid #18252F;
+  color: #E4E5E5;
 }
 .content ul li a:hover {
-  color: #3c9dc7;
+  color: #148EC5;
 }
-.content div {
-  flex-grow: 1;
-  padding: 10px;
+.content ul li a:focus {
+   border-left: 2px solid #203A46;
+   color: #148EC5;
 }
 .content-center {
   width: auto;
@@ -329,16 +334,15 @@ export default {
   display: block;
   height: 500px;
   width: 150px;
+  margin-top:125px;
 }
 .content-center li.brain {
   margin-top: 10px;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 50px;
 }
 .content-center ul li {
-  height: 15%;
-  padding: 14px 18px 14px 24px;
-  border-left: 2px solid #2e596a;
+  
 }
 .content-right {
   width: 77%;

@@ -1,7 +1,7 @@
 <template>
   <div>
        <div class="wordClouds">
-             <h2>漏洞文字云:</h2>
+             <h2>漏洞文字云</h2>
              <cloud></cloud>
         </div>
         <div class="holeProportion">
@@ -47,7 +47,7 @@ export default {
           text: "漏洞等级",
           x: "center",
           textStyle: {
-            color: "white"
+            color: "#E4E5E5"
           }
         },
         tooltip: {
@@ -59,7 +59,7 @@ export default {
           left: "left",
           data: ["一级", "二级", "三级"],
           textStyle: {
-            color: "white"
+            color: "#E4E5E5"
           }
         },
         series: [
@@ -125,6 +125,7 @@ export default {
 <style scoped>
 .wordClouds{
     float: left;
+    color: #E4E5E5;
 }
 .holeProportion{
     float: right;
@@ -133,6 +134,7 @@ export default {
 .holeclassify {
   width: 100%;
   margin-right: 3px;
+  color: #E4E5E5;
 }
 .holeclassify span{
   display: inline-block;
@@ -146,14 +148,14 @@ export default {
 .holeList ul{
   width: 100%;
   height: auto;
-  border: 1px solid #3C9DC7;
+  border: 1px solid #21262F;
 }
 .holeList ul li{
 list-style-type: none;
 height: 23px;
 font-size: 12px;
 line-height: 23px;
-border-bottom: 1px solid #3C9DC7;
+border-bottom: 1px solid #21262F;
 }
 .holeList ul li:nth-child(12){  
 border:none;

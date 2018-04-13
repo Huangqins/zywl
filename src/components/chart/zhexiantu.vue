@@ -18,7 +18,7 @@ export default {
         title: {
           text: "动态数据 + 时间坐标轴",
           textStyle:{
-            color:"white"
+            color:"#E4E5E5"
           }
         },
         tooltip: {
@@ -47,7 +47,7 @@ export default {
           },
           axisLine: {
             lineStyle: {
-                color: 'white'
+                color: '#E4E5E5'
           }
         }
 

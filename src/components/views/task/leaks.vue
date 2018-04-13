@@ -91,6 +91,7 @@ export default {
 <style scoped>
 .list{
   width: 100%;
+  color: #E4E5E5;
 }
 .timeAxis{
   width: 50%;

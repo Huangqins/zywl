@@ -201,7 +201,10 @@ const router = new VueRouter({
                 {
                     path: 'assetsManage',
                     component: AssetsManage
-                }
+                },
+
+
+
             ]
         }
     ].concat(assetsRoutes)
