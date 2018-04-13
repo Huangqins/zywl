@@ -38,24 +38,23 @@
 /* table */
 
 .ivu-table .demo-table-info-row td {
-    background-color: rgba(18, 62, 101);
-    color: #fff;
+    background-color: rgba(23,29,37);
+    color: #E4E5E5;
 }
 
 .ivu-table-header th {
-    background-color: rgba(18, 62, 101);
-    color: #fff;
+    background-color: rgba(23,29,37);
+    color: #E4E5E5;
 }
 
 .ivu-table-border td,
 .ivu-table-border th {
-    border-right: 1px solid rgb(81, 179, 218);
+    border-right:none;
 }
 
 .ivu-table-wrapper {
-    border: 1px solid rgb(81, 179, 218);
+    border: 1px solid rgb(33,38,47);
     border-bottom: 0;
-    /* border-right: 0px; */
 }
 .ivu-table-tip {
     overflow-x: hidden;
@@ -63,7 +62,7 @@
 
 .ivu-table td,
 .ivu-table th {
-    border-bottom: 1px solid rgb(81, 179, 218);
+    border-bottom: 1px solid rgb(33,38,47);
 }
 
 .ivu-table::before {
@@ -80,5 +79,5 @@
 
 .ivu-table-tip table td {
     background-color: rgba(18, 62, 101);
-    color: #fff;
+    color: #E4E5E5;
 }
