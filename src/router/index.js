@@ -49,12 +49,6 @@ const Editpassword = (resolve) => {
         resolve(module)
     })
 }
-const Taskexecution = (resolve) => {
-    import('components/taskpage/taskexecution').then(module => {
-        resolve(module)
-    })
-}
-
 const Cloud = (resolve) => {
     import('components/taskpage/cloud').then(module => {
         resolve(module)
@@ -71,7 +65,7 @@ const Holedetail = (resolve) => {
     })
 }
 const Zhexiantu = (resolve) => {
-    import('components/taskpage/zhexiantu').then(module => {
+    import('components/chart/zhexiantu').then(module => {
         resolve(module)
     })
 }
@@ -90,8 +84,8 @@ const Particles = (resolve) => {
         resolve(module)
     })
 }
-const Taskexecution2= (resolve) => {
-    import('components/taskpage/taskexecution2').then(module => {
+const Taskexecution= (resolve) => {
+    import('components/taskpage/taskexecution').then(module => {
         resolve(module)
     })
 }
@@ -102,6 +96,16 @@ const   Process = (resolve) => {
 }
 const   Holecloud = (resolve) => {
     import('components/views/task/holecloud').then(module => {
+        resolve(module)
+    })
+}
+const   Leaks = (resolve) => {
+    import('components/views/task/leaks').then(module => {
+        resolve(module)
+    })
+}
+const   AssetsManage = (resolve) => {
+    import('components/views/assets/assetsManage').then(module => {
         resolve(module)
     })
 }
@@ -147,10 +151,6 @@ const router = new VueRouter({
             component: Editpassword
         },
         {
-            path: '/taskexecution',
-            component: Taskexecution
-        },
-        {
             path: '/cloud',
             component: Cloud
         },
@@ -183,8 +183,8 @@ const router = new VueRouter({
             component: Particles
         },
         {
-            path: '/taskexecution2',
-            component: Taskexecution2,
+            path: '/taskexecution',
+            component: Taskexecution,
             children: [
                 {
                     path: 'process',
@@ -193,6 +193,14 @@ const router = new VueRouter({
                 {
                     path: 'holecloud',
                     component: Holecloud
+                },
+                {
+                    path: 'leaks',
+                    component: Leaks
+                },
+                {
+                    path: 'assetsManage',
+                    component: AssetsManage
                 }
             ]
         }
