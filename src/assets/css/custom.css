@@ -55,7 +55,10 @@
 .ivu-table-wrapper {
     border: 1px solid rgb(81, 179, 218);
     border-bottom: 0;
-    border-right: 0px;
+    /* border-right: 0px; */
+}
+.ivu-table-tip {
+    overflow-x: hidden;
 }
 
 .ivu-table td,
@@ -74,6 +77,7 @@
 .ivu-table-body {
     overflow: hidden;
 }
+
 .ivu-table-tip table td {
     background-color: rgba(18, 62, 101);
     color: #fff;
