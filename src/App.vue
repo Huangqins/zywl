@@ -1,9 +1,10 @@
 <template>
   <div id="app">
-        <transition > 
+      <transition > 
 　　　　<router-view ></router-view>
-　　 </transition>
-  </div>
+　　  </transition>
+    </div>
+        
 </template>
 <script>
 export default {
@@ -17,9 +18,10 @@ body {
   width: 100%;
   height: 100%;
   position: relative;
-  background: url("../static/background.png");
-  background-size: cover;
+  background: #171D25;
+  background:linear-gradient(top, #13181e, #181e26 88%);  
   z-index: -9999;
+  
 }
 #app {
   font-family: sans-serif;
@@ -28,7 +30,10 @@ body {
   min-width: 1200px;
   height: 100%;
   color: white;
+  background: url("./assets/bg.png") repeat 0 0;
+  background-size: 256px 150px;
   overflow: hidden;
+  z-index: -9998;
 }
 
 .entry {

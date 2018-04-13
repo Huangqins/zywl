@@ -1,62 +1,47 @@
 <template>
   <div>
-   <section class="section1">
-     <div class="taskSchedule">
-       <h2>任务已执行:</h2>
-       <chart width="235px" height="235px" :option="optipns"></chart>
-       
-     </div>
-     <div class="taskExtPicture"></div>
-     <div class="holeclassify">
-      <h2>漏洞Top10榜单</h2>
-      <span><Icon type="chevron-right"></Icon>目前已有XXX个漏洞进行排行</span>
-      <div class="holeList">
-       <ul>
-         <li class="listOne">
-           <span class="holeHeader">漏洞排行</span>
-           <span class="holeHeader">漏洞名称</span>
-           <span class="holeHeader">漏洞数量</span>
-         </li>
-         <li v-for="(item,index) in holes" :key="index">
-           <span v-if="index===0"><img src="../../../static/top1.png" ></span>
-           <span v-else-if="index===1"><img src="../../../static/top2.png" ></span>
-           <span v-else-if="index===2"><img src="../../../static/top3.png"/></span>
-           <span v-else-if="index>=3">{{index}}</span>
-           <span>{{item.holeName}}</span>
-           <span style="">{{item.holeNum}}</span>
-           </li>         
-       </ul>
+      <div class="header"></div>
+      <div class="content">
+            <div class="content-left dynamic">
+                <section>
+                   
+                </section>
+                <section class="dynamicPic">
+                  <div class="floor">
+                      <span class="ring light"></span> 
+                      <span class="ring three">
+                        <span class="spinnable"></span>
+                      </span>
+                      <span class="ring one">
+                        <span class="spinnable"></span>
+                      </span> 
+                      <span class="ring two">
+                        <span class="spinnable"></span>
+                      </span> 
+                      <!-- <span class="base"></span> -->
+                  </div>                                                                                                                                                       
+                </section>
+                <section></section>
+                
+            </div>
+            <div class="content-center">
+                <ul>
+                    <li class="brain"><router-link to="/taskexecution/holecloud">文字云</router-link></li>
+                    <li class="brain"><router-link to="/taskexecution/leaks">漏洞列表</router-link></li>
+                    <li class="brain"><router-link to="/taskexecution/assetsManage">资产拓补图</router-link></li>
+                    <li class="brain"><router-link to="/taskexecution/process">任务执行</router-link></li>        
+                </ul>
+            </div>
+            <div class="content-right">
+                 <router-view></router-view>                
+            </div>
       </div>
-     </div>
-   </section>
-   <section class="section2">
-           <div class="wordClouds">
-             <h2>漏洞文字云:</h2>
-             <cloud></cloud>
-           </div>
-           <div class="holeProportion">
-              <chart width="350px" height="350px"  :option="optionHole" id="holeproportion"></chart>
-           </div>
-           <div class="timeAxis">
-            <zhexiantu></zhexiantu>
-           </div>
-   </section>
-   <section class="section3">  
-        <div class="list" style="padding-right:10px;">
-          <h2>漏洞列表</h2>
-            <Table border :columns="columns1" :data="data1"  :loading="loading" @on-row-click="godetail" :row-class-name="rowClassName" ></Table>
-        </div>
-       <div   class="list" style="padding-left:10px;">
-          <h2>资产列表</h2>
-          <Table border  :columns="columns1" :data="assetsList"  :loading="loading" :row-class-name="rowClassName"></Table>
-      </div>    
-   </section>
   </div>
 </template>
 <script>
 import chart from "components/chart/chart";
 import cloud from "components/d3/wordCloud";
-import zhexiantu from "./zhexiantu";
+import zhexiantu from "components/chart/zhexiantu";
 export default {
   name: "taskexecution",
   components: {
@@ -66,98 +51,36 @@ export default {
   },
   data() {
     return {
+      //资产列表
       loading: false,
       columns1: [
         {
           title: "漏洞名称",
           key: "name",
-          align:"center"
+          align: "center"
         },
         {
           title: "类型",
           key: "type",
-          align:"center"
+          align: "center"
         },
         {
           title: "风险等级",
           key: "riskRating",
-          align:"center"
+          align: "center"
         },
         {
           title: "发现时间",
           key: "time",
-          align:"center"
+          align: "center"
         },
         {
           title: "利用情况",
           key: "utilization",
-          align:"center"
+          align: "center"
         }
       ],
-      holes:[
-        {
-         holeName:"XSS",holeNum:"12"
-        },
-        {
-         holeName:"WEB",holeNum:"10"
-        },
-        {
-          holeName:"CSRF",holeNum:"9"
-        },{
-          holeName:"CSRF",holeNum:"8"
-        },
-        {
-          holeName:"CSRF",holeNum:"7"
-        },
-        {
-          holeName:"CSRF",holeNum:"6"
-        },
-        {
-          holeName:"CSRF",holeNum:"5"
-        },
-        {
-          holeName:"CSRF",holeNum:"4"
-        },
-        {
-          holeName:"CSRF",holeNum:"3"
-        },
-        {
-          holeName:"CSRF",holeNum:"2"
-        },
-        {
-          holeName:"CSRF",holeNum:"1"
-        }
-      ],
-      data1: [
-        {
-          name: "John Brown",
-          type: 18,
-          riskRating: "3",
-          time: "2016-10-03",
-          utilization: "80%"
-        },
-        {
-          name: "Jim Green",
-          type: 24,
-          riskRating: "3",
-          time: "2016-10-01",
-          utilization: "80%"
-        },
-        {
-          name: "Joe Black",
-          type: 30,
-          riskRating: "4",
-          time: "2016-10-02",
-          utilization: "89%"
-        },
-        {
-          name: "Joe Black",
-          type: 30,
-          riskRating: "4",
-          time: "2016-10-02",
-          utilization: "89%"
-        }
-      ],
+      assetsList: [],
       option: {
         tooltip: {
           formatter: "{a} <br/>{b} : {c}%"
@@ -166,10 +89,10 @@ export default {
           {
             name: "业务指标",
             type: "gauge",
-            radius:"85%",
-            detail: { formatter: "{value}%",fontSize: 18 },
+            radius: "85%",
+            detail: { formatter: "{value}%", fontSize: 18 },
             data: [{ value: 50, name: "完成率" }],
-            title: { color: "#fff" ,fontSize:12},
+            title: { color: "#fff", fontSize: 12 },
             axisLine: {
               lineStyle: {
                 color: [[0.2, "#41C23C"], [0.8, "#FFCE44"], [1, "#DD4C40"]]
@@ -178,7 +101,52 @@ export default {
           }
         ]
       },
-      assetsList:[],
+      holes: [
+        {
+          holeName: "XSS",
+          holeNum: "12"
+        },
+        {
+          holeName: "WEB",
+          holeNum: "10"
+        },
+        {
+          holeName: "CSRF",
+          holeNum: "9"
+        },
+        {
+          holeName: "CSRF",
+          holeNum: "8"
+        },
+        {
+          holeName: "CSRF",
+          holeNum: "7"
+        },
+        {
+          holeName: "CSRF",
+          holeNum: "6"
+        },
+        {
+          holeName: "CSRF",
+          holeNum: "5"
+        },
+        {
+          holeName: "CSRF",
+          holeNum: "4"
+        },
+        {
+          holeName: "CSRF",
+          holeNum: "3"
+        },
+        {
+          holeName: "CSRF",
+          holeNum: "2"
+        },
+        {
+          holeName: "CSRF",
+          holeNum: "1"
+        }
+      ],
       optionHole: {
         title: {
           text: "漏洞等级",
@@ -219,8 +187,7 @@ export default {
             }
           }
         ]
-      },
-
+      }
     };
   },
   methods: {
@@ -240,119 +207,186 @@ export default {
   }
 };
 </script>
- <style >
-.section1 {
-  display: flex;
+<style scoped>
+.content-left{
+ 
 }
-.section1 div{
-  padding:5px 5px 0 5px;
+.dynamic{
+  margin-left:128px;
+  margin-left:170px;
 }
-.taskSchedule {
-  width: 400px;
+.dynamicPic {
+  display: block;
+  margin: auto;
+  position: relative;
+  height: 500px;
+  width: 250px;
 }
-.taskExtPicture {
-  flex: 1;
+.floor {
+  position: absolute;
+  margin: 0 0 -340px -250px;
+  bottom: 0;
+  left: 50%;
+  height: 500px;
+  width: 500px;
 }
-.holeclassify {
-  width: 400px;
-  margin-right: 3px;
+.floor .ring {
+  margin: -150px 0 0 -150px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  transform: rotateX(70deg)
 }
-.section2 {
+.floor .ring .spinnable {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
   width: 100%;
+  animation-name: ringspin;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes ringspin {
+  0% {
+    transform: rotateZ(0);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+.floor .ring.light {
+  background: -webkit-radial-gradient(
+    closest-side,
+    rgba(60, 140, 180, 0.06),
+    rgba(0, 0, 0, 0)
+  );
+  margin: -300px 0 0 -300px;
+  height: 600px;
+  width: 600px;
+}
+.floor .ring.three {
+  margin: -250px 0 0 -250px;
+  height: 500px;
+  width: 500px;
+  transition-duration: 1200ms;
+}
+.floor .ring.three .spinnable {
+  background: url("../../assets/assetsfloor/1.png") no-repeat center center;
+  background-size: 500px 500px;
+  animation-duration: 28s;
+  animation-direction: reverse;
+}
+.floor .ring.one .spinnable {
+  background: url("../../assets/assetsfloor/0.png") no-repeat center center;
+  background-size: 300px 300px;
+  transition-duration: 1000ms;
+}
+.floor .ring.two {
+  margin: -125px 0 0 -125px;
+  height: 250px;
+  width: 250px;
+}
+.floor .ring.two .spinnable {
+  background: url("../../assets/assetsfloor/2.png") no-repeat center center;
+  background-size: 250px 250px;
+  animation-duration: 16s;
+  animation-direction: reverse;
+}
+.base {
+  opacity: 0.75;
+  transition: all 1600ms ease;
+}
+.header {
+  height: 35px;
+  width: 100%;
+  background: rgba(65, 67, 79);
+  margin-bottom: 130px;
+}
+.content {
   display: flex;
 }
-.section2 div {
-  flex: 1;
-  padding:0 5px;
+.content ul li {
+  list-style-type: none;
 }
-.section3 {
-  display: flex;
+.content ul li a {
+  color: white;
 }
-.section3 .list {
-  flex: 1;
-  width: 40%;
-  padding:0px 5px;
+.content ul li a:hover {
+  color: #3c9dc7;
+}
+.content div {
+  flex-grow: 1;
+  padding: 10px;
+}
+.content-center {
+  width: auto;
+}
+.content-center ul {
+  display: block;
+  height: 500px;
+  width: 150px;
+}
+.content-center li.brain {
+  margin-top: 10px;
+  font-size: 16px;
+  line-height: 50px;
+}
+.content-center ul li {
+  height: 15%;
+  padding: 14px 18px 14px 24px;
+  border-left: 2px solid #2e596a;
+}
+.content-right {
+  width: 77%;
+  margin: 10px 80px 0 0px;
+}
+.content-right ul li {
+  float: left;
 }
 .ivu-table .demo-table-info-row td {
   background-color: rgba(18, 62, 101);
   color: #fff;
 }
-.ivu-table-header th {
-  background-color: rgba(18, 62, 101);
-  color: #fff;
-}
-.ivu-table-border td,
-.ivu-table-border th {
-  border-right: 1px solid rgb(81, 179, 218);
-}
-.ivu-table-wrapper {
-  border: 1px solid rgb(81, 179, 218);
-  border-bottom: 0;
-}
-.ivu-table td,
-.ivu-table th {
-  border-bottom: 1px solid rgb(81, 179, 218);
-}
-.ivu-table::before {
-  background-color: transparent;
-}
-.ivu-table::after {
-  background-color: transparent;
-}
-.ivu-table-body {
-  overflow: hidden;
-}
-canvas {
-  color: #fff !important;
-}
-.holeclassify span{
-  display: inline-block;
-  height: 19px;
-}
-.ivu-icon{
-  margin-right: 4px;
-}
-.holeList{
+/* top10排行榜 */
+.holeList {
   width: 100%;
   height: 100%;
 }
-.holeList ul{
+.holeList ul {
   width: 100%;
   height: auto;
-  border: 1px solid #3C9DC7;
+  border: 1px solid #3c9dc7;
 }
-.holeList ul li{
-list-style-type: none;
-height: 23px;
-font-size: 12px;
-line-height: 23px;
-border-bottom: 1px solid #3C9DC7;
+.holeList ul li {
+  list-style-type: none;
+  height: 23px;
+  font-size: 12px;
+  line-height: 23px;
+  border-bottom: 1px solid #3c9dc7;
 }
-.holeList ul li:nth-child(12){  
-border:none;
+.holeList ul li:nth-child(12) {
+  border: none;
 }
-
-.holeList ul li span{ 
-width: 30%;
-text-align: center;
+.listOne {
+  display: inline-block;
+  width: 100%;
 }
-.holeList ul li span img{
-width:20px;
-height:20px;
-display: inline-block;
-vertical-align: middle;
+.holeList ul li span {
+  width: 30%;
+  text-align: center;
 }
-.listOne{
-display: inline-block;
-width: 100%;
+.holeList ul li span img {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: middle;
 }
-.holeHeader{
+.holeHeader {
   font-size: 14px;
   font-weight: bold;
-}
-.timeAxis h2{
-  /* width: 400px; */
-  height: auto;
-  float: right;
 }
 </style>

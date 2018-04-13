@@ -1,12 +1,11 @@
 <template>
    <div>
-     <chart :option="option" ref="chart" height="350px" width="400px" id="wjj" style="float:right"></chart>
+     <chart :option="option" ref="chart" height="350px" width="400px" id="wjj"></chart>
    </div>
 </template>
 
 <script>
 import chart from "components/chart/chart";
-
 export default {
   name: "zhexiantu",
   components: {
