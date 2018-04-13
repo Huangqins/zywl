@@ -28,6 +28,7 @@ body {
   min-width: 1200px;
   height: 100%;
   color: white;
+  overflow: hidden;
 }
 
 .entry {
