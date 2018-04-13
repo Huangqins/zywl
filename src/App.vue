@@ -44,7 +44,7 @@ body {
   height: auto;
   transform: translateX(-50%) translateY(-50%);
   border-radius: 9px;
-  /* z-index: 9999; */
+  z-index: 2;
 }
 .ivu-form .ivu-form-item-label {
   color: #f6fbfb;

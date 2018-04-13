@@ -156,7 +156,7 @@ export default {
   width: auto;
   padding: none;
   border: none;
-  z-index: -9998;
+  z-index: 1;
   animation-name: slideUp;
   animation-duration: 1.5s;
   animation-fill-mode: forwards;
