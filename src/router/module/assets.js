@@ -6,6 +6,7 @@ const AssetsManage = () =>
 const assetsRoutes = [{
   path: '/assets/',
   component: Assets,
+  
   children: [{
     path: 'assetsManage',
     component: AssetsManage

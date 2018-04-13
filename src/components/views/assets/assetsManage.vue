@@ -1,11 +1,11 @@
 <template>
   <div>
       <Table border  :columns="assetsColums" :data="assetsList"  :row-class-name="rowClassName"></Table>
+
   </div>
 </template>
 <script>
 import assetsInfo from "api/assetsInfo";
-
 export default {
   name: "assetsManage",
   data() {
@@ -67,4 +67,5 @@ export default {
   }
 };
 </script>
+
 
