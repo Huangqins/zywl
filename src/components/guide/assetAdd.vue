@@ -17,7 +17,7 @@
                                     <Input type="text" v-model="handAddForm.assetsURL" placeholder="URL地址"></Input>
                                 </FormItem>
                                  <FormItem>
-                                    <Input type="text" v-model="handAddForm.assetsIP" placeholder="IP"></Input>
+                                    <Input type="text" v-model="handAddForm.assetsIp" placeholder="IP"></Input>
                                 </FormItem>
                                 <FormItem>
                                     <Input type="text" v-model="handAddForm.assetsPort" placeholder="端口"></Input>
@@ -73,7 +73,7 @@ export default {
       handAddForm: {
         assetsName: "",
         assetsURL: "",
-        assetsIP: "",
+        assetsIp: "",
         assetsPort: "",
         assetsProto: "",
         assetsServers: "",
@@ -96,7 +96,7 @@ export default {
       assetAdd(this.handAddForm).then(res => {
         if (res.result === 0) {
           message("success", "导入资产成功");
-          this.$router.push({path: '/assetSet'})
+          this.$router.push({name: 'assetSet',params: { assetsUrl:this.handAddForm.assetsURL, assetsIp: this.handAddForm.assetsIp}})
         } else if (res.result === -1) {
           message("error", "导入资产失败");
         } else if (res.result === 2) {

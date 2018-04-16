@@ -4,34 +4,34 @@
   <div class="entry">
        <Form :model="formItem" :label-width="80" ref="formItem" :rules="ruleValidate" >
        <FormItem label="任务名称">
-           <Select v-model="formItem.taskName" filterable>
-                <Option v-for="item in formItem.cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-            </Select>
+            <Input v-model="formItem.taskName" placeholder="请输入"/>
        </FormItem>
           <FormItem label="扫描策略">
-            <Input v-model="formItem.strategy" placeholder="请输入"/>
+             <RadioGroup v-model="formItem.strategy">
+              <Radio label= 0></Radio>
+              <Radio label= 1></Radio>
+             </RadioGroup>
           </FormItem>
           <FormItem label="开始时间" prop="startTime">
             <Row>
-                <DatePicker type="datetime" placeholder="Select date and time" style="width:420px;" :value="formItem.startTime"></DatePicker>
+                <DatePicker type="datetime" placeholder="开始时间" style="width:420px;"  @on-change="timeChange"></DatePicker>
             </Row>
           </FormItem>
           <FormItem label="周期" prop="cycle">
             <Select v-model="formItem.cycle">
-                <Option value="beijing">一年</Option>
-                <Option value="shanghai">三个月</Option>
-                <Option value="shenzhen">最近一周</Option>
+                <Option value="0">立即执行</Option>
+                <Option value="2">每天</Option>
+                <Option value="3">每月</Option>
+                <Option value="4">每年</Option>               
             </Select>
           </FormItem>
           <FormItem label="资产url">
-               <Select v-model="formItem.AssetsUrl" filterable>
-                <Option v-for="item in formItem.cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-            </Select>
+              
+            <Input v-model="formItem.assetsUrl" placeholder="请输入"/>
           </FormItem>
           <FormItem label="资产ip">
-               <Select v-model="formItem.AssetsIp" filterable>
-                <Option v-for="item in formItem.cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-            </Select>
+              
+                <Input v-model="formItem.assetsIp" placeholder="请输入"/>
           </FormItem>
           <FormItem>
               <Button type="info" @click="cancel">取消</Button>
@@ -43,21 +43,24 @@
 </template>
 <script>
 import assetsInfo from "api/assetsInfo";
+import assetsSet from "api/assetsSet";
+import { getUserName } from "@/utils/auth";
 export default {
-  components:{
-    
-  },
   name: "assetSet",
+  components: {},
   data() {
     return {
       formItem: {
         taskName: "",
-        strategy: "",
+        strategy: 0,
         startTime: "",
-        cycle: "",
-        assets: "",
-        cityList: [ ]
+        cycle: 0,
+        disabledGroup: "常规执行",
+        assetsUrl: "",
+        assetsIp: "",
+        userName: ""
       },
+
       ruleValidate: {
         assets: [
           {
@@ -80,29 +83,36 @@ export default {
     };
   },
   created() {
-    this._assetsInfo();
-    // background: rgba(45, 140, 240, 0);
-    // border: 1px solid #5D90BB;
-    // color: #fff;
+    const params = this.$route.params;
+    this.formItem.assetsUrl = params.assetsUrl;
+    this.formItem.assetsIp = params.assetsIp;
   },
   methods: {
+    timeChange(date) {
+      this.formItem.startTime = date
+    },
     cancel() {
       //    跳到任务管理页面
-      this.$router.push({ path: "/taskhomepage" });
+    
     },
     //点击提交跳到首页
     goToIndex(assets) {
       this.$refs[assets].validate(valid => {
         if (valid) {
-          this.$router.push({ path: "/taskexecution" });
+          this.formItem.userName = getUserName();
+          assetsSet(this.formItem).then(res => {
+            if (res.result === 0) {
+              this.$router.push({path: '/taskexecution'})
+            } else if (res.result === -1) {
+              this.$Message.error({
+                content: '添加任务失败'
+              })
+            }
+          });
         } else {
           this.$Message.error("Fail!");
         }
       });
-    },
-    async _assetsInfo() {
-      const res = await assetsInfo({ area: 1 });
-      console.log(res);
     }
   }
 };
