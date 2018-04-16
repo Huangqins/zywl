@@ -96,6 +96,7 @@ export default {
       assetAdd(this.handAddForm).then(res => {
         if (res.result === 0) {
           message("success", "导入资产成功");
+          // this
         } else if (res.result === -1) {
           message("error", "导入资产失败");
         }
