@@ -226,6 +226,7 @@ export default {
   left: 50%;
   height: 500px;
   width: 500px;
+  z-index: 1;
 }
 .floor .ring {
   margin: -150px 0 0 -150px;
@@ -329,6 +330,7 @@ export default {
 }
 .content-center {
   width: auto;
+  z-index: 2;
 }
 .content-center ul {
   display: block;

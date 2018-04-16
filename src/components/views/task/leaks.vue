@@ -5,46 +5,54 @@
         </div>
         <div class="list">
           <h2>漏洞列表</h2>
-            <Table border :columns="columns1" :data="data1"  :loading="loading" @on-row-click="godetail" :row-class-name="rowClassName" ></Table>
+            <!-- <Table border :columns="columns1" :data="data1"></Table> -->
+            <page :columns="columns"></page>
         </div>
   </div>
 </template>
 <script>
 import chart from "components/chart/chart";
 import zhexiantu from "components/chart/zhexiantu";
+import page from "components/page/page";
+import assetsInfo from "api/assetsInfo";
+
 export default {
-  components:{
+  components: {
     chart,
-    zhexiantu
+    zhexiantu,
+    page
   },
-  data(){
-    return{
+  created() {
+    this._assetsInfo();
+  },
+  data() {
+    return {
       loading: false,
-      columns1: [
+      columns: [
         {
           title: "漏洞名称",
           key: "name",
-          align:"center"
+          align: "center"
         },
         {
           title: "类型",
           key: "type",
-          align:"center"
-        },                                    
+          align: "center"
+        },
         {
           title: "风险等级",
           key: "riskRating",
-          align:"center"
+          align: "center"
         },
         {
           title: "发现时间",
           key: "time",
-          align:"center"
+          align: "center"
         },
         {
           title: "利用情况",
           key: "utilization",
-          align:"center"
+          align: "center"
         }
       ],
       data1: [
@@ -76,27 +84,32 @@ export default {
           time: "2016-10-02",
           utilization: "89%"
         }
-      ],
-    }
+      ]
+    };
   },
   methods: {
     godetail() {},
     rowClassName(row, index) {
       return "demo-table-info-row";
+    },
+    async _assetsInfo() {
+      const res = await assetsInfo({ area: 1 ,rows: 10, page: 1});
+      console.log(res);
     }
-  },
-}
+  }
+};
+
 </script>
 
 <style scoped>
-.list{
+.list {
   width: 100%;
-  color: #E4E5E5;
+  color: #e4e5e5;
 }
-.timeAxis{
+.timeAxis {
   width: 50%;
 }
-.timeAxis h2{
+.timeAxis h2 {
   height: auto;
   float: right;
 }
