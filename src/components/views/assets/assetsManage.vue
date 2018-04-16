@@ -1,16 +1,19 @@
 <template>
   <div>
-      <topology height="300px" width="600px"></topology>
-      <Table border  :columns="assetsColums" :data="assetsList"  :row-class-name="rowClassName" height="200"></Table>
+      <!-- <topology height="300px" width="600px"></topology> -->
+      <!-- <Table border  :columns="assetsColums" :data="assetsList"  :row-class-name="rowClassName" height="200"></Table> -->
+<page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad"></page>
   </div>
 </template>
 <script>
 import assetsInfo from "api/assetsInfo";
-import topology from 'components/chart/topology';
+import topology from "components/chart/topology";
+import page from "components/page/page";
 export default {
   name: "assetsManage",
   components: {
-    topology
+    topology,
+    page
   },
   data() {
     return {
@@ -51,22 +54,34 @@ export default {
           key: "assets_creatuser",
           align: "center"
         }
-      ]
+      ],
+      total: 0,
+      defaultPage: {
+        area: 1,
+        rows: 10,
+        page: 1
+      }
     };
   },
   created() {
-    this._assetsInfo();
+    this._assetsInfo(this.defaultPage);
   },
   methods: {
     rowClassName(row, index) {
       return "demo-table-info-row";
     },
-    async _assetsInfo() {
-      const params = { area: 1 };
+    async _assetsInfo(params) {
       const res = await assetsInfo(params);
       if (res.result === 0) {
-        this.assetsList = res.list;
+        this.assetsList = res.rows;
+        this.total = res.total;
       }
+    },
+    dataLoad(paramsObj) {
+      console.log(paramsObj)
+      // let { pageSize, pageNum } = paramsObj;
+      const params = Object.assign({},this.defaultPage,paramsObj)
+      this._assetsInfo(params)
     }
   }
 };

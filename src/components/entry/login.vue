@@ -46,8 +46,8 @@ import message from "utils/message";
 import animationCircle from "./animationCircle";
 import registers from "./register";
 
-const host =
-  process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
+// const host = process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
+const host = process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
 
 export default {
   name: "login",
