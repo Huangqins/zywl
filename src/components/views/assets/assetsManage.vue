@@ -2,7 +2,7 @@
   <div>
       <!-- <topology height="300px" width="600px"></topology> -->
       <!-- <Table border  :columns="assetsColums" :data="assetsList"  :row-class-name="rowClassName" height="200"></Table> -->
-<page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad"></page>
+<page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading"></page>
   </div>
 </template>
 <script>
@@ -60,7 +60,8 @@ export default {
         area: 1,
         rows: 10,
         page: 1
-      }
+      },
+      loading: false
     };
   },
   created() {
@@ -71,15 +72,17 @@ export default {
       return "demo-table-info-row";
     },
     async _assetsInfo(params) {
+      this.loading = true;
       const res = await assetsInfo(params);
       if (res.result === 0) {
+        this.loading = false;
         this.assetsList = res.rows;
         this.total = res.total;
       }
     },
     dataLoad(paramsObj) {
-      const params = Object.assign({},this.defaultPage,paramsObj)
-      this._assetsInfo(params)
+      const params = Object.assign({}, this.defaultPage, paramsObj);
+      this._assetsInfo(params);
     }
   }
 };
