@@ -134,7 +134,8 @@ const router = new VueRouter({
             path: '/assetAdd',
             component: Assetadd
         },
-        {
+        {   
+            name: 'assetSet',
             path: '/assetSet',
             component: Assetset
         },

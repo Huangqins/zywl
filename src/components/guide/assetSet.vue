@@ -8,18 +8,18 @@
        </FormItem>
           <FormItem label="扫描策略">
              <RadioGroup v-model="formItem.strategy">
-              <Radio label="立即执行"></Radio>
-              <Radio label="常规执行"></Radio>
+              <Radio label= 0></Radio>
+              <Radio label= 1></Radio>
              </RadioGroup>
           </FormItem>
           <FormItem label="开始时间" prop="startTime">
             <Row>
-                <DatePicker type="datetime" placeholder="开始时间" style="width:420px;" :value="formItem.startTime"></DatePicker>
+                <DatePicker type="datetime" placeholder="开始时间" style="width:420px;"  @on-change="timeChange"></DatePicker>
             </Row>
           </FormItem>
           <FormItem label="周期" prop="cycle">
             <Select v-model="formItem.cycle">
-                <Option value="1">立即执行</Option>
+                <Option value="0">立即执行</Option>
                 <Option value="2">每天</Option>
                 <Option value="3">每月</Option>
                 <Option value="4">每年</Option>               
@@ -43,24 +43,24 @@
 </template>
 <script>
 import assetsInfo from "api/assetsInfo";
+import assetsSet from "api/assetsSet";
+import { getUserName } from "@/utils/auth";
 export default {
-  components:{
-    
-  },
   name: "assetSet",
+  components: {},
   data() {
     return {
       formItem: {
         taskName: "",
-        strategy: "常规执行",
+        strategy: 0,
         startTime: "",
-        cycle: "1",
-        assets: "",
-        disabledGroup:"常规执行",
-        AssetsUrl:"",
-        assetsIp:""
+        cycle: 0,
+        disabledGroup: "常规执行",
+        assetsUrl: "",
+        assetsIp: "",
+        userName: ""
       },
-      
+
       ruleValidate: {
         assets: [
           {
@@ -83,27 +83,36 @@ export default {
     };
   },
   created() {
-    this._assetsInfo();
-    // 
+    const params = this.$route.params;
+    this.formItem.assetsUrl = params.assetsUrl;
+    this.formItem.assetsIp = params.assetsIp;
   },
   methods: {
+    timeChange(date) {
+      this.formItem.startTime = date
+    },
     cancel() {
       //    跳到任务管理页面
-      this.$router.push({ path: "/taskhomepage" });
+    
     },
     //点击提交跳到首页
     goToIndex(assets) {
       this.$refs[assets].validate(valid => {
         if (valid) {
-          this.$router.push({ path: "/taskexecution" });
+          this.formItem.userName = getUserName();
+          assetsSet(this.formItem).then(res => {
+            if (res.result === 0) {
+              this.$router.push({path: '/taskexecution'})
+            } else if (res.result === -1) {
+              this.$Message.error({
+                content: '添加任务失败'
+              })
+            }
+          });
         } else {
           this.$Message.error("Fail!");
         }
       });
-    },
-    async _assetsInfo() {
-      const res = await assetsInfo({ area: 1 });
-      console.log(res);
     }
   }
 };
