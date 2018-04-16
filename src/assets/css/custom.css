@@ -81,3 +81,8 @@
     background-color: rgba(18, 62, 101);
     color: #E4E5E5;
 }
+.ivu-select-single .ivu-select-selection{
+    background: rgba(45, 140, 240, 0);
+    border: 1px solid #5D90BB;
+    color: #dddee1;
+}

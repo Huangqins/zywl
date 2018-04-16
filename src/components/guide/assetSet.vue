@@ -4,34 +4,34 @@
   <div class="entry">
        <Form :model="formItem" :label-width="80" ref="formItem" :rules="ruleValidate" >
        <FormItem label="任务名称">
-           <Select v-model="formItem.taskName" filterable>
-                <Option v-for="item in formItem.cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-            </Select>
+            <Input v-model="formItem.taskName" placeholder="请输入"/>
        </FormItem>
           <FormItem label="扫描策略">
-            <Input v-model="formItem.strategy" placeholder="请输入"/>
+             <RadioGroup v-model="formItem.strategy">
+              <Radio label="立即执行"></Radio>
+              <Radio label="常规执行"></Radio>
+             </RadioGroup>
           </FormItem>
           <FormItem label="开始时间" prop="startTime">
             <Row>
-                <DatePicker type="datetime" placeholder="Select date and time" style="width:420px;" :value="formItem.startTime"></DatePicker>
+                <DatePicker type="datetime" placeholder="开始时间" style="width:420px;" :value="formItem.startTime"></DatePicker>
             </Row>
           </FormItem>
           <FormItem label="周期" prop="cycle">
             <Select v-model="formItem.cycle">
-                <Option value="beijing">一年</Option>
-                <Option value="shanghai">三个月</Option>
-                <Option value="shenzhen">最近一周</Option>
+                <Option value="1">立即执行</Option>
+                <Option value="2">每天</Option>
+                <Option value="3">每月</Option>
+                <Option value="4">每年</Option>               
             </Select>
           </FormItem>
           <FormItem label="资产url">
-               <Select v-model="formItem.AssetsUrl" filterable>
-                <Option v-for="item in formItem.cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-            </Select>
+              
+            <Input v-model="formItem.assetsUrl" placeholder="请输入"/>
           </FormItem>
           <FormItem label="资产ip">
-               <Select v-model="formItem.AssetsIp" filterable>
-                <Option v-for="item in formItem.cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-            </Select>
+              
+                <Input v-model="formItem.assetsIp" placeholder="请输入"/>
           </FormItem>
           <FormItem>
               <Button type="info" @click="cancel">取消</Button>
@@ -52,12 +52,15 @@ export default {
     return {
       formItem: {
         taskName: "",
-        strategy: "",
+        strategy: "常规执行",
         startTime: "",
-        cycle: "",
+        cycle: "1",
         assets: "",
-        cityList: [ ]
+        disabledGroup:"常规执行",
+        AssetsUrl:"",
+        assetsIp:""
       },
+      
       ruleValidate: {
         assets: [
           {
@@ -81,9 +84,7 @@ export default {
   },
   created() {
     this._assetsInfo();
-    // background: rgba(45, 140, 240, 0);
-    // border: 1px solid #5D90BB;
-    // color: #fff;
+    // 
   },
   methods: {
     cancel() {
