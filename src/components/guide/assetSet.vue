@@ -3,11 +3,11 @@
 
   <div class="entry">
        <Form :model="formItem" :label-width="80" ref="formItem" :rules="ruleValidate" >
-          <FormItem label="选择资产" prop="assets">
-            <Select v-model="formItem.assets" filterable>
+       <FormItem label="任务名称">
+           <Select v-model="formItem.assets" filterable>
                 <Option v-for="item in formItem.cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-            </Select>       
-          </FormItem>
+            </Select>
+       </FormItem>
           <FormItem label="扫描策略">
             <Input v-model="formItem.strategy" placeholder="请输入"/>
           </FormItem>
@@ -23,6 +23,16 @@
                 <Option value="shenzhen">最近一周</Option>
             </Select>
           </FormItem>
+          <FromItem label="资产url">
+               <Select v-model="formItem.assets" filterable>
+                <Option v-for="item in formItem.cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+            </Select>
+          </FromItem>
+          <FromItem label="资产ip">
+               <Select v-model="formItem.assets" filterable>
+                <Option v-for="item in formItem.cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+            </Select>
+          </FromItem>
           <FormItem>
               <Button type="info" @click="cancel">取消</Button>
               <Button type="success" @click="goToIndex('formItem')" style="float: right">提交</Button>
@@ -32,60 +42,74 @@
   </div>
 </template>
 <script>
+import assetsInfo from "api/assetsInfo";
 export default {
-name:'assetSet',
-  data(){
-      return{
-            formItem:{
-            input:'',
-            startTime:"",
-            cycle:'',
-            assets:'',
-            cityList: [
-                    {
-                        value: 'New York',
-                        label: 'New York'
-                    },
-                    {
-                        value: 'London',
-                        label: 'London'
-                    }
-           ]
+  name: "assetSet",
+  data() {
+    return {
+      formItem: {
+        taskName: "",
+        strategy: "",
+        startTime: "",
+        cycle: "",
+        assets: "",
+        cityList: [
+          {
+            value: "New York",
+            label: "New York"
           },
-          ruleValidate:{
-              assets:[{
-                   required: true, message: '请选择资产', trigger: 'change'
-              }],
-              cycle:[{
-                   required: true, message: '请选择周期', trigger: 'change'
-              }],
-            //   startTime:[{
-            //        required: true,type:'string', message: '请选择开始时间', trigger: 'change' 
-            //   }]
+          {
+            value: "London",
+            label: "London"
           }
-
-
-      }
-  },
-  methods:{
-      cancel(){
-        //    跳到任务管理页面
-        this.$router.push({path:"/taskhomepage"})
+        ]
       },
-   //点击提交跳到首页
-   goToIndex (assets) {
-                this.$refs[assets].validate((valid) => {
-                    if (valid) {
-                        this.$router.push({path:"/taskexecution"})
-                    } else {
-                        this.$Message.error('Fail!');
-                    }
-                })
-            },
-
+      ruleValidate: {
+        assets: [
+          {
+            required: true,
+            message: "请选择资产",
+            trigger: "change"
+          }
+        ],
+        cycle: [
+          {
+            required: true,
+            message: "请选择周期",
+            trigger: "change"
+          }
+        ]
+        //   startTime:[{
+        //        required: true,type:'string', message: '请选择开始时间', trigger: 'change'
+        //   }]
+      }
+    };
+  },
+  created() {
+    this._assetsInfo();
+  },
+  methods: {
+    cancel() {
+      //    跳到任务管理页面
+      this.$router.push({ path: "/taskhomepage" });
+    },
+    //点击提交跳到首页
+    goToIndex(assets) {
+      this.$refs[assets].validate(valid => {
+        if (valid) {
+          this.$router.push({ path: "/taskexecution" });
+        } else {
+          this.$Message.error("Fail!");
+        }
+      });
+    },
+    async _assetsInfo() {
+      const res = await assetsInfo({ area: 1 });
+      console.log(res);
+    }
   }
-
-}
+};
 </script>
 <style scoped>
+
 </style>
