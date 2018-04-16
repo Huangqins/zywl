@@ -4,7 +4,7 @@
   <div class="entry">
        <Form :model="formItem" :label-width="80" ref="formItem" :rules="ruleValidate" >
        <FormItem label="任务名称">
-           <Select v-model="formItem.assets" filterable>
+           <Select v-model="formItem.taskName" filterable>
                 <Option v-for="item in formItem.cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
             </Select>
        </FormItem>
@@ -15,7 +15,7 @@
             <Row>
                 <DatePicker type="datetime" placeholder="Select date and time" style="width:420px;" :value="formItem.startTime"></DatePicker>
             </Row>
-        </FormItem>
+          </FormItem>
           <FormItem label="周期" prop="cycle">
             <Select v-model="formItem.cycle">
                 <Option value="beijing">一年</Option>
@@ -23,16 +23,16 @@
                 <Option value="shenzhen">最近一周</Option>
             </Select>
           </FormItem>
-          <FromItem label="资产url">
-               <Select v-model="formItem.assets" filterable>
+          <FormItem label="资产url">
+               <Select v-model="formItem.AssetsUrl" filterable>
                 <Option v-for="item in formItem.cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
             </Select>
-          </FromItem>
-          <FromItem label="资产ip">
-               <Select v-model="formItem.assets" filterable>
+          </FormItem>
+          <FormItem label="资产ip">
+               <Select v-model="formItem.AssetsIp" filterable>
                 <Option v-for="item in formItem.cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
             </Select>
-          </FromItem>
+          </FormItem>
           <FormItem>
               <Button type="info" @click="cancel">取消</Button>
               <Button type="success" @click="goToIndex('formItem')" style="float: right">提交</Button>
@@ -44,6 +44,9 @@
 <script>
 import assetsInfo from "api/assetsInfo";
 export default {
+  components:{
+    
+  },
   name: "assetSet",
   data() {
     return {
@@ -53,16 +56,7 @@ export default {
         startTime: "",
         cycle: "",
         assets: "",
-        cityList: [
-          {
-            value: "New York",
-            label: "New York"
-          },
-          {
-            value: "London",
-            label: "London"
-          }
-        ]
+        cityList: [ ]
       },
       ruleValidate: {
         assets: [
@@ -87,6 +81,9 @@ export default {
   },
   created() {
     this._assetsInfo();
+    // background: rgba(45, 140, 240, 0);
+    // border: 1px solid #5D90BB;
+    // color: #fff;
   },
   methods: {
     cancel() {
