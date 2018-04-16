@@ -33,7 +33,7 @@ service.interceptors.response.use(response => {
             duration: 3,
             content: '登录超时或登录重复请重新登录'
         })
-        router.push({ path:'/login' })
+        // router.push({ path:'/login' })
     }
     return response.data
 }, error => {

@@ -26,7 +26,7 @@ export default {
     },
     dataTotal: {
       type: Number,
-      default: 0
+      default: 500
     },
     current: {
       type: Number,
@@ -45,39 +45,21 @@ export default {
   },
   data() {
     return {
-      //   dataTotal: ""
       pageSize: 1,
-      pageNum: 10,
-      status: false
+      pageNum: 10
     };
   },
   methods: {
     onPageChange(pageSize) {
+      if (pageSize > 1) {
+        this.$emit("dataLoad", { page: pageSize, rows: this.pageNum });
+      } else {
         this.pageSize = pageSize;
-        //  console.log(pageSize,'页码');
-        // if ( pageSize > 1) {
-        //       console.log(pageSize,'页码');
-        // } else {
-        //     return 
-        // }
-        // if (this.status && pageSize > 1) {
-        //     return
-        // } else  {
-        //     console.log(pageSize,'页码');
-        // } 
-         console.log(this.status)
-    
-
-        // this.$emit('dataLoad', {page: pageSize, rows: this.pageNum})
+      }
     },
     onChangehandle(pageNum) {
-    //   console.log(pageNum,'条数');
-    //   console.log(this.pageNum === pageNum)
-      this.status = this.pageNum === pageNum ? true : false
-    //  console.log('改变,新发送1')
-      //
       this.pageNum = pageNum;
-      
+      this.$emit("dataLoad", { page: this.pageSize, rows: pageNum });
     }
   }
 };

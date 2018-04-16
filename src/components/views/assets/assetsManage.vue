@@ -78,8 +78,6 @@ export default {
       }
     },
     dataLoad(paramsObj) {
-      console.log(paramsObj)
-      // let { pageSize, pageNum } = paramsObj;
       const params = Object.assign({},this.defaultPage,paramsObj)
       this._assetsInfo(params)
     }
