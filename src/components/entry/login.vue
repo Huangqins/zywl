@@ -46,8 +46,8 @@ import message from "utils/message";
 import animationCircle from "./animationCircle";
 import registers from "./register";
 
-// const host = process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
-const host = process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
+const host = process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
+// const host = process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
 
 export default {
   name: "login",
@@ -105,8 +105,9 @@ export default {
           if (res.result === 0) {
             if (res.isAsset === 0) {
               this.$router.push({ path: "/welcome" });
-            } else if (res.isAsset === 1) {             
-              this.$router.push({ path: "/sysinfo" });
+            } else if (res.isAsset === 1) { 
+              //登陆成功并存在资产            
+              this.$router.push({ name: "taskexecution", params: {isAsset: res.isAsset,firstLogin: res.firstLogin} });
             }
           } else if (res.result === 2) {
             message("error", "密码错误");

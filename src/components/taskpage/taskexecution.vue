@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="whole">
       <div class="header"></div>
       <div class="content">
             <div class="content-left dynamic">
@@ -29,16 +29,28 @@
                     <li class="brain"><router-link to="/taskexecution/holecloud">文字云</router-link></li>
                     <li class="brain"><router-link to="/taskexecution/leaks">漏洞列表</router-link></li>
                     <li class="brain"><router-link to="/taskexecution/assetsManage">资产拓补图</router-link></li>
-                    <li class="brain"><router-link to="/taskexecution/process">任务执行</router-link></li>        
+                    <li class="brain"><router-link to="/taskexecution">任务执行</router-link></li>        
                 </ul>
             </div>
             <div class="content-right">
                  <router-view></router-view>                
             </div>
       </div>
+      <div class="card">
+         <!-- <Row>
+          <Col span="24">
+              <Card>
+                  <p slot="title" >{{trueName}},您好！</p>
+                  <p>欢迎使用智刃安全攻防平台,距您上次进行攻防测试已经过了XXX天XXX小时XXX分钟，建议进行测试的资产为XXX。</p>               
+                  <p class="handle"><i-button type="success"  @click="nextFunction">确定</i-button></p>                  
+              </Card>
+          </Col>
+         </Row> -->
+      </div>
   </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 import chart from "components/chart/chart";
 import cloud from "components/d3/wordCloud";
 import zhexiantu from "components/chart/zhexiantu";
@@ -49,6 +61,8 @@ export default {
     cloud,
     zhexiantu
   },
+  computed: {},
+  mounted() {},
   data() {
     return {
       //资产列表
@@ -197,6 +211,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(["trueName"]),
     optipns() {
       setInterval(() => {
         this.option.series[0].data[0].value =
@@ -208,9 +223,9 @@ export default {
 };
 </script>
 <style scoped>
-.dynamic{
-  margin-left:128px;
-  margin-left:170px;
+.dynamic {
+  margin-left: 128px;
+  margin-left: 170px;
 }
 .dynamicPic {
   display: block;
@@ -235,7 +250,7 @@ export default {
   left: 50%;
   width: 300px;
   height: 300px;
-  transform: rotateX(70deg)
+  transform: rotateX(70deg);
 }
 .floor .ring .spinnable {
   display: block;
@@ -309,7 +324,7 @@ export default {
 }
 .content div {
   flex-grow: 1;
-   padding: 10px;
+  padding: 10px;
 }
 .content ul li {
   list-style-type: none;
@@ -318,15 +333,15 @@ export default {
   height: 15%;
   display: block;
   padding: 14px 18px 14px 24px;
-  border-left: 2px solid #18252F;
-  color: #E4E5E5;
+  border-left: 2px solid #18252f;
+  color: #e4e5e5;
 }
 .content ul li a:hover {
-  color: #148EC5;
+  color: #148ec5;
 }
 .content ul li a:focus {
-   border-left: 2px solid #203A46;
-   color: #148EC5;
+  border-left: 2px solid #203a46;
+  color: #148ec5;
 }
 .content-center {
   width: auto;
@@ -336,7 +351,7 @@ export default {
   display: block;
   height: 500px;
   width: 150px;
-  margin-top:16px;
+  margin-top: 16px;
 }
 .content-center li.brain {
   margin-top: 10px;
@@ -344,7 +359,6 @@ export default {
   line-height: 50px;
 }
 .content-center ul li {
-  
 }
 .content-right {
   width: 77%;
@@ -394,5 +408,14 @@ export default {
 .holeHeader {
   font-size: 14px;
   font-weight: bold;
+}
+.whole {
+  position: relative;
+}
+.card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
 }
 </style>

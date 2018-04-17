@@ -40,7 +40,6 @@ body {
   position: absolute;
   left: 50%;
   top: 50%;
-  /* width: 525px; */
   height: auto;
   transform: translateX(-50%) translateY(-50%);
   border-radius: 9px;

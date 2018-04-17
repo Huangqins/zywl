@@ -1,12 +1,22 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import assetsRoutes from './module/assets'
+import { Modal } from 'iview'
+import { getUserName } from '@/utils/auth'
 
 Vue.use(VueRouter)
 const Historydata = (resolve) => {
     import('components/historydata/datamanage').then(module => {
         resolve(module)
     })
+}
+
+const isAssetOne = () => {
+    return `欢迎使用智刃安全攻防平台,距您上次进行攻防测试已经过了XXX天XXX小时XXX分钟，建议进行测试的资产为XXX`;
+}
+const isAssetTwo = () => {
+    return `欢迎使用智刃安全攻防平台,目前网络空间安全等级为XXX，安全情报监控显示，XXX资产暴露XXX问题，可能存在问题的资产有XXX。
+    是否要进行安全测试？`
 }
 
 const Regitser = (resolve) => {
@@ -84,27 +94,27 @@ const Particles = (resolve) => {
         resolve(module)
     })
 }
-const Taskexecution= (resolve) => {
+const Taskexecution = (resolve) => {
     import('components/taskpage/taskexecution').then(module => {
         resolve(module)
     })
 }
-const   Process = (resolve) => {
+const Process = (resolve) => {
     import('components/views/task/process').then(module => {
         resolve(module)
     })
 }
-const   Holecloud = (resolve) => {
+const Holecloud = (resolve) => {
     import('components/views/task/holecloud').then(module => {
         resolve(module)
     })
 }
-const   Leaks = (resolve) => {
+const Leaks = (resolve) => {
     import('components/views/task/leaks').then(module => {
         resolve(module)
     })
 }
-const   AssetsManage = (resolve) => {
+const AssetsManage = (resolve) => {
     import('components/views/assets/assetsManage').then(module => {
         resolve(module)
     })
@@ -134,7 +144,7 @@ const router = new VueRouter({
             path: '/assetAdd',
             component: Assetadd
         },
-        {   
+        {
             name: 'assetSet',
             path: '/assetSet',
             component: Assetset
@@ -183,14 +193,48 @@ const router = new VueRouter({
             path: '/particles',
             component: Particles
         },
-        {
+        {   
+            name: 'taskexecution',
             path: '/taskexecution',
             component: Taskexecution,
+            beforeEnter: (to, from, next) => {
+                console.log(to)
+                if (from.fullPath === '/login') {
+                    Modal.info({
+                        'title': `您好,${getUserName()}`,
+                        'content': to.params.firstLogin === 1 ? isAssetOne() : isAssetTwo(),
+                        'onOk': () => {
+                            if (to.params.firstLogin === 1) {
+                                next()
+                            }else {
+                                next('/assets/assetsManage')
+                            }
+                        },
+                        'onCancel': () => {
+                            if (to.params.firstLogin === 0) {
+                                next('/taskhomepage')
+                            }else{
+                                next()
+                            }
+                        }
+                    })
+                }
+                next()
+            },
+            // beforeRouteLeave: (to, from ,next) => {
+            //     console.log('1111')
+            //     Modal.remove()
+            // },
             children: [
                 {
-                    path: 'process',
+                    path: '',
                     component: Process
                 },
+                // {   
+                //     name: 'process',
+                //     path: 'process',
+                //     component: Process
+                // },
                 {
                     path: 'holecloud',
                     component: Holecloud
