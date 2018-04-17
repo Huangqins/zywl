@@ -6,7 +6,7 @@
         <div class="list">
           <h2>漏洞列表</h2>
             <!-- <Table border :columns="columns1" :data="data1"></Table> -->
-            <page :columns="columns"></page>
+            <page :columns="columns" ></page>
         </div>
   </div>
 </template>

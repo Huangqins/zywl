@@ -309,7 +309,7 @@ export default {
 }
 .content div {
   flex-grow: 1;
-  padding: 10px;
+   padding: 10px;
 }
 .content ul li {
   list-style-type: none;
@@ -336,7 +336,7 @@ export default {
   display: block;
   height: 500px;
   width: 150px;
-  margin-top:125px;
+  margin-top:16px;
 }
 .content-center li.brain {
   margin-top: 10px;

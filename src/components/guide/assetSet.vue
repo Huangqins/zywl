@@ -8,8 +8,8 @@
        </FormItem>
           <FormItem label="扫描策略">
              <RadioGroup v-model="formItem.strategy">
-              <Radio label= 0></Radio>
-              <Radio label= 1></Radio>
+              <Radio label= "0">立即扫描</Radio>
+              <Radio label= "1">常规扫描</Radio>
              </RadioGroup>
           </FormItem>
           <FormItem label="开始时间" prop="startTime">
@@ -52,9 +52,9 @@ export default {
     return {
       formItem: {
         taskName: "",
-        strategy: 0,
+        strategy:"0",
         startTime: "",
-        cycle: 0,
+        cycle: "0",
         disabledGroup: "常规执行",
         assetsUrl: "",
         assetsIp: "",

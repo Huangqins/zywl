@@ -1,6 +1,7 @@
 <template>
 <div>
- <Table border :columns="columns" :data="data"  :loading="loading" ></Table>
+ <Table  :columns="columns" :data="data"  :loading="loading"></Table>
+ 
   <Page :total="dataTotal" size="small" :current="current" :placement="placement"  :page-size-opts="pageSizeOpts" show-total  show-sizer 
   @on-change="onPageChange" @on-page-size-change="onChangehandle" ></Page>
   </div>
@@ -26,7 +27,7 @@ export default {
     },
     dataTotal: {
       type: Number,
-      default: 500
+      default: 0
     },
     current: {
       type: Number,

@@ -105,7 +105,7 @@ export default {
           if (res.result === 0) {
             if (res.isAsset === 0) {
               this.$router.push({ path: "/welcome" });
-            } else if (res.isAsset === 1) {
+            } else if (res.isAsset === 1) {             
               this.$router.push({ path: "/sysinfo" });
             }
           } else if (res.result === 2) {
