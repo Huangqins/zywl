@@ -6,7 +6,7 @@
         <div class="list">
           <h2>漏洞列表</h2>
             <!-- <Table border :columns="columns1" :data="data1"></Table> -->
-            <page :columns="columns" ></page>
+            <page :columns="leaksColums" :data="leaksList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading"></page>
         </div>
   </div>
 </template>
@@ -14,7 +14,8 @@
 import chart from "components/chart/chart";
 import zhexiantu from "components/chart/zhexiantu";
 import page from "components/page/page";
-import assetsInfo from "api/assetsInfo";
+import leaksInfo from "api/leaksInfo";
+import { getToken } from "@/utils/auth";
 
 export default {
   components: {
@@ -23,68 +24,46 @@ export default {
     page
   },
   created() {
-    this._assetsInfo();
+    this._leaksInfo(Object.assign({}, this.defaultPage,{token: getToken()}));
   },
   data() {
     return {
       loading: false,
-      columns: [
+      leaksColums: [
         {
           title: "漏洞名称",
-          key: "name",
+          key: "vuln_name",
           align: "center"
         },
         {
-          title: "类型",
-          key: "type",
+          title: "漏洞类型",
+          key: "vuln_type",
           align: "center"
         },
         {
-          title: "风险等级",
-          key: "riskRating",
+          title: "漏洞等级",
+          key: "vuln_level",
           align: "center"
         },
         {
-          title: "发现时间",
-          key: "time",
+          title: "漏洞端口",
+          key: "vuln_Port",
           align: "center"
         },
         {
-          title: "利用情况",
-          key: "utilization",
+          title: "操作人",
+          key: "vuln_oper",
           align: "center"
         }
       ],
-      data1: [
-        {
-          name: "John Brown",
-          type: 18,
-          riskRating: "3",
-          time: "2016-10-03",
-          utilization: "80%"
-        },
-        {
-          name: "Jim Green",
-          type: 24,
-          riskRating: "3",
-          time: "2016-10-01",
-          utilization: "80%"
-        },
-        {
-          name: "Joe Black",
-          type: 30,
-          riskRating: "4",
-          time: "2016-10-02",
-          utilization: "89%"
-        },
-        {
-          name: "Joe Black",
-          type: 30,
-          riskRating: "4",
-          time: "2016-10-02",
-          utilization: "89%"
-        }
-      ]
+      leaksList: [],
+      total: 0,
+      defaultPage: {
+        area: 1,
+        rows: 10,
+        page: 1
+      },
+      loading: false
     };
   },
   methods: {
@@ -92,13 +71,23 @@ export default {
     rowClassName(row, index) {
       return "demo-table-info-row";
     },
-    async _assetsInfo() {
-      const res = await assetsInfo({ area: 1 ,rows: 10, page: 1});
-      console.log(res);
+    async _leaksInfo(params) {
+      this.loading = true;
+      const res = await leaksInfo(params);
+      if (res.result === 0) {
+        this.loading = false;
+        this.leaksList = res.rows;
+        this.total = res.total;
+      }
+      // console.log(res);
+    },
+    dataLoad(paramsObj) {
+      const params = Object.assign({}, this.defaultPage, paramsObj, {token: getToken()});
+      // console.log()
+      this._leaksInfo(params);
     }
   }
 };
-
 </script>
 
 <style scoped>

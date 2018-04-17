@@ -3,7 +3,7 @@
  <Table  :columns="columns" :data="data"  :loading="loading"></Table>
  
   <Page :total="dataTotal" size="small" :current="current" :placement="placement"  :page-size-opts="pageSizeOpts" show-total  show-sizer 
-  @on-change="onPageChange" @on-page-size-change="onChangehandle" ></Page>
+  @on-change="onPageChange" @on-page-size-change="onChangehandle" show-elevator></Page>
   </div>
 </template>
 <script>
@@ -56,11 +56,13 @@ export default {
         this.$emit("dataLoad", { page: pageSize, rows: this.pageNum });
       } else {
         this.pageSize = pageSize;
+        console.log( { page: this.pageSize, rows: this.pageNum })
+        // this.$emit("dataLoad", { page: this.pageSize, rows: this.pageNum });
       }
     },
     onChangehandle(pageNum) {
       this.pageNum = pageNum;
-      this.$emit("dataLoad", { page: this.pageSize, rows: pageNum });
+      this.$emit("dataLoad", { page: this.pageSize, rows:  pageNum });
     }
   }
 };

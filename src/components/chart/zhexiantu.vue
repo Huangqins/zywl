@@ -100,7 +100,7 @@ export default {
         this.data.push(randomData());
       }
       this.option.series[0].data = this.data;
-      // this.$refs.chart.refresh();
+      this.$refs.chart.refresh();
     }, 1000);
   },
   methods: {}
