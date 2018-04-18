@@ -350,12 +350,12 @@ export default {
   opacity: 0.75;
   transition: all 1600ms ease;
 }
-.header {
+/* .header {
   height: 35px;
   width: 100%;
   background: rgba(65, 67, 79);
   margin-bottom: 130px;
-}
+} */
 .content {
   width:100%;
 }
