@@ -11,8 +11,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/ZY': {
-        // target: 'http://192.168.10.104:8080/'
-        target: 'http://192.168.10.175/'
+        target: 'http://192.168.10.104:8080/'
+        // target: 'http://192.168.10.175/'
       }
     },
 
@@ -45,8 +45,8 @@ module.exports = {
     index: path.resolve(__dirname, '../dist/index.html'),
 
     // Paths
-    assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
+    assetsRoot: path.resolve(__dirname, '../dist/ZY'),
+    assetsSubDirectory: '/static',
     assetsPublicPath: '/',
 
     /**
