@@ -79,4 +79,9 @@ export default {
   }
 };
 </script>
+<style>
+#vis{
+  margin-top: 150px;
+}
+</style>
 

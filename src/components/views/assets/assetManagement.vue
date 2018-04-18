@@ -14,7 +14,6 @@ export default {
 <style scoped>
 .whole{
     width: 100%;
-
 }
 .assetLeft{
     width:200px;

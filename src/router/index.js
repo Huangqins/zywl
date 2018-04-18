@@ -201,19 +201,34 @@ const router = new VueRouter({
             children: [
                 {
                     path: '',
-                    component: Process
+                    // component: Process,
+                    components: {
+                        default: Process,
+                        // left: Cloud,
+                    }
                 },
                 {
                     path: 'holecloud',
-                    component: Holecloud
+                    // component: Holecloud
+                    components: {
+                        // left: ,
+                        default: Holecloud
+                    }
                 },
                 {
                     path: 'leaks',
-                    component: Leaks
+                    components: {
+                        left: Cloud,
+                        default: Leaks
+                    }
                 },
                 {
                     path: 'assetsManage',
-                    component: AssetsManage
+                    // component: AssetsManage
+                    components: {
+                        // left: Cloud,
+                        default: AssetsManage
+                    }
                 },
 
 

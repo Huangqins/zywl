@@ -4,10 +4,12 @@
       <div class="content">
             <div class="content-left dynamic">
                 <section class="dynamicPic">
-                  <div class="wordClouds">
-                    <h2>漏洞文字云</h2>
-                    <cloud></cloud>
-                  </div>
+                  <!-- <router-view></router-view> -->
+                  <router-view class="wordClouds" name="left">
+                    <!--<cloud></cloud> -->
+                    <!-- <zhexiantu></zhexiantu> -->
+                    <!-- <router-view></router-view>  -->
+                  </router-view>
                   <div class="floor">
                       <span class="ring light"></span> 
                       <span class="ring three">
@@ -19,11 +21,8 @@
                       <span class="ring two">
                         <span class="spinnable"></span>
                       </span> 
-                      <!-- <span class="base"></span> -->
                   </div>                                                                                                                                                       
-                </section>
-                <section></section>
-                
+                </section>                
             </div>
             <div class="content-center">
                 <ul>
@@ -251,23 +250,19 @@ export default {
 };
 </script>
 <style scoped>
-.dynamic {
-  /* margin-left: 128px;
-  margin-left: 170px; */
-}
+
 .dynamicPic {
   display: block;
   margin: auto;
   position: relative;
-  height: 410px;
-  width: 250px;
+  height: 470px;
 }
 .floor {
   position: absolute;
   margin: 0 0 -340px -250px;
   bottom: 0;
   left: 50%;
-  height: 500px;
+  height:240px;
   width: 500px;
   z-index: 1;
 }
@@ -337,18 +332,9 @@ export default {
   animation-duration: 16s;
   animation-direction: reverse;
 }
-.base {
-  opacity: 0.75;
-  transition: all 1600ms ease;
-}
-/* .header {
-  height: 35px;
-  width: 100%;
-  background: rgba(65, 67, 79);
-  margin-bottom: 130px;
-} */
 .content {
   width:100%;
+  margin-top: 100px;
 }
 .content-left{
   width: 25%;
