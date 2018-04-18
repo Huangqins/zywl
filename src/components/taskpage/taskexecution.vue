@@ -1,6 +1,6 @@
 <template>
   <div class="whole">
-      <div class="header"></div>
+      <!-- <div class="header"></div> -->
       <div class="content">
             <div class="content-left dynamic">
                 <section class="dynamicPic">

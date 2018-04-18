@@ -3,9 +3,14 @@ import NProgress from 'nprogress' // Progress 进度条
 import 'nprogress/nprogress.css'// Progress 进度条样式
 import { Message } from 'iview'
 import { getToken } from '@/utils/auth' // 验权
+import store from './store'
 
 router.beforeEach((to, from, next) => {
     NProgress.start()
+    if (to.path === '/register') {
+        store.commit('REMOVE_TOKEN');
+        store.commit('REMOVE_USER_NAME');
+    }
     next()
     // if (getToken() !== 'undefined' && getToken()) {
     //     next()

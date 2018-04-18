@@ -8,7 +8,7 @@
        </FormItem>
           <FormItem label="扫描策略">
              <RadioGroup v-model="formItem.strategy">
-              <Radio label= "0">立即扫描</Radio>
+              <Radio label= "0">深度扫描</Radio>
               <Radio label= "1">常规扫描</Radio>
              </RadioGroup>
           </FormItem>
@@ -20,9 +20,9 @@
           <FormItem label="周期" prop="cycle">
             <Select v-model="formItem.cycle">
                 <Option value="0">立即执行</Option>
-                <Option value="2">每天</Option>
-                <Option value="3">每月</Option>
-                <Option value="4">每年</Option>               
+                <Option value="1">每天</Option>
+                <Option value="2">每月</Option>
+                <Option value="3">每年</Option>               
             </Select>
           </FormItem>
           <FormItem label="资产url">

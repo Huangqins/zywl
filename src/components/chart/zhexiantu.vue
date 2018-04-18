@@ -13,6 +13,7 @@ export default {
   },
   data() {
     return {
+      mock:'',
       data: [],
       option: {
         title: {
@@ -76,6 +77,10 @@ export default {
       }
     };
   },
+  // 离开组件注销定时器，避免出错
+  destroyed() {
+    clearInterval(this.mock)
+  },
   mounted() {
     function randomData() {
       now = new Date(+now + oneDay);
@@ -94,16 +99,20 @@ export default {
     for (var i = 0; i < 80; i++) {
       this.data.push(randomData());
     };    
-    setInterval(() => {
+   this.mock =  setInterval(() => {
       for (var i = 0; i < 5; i++) {
         this.data.shift();
         this.data.push(randomData());
       }
       this.option.series[0].data = this.data;
-      this.$refs.chart.refresh();
+
+        this.$refs.chart.refresh();
+      
     }, 1000);
   },
-  methods: {}
+  methods: {
+
+  }
 };
 </script>
 
