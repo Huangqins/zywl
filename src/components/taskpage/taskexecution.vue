@@ -261,8 +261,8 @@ export default {
 </script>
 <style scoped>
 .dynamic {
-  margin-left: 128px;
-  margin-left: 170px;
+  /* margin-left: 128px;
+  margin-left: 170px; */
 }
 .dynamicPic {
   display: block;
@@ -357,11 +357,21 @@ export default {
   margin-bottom: 130px;
 }
 .content {
-  /* display: flex; */
   width:100%;
 }
+.content-left{
+  width: 25%;
+  float: left;
+}
+.content-center{
+  width: 25%;
+  float: left;
+}
+.content-right{
+  width: 50%;
+  float: left;
+}
 .content div {
-  /* flex-grow: 1; */
   padding: 10px;
 }
 .content ul li {
@@ -397,10 +407,6 @@ export default {
   line-height: 50px;
 }
 .content-center ul li {
-}
-.content-right {
-  width: 77%;
-  margin: 10px 80px 0 0px;
 }
 .content-right ul li {
   float: left;
