@@ -46,7 +46,8 @@ import message from "utils/message";
 import animationCircle from "./animationCircle";
 import registers from "./register";
 
-const host = process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
+const host =
+  process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
 // const host = process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
 
 export default {
@@ -93,7 +94,11 @@ export default {
     },
     changeImg() {
       getIdentifyCode(this.formItem).then(res => {
-        this.codeSrc = host + `${res.code}`;
+        const codeSrc =
+          process.env.NODE_ENV === "development"
+            ? host + `${res.code}`
+            : host + `/ZY/${res.code}`;
+        this.codeSrc = codeSrc;
         this.formItem.verifyCodeID = res.codeID;
       });
     },
@@ -106,7 +111,11 @@ export default {
             if (res.isAsset === 0) {
               this.$router.push({ path: "/welcome" });
             } else if (res.isAsset === 1) {
-              this.$router.push({ path: "/sysinfo" });
+              //登陆成功并存在资产
+              this.$router.push({
+                name: "taskexecution",
+                params: { isAsset: res.isAsset, firstLogin: res.firstLogin }
+              });
             }
           } else if (res.result === 2) {
             message("error", "密码错误");
@@ -141,7 +150,7 @@ export default {
     },
     register() {
       // this.registerModal = true;
-      this.$router.push('/register')
+      this.$router.push("/register");
     }
   },
   destroyed() {
@@ -161,15 +170,13 @@ export default {
   animation-duration: 1.5s;
   animation-fill-mode: forwards;
 }
- @keyframes slideUp {
-      0% {
-       
-        opacity: 0;
-      }
-      100% {
-       
-        opacity: 1;
-      }
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 .ivu-modal-footer {
   border-top: none;

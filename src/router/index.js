@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import assetsRoutes from './module/assets'
+import { getUserName } from '@/utils/auth'
 
 Vue.use(VueRouter)
 const Historydata = (resolve) => {
@@ -8,6 +9,7 @@ const Historydata = (resolve) => {
         resolve(module)
     })
 }
+
 
 const Regitser = (resolve) => {
     import('components/entry/register').then(module => {
@@ -84,27 +86,27 @@ const Particles = (resolve) => {
         resolve(module)
     })
 }
-const Taskexecution= (resolve) => {
+const Taskexecution = (resolve) => {
     import('components/taskpage/taskexecution').then(module => {
         resolve(module)
     })
 }
-const   Process = (resolve) => {
+const Process = (resolve) => {
     import('components/views/task/process').then(module => {
         resolve(module)
     })
 }
-const   Holecloud = (resolve) => {
+const Holecloud = (resolve) => {
     import('components/views/task/holecloud').then(module => {
         resolve(module)
     })
 }
-const   Leaks = (resolve) => {
+const Leaks = (resolve) => {
     import('components/views/task/leaks').then(module => {
         resolve(module)
     })
 }
-const   AssetsManage = (resolve) => {
+const AssetsManage = (resolve) => {
     import('components/views/assets/assetsManage').then(module => {
         resolve(module)
     })
@@ -134,7 +136,7 @@ const router = new VueRouter({
             path: '/assetAdd',
             component: Assetadd
         },
-        {   
+        {
             name: 'assetSet',
             path: '/assetSet',
             component: Assetset
@@ -183,14 +185,44 @@ const router = new VueRouter({
             path: '/particles',
             component: Particles
         },
-        {
+        {   
+            name: 'taskexecution',
             path: '/taskexecution',
             component: Taskexecution,
+            // beforeEnter: (to, from, next) => {
+            //     if (from.fullPath === '/login') {
+            //         Modal.confirm({
+            //             'title': `您好,${getUserName()}`,
+            //             'content': to.params.firstLogin === 1 ? isAssetOne() : isAssetTwo(),
+            //             'onOk': () => {
+            //                 if (to.params.firstLogin === 1) {
+            //                     next()
+            //                 }else {
+            //                     next('/assets/assetsManage')
+            //                 }
+            //             },
+            //             'onCancel': () => {
+            //                 if (to.params.firstLogin === 0) {
+            //                     next('/taskhomepage')
+            //                 }else{
+            //                     next()
+            //                 }
+            //             }
+            //         })
+            //     }
+            //     next()
+            // },
+            
             children: [
                 {
-                    path: 'process',
+                    path: '',
                     component: Process
                 },
+                // {   
+                //     name: 'process',
+                //     path: 'process',
+                //     component: Process
+                // },
                 {
                     path: 'holecloud',
                     component: Holecloud

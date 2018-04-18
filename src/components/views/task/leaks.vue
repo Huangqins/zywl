@@ -30,7 +30,33 @@ export default {
   data() {
     return {
       loading: false,
-      leaksColums: [],
+      leaksColums: [
+        {
+          title: "漏洞名称",
+          key: "vuln_name",
+          align: "center"
+        },
+        {
+          title: "漏洞类型",
+          key: "vuln_type",
+          align: "center"
+        },
+        {
+          title: "漏洞等级",
+          key: "vuln_level",
+          align: "center"
+        },
+        {
+          title: "漏洞端口",
+          key: "vuln_Port",
+          align: "center"
+        },
+        {
+          title: "操作人",
+          key: "vuln_oper",
+          align: "center"
+        }
+      ],
       leaksList: [],
       total: 0,
       defaultPage: {

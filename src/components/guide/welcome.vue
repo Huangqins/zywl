@@ -6,8 +6,7 @@
             <div >
           <i-button type="text" class="go" @click="go">去导入<Icon type="arrow-right-c"></Icon></i-button>
         </div>    
-        </div> 
-          
+        </div>     
      
   </div>
   </div>

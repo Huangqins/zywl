@@ -130,8 +130,6 @@ export default {
   background: rgba(46, 59, 93, 0.1);
   border: 1px solid #3889d9;
   color: white;
-  /* box-shadow: -5px 4px 20px #3889d9, 1px 4px 20px #3889d9, 4px 1px 20px #3889d9,
-    -2px -1px 20px #3889d9; */
 }
 </style>
        

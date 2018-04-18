@@ -8,6 +8,7 @@ import { getUserName, getToken } from '@/utils/auth'
 // 拦截器
 // 请求拦截器
 // 创建axios实例
+const baseURL = location.origin
 const service = axios.create({
     // baseURL: process.env.BASE_API,
     // baseURL: 'http://192.168.0.107/ZY/',
