@@ -3,10 +3,11 @@
       <div class="header"></div>
       <div class="content">
             <div class="content-left dynamic">
-                <section>
-                   
-                </section>
                 <section class="dynamicPic">
+                  <div class="wordClouds">
+                    <h2>漏洞文字云</h2>
+                    <cloud></cloud>
+                  </div>
                   <div class="floor">
                       <span class="ring light"></span> 
                       <span class="ring three">
@@ -27,25 +28,15 @@
             <div class="content-center">
                 <ul>
                     <li class="brain"><router-link to="/taskexecution/holecloud">文字云</router-link></li>
+                    <li class="brain"><router-link to="/taskexecution">任务执行</router-link></li>    
                     <li class="brain"><router-link to="/taskexecution/leaks">漏洞列表</router-link></li>
                     <li class="brain"><router-link to="/taskexecution/assetsManage">资产拓补图</router-link></li>
-                    <li class="brain"><router-link to="/taskexecution">任务执行</router-link></li>        
+                        
                 </ul>
             </div>
             <div class="content-right">
                  <router-view></router-view>                
             </div>
-      </div>
-      <div class="card">
-         <!-- <Row>
-          <Col span="24">
-              <Card>
-                  <p slot="title" >{{trueName}},您好！</p>
-                  <p>欢迎使用智刃安全攻防平台,距您上次进行攻防测试已经过了XXX天XXX小时XXX分钟，建议进行测试的资产为XXX。</p>               
-                  <p class="handle"><i-button type="success"  @click="nextFunction">确定</i-button></p>                  
-              </Card>
-          </Col>
-         </Row> -->
       </div>
   </div>
 </template>
@@ -268,7 +259,7 @@ export default {
   display: block;
   margin: auto;
   position: relative;
-  height: 500px;
+  height: 410px;
   width: 250px;
 }
 .floor {
