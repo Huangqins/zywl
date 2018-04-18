@@ -1,10 +1,10 @@
 /* input样式 */
 
-.ivu-input {
+/* .ivu-input {
     background: rgba(45, 140, 240, 0);
     border: 1px solid #5D90BB;
     color: #fff;
-}
+} */
 
 .ivu-form-item {
     margin-bottom: 16px;
@@ -12,7 +12,7 @@
 
 /* 按钮样式 */
 
-.ivu-btn-ghost {
+/* .ivu-btn-dashed {
     background: rgba(45, 140, 240, 0);
     border: 1px solid #5d90bb;
 }
@@ -20,7 +20,7 @@
 .ivu-btn-ghost:hover {
     background-color: #5d90bb;
     color: #fff;
-}
+} */
 
 /* modal样式 */
 

@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 export default function leaksInfo({
-  token,
+  userName,
   rows,
   page
 }) {
@@ -9,7 +9,7 @@ export default function leaksInfo({
     url: '/ZY/vuln/vulnSearch',
     method: 'post',
     data: {
-      token,
+      userName,
       rows,
       page
     }

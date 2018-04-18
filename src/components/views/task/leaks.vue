@@ -15,7 +15,7 @@ import chart from "components/chart/chart";
 import zhexiantu from "components/chart/zhexiantu";
 import page from "components/page/page";
 import leaksInfo from "api/leaksInfo";
-import { getToken } from "@/utils/auth";
+import { getUserName } from "@/utils/auth";
 
 export default {
   components: {
@@ -24,7 +24,8 @@ export default {
     page
   },
   created() {
-    this._leaksInfo(Object.assign({}, this.defaultPage,{token: getToken()}));
+    const params = Object.assign({}, this.defaultPage,{userName: getUserName()})
+    this._leaksInfo(params);
   },
   data() {
     return {
@@ -82,8 +83,8 @@ export default {
       // console.log(res);
     },
     dataLoad(paramsObj) {
-      const params = Object.assign({}, this.defaultPage, paramsObj, {token: getToken()});
-      // console.log()
+      const params = Object.assign({}, this.defaultPage, paramsObj, {userName: getUserName()});
+      
       this._leaksInfo(params);
     }
   }
