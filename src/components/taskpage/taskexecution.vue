@@ -1,10 +1,9 @@
 <template>
   <div class="whole">
-      <div class="header"></div>
+      <!-- <div class="header"></div> -->
       <div class="content">
             <div class="content-left dynamic">
-                <section>
-                   
+                <section>            
                 </section>
                 <section class="dynamicPic">
                   <div class="floor">

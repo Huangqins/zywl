@@ -146,5 +146,6 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
+  overflow-y: hidden;
 }
 </style>

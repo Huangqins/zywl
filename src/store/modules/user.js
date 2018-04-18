@@ -19,6 +19,12 @@ const user = {
         },
         SET_TOKEN: (state, token) => {
             state.token = token
+        },
+        REMOVE_TOKEN: (state) => {
+            state.token = ''
+        },
+        REMOVE_USER_NAME: (state) => {
+            state.userName = ''
         }
     },
     actions: {

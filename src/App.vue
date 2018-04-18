@@ -1,14 +1,21 @@
 <template>
   <div id="app">
-      <transition > 
-　　　　<router-view ></router-view>
-　　  </transition>
-    </div>
-        
+        <headers v-if="token"></headers>
+　　　　<router-view  :style="{marginTop: token ? '36px': 0}"></router-view>
+    </div>     
 </template>
 <script>
+import headers from "components/layout/headers";
+import { mapGetters } from "vuex";
+import { getToken } from "@/utils/auth";
 export default {
-  name: "App"
+  name: "App",
+  computed: {
+    ...mapGetters(["token"])
+  },
+  components: {
+    headers
+  }
 };
 </script>
 
@@ -18,10 +25,9 @@ body {
   width: 100%;
   height: 100%;
   position: relative;
-  background: #171D25;
-  background:linear-gradient(top, #13181e, #181e26 88%);  
+  background: #171d25;
+  background: linear-gradient(top, #13181e, #181e26 88%);
   z-index: -9999;
-  
 }
 #app {
   font-family: sans-serif;

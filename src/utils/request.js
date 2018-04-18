@@ -14,8 +14,10 @@ const service = axios.create({
     // baseURL: 'http://192.168.0.107/ZY/',
     timeout: 15000 // 请求超时时间
 })
-
+// 保存请求路径参数
+let requestPath = ''
 service.interceptors.request.use(config => {
+    requestPath = config.url
     if (store.getters.token && store.getters.userName) {
         config.headers['token'] = getToken()
         config.headers['userName'] = getUserName()
@@ -27,14 +29,22 @@ service.interceptors.request.use(config => {
 })
 //   response拦截器
 service.interceptors.response.use(response => {
-    // if ()
-    if (response.data.result === 1 || response.data.result === 3) {
+    if (requestPath.indexOf('checkUserName') > -1 && response.data.result === 1) {
         Message.error({
             top: 50,
             duration: 3,
-            content: '登录超时或登录重复请重新登录'
+            content: '用户名已存在'
         })
-        // router.push({ path:'/login' })
+    } else if (response.data.result === 1 || response.data.result === 3) {
+        Message.error({
+            top: 50,
+            duration: 3,
+            content: '登录超时或错误请重新登录'
+        })
+        // 清除store信息
+        store.commit('REMOVE_TOKEN');
+        store.commit('REMOVE_USER_NAME');
+           // router.push({ path: '/login' })
     }
     return response.data
 }, error => {
