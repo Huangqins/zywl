@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import assetsRoutes from './module/assets'
-import { Modal } from 'iview'
 import { getUserName } from '@/utils/auth'
 
 Vue.use(VueRouter)
@@ -11,13 +10,6 @@ const Historydata = (resolve) => {
     })
 }
 
-const isAssetOne = () => {
-    return `欢迎使用智刃安全攻防平台,距您上次进行攻防测试已经过了XXX天XXX小时XXX分钟，建议进行测试的资产为XXX`;
-}
-const isAssetTwo = () => {
-    return `欢迎使用智刃安全攻防平台,目前网络空间安全等级为XXX，安全情报监控显示，XXX资产暴露XXX问题，可能存在问题的资产有XXX。
-    是否要进行安全测试？`
-}
 
 const Regitser = (resolve) => {
     import('components/entry/register').then(module => {
@@ -197,34 +189,30 @@ const router = new VueRouter({
             name: 'taskexecution',
             path: '/taskexecution',
             component: Taskexecution,
-            beforeEnter: (to, from, next) => {
-                console.log(to)
-                if (from.fullPath === '/login') {
-                    Modal.info({
-                        'title': `您好,${getUserName()}`,
-                        'content': to.params.firstLogin === 1 ? isAssetOne() : isAssetTwo(),
-                        'onOk': () => {
-                            if (to.params.firstLogin === 1) {
-                                next()
-                            }else {
-                                next('/assets/assetsManage')
-                            }
-                        },
-                        'onCancel': () => {
-                            if (to.params.firstLogin === 0) {
-                                next('/taskhomepage')
-                            }else{
-                                next()
-                            }
-                        }
-                    })
-                }
-                next()
-            },
-            // beforeRouteLeave: (to, from ,next) => {
-            //     console.log('1111')
-            //     Modal.remove()
+            // beforeEnter: (to, from, next) => {
+            //     if (from.fullPath === '/login') {
+            //         Modal.confirm({
+            //             'title': `您好,${getUserName()}`,
+            //             'content': to.params.firstLogin === 1 ? isAssetOne() : isAssetTwo(),
+            //             'onOk': () => {
+            //                 if (to.params.firstLogin === 1) {
+            //                     next()
+            //                 }else {
+            //                     next('/assets/assetsManage')
+            //                 }
+            //             },
+            //             'onCancel': () => {
+            //                 if (to.params.firstLogin === 0) {
+            //                     next('/taskhomepage')
+            //                 }else{
+            //                     next()
+            //                 }
+            //             }
+            //         })
+            //     }
+            //     next()
             // },
+            
             children: [
                 {
                     path: '',
