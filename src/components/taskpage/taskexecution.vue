@@ -362,6 +362,7 @@ export default {
 .content-left{
   width: 25%;
   float: left;
+  margin-left: 100px;
 }
 .content-center{
   width: 25%;
