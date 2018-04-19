@@ -1,11 +1,9 @@
 <template>
   <div class="whole">
-      <!-- <div class="header"></div> -->
       <div class="content">
             <div class="content-left dynamic">
-                <section>            
-                </section>
-                <section class="dynamicPic">
+                <section class="dynamicPic">                  
+                  <router-view class="wordClouds" name="left"></router-view>
                   <div class="floor">
                       <span class="ring light"></span> 
                       <span class="ring three">
@@ -17,34 +15,21 @@
                       <span class="ring two">
                         <span class="spinnable"></span>
                       </span> 
-                      <!-- <span class="base"></span> -->
                   </div>                                                                                                                                                       
-                </section>
-                <section></section>
-                
+                </section>                
             </div>
             <div class="content-center">
                 <ul>
                     <li class="brain"><router-link to="/taskexecution/holecloud">文字云</router-link></li>
+                    <li class="brain"><router-link to="/taskexecution">任务执行</router-link></li>    
                     <li class="brain"><router-link to="/taskexecution/leaks">漏洞列表</router-link></li>
                     <li class="brain"><router-link to="/taskexecution/assetsManage">资产拓补图</router-link></li>
-                    <li class="brain"><router-link to="/taskexecution">任务执行</router-link></li>        
+                        
                 </ul>
             </div>
             <div class="content-right">
                  <router-view></router-view>                
             </div>
-      </div>
-      <div class="card">
-         <!-- <Row>
-          <Col span="24">
-              <Card>
-                  <p slot="title" >{{trueName}},您好！</p>
-                  <p>欢迎使用智刃安全攻防平台,距您上次进行攻防测试已经过了XXX天XXX小时XXX分钟，建议进行测试的资产为XXX。</p>               
-                  <p class="handle"><i-button type="success"  @click="nextFunction">确定</i-button></p>                  
-              </Card>
-          </Col>
-         </Row> -->
       </div>
   </div>
 </template>
@@ -259,23 +244,19 @@ export default {
 };
 </script>
 <style scoped>
-.dynamic {
-  /* margin-left: 128px;
-  margin-left: 170px; */
-}
+
 .dynamicPic {
   display: block;
   margin: auto;
   position: relative;
-  height: 500px;
-  width: 250px;
+  height: 470px;
 }
 .floor {
   position: absolute;
   margin: 0 0 -340px -250px;
   bottom: 0;
   left: 50%;
-  height: 500px;
+  height:240px;
   width: 500px;
   z-index: 1;
 }
@@ -345,18 +326,9 @@ export default {
   animation-duration: 16s;
   animation-direction: reverse;
 }
-.base {
-  opacity: 0.75;
-  transition: all 1600ms ease;
-}
-/* .header {
-  height: 35px;
-  width: 100%;
-  background: rgba(65, 67, 79);
-  margin-bottom: 130px;
-} */
 .content {
   width:100%;
+  margin-top: 100px;
 }
 .content-left{
   width: 25%;

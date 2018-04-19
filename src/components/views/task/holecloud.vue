@@ -1,12 +1,12 @@
 <template>
   <div>
-       <div class="wordClouds">
+        <!-- <div class="wordClouds">
              <h2>漏洞文字云</h2>
              <cloud></cloud>
-        </div>
-        <div class="holeProportion">
+        </div> -->
+        <!-- <div class="holeProportion">
               <chart width="350px" height="350px"  :option="optionHole" id="holeproportion"></chart>
-        </div>
+        </div> -->
         <div style="clear:both;"></div>
         <div class="holeclassify">
             <h2>漏洞Top10榜单</h2>

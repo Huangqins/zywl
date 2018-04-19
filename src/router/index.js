@@ -111,6 +111,11 @@ const AssetsManage = (resolve) => {
         resolve(module)
     })
 }
+const AssetManagement = (resolve) => {
+    import('components/views/assets/assetManagement').then(module => {
+        resolve(module)
+    })
+}
 const router = new VueRouter({
     // mode: 'history',
     routes: [
@@ -185,55 +190,45 @@ const router = new VueRouter({
             path: '/particles',
             component: Particles
         },
+        {
+            path: '/assetManagement',
+            component: AssetManagement
+        },
         {   
             name: 'taskexecution',
             path: '/taskexecution',
-            component: Taskexecution,
-            // beforeEnter: (to, from, next) => {
-            //     if (from.fullPath === '/login') {
-            //         Modal.confirm({
-            //             'title': `您好,${getUserName()}`,
-            //             'content': to.params.firstLogin === 1 ? isAssetOne() : isAssetTwo(),
-            //             'onOk': () => {
-            //                 if (to.params.firstLogin === 1) {
-            //                     next()
-            //                 }else {
-            //                     next('/assets/assetsManage')
-            //                 }
-            //             },
-            //             'onCancel': () => {
-            //                 if (to.params.firstLogin === 0) {
-            //                     next('/taskhomepage')
-            //                 }else{
-            //                     next()
-            //                 }
-            //             }
-            //         })
-            //     }
-            //     next()
-            // },
-            
+            component: Taskexecution,            
             children: [
                 {
                     path: '',
-                    component: Process
+                    // component: Process,
+                    components: {
+                        default: Process,
+                        // left: Cloud,
+                    }
                 },
-                // {   
-                //     name: 'process',
-                //     path: 'process',
-                //     component: Process
-                // },
                 {
                     path: 'holecloud',
-                    component: Holecloud
+                    // component: Holecloud
+                    components: {
+                        // left: ,
+                        default: Holecloud
+                    }
                 },
                 {
                     path: 'leaks',
-                    component: Leaks
+                    components: {
+                        left: Cloud,
+                        default: Leaks
+                    }
                 },
                 {
                     path: 'assetsManage',
-                    component: AssetsManage
+                    // component: AssetsManage
+                    components: {
+                        // left: Cloud,
+                        default: AssetsManage
+                    }
                 },
 
 
