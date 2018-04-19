@@ -24,6 +24,7 @@
                     <li class="brain"><router-link to="/taskexecution">任务执行</router-link></li>    
                     <li class="brain"><router-link to="/taskexecution/leaks">漏洞列表</router-link></li>
                     <li class="brain"><router-link to="/taskexecution/assetsManage">资产拓补图</router-link></li>
+                    <li class="brain" ><span @click="gotaskadd()">任务添加</span></li>
                         
                 </ul>
             </div>
@@ -229,6 +230,9 @@ export default {
     godetail() {},
     rowClassName(row, index) {
       return "demo-table-info-row";
+    },
+    gotaskadd(){
+      this.$router.push({ path: '/assetSet' })
     }
   },
   computed: {
@@ -348,6 +352,7 @@ export default {
 }
 .content ul li {
   list-style-type: none;
+  text-align: center;
 }
 .content ul li a {
   height: 15%;
@@ -357,6 +362,17 @@ export default {
   color: #e4e5e5;
 }
 .content ul li a:hover {
+  color: #148ec5;
+}
+.content ul li span {
+  display: block;
+  height:75px;
+  line-height: 75px;
+  text-align: center;
+  color: #e4e5e5;
+  border-left: 2px solid #18252f;
+}
+.content ul li span:hover{
   color: #148ec5;
 }
 .content ul li a:focus {
