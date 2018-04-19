@@ -232,7 +232,7 @@ export default {
       return "demo-table-info-row";
     },
     gotaskadd(){
-      this.$router.push({ path: '/assetAdd' })
+      this.$router.push({ path: '/assetSet' })
     }
   },
   computed: {
