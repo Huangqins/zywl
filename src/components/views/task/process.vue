@@ -2,8 +2,8 @@
   <div>
     <div class="taskSchedule">
         <chart width="235px" height="235px" :option="option" id="completionRate" ref="completionRate"></chart>   
-        <chart width="235px" height="235px" :option="optipnTwo" id="taskholeNum"></chart>  
-        <chart width="235px" height="235px" :option="optipnThree" id="holeUtilization"></chart>      
+        <chart width="235px" height="235px" :option="optipnTwo" id="taskholeNum" ref="taskholeNum"></chart>  
+        <chart width="235px" height="235px" :option="optipnThree" id="holeUtilization" ref='holeUtilization'></chart>      
     </div>
     <zhexiantu></zhexiantu>
   </div>
@@ -13,7 +13,7 @@ import chart from "components/chart/chart";
 import zhexiantu from "components/chart/zhexiantu";
 import taskTargetInfo from "api/taskTargetInfo";
 import { mapGetters } from "vuex";
-
+import timeLine from "api/timeLine"
 export default {
   components: {
     chart,
@@ -21,6 +21,7 @@ export default {
   },
   data() {
     return {
+      id:"",
       taskInfo: [],
       timer: '',
       option: {
@@ -33,7 +34,7 @@ export default {
             type: "gauge",
             radius: "85%",
             detail: { formatter: "{value}%", fontSize: 18 },
-            data: [{ value: 14, name: "完成率" }],
+            data: [{ value: 0, name: "完成率" }],
             title: { color: "#E4E5E5", fontSize: 12 },
             splitLine: { show: false },
             axisTick: { show: false },
@@ -47,7 +48,7 @@ export default {
           }
         ]
       },
-      optiontwo: {
+      optipnTwo: {
         tooltip: {
           formatter: "{a} <br/>{b} : {c}%"
         },
@@ -56,8 +57,8 @@ export default {
             name: "业务指标",
             type: "gauge",
             radius: "85%",
-            detail: { formatter: "{value}%", fontSize: 18 },
-            data: [{ value: 50, name: "任务漏洞量" }],
+            detail: { formatter: "{value}", fontSize: 18 },
+            data: [{ value: 0, name: "任务漏洞量" }],
             title: { color: "#E4E5E5", fontSize: 12 },
             splitLine: { show: false },
             axisTick: { show: false },
@@ -98,18 +99,14 @@ export default {
     };
   },
   computed: {
-    // optipns() {
-    //   console.log(this.taskInfo)
-    //   // this.option.series[0].data[0].value = this.taskInfo[0].target_scaning;
-    //   return this.option;
+    
+    // optipnTwo() {
+    //   setInterval(() => {
+    //     this.optiontwo.series[0].data[0].value =
+    //       (Math.random() * 100).toFixed(2) - 0;
+    //   }, 2000);
+    //   return this.optiontwo;
     // },
-    optipnTwo() {
-      setInterval(() => {
-        this.optiontwo.series[0].data[0].value =
-          (Math.random() * 100).toFixed(2) - 0;
-      }, 2000);
-      return this.optiontwo;
-    },
     optipnThree() {
       setInterval(() => {
         this.optionthree.series[0].data[0].value =
@@ -120,22 +117,34 @@ export default {
     ...mapGetters(["userName"])
   },
   created() {
-    // this._taskTargetInfo()
     const params = { userName: this.userName, targetStruts: 0 };
     this._taskTargetInfo(params);
+    
   },
   methods: {
     async _taskTargetInfo(params) {
       let res = await taskTargetInfo(params);
-      this.taskInfo = res.targets;
+      if (res.targets.length > 0) {
+         this.taskInfo = res.targets;
+      this.id = res.targets[0].target_id
+      this._timeLine({taskID: this.id});
       this.option.series[0].data[0].value = Number(this.taskInfo[0].target_scaning).toFixed(2);
       this.$refs.completionRate.refresh()
+      this.$refs.taskholeNum.refresh()
       this.timer = setInterval(async () => {
         res = await taskTargetInfo(params);
-        this.taskInfo = res.targets;
+        this.taskInfo = res.targets; 
+        this._timeLine({taskID: this.id});
         this.option.series[0].data[0].value = Number(this.taskInfo[0].target_scaning).toFixed(2);
         this.$refs.completionRate.refresh()
+        this.$refs.taskholeNum.refresh()
       }, 5000);
+      }
+    },
+     _timeLine(params){
+     timeLine(params).then(res => {
+       this.optipnTwo.series[0].data[0].value = res.vulnNum
+     })
     }
   },
   destroyed() {
