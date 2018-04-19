@@ -1,15 +1,9 @@
 <template>
   <div class="whole">
-      <!-- <div class="header"></div> -->
       <div class="content">
             <div class="content-left dynamic">
-                <section class="dynamicPic">
-                  <!-- <router-view></router-view> -->
-                  <router-view class="wordClouds" name="left">
-                    <!--<cloud></cloud> -->
-                    <!-- <zhexiantu></zhexiantu> -->
-                    <!-- <router-view></router-view>  -->
-                  </router-view>
+                <section class="dynamicPic">                  
+                  <router-view class="wordClouds" name="left"></router-view>
                   <div class="floor">
                       <span class="ring light"></span> 
                       <span class="ring three">
