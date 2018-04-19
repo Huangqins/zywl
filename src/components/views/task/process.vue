@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="taskSchedule">
-        <chart width="235px" height="235px" :option="optipns" id="completionRate"></chart>   
+        <chart width="235px" height="235px" :option="option" id="completionRate" ref="completionRate"></chart>   
         <chart width="235px" height="235px" :option="optipnTwo" id="taskholeNum"></chart>  
         <chart width="235px" height="235px" :option="optipnThree" id="holeUtilization"></chart>      
     </div>
@@ -9,9 +9,11 @@
   </div>
 </template>
 <script>
-
 import chart from "components/chart/chart";
 import zhexiantu from "components/chart/zhexiantu";
+import taskTargetInfo from "api/taskTargetInfo";
+import { mapGetters } from "vuex";
+
 export default {
   components: {
     chart,
@@ -19,6 +21,8 @@ export default {
   },
   data() {
     return {
+      taskInfo: [],
+      timer: '',
       option: {
         tooltip: {
           formatter: "{a} <br/>{b} : {c}%"
@@ -29,12 +33,12 @@ export default {
             type: "gauge",
             radius: "85%",
             detail: { formatter: "{value}%", fontSize: 18 },
-            data: [{ value: 90, name: "完成率" }],
+            data: [{ value: 14, name: "完成率" }],
             title: { color: "#E4E5E5", fontSize: 12 },
-            splitLine:{ show:false},
-            axisTick:{show:false},
-            axisLabel:{show:false,distance:0},
-            pointer:{length:"30%",show:true,width:4},
+            splitLine: { show: false },
+            axisTick: { show: false },
+            axisLabel: { show: false, distance: 0 },
+            pointer: { length: "30%", show: true, width: 4 },
             axisLine: {
               lineStyle: {
                 color: [[0.2, "#66AB31"], [0.8, "#1A9348"], [1, "#21B4D2"]]
@@ -55,10 +59,10 @@ export default {
             detail: { formatter: "{value}%", fontSize: 18 },
             data: [{ value: 50, name: "任务漏洞量" }],
             title: { color: "#E4E5E5", fontSize: 12 },
-            splitLine:{ show:false},
-            axisTick:{show:false},
-            axisLabel:{show:false,distance:0},
-            pointer:{length:"30%",show:true,width:4},
+            splitLine: { show: false },
+            axisTick: { show: false },
+            axisLabel: { show: false, distance: 0 },
+            pointer: { length: "30%", show: true, width: 4 },
             axisLine: {
               lineStyle: {
                 color: [[0.2, "#66AB31"], [0.8, "#1A9348"], [1, "#21B4D2"]]
@@ -79,10 +83,10 @@ export default {
             detail: { formatter: "{value}%", fontSize: 18 },
             data: [{ value: 30, name: "漏洞利用率" }],
             title: { color: "#E4E5E5", fontSize: 12 },
-            splitLine:{ show:false},
-            axisTick:{show:false},
-            axisLabel:{show:false,distance:0},
-            pointer:{length:"30%",show:true,width:4},
+            splitLine: { show: false },
+            axisTick: { show: false },
+            axisLabel: { show: false, distance: 0 },
+            pointer: { length: "30%", show: true, width: 4 },
             axisLine: {
               lineStyle: {
                 color: [[0.2, "#66AB31"], [0.8, "#1A9348"], [1, "#21B4D2"]]
@@ -94,13 +98,11 @@ export default {
     };
   },
   computed: {
-    optipns() {
-      setInterval(() => {
-        this.option.series[0].data[0].value =
-          (Math.random() * 100).toFixed(2) - 0;
-      }, 2000);
-      return this.option;
-    },
+    // optipns() {
+    //   console.log(this.taskInfo)
+    //   // this.option.series[0].data[0].value = this.taskInfo[0].target_scaning;
+    //   return this.option;
+    // },
     optipnTwo() {
       setInterval(() => {
         this.optiontwo.series[0].data[0].value =
@@ -114,15 +116,38 @@ export default {
           (Math.random() * 100).toFixed(2) - 0;
       }, 2000);
       return this.optionthree;
+    },
+    ...mapGetters(["userName"])
+  },
+  created() {
+    // this._taskTargetInfo()
+    const params = { userName: this.userName, targetStruts: 0 };
+    this._taskTargetInfo(params);
+  },
+  methods: {
+    async _taskTargetInfo(params) {
+      let res = await taskTargetInfo(params);
+      this.taskInfo = res.targets;
+      this.option.series[0].data[0].value = Number(this.taskInfo[0].target_scaning).toFixed(2);
+      this.$refs.completionRate.refresh()
+      this.timer = setInterval(async () => {
+        res = await taskTargetInfo(params);
+        this.taskInfo = res.targets;
+        this.option.series[0].data[0].value = Number(this.taskInfo[0].target_scaning).toFixed(2);
+        this.$refs.completionRate.refresh()
+      }, 5000);
     }
+  },
+  destroyed() {
+    clearInterval(this.timer)
   }
 };
 </script>
 <style scoped>
-.taskSchedule{
-  color: #E4E5E5;
+.taskSchedule {
+  color: #e4e5e5;
 }
-.taskSchedule div{
+.taskSchedule div {
   float: left;
 }
 </style>
