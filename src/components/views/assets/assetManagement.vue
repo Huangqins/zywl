@@ -170,6 +170,7 @@ export default {
     ...mapGetters(["userName"])
   },
   methods: {
+    
     assetsAdd() {
       this.$refs.formValidate.displayToggle()
       // this.format.assetsCreatUser = this.userName;
@@ -184,7 +185,10 @@ export default {
       //   }
       // });
     },
+    //提交
+    //删除
     remove() {},
+    //修改
     edit() {}
   }
 };
