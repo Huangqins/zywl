@@ -42,11 +42,6 @@ export default {
   mounted() {
     this.init();
   },
-  watch: {
-    // ['option.series[0].data[0].value'] (val) {
-    //   console.log(val)
-    // }
-  },
   methods: {
     init() {
       this.chart = this.$echarts.init(document.getElementById(this.id));

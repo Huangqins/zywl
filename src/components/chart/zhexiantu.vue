@@ -1,6 +1,6 @@
 <template>
    <div>
-     <chart :option="option" ref="chart" height="350px" width="400px" id="wjj"></chart>
+     <div :option="option" ref="chart" :style="style" id="wjj"></div>
    </div>
 </template>
 
@@ -10,6 +10,27 @@ export default {
   name: "zhexiantu",
   components: {
     chart
+  },
+  props:{
+    id:{
+      type:String,
+      default:""
+    },
+    option: {
+      type: Object,
+      default() {
+        return {}
+      }
+    },
+    width: {
+      type: String,
+      default: "100%"
+    },
+    height: {
+      type: String,
+      default: "100%"
+    }    
+
   },
   data() {
     return {
@@ -82,36 +103,41 @@ export default {
     clearInterval(this.mock)
   },
   mounted() {
-    function randomData() {
-      now = new Date(+now + oneDay);
-      value = value + Math.random() * 21 - 10;
+  //   function randomData() {
+  //     now = new Date(+now + oneDay);
+  //     value = value + Math.random() * 21 - 10;
+  //     return {
+  //       name: now.toString(),
+  //       value: [
+  //         [now.getFullYear(), now.getMonth() + 1, now.getDate()].join("/"),
+  //         Math.round(value)
+  //       ]
+  //     };
+  //   }
+  //   var now = +new Date(1997, 9, 3);
+  //   var oneDay = 24 * 3600 * 1000;
+  //   var value = Math.random() * 1000;
+  //   for (var i = 0; i < 80; i++) {
+  //     this.data.push(randomData());
+  //   };    
+  //  this.mock =  setInterval(() => {
+  //     for (var i = 0; i < 5; i++) {
+  //       this.data.shift();
+  //       this.data.push(randomData());
+  //     }
+  //     this.option.series[0].data = this.data;
+
+  //       this.$refs.chart.refresh();
+      
+  //   }, 1000);
+  },
+  computed: {
+     style() {
       return {
-        name: now.toString(),
-        value: [
-          [now.getFullYear(), now.getMonth() + 1, now.getDate()].join("/"),
-          Math.round(value)
-        ]
+        height: this.height,
+        width: this.width,
       };
     }
-    var now = +new Date(1997, 9, 3);
-    var oneDay = 24 * 3600 * 1000;
-    var value = Math.random() * 1000;
-    for (var i = 0; i < 80; i++) {
-      this.data.push(randomData());
-    };    
-   this.mock =  setInterval(() => {
-      for (var i = 0; i < 5; i++) {
-        this.data.shift();
-        this.data.push(randomData());
-      }
-      this.option.series[0].data = this.data;
-
-        this.$refs.chart.refresh();
-      
-    }, 1000);
-  },
-  methods: {
-
   }
 };
 </script>
