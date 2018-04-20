@@ -7,7 +7,7 @@
           <section class="assetRight">
               <div class="assetRight_header">
                 
-                <Input v-model="value14" placeholder="区域" clearable style="width: 200px"></Input>
+                <Input v-model="value" placeholder="区域" clearable style="width: 200px"></Input>
                 <Button type="primary" icon="ios-search">搜索</Button>
                 <Button type="primary" icon="compose" @click="assetsAdd()">添加</Button>
                 <Button type="primary" icon="log-in">导入</Button>
@@ -18,17 +18,62 @@
               </div>
           </section>
       </div>
+      <Modal :format="format" :data="data" :title="title" ref="formValidate" :rules="rules"></Modal>
   </div>
 </template>
 <script>
+import Modal from "components/Modal/modal";
 import page from "components/page/page";
+import assetAdd from "api/assetAdd";
+import { mapGetters } from "vuex";
+import message from "utils/message";
 export default {
   components: {
-    page
+    page,
+    Modal
   },
   data() {
     return {
-      value14: "",
+      title: "新建",
+      formValidate: false,
+      format: [
+          {label:'资产名称',type:"input"},
+          {label:'HTTP_URL_地址',type:"input"},
+          {label:'ip',type:"input"},
+          {label:'端口',type:"input"},
+          // {label:'通讯协议',type:"input"},
+          // {label:'开放服务信息',type:"input"},
+          // {label:'所属区域',type:"input"},
+          // {label:'资产类型',type:"input"},
+          // {label:'资产重要度',type:"input"},
+          // {label:'OS类型',type:"input"},
+          {label:'负责人',type:"input"}           
+
+      ],
+      data: {
+        assetsName: "",
+        assetsURL: "" ,
+        assetsIP: "", 
+        // assetsPort: "" ,
+        // assetsProto: "",
+        // assetsServers: "" ,
+        // assetsRegion: "", 
+        // assetsType: "" ,
+        // assetsImportant: "",
+        //assetsOS: "" ,
+        assetsManger: "" ,
+        assetsCreatUser:''
+      },
+      rules: {
+        assetsName: [
+          {
+            required: true,
+            message: "请填写资产名",
+            trigger: "blur"
+          }
+        ]
+      },
+      value: "",
       assets: [
         {
           title: "资产名称",
@@ -121,8 +166,24 @@ export default {
       ]
     };
   },
+  computed: {
+    ...mapGetters(["userName"])
+  },
   methods: {
-    assetsAdd() {},
+    assetsAdd() {
+      this.$refs.formValidate.displayToggle()
+      // this.format.assetsCreatUser = this.userName;
+      // assetAdd(this.format).then(res => {
+      //   if (res.result === 0) {
+      //     message("success", "添加资产成功");
+          
+      //   } else if (res.result === -1) {
+      //     message("error", "添加资产失败");
+      //   } else if (res.result === 2) {
+      //     message("error", "添加资产重复");
+      //   }
+      // });
+    },
     remove() {},
     edit() {}
   }

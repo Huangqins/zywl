@@ -1,12 +1,15 @@
 <template>
   <div>
       <Modal v-model="modal" :title="title" :loading="loading" @on-ok="asyncOK">
-        <Form ref="formValidate" :model="data" :rules="ruleValidate" :label-width="80">
+        <Form ref="formValidate" :model="data" :rules="ruleValidate" :label-width="115">
         <!-- <FormItem :label="Name" >
             <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
         </FormItem> -->
-        <FormItem v-for="(item,index) in format" :key="index" :label="item.label">
+        <FormItem v-for="(item,index) in format" :key="index" :label="item.label" >
             <template v-if="item.type === 'input'">
+                <Input  v-model="data[item.prop]"  :placeholder="item.placeholder"/>
+            </template>
+            <template v-if="item.type === 'texteara'">
                 <Input  v-model="data[item.prop]"  :placeholder="item.placeholder"/>
             </template>
         </FormItem>
@@ -18,10 +21,6 @@
 export default {
   name: "modal",
   props: {
-    modal: {
-      type: Boolean,
-      default: false
-    },
     loading: {
       type: Boolean,
       default: false
@@ -31,26 +30,41 @@ export default {
       default: ""
     },
     data: {
-        type: Object,
-        default: () => {
-            return {}
-        }
+      type: Object,
+      default: () => {
+        return {};
+      }
     },
     format: {
-        type: Array,
-        default: () => {
-            return []
-        }
+      type: Array,
+      default: () => {
+        return [];
+      }
+    },
+    ruleValidate: {
+      type: Object,
+      default: () => {
+        return {};
+      }
     }
   },
   data() {
-    return {};
+    return {
+      modal: false
+    };
   },
   methods: {
-    asyncOK() {}
+    asyncOK() {
+      
+    },
+    displayToggle() {
+      this.modal = !this.modal;
+    }
   }
 };
 </script>
-<style scoped>
-
+<style>
+.ivu-modal-body .ivu-form .ivu-form-item-label{
+    color: black;
+}
 </style>

@@ -5,25 +5,101 @@
         <chart width="235px" height="235px" :option="optipnTwo" id="taskholeNum" ref="taskholeNum"></chart>  
         <chart width="235px" height="235px" :option="optipnThree" id="holeUtilization" ref='holeUtilization'></chart>      
     </div>
-    <zhexiantu></zhexiantu>
+    <!-- <zhexiantu></zhexiantu> -->
+    <div class="clear"></div>
+    <div class="line">
+       <chart width="350px" height="400px" :option="linechart"  ref=""></chart>   
+    </div>
   </div>
 </template>
 <script>
 import chart from "components/chart/chart";
-import zhexiantu from "components/chart/zhexiantu";
+// import zhexiantu from "components/chart/zhexiantu";
 import taskTargetInfo from "api/taskTargetInfo";
 import { mapGetters } from "vuex";
-import timeLine from "api/timeLine"
+import timeLine from "api/timeLine";
+import lineChart from "api/lineChart";
+let now=new Date()
+    let year=now.getFullYear()
+    let month=now.getMonth()
+    let day=now.getDate()
+    let hours=now.getHours()
+    let minute=now.getMinutes()
+    let sec=now.getSeconds()
+    let times=year+"-"+month+"-"+day+" "+hours+":"+minute+":"+sec
 export default {
   components: {
-    chart,
-    zhexiantu
+    chart
+    // zhexiantu
   },
   data() {
     return {
-      id:"",
+      id: "",
       taskInfo: [],
-      timer: '',
+      timer: "",
+      //折线图
+      mock:'',
+      linechartdata: [],
+      linechart: {
+        title: {
+          text: "任务漏洞折线图",
+          textStyle: {
+            color: "#E4E5E5"
+          }
+        },
+        tooltip: {
+          trigger: "axis",
+          // formatter: function(params) {
+          //   params = params[0];
+          //   var date = new Date(params.name);
+          //   return (
+          //     date.getDate() +
+          //     "/" +
+          //     (date.getMonth() + 1) +
+          //     "/" +
+          //     date.getFullYear() +
+          //     " : " +
+          //     params.value[1]
+          //   );
+          // },
+          axisPointer: {
+            animation: false
+          }
+        },
+        xAxis: {
+          type: "time",
+          splitLine: {
+            show: false
+          },
+          axisLine: {
+            lineStyle: {
+              color: "#E4E5E5"
+            }
+          }
+        },
+        yAxis: {
+          type: "value",
+          boundaryGap: [0, "100%"],
+          splitLine: {
+            show: false
+          },
+          axisLine: {
+            lineStyle: {
+              color: "white"
+            }
+          }
+        },
+        series: [
+          {
+            name: "模拟数据",
+            type: "line",
+            showSymbol: false,
+            hoverAnimation: false,
+            linechartdata: []
+          }
+        ]
+      },
+      //任务完成率
       option: {
         tooltip: {
           formatter: "{a} <br/>{b} : {c}%"
@@ -33,13 +109,13 @@ export default {
             name: "业务指标",
             type: "gauge",
             radius: "85%",
-            detail: { formatter: "{value}%", fontSize: 18 },
+            detail: { formatter: "{value}%", fontSize: 20 },
             data: [{ value: 0, name: "完成率" }],
             title: { color: "#E4E5E5", fontSize: 12 },
             splitLine: { show: false },
             axisTick: { show: false },
+            pointer: { show: false },
             axisLabel: { show: false, distance: 0 },
-            pointer: { length: "30%", show: true, width: 4 },
             axisLine: {
               lineStyle: {
                 color: [[0.2, "#66AB31"], [0.8, "#1A9348"], [1, "#21B4D2"]]
@@ -57,13 +133,13 @@ export default {
             name: "业务指标",
             type: "gauge",
             radius: "85%",
-            detail: { formatter: "{value}", fontSize: 18 },
+            detail: { formatter: "{value}", fontSize: 20 },
             data: [{ value: 0, name: "任务漏洞量" }],
             title: { color: "#E4E5E5", fontSize: 12 },
             splitLine: { show: false },
             axisTick: { show: false },
+            pointer: { show: false },
             axisLabel: { show: false, distance: 0 },
-            pointer: { length: "30%", show: true, width: 4 },
             axisLine: {
               lineStyle: {
                 color: [[0.2, "#66AB31"], [0.8, "#1A9348"], [1, "#21B4D2"]]
@@ -81,13 +157,13 @@ export default {
             name: "业务指标",
             type: "gauge",
             radius: "85%",
-            detail: { formatter: "{value}%", fontSize: 18 },
+            detail: { formatter: "{value}%", fontSize: 20 },
             data: [{ value: 30, name: "漏洞利用率" }],
             title: { color: "#E4E5E5", fontSize: 12 },
             splitLine: { show: false },
             axisTick: { show: false },
+            pointer: { show: false },
             axisLabel: { show: false, distance: 0 },
-            pointer: { length: "30%", show: true, width: 4 },
             axisLine: {
               lineStyle: {
                 color: [[0.2, "#66AB31"], [0.8, "#1A9348"], [1, "#21B4D2"]]
@@ -99,14 +175,6 @@ export default {
     };
   },
   computed: {
-    
-    // optipnTwo() {
-    //   setInterval(() => {
-    //     this.optiontwo.series[0].data[0].value =
-    //       (Math.random() * 100).toFixed(2) - 0;
-    //   }, 2000);
-    //   return this.optiontwo;
-    // },
     optipnThree() {
       setInterval(() => {
         this.optionthree.series[0].data[0].value =
@@ -116,40 +184,84 @@ export default {
     },
     ...mapGetters(["userName"])
   },
+  mounted(){
+  function randomData() {
+      now = new Date(+now + oneDay);
+      value = value + Math.random() * 21 - 10;
+      return {
+        name: now.toString(),
+        value: [
+          [now.getFullYear(), now.getMonth() + 1, now.getDate()].join("/"),
+          Math.round(value)
+        ]
+      };
+    }
+    var now = +new Date();
+    var oneDay = 24 * 3600 * 1000;
+    var value = Math.random() * 1000;
+    for (var i = 0; i < 80; i++) {
+      this.linechartdata.push(randomData());
+    };    
+    // this.mock =  setInterval(() => {
+    //   for (var i = 0; i < 5; i++) {
+    //     this.linechartdata.shift();
+    //     this.linechartdata.push(randomData());
+    //   }
+    //   this.linechart.series[0].linechartdata = this.linechartdata;
+
+    //     this.$refs.linechart.refresh();
+      
+    // }, 1000);
+  },
   created() {
     const params = { userName: this.userName, targetStruts: 0 };
     this._taskTargetInfo(params);
-    
   },
   methods: {
+    //折线图
+    _lineChart(params){
+      lineChart(params).then(res=>{
+           console.log(res)      
+      })
+      
+    },
+    //任务完成情况
     async _taskTargetInfo(params) {
       let res = await taskTargetInfo(params);
       if (res.targets.length > 0) {
-         this.taskInfo = res.targets;
-      this.id = res.targets[0].target_id
-      this._timeLine({taskID: this.id});
-      this.option.series[0].data[0].value = Number(this.taskInfo[0].target_scaning).toFixed(2);
-      this.$refs.completionRate.refresh()
-      this.$refs.taskholeNum.refresh()
-      this.timer = setInterval(async () => {
-        res = await taskTargetInfo(params);
-        this.taskInfo = res.targets; 
-        this._timeLine({taskID: this.id});
-        this.option.series[0].data[0].value = Number(this.taskInfo[0].target_scaning).toFixed(2);
-        this.$refs.completionRate.refresh()
-        this.$refs.taskholeNum.refresh()
-      }, 5000);
+        this.taskInfo = res.targets;
+        this.id = res.targets[0].target_id;
+        this._timeLine({ taskID: this.id });
+        this._lineChart({taskID: this.id,currentTime:this.times})
+        this.option.series[0].data[0].value = Number(
+          this.taskInfo[0].target_scaning
+        ).toFixed(2);
+        this.$refs.completionRate.refresh();
+        this.$refs.taskholeNum.refresh();
+        this.timer = setInterval(async () => {
+          res = await taskTargetInfo(params);
+          this.taskInfo = res.targets;
+          //this._lineChart({taskID: this.id,currentTime:this.times})
+          this._timeLine({ taskID: this.id });
+          this.option.series[0].data[0].value = Number(
+            this.taskInfo[0].target_scaning
+          ).toFixed(2);
+          this.$refs.completionRate.refresh();
+          this.$refs.taskholeNum.refresh();
+        }, 5000);
       }
     },
-     _timeLine(params){
-     timeLine(params).then(res => {
-       this.optipnTwo.series[0].data[0].value = res.vulnNum
-     })
+    _timeLine(params) {
+      timeLine(params).then(res => {
+        this.optipnTwo.series[0].data[0].value = res.vulnNum;
+      });
     }
   },
   destroyed() {
-    clearInterval(this.timer)
-  }
+    clearInterval(this.timer);
+  },
+  
+    
 };
 </script>
 <style scoped>
@@ -158,5 +270,11 @@ export default {
 }
 .taskSchedule div {
   float: left;
+}
+.line{
+  width: 100%;
+}
+.clear{
+  clear: both;
 }
 </style>
