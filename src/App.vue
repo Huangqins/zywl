@@ -25,9 +25,12 @@ body {
   width: 100%;
   height: 100%;
   position: relative;
-  background: #171d25;
-  background: linear-gradient(top, #13181e, #181e26 88%);
   z-index: -9999;
+}
+body {
+    background: #171d25;
+    background: linear-gradient(top, #13181e, #181e26 88%);
+    background: -webkit-gradient(linear, left top, left bottom, from(#13181e), color-stop(88%, #181e26));
 }
 #app {
   font-family: sans-serif;
@@ -35,7 +38,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   min-width: 1200px;
   height: 100%;
-  color: white;
   background: url("./assets/bg.png") repeat 0 0;
   background-size: 256px 150px;
   overflow: hidden;

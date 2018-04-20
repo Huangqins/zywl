@@ -11,7 +11,7 @@
         <div class="clear"></div>
         <div class="list">
           <h2>漏洞列表</h2>
-            <page :columns="leaksColums" :data="leaksList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading"></page>
+            <page :columns="leaksColums" :data="leaksList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" ></page>
         </div>
   </div>
 </template>
