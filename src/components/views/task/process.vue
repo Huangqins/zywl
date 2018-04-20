@@ -13,7 +13,8 @@ import chart from "components/chart/chart";
 import zhexiantu from "components/chart/zhexiantu";
 import taskTargetInfo from "api/taskTargetInfo";
 import { mapGetters } from "vuex";
-import timeLine from "api/timeLine"
+import timeLine from "api/timeLine";
+import { fomatterTime } from '@/utils/tool';
 export default {
   components: {
     chart,
@@ -127,7 +128,8 @@ export default {
       if (res.targets.length > 0) {
          this.taskInfo = res.targets;
       this.id = res.targets[0].target_id
-      this._timeLine({taskID: this.id});
+      // this._timeLine({taskID: this.id,currentTime: fomatterTime(new Date())});
+       this._timeLine({taskID: this.id});
       this.option.series[0].data[0].value = Number(this.taskInfo[0].target_scaning).toFixed(2);
       this.$refs.completionRate.refresh()
       this.$refs.taskholeNum.refresh()

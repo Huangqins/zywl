@@ -1,6 +1,6 @@
 <template>
 <div>
- <Table  :columns="columns" :data="data"  :loading="loading"></Table>
+ <Table  :columns="columns" :data="data"  :loading="loading" :height="height"></Table>
  
   <Page :total="dataTotal" size="small" :current="current" :placement="placement"  :page-size-opts="pageSizeOpts" show-total  show-sizer 
   @on-change="onPageChange" @on-page-size-change="onChangehandle" show-elevator></Page>
@@ -42,6 +42,10 @@ export default {
     placement: {
       type: String,
       default: "bottom"
+    },
+    height: {
+      type: Number,
+      default: 308
     }
   },
   data() {
@@ -56,8 +60,8 @@ export default {
         this.$emit("dataLoad", { page: pageSize, rows: this.pageNum });
       } else {
         this.pageSize = pageSize;
-        console.log( { page: this.pageSize, rows: this.pageNum })
-        // this.$emit("dataLoad", { page: this.pageSize, rows: this.pageNum });
+        // console.log( { page: this.pageSize, rows: this.pageNum })
+        this.$emit("dataLoad", { page: this.pageSize, rows: this.pageNum });
       }
     },
     onChangehandle(pageNum) {

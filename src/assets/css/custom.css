@@ -38,31 +38,32 @@
 /* table */
 
 .ivu-table .demo-table-info-row td {
-    background-color: rgba(23,29,37);
+    background-color: rgba(23, 29, 37);
     color: #E4E5E5;
 }
 
 .ivu-table-header th {
-    background-color: rgba(23,29,37);
+    background-color: rgba(23, 29, 37);
     color: #E4E5E5;
 }
 
 .ivu-table-border td,
 .ivu-table-border th {
-    border-right:none;
+    border-right: none;
 }
 
 .ivu-table-wrapper {
-    border: 1px solid rgb(33,38,47);
+    border: 1px solid rgb(33, 38, 47);
     border-bottom: 0;
 }
+
 .ivu-table-tip {
     overflow-x: hidden;
 }
 
 .ivu-table td,
 .ivu-table th {
-    border-bottom: 1px solid rgb(33,38,47);
+    border-bottom: 1px solid rgb(33, 38, 47);
 }
 
 .ivu-table::before {
@@ -74,18 +75,24 @@
 }
 
 .ivu-table-body {
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 .ivu-table-tip table td {
     background-color: rgba(18, 62, 101);
     color: #E4E5E5;
 }
-.ivu-select-single .ivu-select-selection{
+
+.ivu-select-single .ivu-select-selection {
     background: rgba(45, 140, 240, 0);
     border: 1px solid #5D90BB;
     color: #dddee1;
 }
-.ivu-page .mini{
-padding-top: 3px;
+
+.ivu-page .mini {
+    padding-top: 3px;
+}
+
+.ivu-table-overflowY {
+    overflow-y: auto;
 }
