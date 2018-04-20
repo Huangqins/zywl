@@ -1,6 +1,6 @@
 <template>
   <div>
-      <Modal v-model="modal" :title="title" :loading="loading" @on-ok="asyncOK">
+      <Modal v-model="displayModal" :title="title" :loading="loading" @on-ok="asyncOK">
         <Form ref="formValidate" :model="data" :rules="ruleValidate" :label-width="115">
         <!-- <FormItem :label="Name" >
             <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
@@ -46,6 +46,17 @@ export default {
       default: () => {
         return {};
       }
+    },
+    display: {
+      type: Boolean,
+      default: false
+    }
+  },
+  computed: {
+    displayModal() {
+      set: () => {
+         return this.display
+      }   
     }
   },
   data() {
@@ -55,10 +66,8 @@ export default {
   },
   methods: {
     asyncOK() {
-      
-    },
-    displayToggle() {
-      this.modal = !this.modal;
+      // console.log('11')
+      this.$emit('submit', this.data)
     }
   }
 };

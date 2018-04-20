@@ -6,23 +6,24 @@
           </section>
           <section class="assetRight">
               <div class="assetRight_header">
-                
                 <Input v-model="value" placeholder="区域" clearable style="width: 200px"></Input>
                 <Button type="primary" icon="ios-search">搜索</Button>
-                <Button type="primary" icon="compose" @click="assetsAdd()">添加</Button>
+                <Button type="primary" icon="compose" @click="assetsAdd">添加</Button>
                 <Button type="primary" icon="log-in">导入</Button>
                 <Button type="primary" icon="log-out">导出</Button>
               </div>
               <div class="assetRight_content">
-                  <page :columns="assets" :data="assetsList"></page>
+                  <page :columns="assets" :data="assetsList">
+
+                  </page>
               </div>
           </section>
       </div>
-      <Modal :format="format" :data="data" :title="title" ref="formValidate" :rules="rules"></Modal>
+      <Modals :format="format" :data="data" :title="title" ref="formValidate" :rules="rules" @submit="asyncok" :display="display"></Modals>
   </div>
 </template>
 <script>
-import Modal from "components/Modal/modal";
+import Modals from "components/Modal/modal";
 import page from "components/page/page";
 import assetAdd from "api/assetAdd";
 import { mapGetters } from "vuex";
@@ -30,39 +31,37 @@ import message from "utils/message";
 export default {
   components: {
     page,
-    Modal
+    Modals
   },
   data() {
     return {
       title: "新建",
       formValidate: false,
       format: [
-          {label:'资产名称',type:"input"},
-          {label:'HTTP_URL_地址',type:"input"},
-          {label:'ip',type:"input"},
-          {label:'端口',type:"input"},
-          // {label:'通讯协议',type:"input"},
-          // {label:'开放服务信息',type:"input"},
-          // {label:'所属区域',type:"input"},
-          // {label:'资产类型',type:"input"},
-          // {label:'资产重要度',type:"input"},
-          // {label:'OS类型',type:"input"},
-          {label:'负责人',type:"input"}           
-
+        { label: "资产名称", type: "input", prop: "assets_name" },
+        { label: "HTTP_URL_地址", type: "input", prop: "assets_url" },
+        { label: "ip", type: "input", prop: "assets_ip" },
+        // {label:'通讯协议',type:"input"},
+        // {label:'开放服务信息',type:"input"},
+        // {label:'所属区域',type:"input"},
+        // {label:'资产类型',type:"input"},
+        // {label:'资产重要度',type:"input"},
+        // {label:'OS类型',type:"input"},
+        { label: "负责人", type: "input", prop: "assetsManger" }
       ],
       data: {
-        assetsName: "",
-        assetsURL: "" ,
-        assetsIP: "", 
+        assets_name: "",
+        assets_url: "",
+        assets_ip: "",
         // assetsPort: "" ,
         // assetsProto: "",
         // assetsServers: "" ,
-        // assetsRegion: "", 
+        // assetsRegion: "",
         // assetsType: "" ,
         // assetsImportant: "",
         //assetsOS: "" ,
-        assetsManger: "" ,
-        assetsCreatUser:''
+        assetsManger: ""
+        // assetsCreatUser:''
       },
       rules: {
         assetsName: [
@@ -86,7 +85,7 @@ export default {
           align: "center"
         },
         {
-          title: "端口",
+          title: "url",
           key: "assets_url",
           align: "center"
         },
@@ -122,7 +121,10 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.edit(params.index);
+                      // this.edit(params.index);
+                      this.data = Object.assign({}, this.data, params.row);
+                      console.log(params.row);
+                      this.modalOpen();
                     }
                   }
                 },
@@ -137,7 +139,8 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.remove(params.index);
+                      // this.remove(params.index);
+                      // console.log(params)
                     }
                   }
                 },
@@ -147,20 +150,24 @@ export default {
           }
         }
       ],
+      display: false,
       assetsList: [
         {
           assets_name: "John Brown",
           assets_ip: 18,
+          assets_url: "www",
           assets_os_type: "New York No. 1 Lake Park"
         },
         {
           assets_name: "Jim Green",
           assets_ip: 24,
+          assets_url: "www1",
           assets_os_type: "London No. 1 Lake Park"
         },
         {
           assets_name: "Joe Black",
           assets_ip: 30,
+          assets_url: "www2",
           assets_os_type: "Sydney No. 1 Lake Park"
         }
       ]
@@ -170,14 +177,19 @@ export default {
     ...mapGetters(["userName"])
   },
   methods: {
-    
+    modalOpen() {
+      this.display = true
+    },
     assetsAdd() {
-      this.$refs.formValidate.displayToggle()
+      this.modalOpen()
+     
+      // this.$refs.formValidate.displayToggle();
+      // this.$refs.formValidate.submit()
       // this.format.assetsCreatUser = this.userName;
       // assetAdd(this.format).then(res => {
       //   if (res.result === 0) {
       //     message("success", "添加资产成功");
-          
+
       //   } else if (res.result === -1) {
       //     message("error", "添加资产失败");
       //   } else if (res.result === 2) {
@@ -186,6 +198,12 @@ export default {
       // });
     },
     //提交
+    asyncok(data) {
+      console.log(data);
+    
+         this.modalOpen()
+      
+    },
     //删除
     remove() {},
     //修改
