@@ -13,7 +13,9 @@
                 <Button type="primary" icon="log-out">导出</Button>
               </div>  
               <div class="assetRight_content">
-                  <page :columns="assets" :data="assetsList"> </page>
+                  <page :columns="assets" :data="assetsList">
+
+                  </page>
               </div>
           </section>
       </div>
@@ -26,6 +28,7 @@ import page from "components/page/page";
 import assetAdd from "api/assetAdd";
 import { mapGetters } from "vuex";
 import message from "utils/message";
+import assetsInfo from "api/assetsInfo";
 export default {
   components: {
     page,
@@ -37,17 +40,17 @@ export default {
       title: "新建",
       formValidate: false,
       format: [
-        { label: "资产名称", type: "input", prop: "Assets_name" },
-        { label: "HTTP_URL_地址", type: "input", prop: "Assets_url" },
-        { label: "ip", type: "input", prop: "Assets_ip" },
-        { label: "负责人", type: "input", prop: "Assets_manger" }
+        { label: "资产名称", type: "input", prop: "assets_name" },
+        { label: "HTTP_URL_地址", type: "input", prop: "assets_url" },
+        { label: "ip", type: "input", prop: "assets_ip" },
+        { label: "负责人", type: "input", prop: "assets_manger" }
       ],
       data: {
-        Assets_name: "",
-        Assets_url: "",
-        Assets_ip: "",
-        Assets_manger: "",
-        Assets_creatuser: ""
+        assets_name: "",
+        assets_url: "",
+        assets_ip: "",
+        assets_manger: "",
+        assets_creatuser: ""
       },
       rules: {
         assetsName: [
@@ -62,17 +65,17 @@ export default {
       assets: [
         {
           title: "资产名称",
-          key: "Assets_name",
+          key: "assets_name",
           align: "center"
         },
         {
           title: "ip",
-          key: "Assets_ip",
+          key: "assets_ip",
           align: "center"
         },
         {
           title: "url",
-          key: "Assets_url",
+          key: "assets_url",
           align: "center"
         },
         {
@@ -138,11 +141,23 @@ export default {
         }
       ],
       display: false,
-      assetsList: []
+      assetsList: [],
+      defaultPage: {
+        area: 0,
+        rows: 10,
+        page: 1
+      },
     };
   },
   computed: {
     ...mapGetters(["userName"])
+  },
+  created() {
+    const params = Object.assign({},this.defaultPage)
+    assetsInfo(params).then(res => {
+      console.log(res)
+      // this.assetsList = res.rows
+    })
   },
   methods: {
     // modalOpen() {
@@ -163,7 +178,7 @@ export default {
     },
 
     //删除
-    remove({}) {},
+    remove() {},
     //修改
     update(data) {}
   }
