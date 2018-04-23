@@ -29,6 +29,7 @@ import assetAdd from "api/assetAdd";
 import { mapGetters } from "vuex";
 import message from "utils/message";
 import assetsInfo from "api/assetsInfo";
+
 export default {
   components: {
     page,
@@ -146,18 +147,18 @@ export default {
         area: 0,
         rows: 10,
         page: 1
-      },
+      }
     };
   },
   computed: {
     ...mapGetters(["userName"])
   },
   created() {
-    const params = Object.assign({},this.defaultPage)
+    const params = Object.assign({}, this.defaultPage);
     assetsInfo(params).then(res => {
-      console.log(res)
+      console.log(res);
       // this.assetsList = res.rows
-    })
+    });
   },
   methods: {
     // modalOpen() {

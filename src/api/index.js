@@ -4,11 +4,17 @@ projectPath: 项目路径
 */
 
 import request from '@/utils/request'
-const fs = require('fs')
-const apiJSON = require('./api.json')
-const apiFile = JSON.parse(fs.readFileSync(apiJSON))
-
-
+// const fs = require('fs');
+// console.log(fs)
+// const apiJSON = require('./api.json')
+const apiFile = {
+    "userLogin": {
+      "method": "post",
+      "url": "user/userLogin",
+      "data": {}
+    }
+  }
+  
 const baseConfig = {
   projectPath: '/ZY/'
 }
@@ -16,21 +22,22 @@ const baseConfig = {
 let api = {}
 
 for (let i in apiFile) {
-    if (i === "url") {
-        api[url] = `${baseConfig}apiFile[i]`
-    } else {
         api[i] = apiFile[i]
-    }
+        api[i].url = `${baseConfig.projectPath}`+ apiFile[i].url
 }
+console.log(api)
 
-export default function createApi() {
-  const allPath = api.keys()
-  const exportApi = {}
+let exportApi = {}
+
+function createApi() {
+  const allPath = Object.keys(api)
   for (let key of allPath) {
     let params = api[key]
-    exportApi[key] = {
-      request(params)
+    exportApi[key] =  () => {
+        return request(params)
     }
-  }
-  return 
+  } 
 }
+createApi()
+
+export default {}
