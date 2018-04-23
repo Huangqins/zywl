@@ -13,7 +13,7 @@
                 <Button type="primary" icon="log-out">导出</Button>
               </div>  
               <div class="assetRight_content">
-                  <page :columns="assets" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading"> 
+                  <page :columns="assets" :data="assetsList">
 
                   </page>
               </div>
@@ -29,8 +29,7 @@ import assetAdd from "api/assetAdd";
 import { mapGetters } from "vuex";
 import message from "utils/message";
 import assetsInfo from "api/assetsInfo";
-import assetsDel from "api/assetsDel";
-import updateAssets from "api/updateAssets";
+
 export default {
   components: {
     page,
@@ -38,7 +37,6 @@ export default {
   },
   data() {
     return {
-      total: 0,
       loading: false,
       title: "新建",
       formValidate: false,
@@ -52,7 +50,8 @@ export default {
         assets_name: "",
         assets_url: "",
         assets_ip: "",
-        assets_manger: ""
+        assets_manger: "",
+        assets_creatuser: ""
       },
       rules: {
         assetsName: [
@@ -116,6 +115,7 @@ export default {
                       // 打开
                       this.$refs.formValidate.open();
                       // 调用修改方法
+                      this.update(this.data);
                     }
                   }
                 },
@@ -130,7 +130,6 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.assetDel(params.row);
                       // this.remove(params.index);
                       // console.log(params)
                     }
@@ -156,62 +155,33 @@ export default {
   },
   created() {
     const params = Object.assign({}, this.defaultPage);
-    this._assetsInfo(params);
+    assetsInfo(params).then(res => {
+      console.log(res);
+      // this.assetsList = res.rows
+    });
   },
   methods: {
     // modalOpen() {
     //   this.display = true
     // },
-    _assetsInfo(params) {
-      assetsInfo(params).then(res => {
-        this.loading = true;
-        if (res.result === 0) {
-          this.loading = false;
-          this.assetsList = res.rows;
-          this.total = res.total;
-        }
-      });
-    },
-    dataLoad(paramsObj) {
-      const params = Object.assign({}, this.defaultPage, paramsObj, {
-        area: 0
-      });
-      this._assetsInfo(params);
-    },
     assetsAdd() {
       this.$refs.formValidate.open();
       this.data = {};
     },
     //提交
     asyncOK(data) {
-      if (!data.assets_id) {
-        assetAdd(data).then(res => {
-          if (res.result === 0) {
-            this.$refs.formValidate.close();
-            
-          } else {
-            this.$refs.formValidate.open();
-          }
-        });
-      } else {
-        this.update(data)
-      }
-      this.data.assets_creatuser = this.userName;
       //  console.log(data)
+      assetAdd(data).then(res => {
+        console.log(res);
+      });
+
+      // this.$refs.formValidate.close();
     },
 
     //删除
-    assetDel(params) {
-      assetsDel(params).then(res => {
-        console.log(res);
-      });
-    },
+    remove() {},
     //修改
-    update(data) {
-      updateAssets(data).then(res => {
-        console.log(res);
-      });
-    }
+    update(data) {}
   }
 };
 </script>

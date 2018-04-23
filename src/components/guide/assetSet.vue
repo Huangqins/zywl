@@ -4,10 +4,10 @@
   <div class="entry">
        <Form :model="formItem" :label-width="80" ref="formItem" :rules="ruleValidate" >
        <FormItem label="任务名称">
-            <Input v-model="formItem.taskName" placeholder="请输入"/>
+            <Input v-model="formItem.target_name" placeholder="请输入"/>
        </FormItem>
           <FormItem label="扫描策略">
-             <Select v-model="formItem.strategy">
+             <Select v-model="formItem.target_teststra">
                 <Option v-for="(item,index) in strategyRule" :key="index" :value="item.rule_key">{{item.rule_name}}</Option>
              </Select>
           </FormItem>  
@@ -29,17 +29,17 @@
             </Row>
           </FormItem>
           <FormItem label="周期" prop="cycle">
-            <Select v-model="formItem.cycle">
+            <Select v-model="formItem.target_cycle">
                 <Option v-for="(item,index) in cycleRule" :key="index" :value="item.rule_key">{{item.rule_name}}</Option>
             </Select>
           </FormItem>
           <FormItem label="资产url">
               
-            <Input v-model="formItem.assetsUrl" placeholder="请输入"/>
+            <Input v-model="formItem.target_url" placeholder="请输入"/>
           </FormItem>
           <FormItem label="资产ip">
               
-                <Input v-model="formItem.assetsIp" placeholder="请输入"/>
+                <Input v-model="formItem.target_ip" placeholder="请输入"/>
           </FormItem>
           <FormItem>
               <Button type="info" @click="cancel">取消</Button>
@@ -62,13 +62,12 @@ export default {
   data() {
     return {
       formItem: {
-        taskName: "",
-        strategy: "0",
-        startTime: "",
-        cycle: "0",
-        disabledGroup: "常规执行",
-        assetsUrl: "",
-        assetsIp: "",
+        target_name: "",
+        target_teststra: "0",
+        target_starttime: "",
+        target_cycle: "0",
+        target_url: "",
+        target_ip: "",
         userName: "",
       },
       strategyRule: [],
@@ -116,7 +115,7 @@ export default {
       }
     },
     timeChange(date) {
-      this.formItem.startTime = date;
+      this.formItem.target_starttime = date;
     },
     cancel() {
       //    跳到任务管理页面
