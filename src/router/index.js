@@ -116,6 +116,11 @@ const AssetManagement = (resolve) => {
         resolve(module)
     })
 }
+const Kbinfo = (resolve) => {
+    import('components/views/knowledgebase/kbinfo').then(module => {
+        resolve(module)
+    })
+}
 const router = new VueRouter({
     // mode: 'history',
     routes: [
@@ -193,6 +198,10 @@ const router = new VueRouter({
         {
             path: '/assetManagement',
             component: AssetManagement
+        },
+        {
+            path: '/kbinfo',
+            component: Kbinfo
         },
         {   
             name: 'taskexecution',
