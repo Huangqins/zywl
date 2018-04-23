@@ -10,7 +10,19 @@
              <Select v-model="formItem.strategy">
                 <Option v-for="(item,index) in strategyRule" :key="index" :value="item.rule_key">{{item.rule_name}}</Option>
              </Select>
+          </FormItem>  
+          <template v-if="formItem.strategy==='depth'">        
+          <FormItem label="账号"   >
+            <Row>
+                <Input v-model="formItem.taskName"  placeholder="请输入您所扫描地址的账号" style="width:420px;"  ></Input>
+            </Row>
           </FormItem>
+          <FormItem label="密码" >
+            <Row>
+                <Input v-model="formItem.taskName" type="password" placeholder="请输入您所扫描地址的密码" style="width:420px;"  ></Input>
+            </Row>
+          </FormItem>
+          </template>
           <FormItem label="开始时间" prop="startTime">
             <Row>
                 <DatePicker type="datetime" placeholder="开始时间" style="width:420px;"  @on-change="timeChange"></DatePicker>
@@ -57,7 +69,7 @@ export default {
         disabledGroup: "常规执行",
         assetsUrl: "",
         assetsIp: "",
-        userName: ""
+        userName: "",
       },
       strategyRule: [],
       cycleRule: [],
@@ -89,6 +101,7 @@ export default {
     this._getRule(strategy);
     this._getRule(cycle);
   },
+
   methods: {
     async _getRule(params) {
       const res = await getRule(params);

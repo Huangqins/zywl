@@ -13,9 +13,7 @@
                 <Button type="primary" icon="log-out">导出</Button>
               </div>
               <div class="assetRight_content">
-                  <page :columns="assets" :data="assetsList">
-
-                  </page>
+                  <page :columns="assets" :data="assetsList"> </page>
               </div>
           </section>
       </div>

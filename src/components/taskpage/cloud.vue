@@ -81,7 +81,7 @@ export default {
 </script>
 <style>
 #vis{
-  margin-top: 150px;
+  margin-top: 270px;
 }
 </style>
 
