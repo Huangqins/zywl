@@ -123,7 +123,6 @@ export default {
                     click: () => {
                       // this.edit(params.index);
                       this.data = Object.assign({}, this.data, params.row);
-                      console.log(params.row);
                       this.modalOpen();
                     }
                   }
