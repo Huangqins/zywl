@@ -1,0 +1,7 @@
+{
+  "userLogin": {
+    "method": "post",
+    "url": "user/userLogin",
+    "data": {}
+  }
+}
