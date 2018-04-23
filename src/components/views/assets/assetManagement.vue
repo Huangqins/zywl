@@ -11,13 +11,13 @@
                 <Button type="primary" icon="compose" @click="assetsAdd">添加</Button>
                 <Button type="primary" icon="log-in">导入</Button>
                 <Button type="primary" icon="log-out">导出</Button>
-              </div>
+              </div>  
               <div class="assetRight_content">
                   <page :columns="assets" :data="assetsList"> </page>
               </div>
           </section>
       </div>
-      <Modals :format="format" :data="data" :title="title" ref="formValidate" :rules="rules" @submit="asyncok" :display="display"></Modals>
+      <Modals :format="format" :data="data" :title="title" ref="formValidate" :rules="rules" @asyncOK="asyncOK" :display="display"  :loading="loading"></Modals>
   </div>
 </template>
 <script>
@@ -33,33 +33,21 @@ export default {
   },
   data() {
     return {
+      loading: false,
       title: "新建",
       formValidate: false,
       format: [
-        { label: "资产名称", type: "input", prop: "assets_name" },
-        { label: "HTTP_URL_地址", type: "input", prop: "assets_url" },
-        { label: "ip", type: "input", prop: "assets_ip" },
-        // {label:'通讯协议',type:"input"},
-        // {label:'开放服务信息',type:"input"},
-        // {label:'所属区域',type:"input"},
-        // {label:'资产类型',type:"input"},
-        // {label:'资产重要度',type:"input"},
-        // {label:'OS类型',type:"input"},
-        { label: "负责人", type: "input", prop: "assetsManger" }
+        { label: "资产名称", type: "input", prop: "Assets_name" },
+        { label: "HTTP_URL_地址", type: "input", prop: "Assets_url" },
+        { label: "ip", type: "input", prop: "Assets_ip" },
+        { label: "负责人", type: "input", prop: "Assets_manger" }
       ],
       data: {
-        assets_name: "",
-        assets_url: "",
-        assets_ip: "",
-        // assetsPort: "" ,
-        // assetsProto: "",
-        // assetsServers: "" ,
-        // assetsRegion: "",
-        // assetsType: "" ,
-        // assetsImportant: "",
-        //assetsOS: "" ,
-        assetsManger: ""
-        // assetsCreatUser:''
+        Assets_name: "",
+        Assets_url: "",
+        Assets_ip: "",
+        Assets_manger: "",
+        Assets_creatuser: ""
       },
       rules: {
         assetsName: [
@@ -74,17 +62,17 @@ export default {
       assets: [
         {
           title: "资产名称",
-          key: "assets_name",
+          key: "Assets_name",
           align: "center"
         },
         {
           title: "ip",
-          key: "assets_ip",
+          key: "Assets_ip",
           align: "center"
         },
         {
           title: "url",
-          key: "assets_url",
+          key: "Assets_url",
           align: "center"
         },
         {
@@ -119,9 +107,11 @@ export default {
                   },
                   on: {
                     click: () => {
-                      // this.edit(params.index);
                       this.data = Object.assign({}, this.data, params.row);
-                      this.modalOpen();
+                      // 打开
+                      this.$refs.formValidate.open();
+                      // 调用修改方法
+                      this.update(this.data);
                     }
                   }
                 },
@@ -148,63 +138,34 @@ export default {
         }
       ],
       display: false,
-      assetsList: [
-        {
-          assets_name: "John Brown",
-          assets_ip: 18,
-          assets_url: "www",
-          assets_os_type: "New York No. 1 Lake Park"
-        },
-        {
-          assets_name: "Jim Green",
-          assets_ip: 24,
-          assets_url: "www1",
-          assets_os_type: "London No. 1 Lake Park"
-        },
-        {
-          assets_name: "Joe Black",
-          assets_ip: 30,
-          assets_url: "www2",
-          assets_os_type: "Sydney No. 1 Lake Park"
-        }
-      ]
+      assetsList: []
     };
   },
   computed: {
     ...mapGetters(["userName"])
   },
   methods: {
-    modalOpen() {
-      this.display = true
-    },
+    // modalOpen() {
+    //   this.display = true
+    // },
     assetsAdd() {
-      this.modalOpen()
-     
-      // this.$refs.formValidate.displayToggle();
-      // this.$refs.formValidate.submit()
-      // this.format.assetsCreatUser = this.userName;
-      // assetAdd(this.format).then(res => {
-      //   if (res.result === 0) {
-      //     message("success", "添加资产成功");
-
-      //   } else if (res.result === -1) {
-      //     message("error", "添加资产失败");
-      //   } else if (res.result === 2) {
-      //     message("error", "添加资产重复");
-      //   }
-      // });
+      this.$refs.formValidate.open();
+      this.data = {};
     },
     //提交
-    asyncok(data) {
-      console.log(data);
-    
-         this.modalOpen()
-      
+    asyncOK(data) {
+      //  console.log(data)
+      assetAdd(data).then(res => {
+        console.log(res);
+      });
+
+      // this.$refs.formValidate.close();
     },
+
     //删除
-    remove() {},
+    remove({}) {},
     //修改
-    edit() {}
+    update(data) {}
   }
 };
 </script>

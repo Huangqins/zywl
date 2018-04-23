@@ -1,10 +1,7 @@
 <template>
   <div>
-      <Modal v-model="displayModal" :title="title" :loading="loading" @on-ok="asyncOK">
+      <Modal v-model="modal" :title="title" :loading="loading" @on-ok="asyncOK">
         <Form ref="formValidate" :model="data" :rules="ruleValidate" :label-width="115">
-        <!-- <FormItem :label="Name" >
-            <Input v-model="formValidate.name" placeholder="Enter your name"></Input>
-        </FormItem> -->
         <FormItem v-for="(item,index) in format" :key="index" :label="item.label" >
             <template v-if="item.type === 'input'">
                 <Input  v-model="data[item.prop]"  :placeholder="item.placeholder"/>
@@ -14,6 +11,7 @@
             </template>
         </FormItem>
         </Form>
+        <slot/>
       </Modal>
   </div>
 </template>
@@ -21,10 +19,6 @@
 export default {
   name: "modal",
   props: {
-    loading: {
-      type: Boolean,
-      default: false
-    },
     title: {
       type: String,
       default: ""
@@ -46,34 +40,30 @@ export default {
       default: () => {
         return {};
       }
-    },
-    display: {
-      type: Boolean,
-      default: false
-    }
-  },
-  computed: {
-    displayModal() {
-      set: () => {
-         return this.display
-      }   
     }
   },
   data() {
     return {
-      modal: false
+      modal: false,
+      loading: true
     };
   },
   methods: {
     asyncOK() {
-      // console.log('11')
-      this.$emit('submit', this.data)
+      // 传递数据
+      this.$emit("asyncOK", this.data);
+    },
+    open() {
+      this.modal = true;
+    },
+    close() {
+      this.modal = false;
     }
   }
 };
 </script>
 <style>
-.ivu-modal-body .ivu-form .ivu-form-item-label{
-    color: black;
+.ivu-modal-body .ivu-form .ivu-form-item-label {
+  color: black;
 }
 </style>
