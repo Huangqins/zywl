@@ -19,14 +19,16 @@ import taskTargetInfo from "api/taskTargetInfo";
 import { mapGetters } from "vuex";
 import timeLine from "api/timeLine";
 import lineChart from "api/lineChart";
-let now=new Date()
-    let year=now.getFullYear()
-    let month=now.getMonth()
-    let day=now.getDate()
-    let hours=now.getHours()
-    let minute=now.getMinutes()
-    let sec=now.getSeconds()
-    let times=year+"-"+month+"-"+day+" "+hours+":"+minute+":"+sec
+import leaksInfo from "api/leaksInfo";
+let now = new Date();
+let year = now.getFullYear();
+let month = now.getMonth();
+let day = now.getDate();
+let hours = now.getHours();
+let minute = now.getMinutes();
+let sec = now.getSeconds();
+let times =
+  year + "-" + month + "-" + day + " " + hours + ":" + minute + ":" + sec;
 export default {
   components: {
     chart
@@ -38,7 +40,7 @@ export default {
       taskInfo: [],
       timer: "",
       //折线图
-      mock:'',
+      mock: "",
       linechartdata: [],
       linechart: {
         title: {
@@ -184,8 +186,8 @@ export default {
     },
     ...mapGetters(["userName"])
   },
-  mounted(){
-  function randomData() {
+  mounted() {
+    function randomData() {
       now = new Date(+now + oneDay);
       value = value + Math.random() * 21 - 10;
       return {
@@ -201,7 +203,7 @@ export default {
     var value = Math.random() * 1000;
     for (var i = 0; i < 80; i++) {
       this.linechartdata.push(randomData());
-    };    
+    }
     // this.mock =  setInterval(() => {
     //   for (var i = 0; i < 5; i++) {
     //     this.linechartdata.shift();
@@ -210,7 +212,7 @@ export default {
     //   this.linechart.series[0].linechartdata = this.linechartdata;
 
     //     this.$refs.linechart.refresh();
-      
+
     // }, 1000);
   },
   created() {
@@ -219,11 +221,10 @@ export default {
   },
   methods: {
     //折线图
-    _lineChart(params){
-      lineChart(params).then(res=>{
-          //  console.log(res)      
-      })
-      
+    _lineChart(params) {
+      lineChart(params).then(res => {
+        //  console.log(res)
+      });
     },
     //任务完成情况
     async _taskTargetInfo(params) {
@@ -231,8 +232,9 @@ export default {
       if (res.targets.length > 0) {
         this.taskInfo = res.targets;
         this.id = res.targets[0].target_id;
-        this._timeLine({ taskID: this.id });
-        this._lineChart({taskID: this.id,currentTime:this.times})
+        // this._timeLine({ taskID: this.id });
+        this.getLesks({ targetId: this.id })
+        this._lineChart({ taskID: this.id, currentTime: this.times });
         this.option.series[0].data[0].value = Number(
           this.taskInfo[0].target_scaning
         ).toFixed(2);
@@ -242,7 +244,7 @@ export default {
           res = await taskTargetInfo(params);
           this.taskInfo = res.targets;
           //this._lineChart({taskID: this.id,currentTime:this.times})
-          this._timeLine({ taskID: this.id });
+          this.getLesks({ targetId: this.id })
           this.option.series[0].data[0].value = Number(
             this.taskInfo[0].target_scaning
           ).toFixed(2);
@@ -255,13 +257,16 @@ export default {
       timeLine(params).then(res => {
         this.optipnTwo.series[0].data[0].value = res.vulnNum;
       });
+    },
+    getLesks(params) {
+      leaksInfo(params).then(res => {
+        this.optipnTwo.series[0].data[0].value = res.total
+      });
     }
   },
   destroyed() {
     clearInterval(this.timer);
-  },
-  
-    
+  }
 };
 </script>
 <style scoped>
@@ -271,10 +276,10 @@ export default {
 .taskSchedule div {
   float: left;
 }
-.line{
+.line {
   width: 100%;
 }
-.clear{
+.clear {
   clear: both;
 }
 </style>

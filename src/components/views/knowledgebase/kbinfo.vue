@@ -26,6 +26,8 @@ import page from "components/page/page";
 import { mapGetters } from "vuex";
 import message from "utils/message";
 import kbinfo from "api/kbinfo";
+import kbAdd from "api/kbAdd";
+import kbupdate from "api/kbUpdate";
 export default {
   components: {
     page,
@@ -37,20 +39,22 @@ export default {
       title: "新建",
       formValidate: false,
       format: [
-        { label: "资产名称", type: "input", prop: "Assets_name" },
-        { label: "HTTP_URL_地址", type: "input", prop: "Assets_url" },
-        { label: "ip", type: "input", prop: "Assets_ip" },
-        { label: "负责人", type: "input", prop: "Assets_manger" }
+        { label: "漏洞名称", type: "input", prop: "kb_vuln_name" },
+        { label: "CVE/CNVD编码", type: "input", prop: "kb_vuln_cve" },
+        { label: "漏洞编号", type: "input", prop: "kb_vuln_vnum" },
+        { label: "漏洞级别", type: "input", prop: "kb_vuln_level" },
+        { label: "漏洞端口", type: "input", prop: "kb_vuln_port" },
+        { label: "漏洞类型", type: "input", prop: "kb_vuln_type" }
       ],
       data: {
-        Assets_name: "",
-        Assets_url: "",
-        Assets_ip: "",
-        Assets_manger: "",
-        Assets_creatuser: ""
+        kb_vuln_name: "",
+        kb_vuln_cve: "",
+        kb_vuln_vnum: "",
+        kb_vuln_level: "",
+        kb_vuln_type: ""
       },
       rules: {
-        assetsName: [
+        kb_vuln_name: [
           {
             required: true,
             message: "请填写资产名",
@@ -61,33 +65,33 @@ export default {
       value: "",
       assets: [
         {
-          title: "资产名称",
-          key: "Assets_name",
+          title: "漏洞名称",
+          key: "kb_vuln_name",
           align: "center"
         },
         {
-          title: "ip",
-          key: "Assets_ip",
+          title: "CVE/CNVD编码",
+          key: "kb_vuln_cve",
           align: "center"
         },
         {
-          title: "url",
-          key: "Assets_url",
+          title: "漏洞编号",
+          key: "kb_vuln_vnum",
           align: "center"
         },
         {
-          title: "端口",
-          key: "assets_network_ports",
+          title: "漏洞级别",
+          key: "kb_vuln_level",
           align: "center"
         },
         {
-          title: "系统类型",
-          key: "assets_os_type",
+          title: "漏洞端口",
+          key: "kb_vuln_port",
           align: "center"
         },
         {
-          title: "资产重要度",
-          key: "assets_important",
+          title: "漏洞类型",
+          key: "kb_vuln_type",
           align: "center"
         },
         {
@@ -110,8 +114,7 @@ export default {
                       this.data = Object.assign({}, this.data, params.row);
                       // 打开
                       this.$refs.formValidate.open();
-                      // 调用修改方法
-                      this.update(this.data);
+                    
                     }
                   }
                 },
@@ -152,31 +155,34 @@ export default {
   created() {
     const params = Object.assign({}, this.defaultPage,{area: 0})
     kbinfo(params).then(res => {
-      console.log(res)
+      this.assetsList=res.rows;
     })
   },
   methods: {
-    // modalOpen() {
-    //   this.display = true
-    // },
     assetsAdd() {
       this.$refs.formValidate.open();
       this.data = {};
     },
     //提交
     asyncOK(data) {
-      //  console.log(data)
-      assetAdd(data).then(res => {
-        console.log(res);
+
+      kbAdd(data).then(res => {
+        if(res.result===0){
+          this.$refs.formValidate.close();
+        }else{
+          this.$refs.formValidate.open();
+        }
       });
 
-      // this.$refs.formValidate.close();
+     
     },
 
     //删除
     remove({}) {},
     //修改
-    update(data) {}
+    update(data) {
+      
+    }
   }
 };
 </script>

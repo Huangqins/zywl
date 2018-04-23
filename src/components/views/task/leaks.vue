@@ -22,6 +22,14 @@ import page from "components/page/page";
 import leaksInfo from "api/leaksInfo";
 import { getUserName } from "@/utils/auth";
 import vulnLevel from "api/vulnLevel";
+
+const levelSchema = {
+  '4': '紧急风险',
+  '3': '高风险',
+  '2': '中风险',
+  '1': '低风险',
+  '0': '无风险'
+}
 export default {
   name: 'leaks',
   components: {
@@ -143,11 +151,16 @@ export default {
         {
           title: "漏洞等级",
           key: "vuln_level",
-          align: "center"
+          align: "center",
+          render: (h, params) => {
+            return h('span',
+              `${levelSchema[params.row.vuln_level]}`
+            )
+          }
         },
         {
-          title: "漏洞端口",
-          key: "vuln_Port",
+          title: "payload",
+          key: "vuln_Payload",
           align: "center"
         },
         {

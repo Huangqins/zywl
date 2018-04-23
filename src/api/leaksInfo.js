@@ -4,7 +4,8 @@ export default function leaksInfo({
   userName,
   rows,
   page,
-  taskID
+  taskId,
+  targetId
 }) {
   return request({
     url: '/ZY/vuln/vulnSearch',
@@ -13,7 +14,8 @@ export default function leaksInfo({
       userName,
       rows,
       page,
-      taskID
+      taskId,
+      targetId
     }
   })
 }
