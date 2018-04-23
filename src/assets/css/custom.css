@@ -74,7 +74,9 @@
 }
 
 .ivu-table-body {
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
+    /* overflow: auto; */
 }
 
 .ivu-table-tip table td {

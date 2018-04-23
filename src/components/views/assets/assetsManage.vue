@@ -1,7 +1,5 @@
 <template>
   <div>
-      <!-- <topology height="300px" width="600px"></topology> -->
-      <!-- <Table border  :columns="assetsColums" :data="assetsList"  :row-class-name="rowClassName" height="200"></Table> -->
      <page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page>
   </div>
 </template>

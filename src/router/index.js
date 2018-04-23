@@ -215,7 +215,8 @@ const router = new VueRouter({
                         default: Holecloud
                     }
                 },
-                {
+                {   
+                    name: 'leaks',
                     path: 'leaks',
                     components: {
                         left: Cloud,

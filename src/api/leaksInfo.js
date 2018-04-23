@@ -3,7 +3,8 @@ import request from '@/utils/request'
 export default function leaksInfo({
   userName,
   rows,
-  page
+  page,
+  taskID
 }) {
   return request({
     url: '/ZY/vuln/vulnSearch',
@@ -11,7 +12,8 @@ export default function leaksInfo({
     data: {
       userName,
       rows,
-      page
+      page,
+      taskID
     }
   })
 }

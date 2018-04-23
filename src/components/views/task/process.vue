@@ -221,7 +221,7 @@ export default {
     //折线图
     _lineChart(params){
       lineChart(params).then(res=>{
-           console.log(res)      
+          //  console.log(res)      
       })
       
     },

@@ -21,17 +21,15 @@ import zhexiantu from "components/chart/zhexiantu";
 import page from "components/page/page";
 import leaksInfo from "api/leaksInfo";
 import { getUserName } from "@/utils/auth";
-
+import vulnLevel from "api/vulnLevel";
 export default {
+  name: 'leaks',
   components: {
     chart,
     zhexiantu,
     page
   },
-  created() {
-    const params = Object.assign({}, this.defaultPage,{userName: getUserName()})
-    this._leaksInfo(params);
-  },
+  
   computed: {
     options() {
       setInterval(() => {
@@ -57,6 +55,7 @@ export default {
   },
   data() {
     return {
+      taskID:'',
       option: {
         tooltip: {
           formatter: "{a} <br/>{b} : {c}%"
@@ -167,6 +166,13 @@ export default {
       loading: false
     };
   },
+  created() {
+    this.taskID = this.$route.params.taskID
+    const params = Object.assign({}, this.defaultPage,{userName: getUserName(),taskID: this.taskID})
+    this._leaksInfo(params);
+ 
+    // this._vulnLevel({taskID:})
+  },
   methods: {
     godetail() {},
     rowClassName(row, index) {
@@ -175,7 +181,7 @@ export default {
     async _leaksInfo(params) {
       this.loading = true;
       const res = await leaksInfo(params);
-      if (res.result === 0) {
+      if (res.result === 0) {                
         this.loading = false;
         this.leaksList = res.rows;
         this.total = res.total;

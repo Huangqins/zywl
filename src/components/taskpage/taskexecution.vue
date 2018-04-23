@@ -22,7 +22,7 @@
                 <ul>
                     <li class="brain"><router-link to="/taskexecution/holecloud">文字云</router-link></li>
                     <li class="brain"><router-link to="/taskexecution">任务执行</router-link></li>    
-                    <li class="brain"><router-link to="/taskexecution/leaks">漏洞列表</router-link></li>
+                    <li class="brain"><router-link :to="{name: 'leaks', params: {taskID: taskID}}">漏洞列表</router-link></li>
                     <li class="brain"><router-link to="/taskexecution/assetsManage">资产拓补图</router-link></li>
                     <li class="brain" ><span @click="gotaskadd()">任务添加</span></li>
                         
@@ -40,6 +40,7 @@ import chart from "components/chart/chart";
 import cloud from "components/d3/wordCloud";
 import zhexiantu from "components/chart/zhexiantu";
 import { getUserName } from "@/utils/auth";
+import taskTargetInfo from "api/taskTargetInfo";
 import { Modal } from 'iview'
 const isAssetOne = () => {
   return `欢迎使用智刃安全攻防平台,距您上次进行攻防测试已经过了XXX天XXX小时XXX分钟，建议进行测试的资产为XXX`;
@@ -58,8 +59,18 @@ export default {
   },
   computed: {},
   mounted() {},
+  created() {
+    const params = { userName: this.userName, targetStruts: 0 };
+     taskTargetInfo(params).then(res => {
+       if (res.result === 0) {
+         this.taskID = res.targets[0].target_id
+       }
+     });
+  },
   data() {
     return {
+      // 当前用户下任务信息
+      taskID: 0,
       //资产列表
       loading: false,
       columns1: [
