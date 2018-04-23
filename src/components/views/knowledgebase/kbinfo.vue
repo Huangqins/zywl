@@ -2,7 +2,7 @@
   <div>
       <div class="whole">
           <section class="assetLeft">
-              <span>资产信息维护</span>
+              <span>知识库信息维护</span>
           </section>
           <section class="assetRight">
               <div class="assetRight_header">
@@ -23,10 +23,9 @@
 <script>
 import Modals from "components/Modal/modal";
 import page from "components/page/page";
-import assetAdd from "api/assetAdd";
 import { mapGetters } from "vuex";
 import message from "utils/message";
-import assetsInfo from "api/assetsInfo";
+import kbinfo from "api/kbinfo";
 export default {
   components: {
     page,
@@ -152,7 +151,7 @@ export default {
   },
   created() {
     const params = Object.assign({}, this.defaultPage,{area: 0})
-    assetsInfo(params).then(res => {
+    kbinfo(params).then(res => {
       console.log(res)
     })
   },
