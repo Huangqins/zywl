@@ -5,16 +5,18 @@
         <chart width="235px" height="235px" :option="optipnTwo" id="taskholeNum" ref="taskholeNum"></chart>  
         <chart width="235px" height="235px" :option="optipnThree" id="holeUtilization" ref='holeUtilization'></chart>      
     </div>
-    <!-- <zhexiantu></zhexiantu> -->
     <div class="clear"></div>
     <div class="line">
-       <chart width="350px" height="400px" :option="linechart"  ref=""></chart>   
+       <chart width="350px" height="230px" :option="linechart"  ref=""></chart>   
+    </div>
+    <div class="holetable">
+       <page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page>
     </div>
   </div>
 </template>
 <script>
 import chart from "components/chart/chart";
-// import zhexiantu from "components/chart/zhexiantu";
+import page from "components/page/page";
 import taskTargetInfo from "api/taskTargetInfo";
 import { mapGetters } from "vuex";
 import timeLine from "api/timeLine";
@@ -29,13 +31,62 @@ let minute = now.getMinutes();
 let sec = now.getSeconds();
 let times =
   year + "-" + month + "-" + day + " " + hours + ":" + minute + ":" + sec;
+const levelSchema = {
+  '4': '紧急风险',
+  '3': '高风险',
+  '2': '中风险',
+  '1': '低风险',
+  '0': '无风险'
+}
 export default {
   components: {
-    chart
+    chart,
+    page
     // zhexiantu
   },
   data() {
-    return {
+    return {      
+      width:"800px",
+      loading: false,
+      assetsList:[],
+      total: 0,      
+      defaultPage: {
+        area: 1,
+        rows: 10,
+        page: 1
+      },
+      assetsColums: [
+        {
+          title: "漏洞名称",
+          key: "vuln_name",
+          align: "center"
+        },
+        {
+          title: "漏洞类型",
+          key: "vuln_type",
+          align: "center"
+        },
+        {
+          title: "漏洞等级",
+          key: "vuln_level",
+          align: "center",
+          render: (h, params) => {
+            return h('span',
+              `${levelSchema[params.row.vuln_level]}`
+            )
+          }
+        },
+        {
+          title: "payload",
+          key: "vuln_Payload",
+          align: "center"
+        },
+        {
+          title: "操作人",
+          key: "vuln_oper",
+          align: "center"
+        }
+      ],
       id: "",
       taskInfo: [],
       timer: "",
@@ -220,6 +271,19 @@ export default {
     this._taskTargetInfo(params);
   },
   methods: {
+    dataLoad(paramsObj) {
+      const params = Object.assign({}, this.defaultPage, paramsObj);
+      this._assetsInfo(params);
+     
+    },
+    //当前任务下的漏洞列表
+    _taskvulnList(params){
+      leaksInfo(params).then(res =>{
+        //  console.log(res)
+        this.assetsList=res.rows
+        this.total = res.total;
+      })
+    },
     //折线图
     _lineChart(params) {
       lineChart(params).then(res => {
@@ -232,7 +296,7 @@ export default {
       if (res.targets.length > 0) {
         this.taskInfo = res.targets;
         this.id = res.targets[0].target_id;
-        // this._timeLine({ taskID: this.id });
+        this._taskvulnList({ taskID: this.id });
         this.getLesks({ targetId: this.id })
         this._lineChart({ taskID: this.id, currentTime: this.times });
         this.option.series[0].data[0].value = Number(
@@ -281,5 +345,8 @@ export default {
 }
 .clear {
   clear: both;
+}
+.holetable{
+  width: 100%;
 }
 </style>

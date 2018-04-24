@@ -203,7 +203,6 @@ export default {
     async _vulnLevel(params) {
       this.loading = true;
       const res = await vulnLevel(params);
-      console.log(res)
       // if (res.result === 0) {
       //   this.loading = false;
       //   this.leaksList = res.rows;
