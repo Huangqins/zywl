@@ -1,12 +1,12 @@
 import request from '@/utils/request'
 
-export default function timeLine({taskID,currentTime}) {
+export default function timeLine({target_id,flag = 1}) {
     return request({
         method: 'post',
         url:'/ZY/task/timeLine',
         data: {
-             taskID, 
-             currentTime
+             target_id, 
+             flag
          }
     })
 }
