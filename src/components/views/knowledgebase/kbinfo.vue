@@ -13,7 +13,7 @@
                 <Button type="primary" icon="log-out">导出</Button>
               </div>  
               <div class="assetRight_content">
-                  <page :columns="assets" :data="assetsList"> </page>
+                  <page :columns="assets" :data="assetsList" :dataTotal="total"> </page>
               </div>
           </section>
       </div>
@@ -28,6 +28,13 @@ import message from "utils/message";
 import kbinfo from "api/kbinfo";
 import kbAdd from "api/kbAdd";
 import kbupdate from "api/kbUpdate";
+const levelSchema = {
+  '4': '紧急风险',
+  '3': '高风险',
+  '2': '中风险',
+  '1': '低风险',
+  '0': '无风险'
+}
 export default {
   components: {
     page,
@@ -82,7 +89,11 @@ export default {
         {
           title: "漏洞级别",
           key: "kb_vuln_level",
-          align: "center"
+          align: "center",
+          render:(h,params) =>{
+               return h("span",
+               `${levelSchema[params.row.kb_vuln_level]}`)
+          }
         },
         {
           title: "漏洞端口",
@@ -146,7 +157,8 @@ export default {
         area: 1,
         rows: 10,
         page: 1
-      }
+      },
+      total:0
     };
   },
   computed: {
@@ -156,6 +168,7 @@ export default {
     const params = Object.assign({}, this.defaultPage,{area: 0})
     kbinfo(params).then(res => {
       this.assetsList=res.rows;
+      this.total=res.total
     })
   },
   methods: {
