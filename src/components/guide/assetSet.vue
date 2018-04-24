@@ -25,7 +25,7 @@
           </template>
           <FormItem label="开始时间" prop="startTime">
             <Row>
-                <DatePicker type="datetime" placeholder="开始时间" style="width:420px;"  @on-change="timeChange"></DatePicker>
+                <DatePicker type="datetime" placeholder="开始时间" style="width:420px;"   v-model="formItem.target_starttime" ></DatePicker>
             </Row>
           </FormItem>
           <FormItem label="周期" prop="cycle">
@@ -54,6 +54,7 @@ import assetsInfo from "api/assetsInfo";
 import assetsSet from "api/assetsSet";
 import { getUserName } from "@/utils/auth";
 import getRule from "api/getRule";
+import fomatterTime from '@/utils/tool'
 const strategy = { flag: 1 };
 const cycle = { flag: 2 };
 export default {
@@ -64,7 +65,7 @@ export default {
       formItem: {
         target_name: "",
         target_teststra: "common",
-        target_starttime: "",
+        target_starttime: new Date(),
         target_cycle: "now",
         target_url: "",
         target_ip: "",
@@ -114,9 +115,6 @@ export default {
         }
       }
     },
-    timeChange(date) {
-      this.formItem.target_starttime = date;
-    },
     cancel() {
       //    跳到任务管理页面
     },
@@ -124,6 +122,7 @@ export default {
     goToIndex(assets) {
       this.$refs[assets].validate(valid => {
         if (valid) {
+          this.formItem.target_starttime = fomatterTime(this.formItem.target_starttime)
           this.formItem.userName = getUserName();
           assetsSet(this.formItem).then(res => {
             if (res.result === 0) {

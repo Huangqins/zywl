@@ -273,7 +273,7 @@ export default {
   methods: {
     dataLoad(paramsObj) {
       const params = Object.assign({}, this.defaultPage, paramsObj);
-      this._taskvulnList(params);     
+      // this._taskvulnList(params);     
     },
     
     //折线图
@@ -293,8 +293,8 @@ export default {
         this.id = res.targets[0].target_id;
         const param = Object.assign({}, this.defaultPage,{targetId: this.id})
         this._taskvulnList(param);
-        this.getLesks({ targetId: this.id })
-        this._lineChart({ target_id: this.id })
+        // this.getLesks({ targetId: this.id })
+        // this._lineChart({ target_id: this.id })
 
         this.option.series[0].data[0].value = Number(
           this.taskInfo[0].target_scaning
@@ -304,6 +304,7 @@ export default {
         this.timer = setInterval(async () => {
           res = await taskTargetInfo(params);
           this.taskInfo = res.targets;
+          this._taskvulnList(param);
           // this.getLesks({ targetId: this.id })
   
           this.option.series[0].data[0].value = Number(
@@ -328,8 +329,12 @@ export default {
     _taskvulnList(params){
       leaksInfo(params).then(res =>{
         //  console.log(res)
-        this.assetsList=res.rows
-        this.total = res.total;
+        this.assetsList = res.rows
+        this.optipnTwo.series[0].data[0].value = res.total
+        console.log( this.optipnTwo.series[0].data[0].value)
+        // this.$set( this.optipnTwo.series[0].data, 0, {value: res.total})
+          // console.log(this.optipnTwo.series[0].data[0].value)
+
       })
     },
   },

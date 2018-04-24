@@ -6,6 +6,7 @@ gulp.task('deploy', () => {
   const conn = ftp.create({
     host: '192.168.10.104',
     user: 'wjj',
+    port: 80,
     password: 'zywlwj',
     log: gutil.log
   })

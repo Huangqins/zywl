@@ -89,7 +89,7 @@ export default {
         assets_name: "",
         assets_url: "",
         assets_ip: "",
-        assets_manger: '',
+        assets_manger: "",
         assets_creatuser: ""
       },
       ruleValidate: {
@@ -111,20 +111,24 @@ export default {
     assetSubmit() {
       // this.$router.push({ path: "/sysInfo" });
       this.handAddForm.assets_creatuser = this.userName;
-      assetAdd(this.handAddForm).then(res => {
-        if (res.result === 0) {
-          message("success", "导入资产成功");
-          this.$router.push({
-            name: "assetSet",
-            params: {
-              assets_url: this.handAddForm.assets_url,
-              assets_ip: this.handAddForm.assets_ip
+      this.$refs.handAdd.validate(valid => {
+        if (valid) {
+          assetAdd(this.handAddForm).then(res => {
+            if (res.result === 0) {
+              message("success", "导入资产成功");
+              this.$router.push({
+                name: "assetSet",
+                params: {
+                  assets_url: this.handAddForm.assets_url,
+                  assets_ip: this.handAddForm.assets_ip
+                }
+              });
+            } else if (res.result === -1) {
+              message("error", "导入资产失败");
+            } else if (res.result === 2) {
+              message("error", "导入资产重复");
             }
           });
-        } else if (res.result === -1) {
-          message("error", "导入资产失败");
-        } else if (res.result === 2) {
-          message("error", "导入资产重复");
         }
       });
     }
