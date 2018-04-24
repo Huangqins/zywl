@@ -23,21 +23,28 @@ import leaksInfo from "api/leaksInfo";
 import { getUserName } from "@/utils/auth";
 import vulnLevel from "api/vulnLevel";
 
+// const levelSchema = {
+//   "4": { style: "#FF33CC", class: "vuln", ex: "#FF3399" },
+//   "3": { style: "#e60012", class: "vuln", ex: "#FF6666" },
+//   "2": { style: "#b2976a", class: "vuln", ex: "#666699" },
+//   "1": { style: "#aaa", class: "vuln", ex: "#6699CC" },
+//   "0": { style: "#bbb", class: "vuln", ex: "#66FFCC" }
+// };
 const levelSchema = {
-  '4': {'style':'#FF33CC','class': 'vuln', 'ex': '#FF3399'},
-  '3': {'style':'#e60012','class': 'vuln', 'ex': '#FF6666'},
-  '2': {'style':'#b2976a','class': 'vuln', 'ex': '#666699'},
-  '1': {'style':'#aaa','class': 'vuln', 'ex': '#6699CC'},
-  '0': {'style':'#bbb','class': 'vuln', 'ex': '#66FFCC'}
-}
+  "4": "紧急风险",
+  "3": "高风险",
+  "2": "中风险",
+  "1": "低风险",
+  "0": "无风险"
+};
 export default {
-  name: 'leaks',
+  name: "leaks",
   components: {
     chart,
     zhexiantu,
     page
   },
-  
+
   computed: {
     options() {
       setInterval(() => {
@@ -59,11 +66,11 @@ export default {
           (Math.random() * 100).toFixed(2) - 0;
       }, 2000);
       return this.optionthree;
-    },
+    }
   },
   data() {
     return {
-      taskID:'',
+      taskID: "",
       option: {
         tooltip: {
           formatter: "{a} <br/>{b} : {c}%"
@@ -76,10 +83,10 @@ export default {
             detail: { formatter: "{value}%", fontSize: 18 },
             data: [{ value: 90, name: "一级漏洞" }],
             title: { color: "#E4E5E5", fontSize: 12 },
-            splitLine:{ show:false},
-            axisTick:{show:false},
-            axisLabel:{show:false,distance:0},
-            pointer:{length:"30%",show:true,width:4},
+            splitLine: { show: false },
+            axisTick: { show: false },
+            axisLabel: { show: false, distance: 0 },
+            pointer: { length: "30%", show: true, width: 4 },
             axisLine: {
               lineStyle: {
                 color: [[0.2, "#66AB31"], [0.8, "#1A9348"], [1, "#21B4D2"]]
@@ -100,10 +107,10 @@ export default {
             detail: { formatter: "{value}%", fontSize: 18 },
             data: [{ value: 60, name: "二级漏洞" }],
             title: { color: "#E4E5E5", fontSize: 12 },
-            splitLine:{ show:false},
-            axisTick:{show:false},
-            axisLabel:{show:false,distance:0},
-            pointer:{length:"30%",show:true,width:4},
+            splitLine: { show: false },
+            axisTick: { show: false },
+            axisLabel: { show: false, distance: 0 },
+            pointer: { length: "30%", show: true, width: 4 },
             axisLine: {
               lineStyle: {
                 color: [[0.2, "#66AB31"], [0.8, "#1A9348"], [1, "#21B4D2"]]
@@ -124,10 +131,10 @@ export default {
             detail: { formatter: "{value}%", fontSize: 18 },
             data: [{ value: 20, name: "三级漏洞" }],
             title: { color: "#E4E5E5", fontSize: 12 },
-            splitLine:{ show:false},
-            axisTick:{show:false},
-            axisLabel:{show:false,distance:0},
-            pointer:{length:"30%",show:true,width:4},
+            splitLine: { show: false },
+            axisTick: { show: false },
+            axisLabel: { show: false, distance: 0 },
+            pointer: { length: "30%", show: true, width: 4 },
             axisLine: {
               lineStyle: {
                 color: [[0.2, "#66AB31"], [0.8, "#1A9348"], [1, "#21B4D2"]]
@@ -152,21 +159,34 @@ export default {
           title: "漏洞等级",
           key: "vuln_level",
           align: "center",
-          // render: (h, params) => {
-          //   return h('span',
-          //     `${levelSchema[params.row.vuln_level]}`
-          //   )
-          // },
           render: (h, params) => {
-            const list = new Array(3)
-            return h('div', list.map((item, index) => {
-              const ret = []
-              if (params.row.vuln_level === 3) {
-                ret.push(h('span', {class: levelSchema[params.row.vuln_level].class, style: {}}))
-              }
-              return h('span', item)
-            }))
+            return h("span", `${levelSchema[params.row.vuln_level]}`);
           }
+          // render: (h, params) => {
+          //   const list = [0,0,0];
+          //   return h(
+          //     "div",
+          //     list.map((item, index) => {
+          //       console.log(params.row.vuln_level);
+          //       if (params.row.vuln_level == 3) {
+          //         // return h("span", {
+          //         //   style: {
+          //         //     width: "14px",
+          //         //     height: "5px",
+          //         //     display: "inline-block",
+          //         //     margin: "0 2px",
+          //         //     backgroundColor: 'red'
+          //         //   }
+          //         // });
+          //         return h("span", {'class': 'vuln'})
+          //       } else {
+          //         // return
+          //       }
+
+          //       // return h('span', item)
+          //     })
+          //   );
+          // }
         },
         {
           title: "payload",
@@ -190,21 +210,24 @@ export default {
     };
   },
   created() {
-    this.taskID = this.$route.params.taskID
-    const params = Object.assign({}, this.defaultPage,{userName: getUserName(),taskID: this.taskID})
+    this.taskID = this.$route.params.taskID;
+    const params = Object.assign({}, this.defaultPage, {
+      userName: getUserName(),
+      taskID: this.taskID
+    });
     this._leaksInfo(params);
- 
+
     // this._vulnLevel({taskID:})
   },
   methods: {
     godetail() {},
     rowClassName(row, index) {
       return "demo-table-info-row";
-    },    
+    },
     async _leaksInfo(params) {
       this.loading = true;
       const res = await leaksInfo(params);
-      if (res.result === 0) {                
+      if (res.result === 0) {
         this.loading = false;
         this.leaksList = res.rows;
         this.total = res.total;
@@ -220,15 +243,17 @@ export default {
       // }
     },
     dataLoad(paramsObj) {
-      const params = Object.assign({}, this.defaultPage, paramsObj, {userName: getUserName()});
-      
+      const params = Object.assign({}, this.defaultPage, paramsObj, {
+        userName: getUserName()
+      });
+
       this._leaksInfo(params);
     }
   }
 };
 </script>
 
-<style scoped>
+<style>
 .list {
   width: 100%;
   color: #e4e5e5;
@@ -240,19 +265,19 @@ export default {
   height: auto;
   float: right;
 }
-.taskSchedule div{
+.taskSchedule div {
   float: left;
 }
-.clear{
+.clear {
   clear: both;
 }
-.vuln {
-    width: 14px;
-    height: 5px;
-    margin: 0 2px;
+.list .vuln {
+  width: 14px;
+  height: 5px;
+  display: inline-block;
+  margin: 0 2px;
 }
-.high{
-background-color: #e60012;
+.high {
+  background-color: #e60012;
 }
-
 </style>
