@@ -24,11 +24,11 @@ import { getUserName } from "@/utils/auth";
 import vulnLevel from "api/vulnLevel";
 
 const levelSchema = {
-  '4': '紧急风险',
-  '3': '高风险',
-  '2': '中风险',
-  '1': '低风险',
-  '0': '无风险'
+  '4': {'style':'#FF33CC','class': 'vuln', 'ex': '#FF3399'},
+  '3': {'style':'#e60012','class': 'vuln', 'ex': '#FF6666'},
+  '2': {'style':'#b2976a','class': 'vuln', 'ex': '#666699'},
+  '1': {'style':'#aaa','class': 'vuln', 'ex': '#6699CC'},
+  '0': {'style':'#bbb','class': 'vuln', 'ex': '#66FFCC'}
 }
 export default {
   name: 'leaks',
@@ -152,10 +152,20 @@ export default {
           title: "漏洞等级",
           key: "vuln_level",
           align: "center",
+          // render: (h, params) => {
+          //   return h('span',
+          //     `${levelSchema[params.row.vuln_level]}`
+          //   )
+          // },
           render: (h, params) => {
-            return h('span',
-              `${levelSchema[params.row.vuln_level]}`
-            )
+            const list = new Array(3)
+            return h('div', list.map((item, index) => {
+              const ret = []
+              if (params.row.vuln_level === 3) {
+                ret.push(h('span', {class: levelSchema[params.row.vuln_level].class, style: {}}))
+              }
+              return h('span', item)
+            }))
           }
         },
         {
@@ -236,4 +246,13 @@ export default {
 .clear{
   clear: both;
 }
+.vuln {
+    width: 14px;
+    height: 5px;
+    margin: 0 2px;
+}
+.high{
+background-color: #e60012;
+}
+
 </style>

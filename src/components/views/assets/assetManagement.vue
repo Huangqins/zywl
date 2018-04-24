@@ -1,9 +1,6 @@
 <template>
   <div>
       <div class="whole">
-          <section class="assetLeft">
-              <span>资产信息维护</span>
-          </section>
           <section class="assetRight">
               <div class="assetRight_header">
                 <Input v-model="value" placeholder="区域" clearable style="width: 200px"></Input>
@@ -13,9 +10,7 @@
                 <Button type="primary" icon="log-out">导出</Button>
               </div>  
               <div class="assetRight_content">
-                  <page :columns="assets" :data="assetsList">
-
-                  </page>
+                  <page :columns="assets" :data="assetsList"></page>
               </div>
           </section>
       </div>
@@ -189,10 +184,6 @@ export default {
 .whole {
   width: 100%;
 }
-.assetLeft {
-  width: 20%;
-  float: left;
-}
 .assetLeft span {
   display: inline-block;
   width: 100%;
@@ -204,7 +195,7 @@ export default {
 }
 .assetRight {
   float: left;
-  width: 80%;
+  width: 100%;
   height: auto;
 }
 .assetRight_header {

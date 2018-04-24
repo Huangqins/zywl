@@ -20,12 +20,14 @@
             </div>
             <div class="content-center">
                 <ul>
-                    <li class="brain"><router-link to="/taskexecution/holecloud">文字云</router-link></li>
+                    
                     <li class="brain"><router-link to="/taskexecution">任务执行</router-link></li>    
                     <li class="brain"><router-link :to="{name: 'leaks', params: {taskID: taskID}}">漏洞列表</router-link></li>
                     <li class="brain"><router-link to="/taskexecution/assetsManage">资产拓补图</router-link></li>
-                    <li class="brain" ><span @click="gotaskadd()">任务添加</span></li>
-                        
+                    <li class="brain"><router-link to="/taskexecution/assetManagement">资产信息维护</router-link></li>
+                    <li class="brain" ><span @click="gotaskadd()">任务维护</span></li>
+                    <li class="brain" ><router-link to="/taskexecution/kbinfo">知识库维护</router-link></li> 
+                    <li class="brain"><router-link to="/taskexecution/">报告信息管理</router-link></li>  
                 </ul>
             </div>
             <div class="content-right">
@@ -259,7 +261,6 @@ export default {
 };
 </script>
 <style scoped>
-
 .dynamicPic {
   display: block;
   margin: auto;

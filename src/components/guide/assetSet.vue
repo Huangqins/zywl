@@ -1,7 +1,19 @@
 <template>
 <div>
-
-  <div class="entry">
+  <div class="whole">
+          <section class="assetRight">
+              <div class="assetRight_header">
+                <Input v-model="value" placeholder="区域" clearable style="width: 200px"></Input>
+                <Button type="primary" icon="ios-search">搜索</Button>
+                <Button type="primary" icon="compose" @click="assetsAdd">添加</Button>
+              </div>  
+              <div class="assetRight_content">
+                  <page :columns="tasks" :data="tasksList"></page>
+              </div>
+          </section>
+      </div>
+      <Modals :format="format" :data="data" :title="title" ref="formValidate" :rules="rules" @asyncOK="asyncOK" :display="display"  :loading="loading"></Modals>
+  <!-- <div class="entry">
        <Form :model="formItem" :label-width="80" ref="formItem" :rules="ruleValidate" >
        <FormItem label="任务名称">
             <Input v-model="formItem.target_name" placeholder="请输入"/>
@@ -46,21 +58,133 @@
               <Button type="success" @click="goToIndex('formItem')" style="float: right">提交</Button>
           </FormItem>
       </Form>
-  </div>
+  </div> -->
   </div>
 </template>
 <script>
 import assetsInfo from "api/assetsInfo";
 import assetsSet from "api/assetsSet";
 import { getUserName } from "@/utils/auth";
+import page from "components/page/page";
 import getRule from "api/getRule";
 const strategy = { flag: 1 };
 const cycle = { flag: 2 };
 export default {
   name: "assetSet",
-  components: {},
+  components: {
+    page
+  },
   data() {
     return {
+      format: [
+        { label: "任务名称", type: "input", prop: "target_name" },
+        { label: "发起人", type: "input", prop: "target_user" },
+        { label: "任务类型", type: "input", prop: "target_type" }
+      ],
+      data:{
+        target_name:"",
+        target_user:"",
+        target_type:""
+        },
+      tasks: [
+        {
+          title: "任务名称",
+          key: "target_name",
+          align: "center"
+        },
+        {
+          title: "发起人",
+          key: "target_user",
+          align: "center"
+        },
+        {
+          title: "任务类型",
+          key: "target_type",
+          align: "center"
+        },
+        {
+          title: "更新时间",
+          key: "target_rftime",
+          align: "center"
+        },
+        {
+          title: "扫描进度",
+          key: "target_scaning",
+          align: "center"
+        },
+        {
+          title: "进行的操作",
+          key: "target_scaning_content",
+          align: "center"
+        },
+        {
+          title: "操作人",
+          key: "target_oper",
+          align: "center"
+        },
+        {
+          title: "任务状态",
+          key: "target_struts",
+          align: "center"
+        },
+        {
+          title: "测试人数",
+          key: "target_testpop",
+          align: "center"
+        },
+        {
+          title: "开始时间",
+          key: "target_starttime",
+          align: "center"
+        },
+        {
+          title: "结束时间",
+          key: "target_endtime",
+          align: "center"
+        },
+        {
+          title: "执行次数",
+          key: "target_executions",
+          align: "center"
+        },
+        {
+          title: "测试策略",
+          key: "target_teststra",
+          align: "center"
+        },
+        {
+          title: "目标情况",
+          key: "target_state",
+          align: "center"
+        },
+        {
+          title: "任务操作人",
+          key: "target_tast_oper",
+          align: "center"
+        },
+        {
+          title: "操作",
+          align: "center",
+          render: (h, params) => {
+            return h("div", [
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "error",
+                    size: "small"
+                  },
+                  on: {
+                    click: () => {  }
+                  }
+                },
+                "删除"
+              )
+            ]);
+          }
+        }
+      ],
+      tasksList:[],
       formItem: {
         target_name: "",
         target_teststra: "common",
