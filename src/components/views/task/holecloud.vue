@@ -8,7 +8,7 @@
               <chart width="350px" height="350px"  :option="optionHole" id="holeproportion"></chart>
         </div> -->
         <div style="clear:both;"></div>
-        <div class="holeclassify">
+        <!-- <div class="holeclassify">
             <h2>漏洞Top10榜单</h2>
             <span><Icon type="chevron-right"></Icon>目前已有XXX个漏洞进行排行</span>
             <div class="holeList">
@@ -24,11 +24,11 @@
                 <span v-else-if="index===2"><img src="../../../../static/top3.png"/></span>
                 <span v-else-if="index>=3">{{index}}</span>
                 <span>{{item.holeName}}</span>
-                <span style="">{{item.holeNum}}</span>
+                <span>{{item.holeNum}}</span>
                 </li>         
             </ul>
             </div>
-        </div>
+        </div> -->
   </div>
 </template>
 <script>

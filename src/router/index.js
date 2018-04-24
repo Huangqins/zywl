@@ -240,6 +240,18 @@ const router = new VueRouter({
                         default: AssetsManage
                     }
                 },
+                {
+                    path: 'kbinfo',
+                    components: {
+                        default: Kbinfo
+                    }
+                },
+                {
+                    path: 'assetManagement',
+                    components: {
+                        default: AssetManagement
+                    }
+                },
 
 
 
