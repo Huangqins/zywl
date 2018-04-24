@@ -269,21 +269,14 @@ export default {
   created() {
     const params = { userName: this.userName, targetStruts: 0 };
     this._taskTargetInfo(params);
+   
   },
   methods: {
     dataLoad(paramsObj) {
       const params = Object.assign({}, this.defaultPage, paramsObj);
-      this._assetsInfo(params);
-     
+      this._taskvulnList(params);     
     },
-    //当前任务下的漏洞列表
-    _taskvulnList(params){
-      leaksInfo(params).then(res =>{
-        //  console.log(res)
-        this.assetsList=res.rows
-        this.total = res.total;
-      })
-    },
+    
     //折线图
     _lineChart(params) {
       lineChart(params).then(res => {
@@ -296,7 +289,8 @@ export default {
       if (res.targets.length > 0) {
         this.taskInfo = res.targets;
         this.id = res.targets[0].target_id;
-        this._taskvulnList({ taskID: this.id });
+        const param = Object.assign({}, this.defaultPage,{targetId: this.id})
+        this._taskvulnList(param);
         this.getLesks({ targetId: this.id })
         this._lineChart({ taskID: this.id, currentTime: this.times });
         this.option.series[0].data[0].value = Number(
@@ -307,8 +301,8 @@ export default {
         this.timer = setInterval(async () => {
           res = await taskTargetInfo(params);
           this.taskInfo = res.targets;
-          //this._lineChart({taskID: this.id,currentTime:this.times})
-          this.getLesks({ targetId: this.id })
+          // this.getLesks({ targetId: this.id })
+          // this._lineChart({ taskID: this.id, currentTime: this.times });
           this.option.series[0].data[0].value = Number(
             this.taskInfo[0].target_scaning
           ).toFixed(2);
@@ -326,7 +320,15 @@ export default {
       leaksInfo(params).then(res => {
         this.optipnTwo.series[0].data[0].value = res.total
       });
-    }
+    },
+    //当前任务下的漏洞列表
+    _taskvulnList(params){
+      leaksInfo(params).then(res =>{
+        //  console.log(res)
+        this.assetsList=res.rows
+        this.total = res.total;
+      })
+    },
   },
   destroyed() {
     clearInterval(this.timer);
