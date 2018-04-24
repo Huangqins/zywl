@@ -63,9 +63,9 @@ export default {
     return {
       formItem: {
         target_name: "",
-        target_teststra: "0",
+        target_teststra: "common",
         target_starttime: "",
-        target_cycle: "0",
+        target_cycle: "now",
         target_url: "",
         target_ip: "",
         userName: "",
