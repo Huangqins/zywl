@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <span>当前用户:<span style="color: red">{{userName}}</span></span>
+        <span style="color:#fff">当前用户:<span style="color: red">{{userName}}</span></span>
         <Button type="ghost" shape="circle" icon="power" style="border: none" @click="loginOut"></Button>
     </div>
 </template>

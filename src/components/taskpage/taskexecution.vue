@@ -62,12 +62,12 @@ export default {
   computed: {},
   mounted() {},
   created() {
-    const params = { userName: this.userName, targetStruts: 0 };
-     taskTargetInfo(params).then(res => {
-       if (res.result === 0) {
-         this.taskID = res.targets[0].target_id
-       }
-     });
+    // const params = { userName: this.userName, targetStruts: 0 };
+    //  taskTargetInfo(params).then(res => {
+    //    if (res.result === 0) {
+    //      this.taskID = res.targets[0].target_id
+    //    }
+    //  });
   },
   data() {
     return {

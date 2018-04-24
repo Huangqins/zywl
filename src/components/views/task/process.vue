@@ -20,7 +20,6 @@ import page from "components/page/page";
 import taskTargetInfo from "api/taskTargetInfo";
 import { mapGetters } from "vuex";
 import timeLine from "api/timeLine";
-import lineChart from "api/lineChart";
 import leaksInfo from "api/leaksInfo";
 let now = new Date();
 let year = now.getFullYear();
@@ -274,14 +273,17 @@ export default {
   methods: {
     dataLoad(paramsObj) {
       const params = Object.assign({}, this.defaultPage, paramsObj);
-      this._taskvulnList(params);     
+      // this._taskvulnList(params);     
     },
     
     //折线图
     _lineChart(params) {
-      lineChart(params).then(res => {
-        //  console.log(res)
-      });
+      timeLine(params).then(res => {
+        console.log(res)
+      })
+      // lineChart(params).then(res => {
+      //   //  console.log(res)
+      // });
     },
     //任务完成情况
     async _taskTargetInfo(params) {
@@ -291,8 +293,9 @@ export default {
         this.id = res.targets[0].target_id;
         const param = Object.assign({}, this.defaultPage,{targetId: this.id})
         this._taskvulnList(param);
-        this.getLesks({ targetId: this.id })
-        this._lineChart({ taskID: this.id, currentTime: this.times });
+        // this.getLesks({ targetId: this.id })
+        // this._lineChart({ target_id: this.id })
+
         this.option.series[0].data[0].value = Number(
           this.taskInfo[0].target_scaning
         ).toFixed(2);
@@ -301,8 +304,9 @@ export default {
         this.timer = setInterval(async () => {
           res = await taskTargetInfo(params);
           this.taskInfo = res.targets;
+          this._taskvulnList(param);
           // this.getLesks({ targetId: this.id })
-          // this._lineChart({ taskID: this.id, currentTime: this.times });
+  
           this.option.series[0].data[0].value = Number(
             this.taskInfo[0].target_scaning
           ).toFixed(2);
@@ -325,8 +329,12 @@ export default {
     _taskvulnList(params){
       leaksInfo(params).then(res =>{
         //  console.log(res)
-        this.assetsList=res.rows
-        this.total = res.total;
+        this.assetsList = res.rows
+        this.optipnTwo.series[0].data[0].value = res.total
+        console.log( this.optipnTwo.series[0].data[0].value)
+        // this.$set( this.optipnTwo.series[0].data, 0, {value: res.total})
+          // console.log(this.optipnTwo.series[0].data[0].value)
+
       })
     },
   },
