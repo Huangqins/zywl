@@ -252,6 +252,13 @@ const router = new VueRouter({
                         default: AssetManagement
                     }
                 },
+                {
+                    path: 'assetSet',
+                    components: {
+                        default: Assetset
+                    }
+                },
+
 
 
 

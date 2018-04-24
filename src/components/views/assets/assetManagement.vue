@@ -156,9 +156,6 @@ export default {
     });
   },
   methods: {
-    // modalOpen() {
-    //   this.display = true
-    // },
     assetsAdd() {
       this.$refs.formValidate.open();
       this.data = {};
@@ -168,9 +165,7 @@ export default {
       //  console.log(data)
       assetAdd(data).then(res => {
         console.log(res);
-      });
-
-      // this.$refs.formValidate.close();
+      })
     },
 
     //删除

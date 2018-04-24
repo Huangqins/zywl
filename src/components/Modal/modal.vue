@@ -9,6 +9,14 @@
             <template v-if="item.type === 'texteara'">
                 <Input  v-model="data[item.prop]"  :placeholder="item.placeholder"/>
             </template>
+            <template v-if="item.type === 'select'">
+                <Select  v-model="data[item.prop]"  :placeholder="item.placeholder">
+                 <Option v-for="(item,index) in item.option" :key="index +'a'" :value="item.value">{{item.name}}</Option>
+                 </Select>
+            </template>
+            <template v-if="item.type === 'datetime'"> 
+                <DatePicker type="datetime" placeholder="请选择时间" v-model="data[item.prop]"></DatePicker>
+            </template>
         </FormItem>
         </Form>
         <slot/>
@@ -30,6 +38,12 @@ export default {
       }
     },
     format: {
+      type: Array,
+      default: () => {
+        return [];
+      }
+    },
+    option:{
       type: Array,
       default: () => {
         return [];

@@ -25,7 +25,7 @@
                     <li class="brain"><router-link :to="{name: 'leaks', params: {taskID: taskID}}">漏洞列表</router-link></li>
                     <li class="brain"><router-link to="/taskexecution/assetsManage">资产拓补图</router-link></li>
                     <li class="brain"><router-link to="/taskexecution/assetManagement">资产信息维护</router-link></li>
-                    <li class="brain" ><span @click="gotaskadd()">任务维护</span></li>
+                    <li class="brain" ><router-link to="/taskexecution/assetSet">任务维护</router-link></li>
                     <li class="brain" ><router-link to="/taskexecution/kbinfo">知识库维护</router-link></li> 
                     <li class="brain"><router-link to="/taskexecution/">报告信息管理</router-link></li>  
                 </ul>
@@ -347,16 +347,16 @@ export default {
   margin-top: 100px;
 }
 .content-left{
-  width: 25%;
+  width: 20%;
   float: left;
   margin-left: 100px;
 }
 .content-center{
-  width: 25%;
+  width: 20%;
   float: left;
 }
 .content-right{
-  width: 50%;
+  width: 60%;
   float: left;
 }
 .content div {
