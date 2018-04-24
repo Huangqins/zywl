@@ -10,14 +10,14 @@
                                 <Input v-model="password" placeholder="请输入初始资产信息（IP段/域名）"/>
                             </span>  -->
                             <Form ref="handAdd" :model="handAddForm" :rules="ruleValidate">
-                               <FormItem prop="assetsName">
-                                    <Input type="text" v-model="handAddForm.assetsName" placeholder="资产名称"></Input>
+                               <FormItem prop="tassets_name">
+                                    <Input type="text" v-model="handAddForm.tassets_name" placeholder="资产名称"></Input>
                                 </FormItem>
-                                <FormItem prop="assetsURL">
-                                    <Input type="text" v-model="handAddForm.assetsURL" placeholder="URL地址"></Input>
+                                <FormItem prop="assets_url">
+                                    <Input type="text" v-model="handAddForm.assets_url" placeholder="URL地址"></Input>
                                 </FormItem>
-                                 <FormItem prop="assetsIp">
-                                    <Input type="text" v-model="handAddForm.assetsIp" placeholder="IP"></Input>
+                                 <FormItem prop="assets_ip">
+                                    <Input type="text" v-model="handAddForm.assets_ip" placeholder="IP"></Input>
                                 </FormItem>
                                 <!-- <FormItem>
                                     <Input type="text" v-model="handAddForm.assetsPort" placeholder="端口"></Input>
@@ -40,8 +40,8 @@
                                 <FormItem >
                                     <Input type="text" v-model="handAddForm.assetsOS" placeholder="OS类型"></Input>
                                </FormItem> -->
-                                <FormItem prop="assetsManger">
-                                    <Input type="text" v-model="handAddForm.assetsManger" placeholder="负责人"></Input>
+                                <FormItem prop="assets_manger">
+                                    <Input type="text" v-model="handAddForm.assets_manger" placeholder="负责人"></Input>
                                 </FormItem>
                             </Form>
                         </Tab-pane>
@@ -68,16 +68,16 @@ import message from "utils/message";
 
 export default {
   data() {
-    const assetsUrlPass = (rule, value, callback) => {
-      if (value === "" && this.handAddForm.assetsIp === "") {
+    const assets_urlPass = (rule, value, callback) => {
+      if (value === "" && this.handAddForm.assets_ip === "") {
         callback(new Error("url及ip请至少填写一项"));
       } else {
         callback();
       }
     };
 
-    const assetsIpPass = (rule, value, callback) => {
-      if (value === "" && this.handAddForm.assetsURL === "") {
+    const assets_ipPass = (rule, value, callback) => {
+      if (value === "" && this.handAddForm.assets_url === "") {
         callback(new Error("url及ip请至少填写一项"));
       } else {
         callback();
@@ -86,19 +86,19 @@ export default {
     return {
       password: "",
       handAddForm: {
-        assetsName: "",
-        assetsURL: "",
-        assetsIp: "",
-        assetsManger: '',
-        assetsCreatUser: ""
+        assets_name: "",
+        assets_url: "",
+        assets_ip: "",
+        assets_manger: '',
+        assets_creatuser: ""
       },
       ruleValidate: {
-        assetsName: [
+        tassets_name: [
           { required: true, message: "任务名称必填", trigger: "blur" }
         ],
-        assetsURL: [{ validator: assetsUrlPass, trigger: "blur" }],
-        assetsIp: [{ validator: assetsIpPass, trigger: "blur" }],
-        assetsManger: [
+        assets_url: [{ validator: assets_urlPass, trigger: "blur" }],
+        assets_ip: [{ validator: assets_ipPass, trigger: "blur" }],
+        assets_manger: [
           { required: true, message: "负责人必填", trigger: "blur" }
         ]
       }
@@ -110,15 +110,15 @@ export default {
   methods: {
     assetSubmit() {
       // this.$router.push({ path: "/sysInfo" });
-      this.handAddForm.assetsCreatUser = this.userName;
+      this.handAddForm.assets_creatuser = this.userName;
       assetAdd(this.handAddForm).then(res => {
         if (res.result === 0) {
           message("success", "导入资产成功");
           this.$router.push({
             name: "assetSet",
             params: {
-              assetsUrl: this.handAddForm.assetsURL,
-              assetsIp: this.handAddForm.assetsIp
+              assets_url: this.handAddForm.assets_url,
+              assets_ip: this.handAddForm.assets_ip
             }
           });
         } else if (res.result === -1) {
