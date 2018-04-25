@@ -19,8 +19,7 @@
                 </section>                
             </div>
             <div class="content-center">
-                <ul>
-                    
+                <ul>      
                     <li class="brain"><router-link to="/taskexecution">任务执行</router-link></li>    
                     <li class="brain"><router-link :to="{name: 'leaks', params: {taskID: taskID}}">漏洞列表</router-link></li>
                     <li class="brain"><router-link to="/taskexecution/assetsManage">资产拓补图</router-link></li>

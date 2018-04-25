@@ -151,7 +151,6 @@ const router = new VueRouter({
             component: Assetadd
         },
         {
-            name: 'assetSet',
             path: '/assetSet',
             component: Assetset
         },
@@ -260,7 +259,8 @@ const router = new VueRouter({
                         default: AssetManagement
                     }
                 },
-                {
+                {   
+                    name: 'assetSet',
                     path: 'assetSet',
                     components: {
                         default: Assetset

@@ -119,8 +119,8 @@ export default {
               this.$router.push({
                 name: "assetSet",
                 params: {
-                  assets_url: this.handAddForm.assets_url,
-                  assets_ip: this.handAddForm.assets_ip
+                  target_url: this.handAddForm.assets_url,
+                  target_ip: this.handAddForm.assets_ip
                 }
               });
             } else if (res.result === -1) {
