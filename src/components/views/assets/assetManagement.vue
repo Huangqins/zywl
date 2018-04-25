@@ -71,30 +71,20 @@ export default {
           title: "资产名称",
           key: "assets_name",
           align: "center"
-        },
+        },        
         {
-          title: "ip",
-          key: "assets_ip",
-          align: "center"
-        },
-        {
-          title: "url",
+          title: "资产URL",
           key: "assets_url",
           align: "center"
         },
         {
-          title: "端口",
-          key: "assets_network_ports",
+          title: "资产IP",
+          key: "assets_ip",
           align: "center"
-        },
+        },        
         {
-          title: "系统类型",
-          key: "assets_os_type",
-          align: "center"
-        },
-        {
-          title: "资产重要度",
-          key: "assets_important",
+          title: "创建人",
+          key: "assets_creatuser",
           align: "center"
         },
         {

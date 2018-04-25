@@ -117,7 +117,7 @@ export default {
           {
             required: true,
             message: "请填写任务名称",
-            trigger: "change"
+            trigger: "blur"
           }
         ]
       },
@@ -251,10 +251,11 @@ export default {
     const param = Object.assign({}, this.defaultPage, {
       userName: getUserName()
     });
-    console.log(getUserName());
     this._taskList(param);
   },
+  watch:{
 
+  },
   methods: {
     //任务列表
     // _taskLists(param){
