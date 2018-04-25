@@ -25,6 +25,7 @@ import message from "utils/message";
 import kbinfo from "api/kbinfo";
 import kbAdd from "api/kbAdd";
 import kbUpdate from "api/kbUpdate";
+import kbDelete from "api/kbDelete";
 const levelSchema = {
   "4": "紧急风险",
   "3": "高风险",
@@ -136,6 +137,7 @@ export default {
                   },
                   on: {
                     click: () => {
+                      this._kbDelete(params.row)
                       // this.remove(params.index);
                       // console.log(params)
                     }
@@ -197,14 +199,21 @@ export default {
           this.$refs.formValidate.close();
           this._kbinfo(this.params);
           this.loading = false;
-        } else if (res.result === -1){
+        } else if (res.result === -1) {
           this.$Notice.error({
-                    title: '返回信息',
-                    desc: '修改失败',
-                    duration: 2
-                });
+            title: "返回信息",
+            desc: "修改失败",
+            duration: 2
+          });
           this.loading = false;
           this.$refs.formValidate.open();
+        }
+      });
+    },
+    _kbDelete(data) {
+      kbDelete(data).then(res => {
+        if (res.result === 0) {
+          this._kbinfo(this.params);
         }
       });
     },
