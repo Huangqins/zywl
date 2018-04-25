@@ -164,8 +164,8 @@ export default {
     ...mapGetters(["userName"])
   },
   created() {
-    const params = Object.assign({}, this.defaultPage, { area: 0 });
-    this._kbinfo(params);
+    this.params = Object.assign({}, this.defaultPage, { area: 0 });
+    this._kbinfo(this.params);
   },
   methods: {
     assetsAdd() {

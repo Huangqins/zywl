@@ -65,6 +65,10 @@ export default {
   methods: {
     asyncOK() {
       // 传递数据
+      if (this.ruleValidate) {
+        this.$refs.formValidate.validate((valid) => {
+        })
+      }
       this.$emit("asyncOK", this.data);
     },
     open() {
