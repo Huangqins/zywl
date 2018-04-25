@@ -4,11 +4,11 @@
               <Card class="card" >
                   <h2 slot="title" style="color:white;">请对资产进行任务添加</h2>
                   <Row>
-                            <Form ref="handAdd" :model="formItem" :rules="ruleValidate">
-                               <FormItem prop="tassets_name">
+                            <Form ref="handAdd" :model="formItem" :rules="rules" :label-width="40">
+                               <FormItem prop="tassets_name" label="名称">
                                     <Input type="text" v-model="formItem.target_name" placeholder="任务名称"></Input>
                                 </FormItem>
-                                <FormItem prop="target_teststra">
+                                <FormItem >
                                     <Select v-model="formItem.target_teststra" placeholder="扫描策略">
                                       <Option v-for="item in strategyRule" :value="item.rule_key" :key="item.rule_key">{{ item.rule_name }}</Option>
                                     </Select>
@@ -31,7 +31,7 @@
                         
                     <Row class="primary" type="flex" align='middle' justify="center" >
                         <Col >
-                            <i-button type="primary"  @click="assetSubmit">提交</i-button> 
+                            <i-button type="primary"  @click="asyncOK">提交</i-button> 
                         </Col>
                     </Row>
                   </Row>                 
@@ -41,9 +41,13 @@
 </template>
 <script>
 import getRule from "api/getRule";
+import assetsSet from "api/assetsSet";
+import fomatterTime from "@/utils/tool";
+import { getUserName } from "@/utils/auth";
 const strategy = { flag: 1 };
 const cycle = { flag: 2 };
 export default {
+  name: "firstassetAdd",
   data() {
     return {
       formItem: {
@@ -57,7 +61,7 @@ export default {
       },
       strategyRule: [],
       cycleRule: [],
-      ruleValidate: {
+      rules: {
         target_name: [
           {
             required: true,
@@ -71,9 +75,24 @@ export default {
   created() {
     this._getRule(strategy);
     this._getRule(cycle);
+    const params = this.$route.params;
+    console.log(this.$route);
+    this.formItem.target_url = params.target_url;
+    this.formItem.target_ip = params.target_ip;
   },
   methods: {
     assetSubmit() {},
+    asyncOK(formItem) {
+      this.formItem.userName = getUserName();
+      this.formItem.target_starttime = fomatterTime(this.formItem.target_starttime);
+      this.loading = true;
+      assetsSet(this.formItem).then(res => {
+        if (res.result === 0) {
+          this.loading = false;
+          this.$router.push({path:"/taskexecution"})
+        }
+      });
+    },
     async _getRule(params) {
       const res = await getRule(params);
       if (res.result === 0) {

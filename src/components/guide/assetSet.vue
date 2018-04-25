@@ -230,12 +230,6 @@ export default {
     this._taskList(this.params);
   },
   methods: {
-    //任务列表
-    // _taskLists(param){
-    //      taskList(param).then(res => {
-    //        //this.tasksList=res.targets
-    //      })
-    // },
     _taskList(params) {
       this.pageLoading = true;
       taskList(params).then(res => {

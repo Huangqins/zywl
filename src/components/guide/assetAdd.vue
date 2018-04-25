@@ -117,7 +117,7 @@ export default {
             if (res.result === 0) {
               message("success", "导入资产成功");
               this.$router.push({
-                name: "assetSet",
+                name: "firstassetAdd",
                 params: {
                   target_url: this.handAddForm.assets_url,
                   target_ip: this.handAddForm.assets_ip

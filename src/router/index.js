@@ -207,6 +207,7 @@ const router = new VueRouter({
             component: Kbinfo
         },
         {
+            name:"firstassetAdd",
             path: '/firstassetAdd',
             component: FirstassetAdd
         },
