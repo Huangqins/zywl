@@ -62,6 +62,11 @@ export default {
       value: "",
       assets: [
         {
+          type: "selection",
+          width: 60,
+          align: "center"
+        },
+        {
           title: "资产名称",
           key: "assets_name",
           align: "center"
@@ -172,11 +177,11 @@ export default {
     asyncOK(data) {
       if (data.assets_id) {
         assetsUpdate(data).then(res => {
-        if (res.result === 0) {
-          this._assetsInfo(this.params);
-          this.$refs.formValidate.close();
-        }
-      });
+          if (res.result === 0) {
+            this._assetsInfo(this.params);
+            this.$refs.formValidate.close();
+          }
+        });
       } else {
         assetAdd(data).then(res => {
           if (res.result === 0) {
@@ -211,15 +216,6 @@ export default {
 .whole {
   width: 100%;
 }
-.assetLeft span {
-  display: inline-block;
-  width: 100%;
-  height: 45px;
-  background: rgba(25, 38, 48);
-  text-align: center;
-  line-height: 45px;
-  font-size: 17px;
-}
 .assetRight {
   float: left;
   width: 100%;
@@ -230,7 +226,7 @@ export default {
   height: 100px;
   padding: 25px;
   margin-top: 20px;
-  background: rgba(25, 38, 48);
+  background: rgba(25, 38, 48, 0.1);
 }
 .ivu-btn .ivu-btn-primary {
   margin-left: 5px;
