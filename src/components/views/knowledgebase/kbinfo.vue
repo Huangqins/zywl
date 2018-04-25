@@ -193,19 +193,19 @@ export default {
       });
     },
     _kbUpdate(data) {
-      this.loading = false;
+      // this.loading = false;
       kbUpdate(data).then(res => {
         if (res.result === 0) {
           this.$refs.formValidate.close();
           this._kbinfo(this.params);
-          this.loading = false;
+          // this.loading = false;
         } else if (res.result === -1) {
           this.$Notice.error({
             title: "返回信息",
             desc: "修改失败",
             duration: 2
           });
-          this.loading = false;
+          // this.loading = false;
           this.$refs.formValidate.open();
         }
       });
@@ -239,15 +239,6 @@ export default {
   width: 100%;
   color: #e4e5e5;
 }
-.assetLeft span {
-  display: inline-block;
-  width: 100%;
-  height: 45px;
-  background: rgba(25, 38, 48);
-  text-align: center;
-  line-height: 45px;
-  font-size: 17px;
-}
 .assetRight {
   float: left;
   width: 100%;
@@ -258,7 +249,7 @@ export default {
   height: 100px;
   padding: 25px;
   margin-top: 20px;
-  background: rgba(25, 38, 48);
+  background: rgba(25, 38, 48,0.1);
 }
 .ivu-btn .ivu-btn-primary {
   margin-left: 5px;

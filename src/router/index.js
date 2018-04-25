@@ -10,7 +10,6 @@ const Historydata = (resolve) => {
     })
 }
 
-
 const Regitser = (resolve) => {
     import('components/entry/register').then(module => {
         resolve(module)
@@ -121,6 +120,11 @@ const Kbinfo = (resolve) => {
         resolve(module)
     })
 }
+const FirstassetAdd = (resolve) => {
+    import('components/guide/firstassetAdd').then(module => {
+        resolve(module)
+    })
+}
 const router = new VueRouter({
     // mode: 'history',
     routes: [
@@ -203,6 +207,10 @@ const router = new VueRouter({
             path: '/kbinfo',
             component: Kbinfo
         },
+        {
+            path: '/firstassetAdd',
+            component: FirstassetAdd
+        },
         {   
             name: 'taskexecution',
             path: '/taskexecution',
@@ -258,6 +266,7 @@ const router = new VueRouter({
                         default: Assetset
                     }
                 },
+                
 
 
 

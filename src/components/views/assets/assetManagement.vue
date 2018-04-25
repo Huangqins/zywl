@@ -155,9 +155,11 @@ export default {
       this._assetsInfo(this.params);
     },
     _assetsInfo(params) {
-      assetsInfo(params).then(res => {
+      this.pageLoading=true;
+      assetsInfo(params).then(res => {        
         this.assetsList = res.rows;
         this.dataTotal = res.total;
+        this.pageLoading=false;
       });
     },
     assetsAdd() {
@@ -184,25 +186,13 @@ export default {
         });
       }
     },
-
     //删除
     remove(data) {
-      // this.pageLoading=true;
       assetsDelete(data).then(res => {
         if (res.result === 0) {
-          //  this.pageLoading=false;
           this._assetsInfo(this.params);
         }
       });
-    },
-    //修改
-    update(data) {
-      // assetsUpdate(data).then(res => {
-      //   if (res.result === 0) {
-      //     this._assetsInfo(this.params);
-      //     // this.$refs.formValidate.close();
-      //   }
-      // });
     }
   }
 };
