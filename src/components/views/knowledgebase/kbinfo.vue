@@ -230,12 +230,7 @@ export default {
     dataLoad(paramsObj) {
       this.params = Object.assign({}, this.defaultPage, paramsObj);
       this._kbinfo(this.params);
-    },
-
-    //删除
-    remove({}) {},
-    //修改
-    update(data) {}
+    }
   }
 };
 </script>
