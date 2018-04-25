@@ -1,5 +1,6 @@
 <template>
-<particles>
+<!-- canvas背景图 -->
+<!-- <particles> -->
 
 <div class="entry">
        <Form :model="formItem"  :rules="ruleValidate" ref="formItem" style="border:none;">
@@ -33,7 +34,7 @@
           </FormItem>
       </Form>
   </div>
-</particles>
+<!-- </particles> -->
 </template>
 <script>
 import register from "api/register";
