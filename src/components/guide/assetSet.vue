@@ -8,11 +8,11 @@
                 <Button type="primary" icon="compose" @click="taskAdd">添加</Button>
               </div>  
               <div class="assetRight_content">
-                  <page :columns="tasks" :data="tasksList"></page>
+                  <page :columns="tasks" :data="tasksList" :dataTotal="dataTotal" @dataLoad="dataLoad" :loading="pageLoading"></page>
               </div>
           </section>
       </div>
-      <Modals :format="format" :data="data" title="添加任务" ref="formValidate" :rules="rules" @asyncOK="asyncOK" :display="display"  :loading="loading"></Modals>
+      <Modals :format="format" :data="data" title="添加任务" ref="formValidate" :rules="rules" @asyncOK="asyncOK" :display="display"  :loading="loading" :ruleValidate="rules"></Modals>
   <!-- <div class="entry">
        <Form :model="formItem" :label-width="80" ref="formItem" :rules="ruleValidate" >
        <FormItem label="任务名称">
@@ -74,13 +74,14 @@ import taskList from "api/taskList";
 const strategy = { flag: 1 };
 const cycle = { flag: 2 };
 export default {
-  name: "assetSet",
+  // name: "assetSet",
   components: {
     page,
     Modals
   },
   data() {
     return {
+      pageLoading: false,
       loading: false,
       display: false,
       format: [
@@ -106,7 +107,7 @@ export default {
       data: {
         target_name: "",
         target_teststra: "common",
-        target_starttime: "",
+        target_starttime: new Date(),
         target_cycle: "now",
         target_url: "",
         target_ip: "",
@@ -143,7 +144,10 @@ export default {
           key: "target_scaning",
           align: "center",
           render: (h, params) => {
-            return h('span',`${Number(params.row.target_scaning).toFixed(2)}%`)
+            return h(
+              "span",
+              `${Number(params.row.target_scaning).toFixed(2)}%`
+            );
           }
         },
         {
@@ -205,56 +209,25 @@ export default {
         }
       ],
       tasksList: [],
-      total: 0,
       defaultPage: {
-        area: 1,
+        area: 0,
         rows: 10,
         page: 1
       },
+      dataTotal: 0,
       params: {}
-      // formItem: {
-      //   target_name: "",
-      //   target_teststra: "common",
-      //   target_starttime: new Date(),
-      //   target_cycle: "now",
-      //   target_url: "",
-      //   target_ip: "",
-      //   userName: "",
-      // },
-      // strategyRule: [],
-      // cycleRule: [],
-      // ruleValidate: {
-      //   assets: [
-      //     {
-      //       required: true,
-      //       message: "请选择资产",
-      //       trigger: "change"
-      //     }
-      //   ],
-      //   cycle: [
-      //     {
-      //       required: true,
-      //       message: "请选择周期",
-      //       trigger: "change"
-      //     }
-      //   ]
-      // }
     };
   },
   created() {
-    
-    //const params = this.$route.params;
-    // this.formItem.assetsUrl = params.assetsUrl;
-    // this.formItem.assetsIp = params.assetsIp;
+    const params = this.$route.params;
+    this.data.target_url = params.target_url;
+    this.data.target_ip = params.target_ip;
     this._getRule(strategy);
     this._getRule(cycle);
-    const param = Object.assign({}, this.defaultPage, {
+    this.params = Object.assign({}, this.defaultPage, {
       userName: getUserName()
     });
-    this._taskList(param);
-  },
-  watch:{
-
+    this._taskList(this.params);
   },
   methods: {
     //任务列表
@@ -263,26 +236,30 @@ export default {
     //        //this.tasksList=res.targets
     //      })
     // },
-    async _taskList(params) {
-      this.loading = true;
-      const res = await taskList(params);
-      if (res.result === 0) {
-        this.loading = false;
-        this.tasksList = res.targets;
-        //this.total = res.total;
-      }
+    _taskList(params) {
+      this.pageLoading = true;
+      taskList(params).then(res => {
+        if (res.result === 0) {
+          this.pageLoading = false;
+          this.tasksList = res.targets;
+          this.dataTotal = res.total;
+        }
+      });
     },
     taskAdd() {
       this.$refs.formValidate.open();
-      this.data = {};
     },
+    taskDelete() {},
     //提交
     asyncOK(data) {
-      this.data.userName = getUserName()
-      this.data.target_starttime = fomatterTime(this.data.target_starttime)
+      this.data.userName = getUserName();
+      this.data.target_starttime = fomatterTime(this.data.target_starttime);
+      this.loading = true;
       assetsSet(data).then(res => {
         if (res.result === 0) {
+          this.loading = false;
           this.$refs.formValidate.close();
+          this._taskList(this.params);
         }
       });
     },
@@ -290,43 +267,19 @@ export default {
       const res = await getRule(params);
       if (res.result === 0) {
         if (params.flag === 1) {
-          //  this.strategyRule = res.rules;
           this.format[1].option = res.rules.map(item => {
             return { value: item.rule_key, name: item.rule_name };
           });
-          this.data.target_teststra = this.format[1].option[0].value;
         } else {
           this.format[3].option = res.rules.map(item => {
             return { value: item.rule_key, name: item.rule_name };
           });
-          this.data.target_cycle = this.format[3].option.value;
         }
       }
     },
-    cancel() {
-      //    跳到任务管理页面
-    },
-    //点击提交跳到首页
-    goToIndex(assets) {
-      this.$refs[assets].validate(valid => {
-        if (valid) {
-          this.formItem.target_starttime = fomatterTime(
-            this.formItem.target_starttime
-          );
-          this.formItem.userName = getUserName();
-          assetsSet(this.formItem).then(res => {
-            if (res.result === 0) {
-              this.$router.push({ path: "/taskexecution" });
-            } else if (res.result === -1) {
-              this.$Message.error({
-                content: "添加任务失败"
-              });
-            }
-          });
-        } else {
-          this.$Message.error("Fail!");
-        }
-      });
+    dataLoad(paramsObj) {
+       this.params = Object.assign({}, this.defaultPage, paramsObj);
+       this._taskList(this.params);
     }
   }
 };

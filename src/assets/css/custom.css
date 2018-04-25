@@ -10,6 +10,7 @@
     margin-bottom: 16px;
 }
 
+
 /* 按钮样式 */
 
 /* .ivu-btn-dashed {
@@ -28,6 +29,12 @@
     /* padding: 50px; */
     /* background-image: url('../svg/') */
 }
+.ivu-modal-body .ivu-form .ivu-form-item-label {
+    color: black;
+  }
+/* .ivu-select-selected-value {
+    color: black;
+} */
 
 /* 验证提示信息的样式 */
 
@@ -91,3 +98,4 @@
 .ivu-page .mini{
 padding-top: 3px;
 }
+
