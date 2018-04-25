@@ -8,7 +8,7 @@
                 <Button type="primary" icon="compose" @click="taskAdd">添加</Button>
               </div>  
               <div class="assetRight_content">
-                  <page :columns="tasks" :data="tasksList"></page>
+                  <page :columns="tasks" :data="tasksList" :loading="pageloading" :dataTotal="total" @dataLoad="dataLoad"></page>
               </div>
           </section>
       </div>
@@ -81,6 +81,7 @@ export default {
   },
   data() {
     return {
+      pageloading:false,
       loading: false,
       display: false,
       format: [
@@ -134,11 +135,6 @@ export default {
           align: "center"
         },
         {
-          title: "更新时间",
-          key: "target_rftime",
-          align: "center"
-        },
-        {
           title: "扫描进度",
           key: "target_scaning",
           align: "center",
@@ -149,11 +145,6 @@ export default {
         {
           title: "任务状态",
           key: "target_struts",
-          align: "center"
-        },
-        {
-          title: "测试人数",
-          key: "target_testpop",
           align: "center"
         },
         {
@@ -253,24 +244,19 @@ export default {
     });
     this._taskList(param);
   },
-  watch:{
-
-  },
   methods: {
-    //任务列表
-    // _taskLists(param){
-    //      taskList(param).then(res => {
-    //        //this.tasksList=res.targets
-    //      })
-    // },
     async _taskList(params) {
       this.loading = true;
       const res = await taskList(params);
       if (res.result === 0) {
         this.loading = false;
         this.tasksList = res.targets;
-        //this.total = res.total;
+        this.total=res.total;
       }
+    },    
+    dataLoad(paramsObj) {
+      this.params = Object.assign({}, this.defaultPage, paramsObj,{userName:getUserName()});
+      this._taskList(this.params);
     },
     taskAdd() {
       this.$refs.formValidate.open();
@@ -280,8 +266,10 @@ export default {
     asyncOK(data) {
       this.data.userName = getUserName()
       this.data.target_starttime = fomatterTime(this.data.target_starttime)
+      this.pageloading=true;
       assetsSet(data).then(res => {
         if (res.result === 0) {
+          this.pageloading=false;
           this.$refs.formValidate.close();
         }
       });
@@ -303,10 +291,6 @@ export default {
         }
       }
     },
-    cancel() {
-      //    跳到任务管理页面
-    },
-    //点击提交跳到首页
     goToIndex(assets) {
       this.$refs[assets].validate(valid => {
         if (valid) {
