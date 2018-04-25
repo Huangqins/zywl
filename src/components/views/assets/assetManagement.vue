@@ -167,6 +167,7 @@ export default {
     //提交
     asyncOK(data) {
       if (data.assets_id) {
+        this.data.assets_creatuser = this.userName
         assetsUpdate(data).then(res => {
           if (res.result === 0) {
             this._assetsInfo(this.params);
@@ -174,6 +175,7 @@ export default {
           }
         });
       } else {
+        this.data.assets_creatuser = this.userName
         assetAdd(data).then(res => {
           if (res.result === 0) {
             this._assetsInfo(this.params);
@@ -185,8 +187,10 @@ export default {
 
     //删除
     remove(data) {
+      // this.pageLoading=true;
       assetsDelete(data).then(res => {
         if (res.result === 0) {
+          //  this.pageLoading=false;
           this._assetsInfo(this.params);
         }
       });
