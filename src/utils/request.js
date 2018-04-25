@@ -15,18 +15,17 @@ import {
 // 创建axios实例
 const baseURL = location.origin
 // 取消Token(解决重复发送相同请求)
-// let pending = []; 
-// let cancelToken = axios.CancelToken;
-// let removePending = (config) => {
-//   for (let p in pending) {
-//     if (pending[p].u === config.url + '&' + JSON.stringify(config.data)) {
-//       pending[p].f(); 
-//       pending.splice(p, 1); 
-//     }
-//   }
-// }
+let pending = []; 
+let cancelToken = axios.CancelToken;
+let removePending = (config) => {
+  for (let p in pending) {
+    if (pending[p].u === config.url + '&' + JSON.stringify(config.data)) {
+      pending[p].f(); 
+      pending.splice(p, 1); 
+    }
+  }
+}
 
-// const source = CancelToken.source();
 const service = axios.create({
   // baseURL: process.env.BASE_API,
   // baseURL: 'http://192.168.0.107/ZY/',
@@ -35,14 +34,14 @@ const service = axios.create({
 // 保存请求路径参数
 let requestPath = ''
 service.interceptors.request.use(config => {
-//   removePending(config); //在一个ajax发送前执行一下取消操作
+  removePending(config); 
   requestPath = config.url
-//   config.cancelToken = new cancelToken((c) => {
-//     pending.push({
-//       u: config.url + '&' + JSON.stringify(config.data),
-//       f: c
-//     });
-//   });
+  config.cancelToken = new cancelToken((c) => {
+    pending.push({
+      u: config.url + '&' + JSON.stringify(config.data),
+      f: c
+    });
+  });
   if (store.getters.token && store.getters.userName) {
     config.headers['token'] = getToken()
     config.headers['userName'] = getUserName()

@@ -141,7 +141,10 @@ export default {
         {
           title: "扫描进度",
           key: "target_scaning",
-          align: "center"
+          align: "center",
+          render: (h, params) => {
+            return h('span',`${Number(params.row.target_scaning).toFixed(2)}%`)
+          }
         },
         {
           title: "任务状态",

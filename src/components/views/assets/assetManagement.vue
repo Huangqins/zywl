@@ -10,7 +10,7 @@
                 <Button type="primary" icon="log-out">导出</Button>
               </div>  
               <div class="assetRight_content">
-                  <page :columns="assets" :data="assetsList" :dataTotal="dataTotal" @dataLoad="dataLoad"></page>
+                  <page :columns="assets" :data="assetsList" :dataTotal="dataTotal" @dataLoad="dataLoad"  :loading="pageLoading"></page>
               </div>
           </section>
       </div>
@@ -34,6 +34,7 @@ export default {
   },
   data() {
     return {
+      pageLoading: false,
       loading: false,
       title: "新建",
       formValidate: false,

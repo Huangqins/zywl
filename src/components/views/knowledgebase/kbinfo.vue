@@ -10,7 +10,7 @@
                 <Button type="primary" icon="log-out">导出</Button>
               </div>  
               <div class="assetRight_content">
-                  <page :columns="assets" :data="assetsList" :dataTotal="total"> </page>
+                  <page :columns="assets" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="pageLoading"> </page>
               </div>
           </section>
       </div>
@@ -24,14 +24,14 @@ import { mapGetters } from "vuex";
 import message from "utils/message";
 import kbinfo from "api/kbinfo";
 import kbAdd from "api/kbAdd";
-import kbupdate from "api/kbUpdate";
+import kbUpdate from "api/kbUpdate";
 const levelSchema = {
-  '4': '紧急风险',
-  '3': '高风险',
-  '2': '中风险',
-  '1': '低风险',
-  '0': '无风险'
-}
+  "4": "紧急风险",
+  "3": "高风险",
+  "2": "中风险",
+  "1": "低风险",
+  "0": "无风险"
+};
 export default {
   components: {
     page,
@@ -39,6 +39,7 @@ export default {
   },
   data() {
     return {
+      pageLoading: false,
       loading: false,
       title: "新建",
       formValidate: false,
@@ -87,9 +88,8 @@ export default {
           title: "漏洞级别",
           key: "kb_vuln_level",
           align: "center",
-          render:(h,params) =>{
-               return h("span",
-               `${levelSchema[params.row.kb_vuln_level]}`)
+          render: (h, params) => {
+            return h("span", `${levelSchema[params.row.kb_vuln_level]}`);
           }
         },
         {
@@ -122,7 +122,6 @@ export default {
                       this.data = Object.assign({}, this.data, params.row);
                       // 打开
                       this.$refs.formValidate.open();
-                    
                     }
                   }
                 },
@@ -155,18 +154,16 @@ export default {
         rows: 10,
         page: 1
       },
-      total:0
+      total: 0,
+      params: {}
     };
   },
   computed: {
     ...mapGetters(["userName"])
   },
   created() {
-    const params = Object.assign({}, this.defaultPage,{area: 0})
-    kbinfo(params).then(res => {
-      this.assetsList=res.rows;
-      this.total=res.total
-    })
+    const params = Object.assign({}, this.defaultPage, { area: 0 });
+    this._kbinfo(params);
   },
   methods: {
     assetsAdd() {
@@ -175,31 +172,68 @@ export default {
     },
     //提交
     asyncOK(data) {
-
+      if (data.kb_vuln_id) {
+        this._kbUpdate(data);
+      } else {
+        this._kbAdd(data);
+      }
+    },
+    _kbAdd(data) {
+      this.loading = true;
       kbAdd(data).then(res => {
-        if(res.result===0){
+        if (res.result === 0) {
           this.$refs.formValidate.close();
-        }else{
+          this._kbinfo(this.params);
+          this.loading = false;
+        } else {
           this.$refs.formValidate.open();
         }
       });
-
-     
+    },
+    _kbUpdate(data) {
+      this.loading = false;
+      kbUpdate(data).then(res => {
+        if (res.result === 0) {
+          this.$refs.formValidate.close();
+          this._kbinfo(this.params);
+          this.loading = false;
+        } else if (res.result === -1){
+          this.$Notice.error({
+                    title: '返回信息',
+                    desc: '修改失败',
+                    duration: 2
+                });
+          this.loading = false;
+          this.$refs.formValidate.open();
+        }
+      });
+    },
+    _kbinfo(params) {
+      this.pageLoading = true;
+      kbinfo(params).then(res => {
+        if (res.result === 0) {
+          this.assetsList = res.rows;
+          this.total = res.total;
+          this.pageLoading = false;
+        }
+      });
+    },
+    dataLoad(paramsObj) {
+      this.params = Object.assign({}, this.defaultPage, paramsObj);
+      this._kbinfo(this.params);
     },
 
     //删除
     remove({}) {},
     //修改
-    update(data) {
-      
-    }
+    update(data) {}
   }
 };
 </script>
 <style scoped>
 .whole {
   width: 100%;
-  color:#e4e5e5;
+  color: #e4e5e5;
 }
 .assetLeft span {
   display: inline-block;
