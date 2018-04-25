@@ -230,12 +230,6 @@ export default {
     this._taskList(this.params);
   },
   methods: {
-    //任务列表
-    // _taskLists(param){
-    //      taskList(param).then(res => {
-    //        //this.tasksList=res.targets
-    //      })
-    // },
     _taskList(params) {
       this.pageLoading = true;
       taskList(params).then(res => {
@@ -259,6 +253,7 @@ export default {
         if (res.result === 0) {
           this.loading = false;
           this.$refs.formValidate.close();
+          this.$router.push({path:"/taskexecution"})
           this._taskList(this.params);
         }
       });
@@ -277,6 +272,28 @@ export default {
         }
       }
     },
+    //请勿删掉
+    // goToIndex(assets) {
+    //   this.$refs[assets].validate(valid => {
+    //     if (valid) {
+    //       this.formItem.target_starttime = fomatterTime(
+    //         this.formItem.target_starttime
+    //       );
+    //       this.formItem.userName = getUserName();
+    //       assetsSet(this.formItem).then(res => {
+    //         if (res.result === 0) {
+    //           this.$router.push({ path: "/taskexecution" });
+    //         } else if (res.result === -1) {
+    //           this.$Message.error({
+    //             content: "添加任务失败"
+    //           });
+    //         }
+    //       });
+    //     } else {
+    //       this.$Message.error("Fail!");
+    //     }
+    //   });
+    // }
     dataLoad(paramsObj) {
        this.params = Object.assign({}, this.defaultPage, paramsObj);
        this._taskList(this.params);
