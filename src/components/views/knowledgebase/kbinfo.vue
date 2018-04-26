@@ -44,7 +44,7 @@ export default {
       loading: false,
       title: "新建",
       formValidate: false,
-      width:"110",
+      width:110,
       format: [
         { label: "漏洞名称", type: "input", prop: "kb_vuln_name" },
         { label: "CVE/CNVD编码", type: "input", prop: "kb_vuln_cve" },

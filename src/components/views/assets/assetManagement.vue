@@ -38,7 +38,7 @@ export default {
       loading: false,
       title: "新建",
       formValidate: false,
-      width:"90",
+      width:90,
       format: [
         { label: "资产名称", type: "input", prop: "assets_name" },
         { label: "资产URL", type: "input", prop: "assets_url" },
