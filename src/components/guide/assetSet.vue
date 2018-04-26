@@ -135,11 +135,6 @@ export default {
           align: "center"
         },
         {
-          title: "更新时间",
-          key: "target_rftime",
-          align: "center"
-        },
-        {
           title: "扫描进度",
           key: "target_scaning",
           align: "center",
@@ -156,11 +151,6 @@ export default {
           align: "center"
         },
         {
-          title: "测试人数",
-          key: "target_testpop",
-          align: "center"
-        },
-        {
           title: "开始时间",
           key: "target_starttime",
           align: "center",
@@ -174,11 +164,6 @@ export default {
         {
           title: "结束时间",
           key: "target_endtime",
-          align: "center"
-        },
-        {
-          title: "执行次数",
-          key: "target_executions",
           align: "center"
         },
         {

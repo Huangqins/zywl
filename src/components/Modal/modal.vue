@@ -32,7 +32,7 @@ export default {
   name: "modal",
   props: {
     width:{
-      type: String,
+      type: Number,
       default: 75
     },
     loading: {
