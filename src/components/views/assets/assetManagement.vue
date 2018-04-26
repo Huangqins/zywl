@@ -14,7 +14,7 @@
               </div>
           </section>
       </div>
-      <Modals :format="format" :data="data" :title="title" ref="formValidate" :rules="rules" @asyncOK="asyncOK" :display="display"  :loading="loading"></Modals>
+      <Modals :width="width" :format="format" :data="data" :title="title" ref="formValidate" :rules="rules" @asyncOK="asyncOK" :display="display"  :loading="loading"></Modals>
   </div>
 </template>
 <script>
@@ -38,16 +38,31 @@ export default {
       loading: false,
       title: "新建",
       formValidate: false,
+      width:"90",
       format: [
         { label: "资产名称", type: "input", prop: "assets_name" },
-        { label: "HTTP_URL_地址", type: "input", prop: "assets_url" },
-        { label: "ip", type: "input", prop: "assets_ip" },
+        { label: "资产URL", type: "input", prop: "assets_url" },
+        { label: "资产IP", type: "input", prop: "assets_ip" },
+        { label: "端口", type: "input", prop: "assets_port" },
+        { label: "通讯协议", type: "input", prop: "assets_proto" },
+        { label: "开放服务信息", type: "input", prop: "assets_servers" },
+        { label: "所属区域", type: "input", prop: "assets_region" },
+        { label: "资产类型", type: "input", prop: "assets_type" },
+        { label: "资产重要度", type: "input", prop: "assets_important" },
+        { label: "OS类型", type: "input", prop: "assets_os" },
         { label: "负责人", type: "input", prop: "assets_manger" }
       ],
       data: {
         assets_name: "",
         assets_url: "",
         assets_ip: "",
+        assets_port:"",
+        assets_proto:"",
+        assets_servers:"",
+        assets_region:"",
+        assets_type:"",
+        assets_important:"",
+        assets_os:"",
         assets_manger: "",
         assets_creatuser: ""
       },

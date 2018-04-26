@@ -1,7 +1,7 @@
 <template>
   <div>
       <Modal v-model="modal" :title="title"  @on-ok="asyncOK" @on-visible-change="visiblely">
-        <Form ref="form" :model="data" :rules="ruleValidate" :label-width="75">
+        <Form ref="form" :model="data" :rules="ruleValidate" :label-width="width">
         <FormItem v-for="(item,index) in format" :key="index" :label="item.label"  :prop="item.prop">
             <template v-if="item.type === 'input'">
                 <Input  v-model="data[item.prop]"  :placeholder="item.placeholder"/>
@@ -31,6 +31,10 @@
 export default {
   name: "modal",
   props: {
+    width:{
+      type: String,
+      default: 75
+    },
     loading: {
       type: Boolean,
       default: false

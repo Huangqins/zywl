@@ -14,7 +14,7 @@
               </div>
           </section>
       </div>
-      <Modals :format="format" :data="data" :title="title" ref="formValidate" :rules="rules" @asyncOK="asyncOK" :display="display"  :loading="loading"></Modals>
+      <Modals :width="width" :format="format" :data="data" :title="title" ref="formValidate" :rules="rules" @asyncOK="asyncOK" :display="display"  :loading="loading"></Modals>
   </div>
 </template>
 <script>
@@ -44,20 +44,33 @@ export default {
       loading: false,
       title: "新建",
       formValidate: false,
+      width:"110",
       format: [
         { label: "漏洞名称", type: "input", prop: "kb_vuln_name" },
         { label: "CVE/CNVD编码", type: "input", prop: "kb_vuln_cve" },
         { label: "漏洞编号", type: "input", prop: "kb_vuln_vnum" },
         { label: "漏洞级别", type: "input", prop: "kb_vuln_level" },
         { label: "漏洞端口", type: "input", prop: "kb_vuln_port" },
-        { label: "漏洞类型", type: "input", prop: "kb_vuln_type" }
+        { label: "利用工具", type: "input", prop: "kb_vuln_tool" },
+        { label: "攻击方法", type: "input", prop: "kb_vuln_atme" },
+        { label: "验证手段", type: "input", prop: "kb_vuln_veme" },
+        { label: "攻击Payload", type: "input", prop: "kb_vuln_payload" },
+        { label: "漏洞类型", type: "input", prop: "kb_vuln_type" },
+        { label: "漏洞分类", type: "input", prop: "kb_vuln_class" }
+        
       ],
       data: {
         kb_vuln_name: "",
         kb_vuln_cve: "",
         kb_vuln_vnum: "",
         kb_vuln_level: "",
-        kb_vuln_type: ""
+        kb_vuln_port:"",
+        kb_vuln_tool:"",
+        kb_vuln_atme:"",
+        kb_vuln_veme:"",
+        kb_vuln_payload:"",
+        kb_vuln_type: "",
+        kb_vuln_class:""
       },
       rules: {
         kb_vuln_name: [
