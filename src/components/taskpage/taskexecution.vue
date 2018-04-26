@@ -268,11 +268,11 @@ export default {
 }
 .floor {
   position: absolute;
-  margin: 0 0 -340px -250px;
+  margin: 0 0 -240px -200px;
   bottom: 0;
   left: 50%;
   height:240px;
-  width: 500px;
+  width: 320px;
   z-index: 1;
 }
 .floor .ring {
