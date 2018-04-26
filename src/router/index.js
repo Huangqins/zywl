@@ -218,17 +218,13 @@ const router = new VueRouter({
             children: [
                 {
                     path: '',
-                    // component: Process,
                     components: {
                         default: Process,
-                        // left: Cloud,
                     }
                 },
                 {
                     path: 'holecloud',
-                    // component: Holecloud
                     components: {
-                        // left: ,
                         default: Holecloud
                     }
                 },
@@ -242,9 +238,7 @@ const router = new VueRouter({
                 },
                 {
                     path: 'assetsManage',
-                    // component: AssetsManage
                     components: {
-                        // left: Cloud,
                         default: AssetsManage
                     }
                 },
@@ -266,12 +260,7 @@ const router = new VueRouter({
                     components: {
                         default: Assetset
                     }
-                },
-                
-
-
-
-
+                }
             ]
         }
     ].concat(assetsRoutes)

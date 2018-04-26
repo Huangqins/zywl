@@ -26,7 +26,7 @@
                     <li class="brain"><router-link to="/taskexecution/assetManagement">资产信息维护</router-link></li>
                     <li class="brain" ><router-link to="/taskexecution/assetSet">任务维护</router-link></li>
                     <li class="brain" ><router-link to="/taskexecution/kbinfo">知识库维护</router-link></li> 
-                    <li class="brain"><router-link to="/taskexecution/">报告信息管理</router-link></li>  
+                    <!-- <li class="brain"><router-link to="/taskexecution/">报告信息管理</router-link></li>   -->
                 </ul>
             </div>
             <div class="content-right">

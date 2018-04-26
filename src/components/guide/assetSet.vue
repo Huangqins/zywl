@@ -11,6 +11,7 @@
                   <page :columns="tasks" :data="tasksList" :dataTotal="dataTotal" @dataLoad="dataLoad" :loading="pageLoading"></page>
               </div>
           </section>
+          <!-- <a :href="href" download ref="download"></a> -->
       </div>
       <Modals :format="format" :data="data" title="添加任务" ref="formValidate" :rules="rules" @asyncOK="asyncOK" :display="display"  :loading="loading" :ruleValidate="rules"></Modals>
   <!-- <div class="entry">
@@ -70,6 +71,7 @@ import getRule from "api/getRule";
 import fomatterTime from "@/utils/tool";
 import Modals from "components/Modal/modal";
 import taskList from "api/taskList";
+import exportPDF from "api/exportPDF";
 
 const strategy = { flag: 1 };
 const cycle = { flag: 2 };
@@ -81,6 +83,7 @@ export default {
   },
   data() {
     return {
+      href: "",
       pageLoading: false,
       loading: false,
       display: false,
@@ -189,6 +192,7 @@ export default {
         {
           title: "操作",
           align: "center",
+          width: 150,
           render: (h, params) => {
             return h("div", [
               h(
@@ -198,11 +202,42 @@ export default {
                     type: "error",
                     size: "small"
                   },
+                  style: {
+                    marginRight: "5px"
+                  },
                   on: {
                     click: () => {}
                   }
                 },
                 "删除"
+              ),
+              h(
+                "a",
+                {
+                  on: {
+                    click: ev => {
+                      // console.log(ev)
+                      if (params.row.export_url === "") {
+                        exportPDF(params.row).then(res => {
+                          if (res.result === 0) {
+                            ev.target.download = params.row.target_name;
+                            ev.target.href = decodeURI(
+                              location.origin + "/ZY" + res.path
+                            );
+                            console.log(ev.target.href);
+                            ev.target.innerText = "下载";
+                          }
+                        });
+                      } else {
+                        ev.target.download = params.row.target_name;
+                        ev.target.href = decodeURI(
+                          location.origin + "/ZY" + params.row.export_url
+                        );
+                      }
+                    }
+                  }
+                },
+                params.row.export_url === "" ? "生成" : "下载"
               )
             ]);
           }
@@ -253,7 +288,7 @@ export default {
         if (res.result === 0) {
           this.loading = false;
           this.$refs.formValidate.close();
-          this.$router.push({path:"/taskexecution"})
+          this.$router.push({ path: "/taskexecution" });
           this._taskList(this.params);
         }
       });
@@ -295,8 +330,8 @@ export default {
     //   });
     // }
     dataLoad(paramsObj) {
-       this.params = Object.assign({}, this.defaultPage, paramsObj);
-       this._taskList(this.params);
+      this.params = Object.assign({}, this.defaultPage, paramsObj);
+      this._taskList(this.params);
     }
   }
 };

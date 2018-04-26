@@ -8,6 +8,10 @@
     <div class="clear"></div>
     <div class="line">
        <chart width="350px" height="230px" :option="linechart"  ref=""></chart>   
+       
+       <a :href="href" ref="aLink"    download  type="application/pdf">
+         <Button type="primary"  icon="ios-download-outline" @click="_exportPDF">导出报告</Button>
+       </a>
     </div>
     <div class="holetable">
        <page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page>
@@ -21,6 +25,7 @@ import taskTargetInfo from "api/taskTargetInfo";
 import { mapGetters } from "vuex";
 import timeLine from "api/timeLine";
 import leaksInfo from "api/leaksInfo";
+import exportPDF from "api/exportPDF";
 let now = new Date();
 let year = now.getFullYear();
 let month = now.getMonth();
@@ -31,12 +36,15 @@ let sec = now.getSeconds();
 let times =
   year + "-" + month + "-" + day + " " + hours + ":" + minute + ":" + sec;
 const levelSchema = {
-  '4': '紧急风险',
-  '3': '高风险',
-  '2': '中风险',
-  '1': '低风险',
-  '0': '无风险'
-}
+  "4": "紧急风险",
+  "3": "高风险",
+  "2": "中风险",
+  "1": "低风险",
+  "0": "无风险"
+};
+const host =
+  process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
+// const host = process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
 export default {
   components: {
     chart,
@@ -44,11 +52,14 @@ export default {
     // zhexiantu
   },
   data() {
-    return {      
-      width:"800px",
+    return {
+      target_name: "",
+      id: "",
+      href:'',
+      width: "800px",
       loading: false,
-      assetsList:[],
-      total: 0,      
+      assetsList: [],
+      total: 0,
       defaultPage: {
         area: 1,
         rows: 10,
@@ -70,9 +81,7 @@ export default {
           key: "vuln_level",
           align: "center",
           render: (h, params) => {
-            return h('span',
-              `${levelSchema[params.row.vuln_level]}`
-            )
+            return h("span", `${levelSchema[params.row.vuln_level]}`);
           }
         },
         {
@@ -86,7 +95,6 @@ export default {
           align: "center"
         }
       ],
-      id: "",
       taskInfo: [],
       timer: "",
       //折线图
@@ -268,19 +276,32 @@ export default {
   created() {
     const params = { userName: this.userName, targetStruts: 0 };
     this._taskTargetInfo(params);
-   
   },
   methods: {
+    // 导出
+    _exportPDF() {
+      const params = { target_id: this.id, target_name: this.target_name };
+      exportPDF(params).then(res => {
+        this.href =
+          process.env.NODE_ENV === "development"
+            ? host +  `/${res.path}`
+            : host + `/ZY/${res.path}`;
+        if (res.result === 0) {
+          
+        }
+        // window.open(this.href)
+      });
+    },
     dataLoad(paramsObj) {
       const params = Object.assign({}, this.defaultPage, paramsObj);
-      // this._taskvulnList(params);     
+      // this._taskvulnList(params);
     },
-    
+
     //折线图
     _lineChart(params) {
       timeLine(params).then(res => {
-        console.log(res)
-      })
+        console.log(res);
+      });
       // lineChart(params).then(res => {
       //   //  console.log(res)
       // });
@@ -291,7 +312,10 @@ export default {
       if (res.targets.length > 0) {
         this.taskInfo = res.targets;
         this.id = res.targets[0].target_id;
-        const param = Object.assign({}, this.defaultPage,{targetId: this.id})
+        this.target_name = res.targets[0].target_name;
+        const param = Object.assign({}, this.defaultPage, {
+          targetId: this.id
+        });
         this._taskvulnList(param);
         // this.getLesks({ targetId: this.id })
         // this._lineChart({ target_id: this.id })
@@ -306,7 +330,7 @@ export default {
           this.taskInfo = res.targets;
           this._taskvulnList(param);
           // this.getLesks({ targetId: this.id })
-  
+
           this.option.series[0].data[0].value = Number(
             this.taskInfo[0].target_scaning
           ).toFixed(2);
@@ -322,21 +346,20 @@ export default {
     },
     getLesks(params) {
       leaksInfo(params).then(res => {
-        this.optipnTwo.series[0].data[0].value = res.total
+        this.optipnTwo.series[0].data[0].value = res.total;
       });
     },
     //当前任务下的漏洞列表
-    _taskvulnList(params){
-      leaksInfo(params).then(res =>{
+    _taskvulnList(params) {
+      leaksInfo(params).then(res => {
         //  console.log(res)
-        this.assetsList = res.rows
-        this.optipnTwo.series[0].data[0].value = res.total
-        console.log( this.optipnTwo.series[0].data[0].value)
+        this.assetsList = res.rows;
+        this.optipnTwo.series[0].data[0].value = res.total;
+        console.log(this.optipnTwo.series[0].data[0].value);
         // this.$set( this.optipnTwo.series[0].data, 0, {value: res.total})
-          // console.log(this.optipnTwo.series[0].data[0].value)
-
-      })
-    },
+        // console.log(this.optipnTwo.series[0].data[0].value)
+      });
+    }
   },
   destroyed() {
     clearInterval(this.timer);
@@ -356,7 +379,7 @@ export default {
 .clear {
   clear: both;
 }
-.holetable{
+.holetable {
   width: 100%;
 }
 </style>

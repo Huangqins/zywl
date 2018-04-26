@@ -1,6 +1,6 @@
 <template>
   <div>
-    <canvas id="cloud" width=400 height=400></canvas>
+    <canvas :id="id" :width="width"  :height="height"></canvas>
   </div>
 </template>
 
@@ -13,39 +13,30 @@ export default {
       type: String,
       default: "cloud"
     },
-    data: {
+    list: {
       type: Array,
       default: () => {
-        return [
-          [12, "Love"],
-          [5, "Liebe"],
-          [5, "ፍቅር"],
-          [5, "Lufu"],
-          [5, "حب"],
-          [5, "Aimor"]
-        ];
+        return [["foo", 12], ["bar", 6]];
       }
     },
     width: {
       type: Number,
-      default: 400
+      default: 300
     },
     height: {
       type: Number,
-      default: 400
+      default: 300
     }
   },
   mounted() {
-
-    let my_canvas = document.getElementById("cloud");
+    let my_canvas = document.getElementById(this.id);
     WordCloud(my_canvas, {
-      list: this.data,
-      gridSize: 8,
-      weightFactor: 16,
-      fontFamily: "Hiragino Mincho Pro, serif",
-      color: "random-dark",
-      backgroundColor: "#f0f0f0",
-      rotateRatio: 0
+      list: this.list,
+      gridSize: 18,
+      weightFactor: 3,
+      fontFamily: "Finger Paint, cursive, sans-serif",
+      color: "#f0f0c0",
+      backgroundColor: "transparent"
     });
   },
   data() {

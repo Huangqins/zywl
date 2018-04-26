@@ -5,8 +5,7 @@
             <chart width="235px" height="235px" :option="options"></chart>       
             <chart width="235px" height="235px" :option="optionTwo" id="optionTwo"></chart>      
             <chart width="235px" height="235px" :option="optionThree" id="optionThree"></chart>     
-          </div>
-         
+          </div>       
         </div>
         <div class="clear"></div>
         <div class="list">
