@@ -1,5 +1,8 @@
 <template>
 <div>
+    <!-- <div class="safety">
+      
+    </div> -->
     <div class="holeclassify">
               <h2>漏洞Top10榜单</h2>
               <span><Icon type="chevron-right"></Icon>目前已有XXX个漏洞进行排行</span>
@@ -21,7 +24,29 @@
                 </ul>
               </div>
     </div>
-    <div>
+    <div class="holeclassify">
+              <h2>安全度</h2>
+              <span><Icon type="chevron-right"></Icon></span>
+              <div class="holeList">
+                <ul>
+                    <li class="listOne">
+                    <span class="holeHeader">漏洞排行</span>
+                    <span class="holeHeader">漏洞名称</span>
+                    <span class="holeHeader">漏洞数量</span>
+                    </li>
+                    <li v-for="(item,index) in holes" :key="index">
+                    <span v-if="index===0"><img src="../../../../static/top1.png" ></span>
+                    <span v-else-if="index===1"><img src="../../../../static/top2.png" ></span>
+                    <span v-else-if="index===2"><img src="../../../../static/top3.png"/></span>
+                    <span v-else-if="index>=3">{{index}}</span>
+                    <span>{{item.holeName}}</span>
+                    <span>{{item.holeNum}}</span>
+                    </li>         
+                </ul>
+              </div>
+    </div>
+    <div style="clear:both"></div>
+    <div class="List">
       <page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page>
     </div>
   </div>
@@ -131,16 +156,27 @@ export default {
 </script>
 
 <style scoped>
+
+.safety{
+width: 45%;
+background: red;
+height: 320px;
+}
  /* top10样式 */
 .holeclassify {
-  width: 100%;
-  margin-right: 3px;
+  width: 45%;
+  margin-right: 10px;
   color: #E4E5E5;
+  float: left;
   margin-bottom: 15px;
 }
 .holeclassify span{
   display: inline-block;
   height: 19px;
+}
+.List{
+ width: 100%;
+ 
 }
 .holeList{
   width: 100%;

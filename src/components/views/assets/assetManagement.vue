@@ -225,7 +225,6 @@ export default {
 .assetRight_nav{
   width: 100%;
   height: 280px;
-  background: red;
   margin-bottom:20px;
 }
 .assetRight_header {

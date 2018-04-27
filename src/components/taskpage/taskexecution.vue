@@ -43,13 +43,16 @@ import zhexiantu from "components/chart/zhexiantu";
 import { getUserName } from "@/utils/auth";
 import taskTargetInfo from "api/taskTargetInfo";
 import { Modal } from 'iview'
-const isAssetOne = () => {
-  return `欢迎使用智刃安全攻防平台,距您上次进行攻防测试已经过了XXX天XXX小时XXX分钟，建议进行测试的资产为XXX`;
+const isAssetOne = ({ assets_name, datetime }) => {
+  return `欢迎使用智刃安全攻防平台,距您上次进行攻防测试已经过了XXX天XXX小时XXX分钟，建议进行测试的资产为${assets_name}`;
 };
 const isAssetTwo = () => {
-  return `欢迎使用智刃安全攻防平台,目前网络空间安全等级为XXX，安全情报监控显示，XXX资产暴露XXX问题，可能存在问题的资产有XXX。
-    是否要进行安全测试？`;
+  return `欢迎使用智刃安全攻防平台, 是否要进行安全测试？`;
 };
+// const isAssetTwo = () => {
+//   return `欢迎使用智刃安全攻防平台,目前网络空间安全等级为XXX，安全情报监控显示，XXX资产暴露XXX问题，可能存在问题的资产有XXX。
+//     是否要进行安全测试？`;
+// };
 
 export default {
   name: "taskexecution",
@@ -213,9 +216,10 @@ export default {
   },
   beforeRouteEnter: (to, from, next) => {
     if (from.fullPath === "/login") {
+      console.log(to.params)
       Modal.confirm({
         title: `您好,${getUserName()}`,
-        content: to.params.firstLogin === 1 ? isAssetOne() : isAssetTwo(),
+        content: to.params.firstLogin === 1 ? isAssetOne(to.params.userTips) : isAssetTwo(),
         onOk: () => {
           if (to.params.firstLogin === 1) {
             next();

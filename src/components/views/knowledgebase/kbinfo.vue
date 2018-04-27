@@ -8,8 +8,12 @@
                 <Button type="primary" icon="compose" @click="assetsAdd">添加</Button>
                 <Button type="primary" icon="log-in">导入</Button>
                 <Button type="primary" icon="log-out">导出</Button>
+              </div>  
+              <div class="assetRight_pro">
+                <chart width="305px" height="260px" :option="options"></chart>   
+                <chart width="290px" height="260px" :option="optionOne" id="optionOne"></chart>  
+                <chart width="290px" height="260px" :option="optionTwo" id="optionTwo"></chart>     
               </div>
-              <div class="assetRight_pro"></div>
               <div class="assetRight_content">
                   <page :columns="assets" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="pageLoading"> </page>
               </div>
@@ -29,6 +33,7 @@ import kbAdd from "api/kbAdd";
 import kbUpdate from "api/kbUpdate";
 import kbDelete from "api/kbDelete";
 import Modal from "../../Modal/modal";
+import chart from "components/chart/chart"
 const levelSchema = {
   "4": "紧急风险",
   "3": "高风险",
@@ -40,10 +45,272 @@ export default {
   components: {
     Modal,
     page,
-    Modals
+    Modals,
+    chart
   },
   data() {
     return {
+      options : {
+        title: {
+            text: '风险类型',
+            left: 'center',
+            textStyle: {
+            color: "#E4E5E5"
+          }
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        series : [
+          {
+              type: 'pie',
+              radius : '65%',
+              center: ['50%', '50%'],
+              selectedMode: 'single',
+              data:[
+                  {
+                      value:1548,
+                      name: '幽州',
+                      label: {
+                          normal: {
+                              rich: {
+                                  title: {
+                                      color: '#eee',
+                                      align: 'center'
+                                  },
+                                  abg: {
+                                      backgroundColor: '#333',
+                                      width: '100%',
+                                      align: 'right',
+                                      height: 25,
+                                      borderRadius: [4, 4, 0, 0]
+                                  },
+                                  weatherHead: {
+                                      color: '#333',
+                                      height: 24,
+                                      align: 'left'
+                                  },
+                                  hr: {
+                                      borderColor: '#777',
+                                      width: '100%',
+                                      borderWidth: 0.5,
+                                      height: 0
+                                  },
+                                  value: {
+                                      width: 20,
+                                      padding: [0, 20, 0, 30],
+                                      align: 'left'
+                                  },
+                                  valueHead: {
+                                      color: '#333',
+                                      width: 20,
+                                      padding: [0, 20, 0, 30],
+                                      align: 'center'
+                                  },
+                                  rate: {
+                                      width: 40,
+                                      align: 'right',
+                                      padding: [0, 10, 0, 0]
+                                  },
+                                  rateHead: {
+                                      color: '#333',
+                                      width: 40,
+                                      align: 'center',
+                                      padding: [0, 10, 0, 0]
+                                  }
+                              }
+                          }
+                      }
+                  },
+                {value:535, name: '跨站脚本'},
+                {value:510, name: '跨站请求伪造'},
+                {value:634, name: '益州'},
+                {value:735, name: '西凉'}
+            ],
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+          }
+        ]
+      },
+      optionOne : {
+        title: {
+            text: '风险级别',
+            left: 'center',
+            textStyle: {
+            color: "#E4E5E5"
+          }
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        series : [
+          {
+              type: 'pie',
+              radius : '65%',
+              center: ['50%', '50%'],
+              selectedMode: 'single',
+              data:[
+                  {
+                      label: {
+                          normal: {
+                              rich: {
+                                  title: {
+                                      color: '#eee',
+                                      align: 'center'
+                                  },
+                                  abg: {
+                                      backgroundColor: '#333',
+                                      width: '100%',
+                                      align: 'right',
+                                      height: 25,
+                                      borderRadius: [4, 4, 0, 0]
+                                  },
+                                  weatherHead: {
+                                      color: '#333',
+                                      height: 24,
+                                      align: 'left'
+                                  },
+                                  hr: {
+                                      borderColor: '#777',
+                                      width: '100%',
+                                      borderWidth: 0.5,
+                                      height: 0
+                                  },
+                                  value: {
+                                      width: 20,
+                                      padding: [0, 20, 0, 30],
+                                      align: 'left'
+                                  },
+                                  valueHead: {
+                                      color: '#333',
+                                      width: 20,
+                                      padding: [0, 20, 0, 30],
+                                      align: 'center'
+                                  },
+                                  rate: {
+                                      width: 40,
+                                      align: 'right',
+                                      padding: [0, 10, 0, 0]
+                                  },
+                                  rateHead: {
+                                      color: '#333',
+                                      width: 40,
+                                      align: 'center',
+                                      padding: [0, 10, 0, 0]
+                                  }
+                              }
+                          }
+                      }
+                  },
+                {value:535, name: '低风险'},
+                {value:550, name: '中风险'},
+                {value:634, name: '高风险'},
+            ],
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+          }
+        ]
+      },
+      optionTwo : {
+        title: {
+            text: '利用端口',
+            left: 'center',
+            textStyle: {
+            color: "#E4E5E5"
+          }
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        series : [
+          {
+              type: 'pie',
+              radius : '65%',
+              center: ['50%', '50%'],
+              selectedMode: 'single',
+              data:[
+                  {
+                      value:1548,
+                      name: '幽州',
+                      label: {
+                          normal: {
+                              rich: {
+                                  title: {
+                                      color: '#eee',
+                                      align: 'center'
+                                  },
+                                  abg: {
+                                      backgroundColor: '#333',
+                                      width: '100%',
+                                      align: 'right',
+                                      height: 25,
+                                      borderRadius: [4, 4, 0, 0]
+                                  },
+                                  weatherHead: {
+                                      color: '#333',
+                                      height: 24,
+                                      align: 'left'
+                                  },
+                                  hr: {
+                                      borderColor: '#777',
+                                      width: '100%',
+                                      borderWidth: 0.5,
+                                      height: 0
+                                  },
+                                  value: {
+                                      width: 20,
+                                      padding: [0, 20, 0, 30],
+                                      align: 'left'
+                                  },
+                                  valueHead: {
+                                      color: '#333',
+                                      width: 20,
+                                      padding: [0, 20, 0, 30],
+                                      align: 'center'
+                                  },
+                                  rate: {
+                                      width: 40,
+                                      align: 'right',
+                                      padding: [0, 10, 0, 0]
+                                  },
+                                  rateHead: {
+                                      color: '#333',
+                                      width: 40,
+                                      align: 'center',
+                                      padding: [0, 10, 0, 0]
+                                  }
+                              }
+                          }
+                      }
+                  },
+                {value:535, name: '跨站脚本'},
+                {value:510, name: '兖州'},
+                {value:634, name: '益州'},
+                {value:735, name: '西凉'}
+            ],
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+          }
+        ]
+      },
       footer: true,
       pageLoading: false,
       loading: false,
@@ -60,7 +327,7 @@ export default {
         { label: "攻击方法", type: "input", prop: "kb_vuln_atme" },
         { label: "验证手段", type: "input", prop: "kb_vuln_veme" },
         { label: "攻击Payload", type: "input", prop: "kb_vuln_payload" },
-        { label: "漏洞类型", type: "input", prop: "kb_vuln_type" },
+        { label: "漏洞类型", type: "input", prop: "vuln_type_name" },
         { label: "漏洞分类", type: "input", prop: "kb_vuln_class" }
       ],
       formatCopy:[],
@@ -74,7 +341,7 @@ export default {
         kb_vuln_atme:"",
         kb_vuln_veme:"",
         kb_vuln_payload:"",
-        kb_vuln_type: "",
+        vuln_type_name: "",
         kb_vuln_class:""
       },
       dataCopy: {},
@@ -89,7 +356,7 @@ export default {
       },
       value: "",
       assets: [
-
+        
         {
           title: "风险编号",
           key: "kb_vuln_vnum",
@@ -114,7 +381,7 @@ export default {
           }
         },
         {
-          title: "风险端口",
+          title: "利用端口",
           key: "kb_vuln_port",
           align: "center"
         },
@@ -222,6 +489,7 @@ export default {
     const dataCopy = JSON.parse(JSON.stringify(this.data))
     this.dataCopy = Object.assign({},dataCopy,{kb_vuln_des:'',kb_vuln_anly:''})
     temp.forEach(item => {
+      console.log(item)
          item.type = 'div'
     })
     this.formatCopy = temp;
@@ -315,19 +583,23 @@ console.log(this.dataCopy)
   width: 100%;
   height: auto;
 }
-.assetRight_pro{
-  width:100%;
+.assetRight_pro {
+  width: 100%;
   height: 280px;
   margin-bottom: 20px;
-  background: red;
 }
 .assetRight_header {
   width: 100%;
   height: auto;
   padding: 25px;
-  background: rgba(25, 38, 48,0.1);
+  background: rgba(25, 38, 48, 0.1);
 }
-
+.assetRight_pro div {
+  float: left;
+}
+.assetRight_pro div:nth-child(2){
+  margin:0 20px;
+}
 .ivu-btn .ivu-btn-primary {
   margin-left: 5px;
 }

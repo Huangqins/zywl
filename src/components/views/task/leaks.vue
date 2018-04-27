@@ -79,7 +79,7 @@ export default {
             type: "gauge",
             radius: "85%",
             detail: { formatter: "{value}%", fontSize: 18 },
-            data: [{ value: 90, name: "一级漏洞" }],
+            data: [{ value: 90, name: "高风险" }],
             title: { color: "#E4E5E5", fontSize: 12 },
             splitLine: { show: false },
             axisTick: { show: false },
@@ -103,7 +103,7 @@ export default {
             type: "gauge",
             radius: "85%",
             detail: { formatter: "{value}%", fontSize: 18 },
-            data: [{ value: 60, name: "二级漏洞" }],
+            data: [{ value: 60, name: "中风险" }],
             title: { color: "#E4E5E5", fontSize: 12 },
             splitLine: { show: false },
             axisTick: { show: false },
@@ -127,7 +127,7 @@ export default {
             type: "gauge",
             radius: "85%",
             detail: { formatter: "{value}%", fontSize: 18 },
-            data: [{ value: 20, name: "三级漏洞" }],
+            data: [{ value: 20, name: "低风险" }],
             title: { color: "#E4E5E5", fontSize: 12 },
             splitLine: { show: false },
             axisTick: { show: false },
@@ -144,17 +144,17 @@ export default {
       loading: false,
       leaksColums: [
         {
-          title: "漏洞名称",
+          title: "风险名称",
           key: "vuln_name",
           align: "center"
         },
         {
-          title: "漏洞类型",
+          title: "风险类型",
           key: "vuln_type",
           align: "center"
         },
         {
-          title: "漏洞等级",
+          title: "风险等级",
           key: "vuln_level",
           align: "center",
           render: (h, params) => {

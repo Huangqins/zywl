@@ -45,6 +45,8 @@ import getIdentifyCode from "api/getIdentifyCode";
 import message from "utils/message";
 import animationCircle from "./animationCircle";
 import registers from "./register";
+import userTips from "api/userTips";
+import { getUserName } from "@/utils/auth";
 
 const host =
   process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
@@ -102,6 +104,7 @@ export default {
         this.formItem.verifyCodeID = res.codeID;
       });
     },
+
     handleSubmit() {
       // 登录成功需要存储用户信息
       this.$store
@@ -111,10 +114,20 @@ export default {
             if (res.isAsset === 0) {
               this.$router.push({ path: "/welcome" });
             } else if (res.isAsset === 1) {
-              //登陆成功并存在资产
-              this.$router.push({
-                name: "taskexecution",
-                params: { isAsset: res.isAsset, firstLogin: res.firstLogin }
+              const login_res = res;
+              // console.log(userTips)
+              userTips({ userName: getUserName() }).then(res => {
+                if (res.result === 0) {
+                  //登陆成功并存在资产
+                  this.$router.push({
+                    name: "taskexecution",
+                    params: {
+                      isAsset: login_res.isAsset,
+                      firstLogin: login_res.firstLogin,
+                      userTips: res
+                    }
+                  });
+                }
               });
             }
           } else if (res.result === 2) {
