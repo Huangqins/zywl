@@ -91,11 +91,11 @@ export default {
           key: "assets_ip",
           align: "center"
         },
-        {
-          title: "创建人",
-          key: "assets_creatuser",
-          align: "center"
-        }
+        // {
+        //   title: "创建人",
+        //   key: "assets_creatuser",
+        //   align: "center"
+        // }
       ],
       total: 0,
       defaultPage: {

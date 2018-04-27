@@ -9,7 +9,6 @@
         </div>
         <div class="clear"></div>
         <div class="list">
-          <h2>漏洞列表</h2>
             <page :columns="leaksColums" :data="leaksList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" ></page>
         </div>
   </div>
@@ -192,11 +191,11 @@ export default {
           key: "vuln_Payload",
           align: "center"
         },
-        {
-          title: "操作人",
-          key: "vuln_oper",
-          align: "center"
-        }
+        // {
+        //   title: "操作人",
+        //   key: "vuln_oper",
+        //   align: "center"
+        // }
       ],
       leaksList: [],
       total: 0,

@@ -22,10 +22,10 @@
                 <ul>      
                     <li class="brain"><router-link to="/taskexecution">任务执行</router-link></li>    
                     <li class="brain"><router-link :to="{name: 'leaks', params: {taskID: taskID}}">漏洞列表</router-link></li>
-                    <li class="brain"><router-link to="/taskexecution/assetsManage">资产拓补图</router-link></li>
-                    <li class="brain"><router-link to="/taskexecution/assetManagement">资产信息维护</router-link></li>
-                    <li class="brain" ><router-link to="/taskexecution/assetSet">任务维护</router-link></li>
-                    <li class="brain" ><router-link to="/taskexecution/kbinfo">知识库维护</router-link></li> 
+                    <li class="brain"><router-link to="/taskexecution/assetsManage">资产风险分布</router-link></li>
+                    <li class="brain"><router-link to="/taskexecution/assetManagement">资产码头</router-link></li>
+                    <li class="brain" ><router-link to="/taskexecution/assetSet">任务调度</router-link></li>
+                    <li class="brain" ><router-link to="/taskexecution/kbinfo">知识库</router-link></li> 
                     <!-- <li class="brain"><router-link to="/taskexecution/">报告信息管理</router-link></li>   -->
                 </ul>
             </div>
@@ -346,7 +346,7 @@ export default {
   margin-top: 100px;
 }
 .content-left{
-  width: 20%;
+  width: 18%;
   float: left;
   margin-left: 100px;
 }
@@ -355,7 +355,7 @@ export default {
   float: left;
 }
 .content-right{
-  width: 60%;
+  width: 62%;
   float: left;
 }
 .content div {

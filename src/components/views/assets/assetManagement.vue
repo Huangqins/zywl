@@ -9,6 +9,7 @@
                 <Button type="primary" icon="log-in">导入</Button>
                 <Button type="primary" icon="log-out">导出</Button>
               </div>  
+              <div class="assetRight_nav"></div>
               <div class="assetRight_content">
                   <page :columns="assets" :data="assetsList" :dataTotal="dataTotal" @dataLoad="dataLoad"  :loading="pageLoading"></page>
               </div>
@@ -97,11 +98,11 @@ export default {
           key: "assets_ip",
           align: "center"
         },        
-        {
-          title: "创建人",
-          key: "assets_creatuser",
-          align: "center"
-        },
+        // {
+        //   title: "创建人",
+        //   key: "assets_creatuser",
+        //   align: "center"
+        // },
         {
           title: "操作",
           align: "center",
@@ -112,7 +113,8 @@ export default {
                 {
                   props: {
                     type: "primary",
-                    size: "small"
+                    size: "small",
+                    icon: 'edit'
                   },
                   style: {
                     marginRight: "5px"
@@ -124,23 +126,22 @@ export default {
                       this.$refs.formValidate.open();
                     }
                   }
-                },
-                "修改"
+                }
               ),
               h(
                 "Button",
                 {
                   props: {
                     type: "error",
-                    size: "small"
+                    size: "small",
+                    icon: "trash-a"
                   },
                   on: {
                     click: () => {
                       this.remove({ assets_id: params.row.assets_id });
                     }
                   }
-                },
-                "删除"
+                }
               )
             ]);
           }
@@ -220,6 +221,12 @@ export default {
   float: left;
   width: 100%;
   height: auto;
+}
+.assetRight_nav{
+  width: 100%;
+  height: 280px;
+  background: red;
+  margin-bottom:20px;
 }
 .assetRight_header {
   width: 100%;

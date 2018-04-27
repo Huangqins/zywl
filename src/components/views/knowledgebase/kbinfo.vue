@@ -9,6 +9,7 @@
                 <Button type="primary" icon="log-in">导入</Button>
                 <Button type="primary" icon="log-out">导出</Button>
               </div>
+              <div class="assetRight_pro"></div>
               <div class="assetRight_content">
                   <page :columns="assets" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="pageLoading"> </page>
               </div>
@@ -63,7 +64,9 @@ export default {
         { label: "漏洞分类", type: "input", prop: "kb_vuln_class" }
 
       ],
-      formatCopy:[],
+      formatCopy:[
+        { label: "漏洞名称", type: "input", prop: "kb_vuln_name" },
+      ],
       data: {
         kb_vuln_name: "",
         kb_vuln_cve: "",
@@ -88,8 +91,14 @@ export default {
       },
       value: "",
       assets: [
+
         {
-          title: "漏洞名称",
+          title: "风险编号",
+          key: "kb_vuln_vnum",
+          align: "center"
+        },
+        {
+          title: "风险名称",
           key: "kb_vuln_name",
           align: "center"
         },
@@ -99,12 +108,7 @@ export default {
           align: "center"
         },
         {
-          title: "漏洞编号",
-          key: "kb_vuln_vnum",
-          align: "center"
-        },
-        {
-          title: "漏洞级别",
+          title: "风险级别",
           key: "kb_vuln_level",
           align: "center",
           render: (h, params) => {
@@ -112,12 +116,12 @@ export default {
           }
         },
         {
-          title: "漏洞端口",
+          title: "风险端口",
           key: "kb_vuln_port",
           align: "center"
         },
         {
-          title: "漏洞类型",
+          title: "风险类型",
           key: "kb_vuln_type",
           align: "center"
         },
@@ -131,7 +135,8 @@ export default {
                 {
                   props: {
                     type: "primary",
-                    size: "small"
+                    size: "small",
+                    icon:"edit"
                   },
                   style: {
                     marginRight: "5px"
@@ -146,15 +151,15 @@ export default {
                       this.$refs.formValidate.open();
                     }
                   }
-                },
-                "修改"
+                }
               ),
               h(
                 "Button",
                 {
                   props: {
                     type: "error",
-                    size: "small"
+                    size: "small",
+                    icon:"trash-a"
                   },
                   style: {
                     marginRight:'5px'
@@ -167,7 +172,6 @@ export default {
                     }
                   }
                 },
-                "删除"
               ),
               h(
                 'Button',
@@ -302,13 +306,19 @@ export default {
   width: 100%;
   height: auto;
 }
+.assetRight_pro{
+  width:100%;
+  height: 280px;
+  margin-bottom: 20px;
+  background: red;
+}
 .assetRight_header {
   width: 100%;
-  height: 100px;
+  height: auto;
   padding: 25px;
-  margin-top: 20px;
   background: rgba(25, 38, 48,0.1);
 }
+
 .ivu-btn .ivu-btn-primary {
   margin-left: 5px;
 }

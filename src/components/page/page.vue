@@ -1,13 +1,13 @@
 <template>
 <div>
- <Table  :columns="columns" :data="data"  :loading="loading" :height="height">
+ <Table  :columns="columns" :data="data"  :loading="loading" :height="height" >
    
  </Table>
   <Page :total="dataTotal" size="small" :current="current" :placement="placement"  :page-size-opts="pageSizeOpts" show-total  show-sizer 
   @on-change="onPageChange" @on-page-size-change="onChangehandle" show-elevator></Page>
   </div>
 </template>
-<script>
+<script>    
 export default {
   props: {
     columns: {

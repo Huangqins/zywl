@@ -133,11 +133,6 @@ export default {
           align: "center"
         },
         {
-          title: "任务类型",
-          key: "target_type",
-          align: "center"
-        },
-        {
           title: "扫描进度",
           key: "target_scaning",
           align: "center",
@@ -170,7 +165,7 @@ export default {
           align: "center"
         },
         {
-          title: "任务操作人",
+          title: "创建人",
           key: "target_tast_oper",
           align: "center"
         },
@@ -185,7 +180,8 @@ export default {
                 {
                   props: {
                     type: "error",
-                    size: "small"
+                    size: "small",
+                    icon:"trash-a"
                   },
                   style: {
                     marginRight: "5px"
@@ -193,8 +189,7 @@ export default {
                   on: {
                     click: () => {}
                   }
-                },
-                "删除"
+                }
               ),
               h(
                 "a",
@@ -320,5 +315,19 @@ export default {
 };
 </script>
 <style scoped>
-
+.whole {
+  width: 100%;
+  color: #e4e5e5;
+}
+.assetRight {
+  float: left;
+  width: 100%;
+  height: auto;
+}
+.assetRight_header {
+  width: 100%;
+  height: auto;
+  padding: 25px;
+  background: rgba(25, 38, 48,0.1);
+}
 </style>

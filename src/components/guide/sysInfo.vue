@@ -28,10 +28,11 @@
     <div>
          <Row>
           <Col span="24">
-              <Card style="background:rgba(18,62,101,0.7);border:1px solid #51B3DA;">
+              <Card style="" class="sysinfo">
                   <p slot="title" style="color:white;">{{trueName}},您好！</p>
-                  <p>欢迎使用智刃安全攻防平台,目前网络空间安全等级为XXX，安全情报监控显示，XXX资产暴露XXX问题，可能存在问题的资产有XXX。</p>
-                  <p>是否要进行安全测试？</p>
+                  <p>欢迎使用智刃安全攻防平台,是否要进行安全测试？</p>
+                  <!-- <p>欢迎使用智刃安全攻防平台,目前网络空间安全等级为XXX，安全情报监控显示，XXX资产暴露XXX问题，可能存在问题的资产有XXX。</p> -->
+                 
                   <p class="handle">
                     <i-button type="error" @click="goHomePage" class="cancel">取消</i-button>
                     <i-button type="success"  @click="goAssetSet">确定</i-button>
@@ -68,6 +69,11 @@ export default {
 };
 </script>
 <style scoped>
+.sysinfo{
+background:rgba(18,62,101,0.7);
+border:1px solid #51B3DA;
+color: #ffffff;
+}
 .go {
   font-size: 30px;
   position: absolute;
@@ -77,6 +83,7 @@ export default {
 .handle{
     display: flex;
     justify-content: flex-end;
+    margin-top:10px;
 }
 
 .cancel{

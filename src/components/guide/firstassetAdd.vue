@@ -2,10 +2,10 @@
   <div>
       <div class="whole">  
               <Card class="card" >
-                  <h2 slot="title" style="color:white;">请对资产进行任务添加</h2>
+                  <h2 slot="title" style="color:white;">任务添加</h2>
                   <Row>
-                            <Form ref="handAdd" :model="formItem" :rules="rules" :label-width="40">
-                               <FormItem prop="tassets_name" label="名称">
+                            <Form ref="handAdd" :model="formItem" :rules="rules" :label-width="10">
+                               <FormItem prop="tassets_name">
                                     <Input type="text" v-model="formItem.target_name" placeholder="任务名称"></Input>
                                 </FormItem>
                                 <FormItem >
@@ -31,6 +31,7 @@
                         
                     <Row class="primary" type="flex" align='middle' justify="center" >
                         <Col >
+                            <i-button type="primary"  @click="cancel" class="button">取消</i-button> 
                             <i-button type="primary"  @click="asyncOK">提交</i-button> 
                         </Col>
                     </Row>
@@ -76,12 +77,13 @@ export default {
     this._getRule(strategy);
     this._getRule(cycle);
     const params = this.$route.params;
-    console.log(this.$route);
     this.formItem.target_url = params.target_url;
     this.formItem.target_ip = params.target_ip;
   },
   methods: {
-    assetSubmit() {},
+    cancel(){
+      //this.$router.push({path:"/taskexecution"})//点击取消跳到大首页
+    },
     asyncOK(formItem) {
       this.formItem.userName = getUserName();
       this.formItem.target_starttime = fomatterTime(this.formItem.target_starttime);
@@ -96,7 +98,6 @@ export default {
     async _getRule(params) {
       const res = await getRule(params);
       if (res.result === 0) {
-        console.log(res);
         if (params.flag === 1) {
           this.strategyRule = res.rules;
         } else {
@@ -108,6 +109,9 @@ export default {
 };
 </script>
 <style scoped>
+.button{
+margin-right: 50px;
+}
 .whole {
   width: 410px;
   height: auto;

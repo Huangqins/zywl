@@ -91,9 +91,9 @@
     color: #E4E5E5;
 }
 .ivu-select-single .ivu-select-selection{
-    background: rgba(45, 140, 240, 0);
+    /* background: rgba(45, 140, 240, 0); */
     border: 1px solid #5D90BB;
-    color: #dddee1;
+    color: #495060;
 }
 .ivu-page .mini{
 padding-top: 3px;

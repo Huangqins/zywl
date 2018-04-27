@@ -10,7 +10,13 @@
        <chart width="350px" height="230px" :option="linechart"  ref=""></chart>
     </div>
     <div class="holetable">
-       <page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page>
+      <Row>
+        <Col span="12"></Col>
+        <Col span="12"></Col>
+      </Row>
+      <Row>
+        <Col span="24"><page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page></Col>
+      </Row>
     </div>
   </div>
 </template>
@@ -63,17 +69,17 @@ export default {
       },
       assetsColums: [
         {
-          title: "漏洞名称",
+          title: "风险名称",
           key: "vuln_name",
           align: "center"
         },
         {
-          title: "漏洞类型",
+          title: "风险类型",
           key: "vuln_type",
           align: "center"
         },
         {
-          title: "漏洞等级",
+          title: "风险等级",
           key: "vuln_level",
           align: "center",
           render: (h, params) => {
@@ -83,11 +89,6 @@ export default {
         {
           title: "payload",
           key: "vuln_Payload",
-          align: "center"
-        },
-        {
-          title: "操作人",
-          key: "vuln_oper",
           align: "center"
         }
       ],
@@ -351,7 +352,9 @@ export default {
         //  console.log(res)
         this.assetsList = res.rows;
         this.optipnTwo.series[0].data[0].value = res.total;
+
         console.log(this.optipnTwo.series[0].data[0].value);
+        this.$refs.taskholeNum.refresh();
         // this.$set( this.optipnTwo.series[0].data, 0, {value: res.total})
         // console.log(this.optipnTwo.series[0].data[0].value)
       });
