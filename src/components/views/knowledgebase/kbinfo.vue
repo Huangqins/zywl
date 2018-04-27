@@ -8,13 +8,14 @@
                 <Button type="primary" icon="compose" @click="assetsAdd">添加</Button>
                 <Button type="primary" icon="log-in">导入</Button>
                 <Button type="primary" icon="log-out">导出</Button>
-              </div>  
+              </div>
               <div class="assetRight_content">
                   <page :columns="assets" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="pageLoading"> </page>
               </div>
           </section>
       </div>
-      <Modals :width="width" :format="format" :data="data" :title="title" ref="formValidate" :rules="rules" @asyncOK="asyncOK" :display="display"  :loading="loading"></Modals>
+      <Modals :width="width" :format="formatType" :data="data" :title="title" ref="formValidate" :rules="rules" @asyncOK="asyncOK" :display="display"  :loading="loading" :footer="footer"></Modals>
+    <!--<Modal></Modal>-->
   </div>
 </template>
 <script>
@@ -26,6 +27,7 @@ import kbinfo from "api/kbinfo";
 import kbAdd from "api/kbAdd";
 import kbUpdate from "api/kbUpdate";
 import kbDelete from "api/kbDelete";
+import Modal from "../../Modal/modal";
 const levelSchema = {
   "4": "紧急风险",
   "3": "高风险",
@@ -35,11 +37,13 @@ const levelSchema = {
 };
 export default {
   components: {
+    Modal,
     page,
     Modals
   },
   data() {
     return {
+      footer: true,
       pageLoading: false,
       loading: false,
       title: "新建",
@@ -57,8 +61,9 @@ export default {
         { label: "攻击Payload", type: "input", prop: "kb_vuln_payload" },
         { label: "漏洞类型", type: "input", prop: "kb_vuln_type" },
         { label: "漏洞分类", type: "input", prop: "kb_vuln_class" }
-        
+
       ],
+      formatCopy:[],
       data: {
         kb_vuln_name: "",
         kb_vuln_cve: "",
@@ -134,6 +139,9 @@ export default {
                   on: {
                     click: () => {
                       this.data = Object.assign({}, this.data, params.row);
+                      this.modalStatus = 0;
+                      this.footer = true;
+                      this.title = '修改';
                       // 打开
                       this.$refs.formValidate.open();
                     }
@@ -148,6 +156,9 @@ export default {
                     type: "error",
                     size: "small"
                   },
+                  style: {
+                    marginRight:'5px'
+                  },
                   on: {
                     click: () => {
                       this._kbDelete(params.row)
@@ -157,6 +168,25 @@ export default {
                   }
                 },
                 "删除"
+              ),
+              h(
+                'Button',
+                {
+                  props: {
+                    size: "small",
+                    icon: "social-buffer"
+                  },
+                  on: {
+                    click: () => {
+                      this.data = Object.assign({}, this.data, params.row);
+                      this.modalStatus = 1;
+                      this.footer = false;
+                      this.title = '详情';
+                      this.$refs.formValidate.open();
+                      this._detail(params.row)
+                    }
+                  }
+                }
               )
             ]);
           }
@@ -170,18 +200,29 @@ export default {
         page: 1
       },
       total: 0,
-      params: {}
+      params: {},
+      modalStatus:0
     };
   },
   computed: {
+    formatType() {
+      return this.modalStatus === 0 ? this.format : this.formatCopy;
+    },
     ...mapGetters(["userName"])
   },
   created() {
     this.params = Object.assign({}, this.defaultPage, { area: 0 });
     this._kbinfo(this.params);
+    const temp = JSON.parse(JSON.stringify(this.format))
+    temp.forEach(item => {
+         item.type = 'div'
+    })
+    this.formatCopy = temp;
   },
   methods: {
     assetsAdd() {
+      this.footer = true;
+      this.modalStatus = 0;
       this.$refs.formValidate.open();
       this.data = {};
     },
@@ -243,6 +284,10 @@ export default {
     dataLoad(paramsObj) {
       this.params = Object.assign({}, this.defaultPage, paramsObj);
       this._kbinfo(this.params);
+    },
+  //  详情显示
+    _detail(data) {
+
     }
   }
 };

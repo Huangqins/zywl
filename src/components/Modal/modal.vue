@@ -14,15 +14,20 @@
                  <Option v-for="(item,index) in item.option" :key="index +'a'" :value="item.value">{{item.name}}</Option>
                  </Select>
             </template>
-            <template v-if="item.type === 'datetime'"> 
+            <template v-if="item.type === 'datetime'">
                 <DatePicker type="datetime" placeholder="请选择时间" v-model="data[item.prop]" ></DatePicker>
+            </template>
+            <template v-if="item.type === 'div'">
+                  <div>{{data[item.prop]}}</div>
             </template>
         </FormItem>
         </Form>
         <slot/>
-        <div slot="footer" class="modalButton">
-           <Button type="error" size="large"   @click="resetOK">重置</Button>
-           <Button type="primary" size="large"   @click="asyncOK"  :loading="loading">确定</Button>
+        <div slot="footer" >
+          <div v-if="footer" class="modalButton">
+            <Button type="error" size="large"   @click="resetOK">重置</Button>
+            <Button type="primary" size="large"   @click="asyncOK"  :loading="loading">确定</Button>
+          </div>
         </div>
       </Modal>
   </div>
@@ -66,6 +71,10 @@ export default {
       default: () => {
         return {};
       }
+    },
+    footer: {
+      type: Boolean,
+      default: true
     }
   },
   data() {

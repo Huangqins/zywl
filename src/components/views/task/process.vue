@@ -1,17 +1,13 @@
 <template>
   <div>
     <div class="taskSchedule">
-        <chart width="235px" height="235px" :option="option" id="completionRate" ref="completionRate"></chart>   
-        <chart width="235px" height="235px" :option="optipnTwo" id="taskholeNum" ref="taskholeNum"></chart>  
-        <chart width="235px" height="235px" :option="optipnThree" id="holeUtilization" ref='holeUtilization'></chart>      
+        <chart width="235px" height="235px" :option="option" id="completionRate" ref="completionRate"></chart>
+        <chart width="235px" height="235px" :option="optipnTwo" id="taskholeNum" ref="taskholeNum"></chart>
+        <chart width="235px" height="235px" :option="optipnThree" id="holeUtilization" ref='holeUtilization'></chart>
     </div>
     <div class="clear"></div>
     <div class="line">
-       <chart width="350px" height="230px" :option="linechart"  ref=""></chart>   
-       
-       <a :href="href" ref="aLink"    download  type="application/pdf">
-         <Button type="primary"  icon="ios-download-outline" @click="_exportPDF">导出报告</Button>
-       </a>
+       <chart width="350px" height="230px" :option="linechart"  ref=""></chart>
     </div>
     <div class="holetable">
        <page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page>
@@ -287,7 +283,7 @@ export default {
             ? host +  `/${res.path}`
             : host + `/ZY/${res.path}`;
         if (res.result === 0) {
-          
+
         }
         // window.open(this.href)
       });

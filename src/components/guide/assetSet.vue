@@ -6,7 +6,7 @@
                 <Input v-model="value" placeholder="区域" clearable style="width: 200px"></Input>
                 <Button type="primary" icon="ios-search">搜索</Button>
                 <Button type="primary" icon="compose" @click="taskAdd">添加</Button>
-              </div>  
+              </div>
               <div class="assetRight_content">
                   <page :columns="tasks" :data="tasksList" :dataTotal="dataTotal" @dataLoad="dataLoad" :loading="pageLoading"></page>
               </div>
@@ -23,8 +23,8 @@
              <Select v-model="formItem.target_teststra">
                 <Option v-for="(item,index) in strategyRule" :key="index" :value="item.rule_key">{{item.rule_name}}</Option>
              </Select>
-          </FormItem>  
-          <template v-if="formItem.strategy==='depth'">        
+          </FormItem>
+          <template v-if="formItem.strategy==='depth'">
           <FormItem label="账号"   >
             <Row>
                 <Input v-model="formItem.taskName"  placeholder="请输入您所扫描地址的账号" style="width:420px;"  ></Input>
@@ -47,11 +47,11 @@
             </Select>
           </FormItem>
           <FormItem label="资产url">
-              
+
             <Input v-model="formItem.target_url" placeholder="请输入"/>
           </FormItem>
           <FormItem label="资产ip">
-              
+
                 <Input v-model="formItem.target_ip" placeholder="请输入"/>
           </FormItem>
           <FormItem>
@@ -199,6 +199,9 @@ export default {
               h(
                 "a",
                 {
+                  attrs: {
+                    type: 'application/pdf'
+                  },
                   on: {
                     click: ev => {
                       if (params.row.export_url === "") {
