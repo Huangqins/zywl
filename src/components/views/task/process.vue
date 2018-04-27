@@ -11,11 +11,15 @@
     </div>
     <div class="holetable">
       <Row>
-        <Col span="12"></Col>
-        <Col span="12"></Col>
+        <Col span="16" >
+          <Table :columns="taskInfos" :data="taskInfosList"></Table>
+        </Col>
+        <Col span="7" offset="1">
+          <Table :columns="taskInfoes" :data="taskInfoesList"></Table>
+        </Col>
       </Row>
       <Row>
-        <Col span="24"><page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page></Col>
+        <Col span="24"><page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width" height=120></page></Col>
       </Row>
     </div>
   </div>
@@ -67,6 +71,78 @@ export default {
         rows: 10,
         page: 1
       },
+      taskInfos:[
+        {
+          title: '任务名称',
+          key: 'name'
+        },
+        {
+          title: '任务状态',
+          key: 'age'
+        },
+        {
+          title: '开始时间',
+          key: 'date'
+        },
+        {
+          title: '结束时间',
+          key: 'date'
+        }
+      ],
+      taskInfoes: [
+        {
+          title: 'url',
+          key: 'name'
+        },
+        {
+          title: '利用时间',
+          key: 'date'
+        }
+      ],
+      taskInfoesList: [
+        {
+          name: 'John Brown',
+          date: '2016-10-03'
+        },
+        {
+          name: 'John Brown',
+          date: '2016-10-03'
+        },
+        {
+          name: 'John Brown',
+          date: '2016-10-03'
+        },
+        {
+          name: 'John Brown',
+          date: '2016-10-03'
+        }
+      ],
+      taskInfosList: [
+        {
+          name: 'John Brown',
+          age: 18,
+          address: 'New York No. 1 Lake Park',
+          date: '2016-10-03'
+        },
+        {
+          name: 'Jim Green',
+          age: 24,
+          address: 'London No. 1 Lake Park',
+          date: '2016-10-01'
+        },
+        {
+          name: 'Joe Black',
+          age: 30,
+          address: 'Sydney No. 1 Lake Park',
+          date: '2016-10-02'
+        },
+        {
+          name: 'Jon Snow',
+          age: 26,
+          address: 'Ottawa No. 2 Lake Park',
+          date: '2016-10-04'
+        }
+      ],
       assetsColums: [
         {
           title: "风险名称",

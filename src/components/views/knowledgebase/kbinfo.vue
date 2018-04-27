@@ -15,7 +15,7 @@
               </div>
           </section>
       </div>
-      <Modals :width="width" :format="formatType" :data="data" :title="title" ref="formValidate" :rules="rules" @asyncOK="asyncOK" :display="display"  :loading="loading" :footer="footer"></Modals>
+      <Modals :width="width" :format="formatType" :data="dataType" :title="title" ref="formValidate" :rules="rules" @asyncOK="asyncOK" :display="display"  :loading="loading" :footer="footer"></Modals>
     <!--<Modal></Modal>-->
   </div>
 </template>
@@ -62,11 +62,8 @@ export default {
         { label: "攻击Payload", type: "input", prop: "kb_vuln_payload" },
         { label: "漏洞类型", type: "input", prop: "kb_vuln_type" },
         { label: "漏洞分类", type: "input", prop: "kb_vuln_class" }
-
       ],
-      formatCopy:[
-        { label: "漏洞名称", type: "input", prop: "kb_vuln_name" },
-      ],
+      formatCopy:[],
       data: {
         kb_vuln_name: "",
         kb_vuln_cve: "",
@@ -80,6 +77,7 @@ export default {
         kb_vuln_type: "",
         kb_vuln_class:""
       },
+      dataCopy: {},
       rules: {
         kb_vuln_name: [
           {
@@ -182,7 +180,7 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.data = Object.assign({}, this.data, params.row);
+                      this.dataCopy = Object.assign({}, this.data, params.row);
                       this.modalStatus = 1;
                       this.footer = false;
                       this.title = '详情';
@@ -212,16 +210,27 @@ export default {
     formatType() {
       return this.modalStatus === 0 ? this.format : this.formatCopy;
     },
+    dataType() {
+      return this.modalStatus === 0 ? this.data : this.dataCopy
+    },
     ...mapGetters(["userName"])
   },
   created() {
     this.params = Object.assign({}, this.defaultPage, { area: 0 });
     this._kbinfo(this.params);
     const temp = JSON.parse(JSON.stringify(this.format))
+    const dataCopy = JSON.parse(JSON.stringify(this.data))
+    this.dataCopy = Object.assign({},dataCopy,{kb_vuln_des:'',kb_vuln_anly:''})
     temp.forEach(item => {
          item.type = 'div'
     })
     this.formatCopy = temp;
+    const ret = [
+      { label: "风险描述", type: "div", prop: "kb_vuln_des" },
+      { label: "修复方案", type: "div", prop: "kb_vuln_anly"}
+    ]
+    this.formatCopy = this.formatCopy.concat(ret)
+console.log(this.dataCopy)
   },
   methods: {
     assetsAdd() {

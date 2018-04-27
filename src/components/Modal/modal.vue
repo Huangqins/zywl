@@ -18,7 +18,7 @@
                 <DatePicker type="datetime" placeholder="请选择时间" v-model="data[item.prop]" ></DatePicker>
             </template>
             <template v-if="item.type === 'div'">
-                  <div>{{data[item.prop]}}</div>
+                  <div style="max-height: 130px;overflow: auto">{{data[item.prop]}}</div>
             </template>
         </FormItem>
         </Form>
