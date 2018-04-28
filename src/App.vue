@@ -28,7 +28,7 @@ body {
   z-index: -9999;
 }
 body {
-    background: #171d25;
+    background: #0E1027;
     background: linear-gradient(top, #13181e, #181e26 88%);
     background: -webkit-gradient(linear, left top, left bottom, from(#13181e), color-stop(88%, #181e26));
 }

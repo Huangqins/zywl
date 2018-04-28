@@ -43,15 +43,21 @@
 }
 
 /* table */
-
+.ivu-table{
+    background: transparent;
+    color: #ccc;
+}
+.ivu-table td{
+    background: transparent;
+}
 .ivu-table .demo-table-info-row td {
     background-color: rgba(23,29,37);
-    color: #E4E5E5;
+    color: #ccc;
 }
 
 .ivu-table-header th {
     background-color: rgba(23,29,37);
-    color: #E4E5E5;
+    color: #ccc;
 }
 
 .ivu-table-border td,

@@ -2,9 +2,9 @@
   <div>
         <div class="timeAxis">
           <div class="taskSchedule">
-            <chart width="235px" height="235px" :option="options"></chart>       
-            <chart width="235px" height="235px" :option="optionTwo" id="optionTwo"></chart>      
-            <chart width="235px" height="235px" :option="optionThree" id="optionThree"></chart>     
+            <chart width="235" height="235" :option="options"></chart>       
+            <chart width="235" height="235" :option="optionTwo" id="optionTwo"></chart>      
+            <chart width="235" height="235" :option="optionThree" id="optionThree"></chart>     
           </div>       
         </div>
         <div class="clear"></div>

@@ -10,9 +10,9 @@
                 <Button type="primary" icon="log-out">导出</Button>
               </div>  
               <div class="assetRight_pro">
-                <chart width="305px" height="260px" :option="options"></chart>   
-                <chart width="290px" height="260px" :option="optionOne" id="optionOne"></chart>  
-                <chart width="290px" height="260px" :option="optionTwo" id="optionTwo"></chart>     
+                <chart width=305 height=260 :option="options"></chart>   
+                <chart width=290 height=260 :option="optionOne" id="optionOne"></chart>  
+                <chart width=290 height=260 :option="optionTwo" id="optionTwo"></chart>     
               </div>
               <div class="assetRight_content">
                   <page :columns="assets" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="pageLoading"> </page>
