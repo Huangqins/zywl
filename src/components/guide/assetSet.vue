@@ -8,58 +8,12 @@
                 <Button type="primary" icon="compose" @click="taskAdd">添加</Button>
               </div>
               <div class="assetRight_content">
-                  <page :columns="tasks" :data="tasksList" :dataTotal="dataTotal" @dataLoad="dataLoad" :loading="pageLoading"></page>
+                  <page :columns="tasks" :data="tasksList" :dataTotal="dataTotal" @dataLoad="dataLoad" :loading="pageLoading" @rowClick="rowClick"></page>
               </div>
           </section>
           <!-- <a :href="href" download ref="download"></a> -->
       </div>
       <Modals :format="format" :data="data" title="添加任务" ref="formValidate" :rules="rules" @asyncOK="asyncOK" :display="display"  :loading="loading" :ruleValidate="rules"></Modals>
-  <!-- <div class="entry">
-       <Form :model="formItem" :label-width="80" ref="formItem" :rules="ruleValidate" >
-       <FormItem label="任务名称">
-            <Input v-model="formItem.target_name" placeholder="请输入"/>
-       </FormItem>
-          <FormItem label="扫描策略">
-             <Select v-model="formItem.target_teststra">
-                <Option v-for="(item,index) in strategyRule" :key="index" :value="item.rule_key">{{item.rule_name}}</Option>
-             </Select>
-          </FormItem>
-          <template v-if="formItem.strategy==='depth'">
-          <FormItem label="账号"   >
-            <Row>
-                <Input v-model="formItem.taskName"  placeholder="请输入您所扫描地址的账号" style="width:420px;"  ></Input>
-            </Row>
-          </FormItem>
-          <FormItem label="密码" >
-            <Row>
-                <Input v-model="formItem.taskName" type="password" placeholder="请输入您所扫描地址的密码" style="width:420px;"  ></Input>
-            </Row>
-          </FormItem>
-          </template>
-          <FormItem label="开始时间" prop="startTime">
-            <Row>
-                <DatePicker type="datetime" placeholder="开始时间" style="width:420px;"   v-model="formItem.target_starttime" ></DatePicker>
-            </Row>
-          </FormItem>
-          <FormItem label="周期" prop="cycle">
-            <Select v-model="formItem.target_cycle">
-                <Option v-for="(item,index) in cycleRule" :key="index" :value="item.rule_key">{{item.rule_name}}</Option>
-            </Select>
-          </FormItem>
-          <FormItem label="资产url">
-
-            <Input v-model="formItem.target_url" placeholder="请输入"/>
-          </FormItem>
-          <FormItem label="资产ip">
-
-                <Input v-model="formItem.target_ip" placeholder="请输入"/>
-          </FormItem>
-          <FormItem>
-              <Button type="info" @click="cancel">取消</Button>
-              <Button type="success" @click="goToIndex('formItem')" style="float: right">提交</Button>
-          </FormItem>
-      </Form>
-  </div> -->
   </div>
 </template>
 <script>
@@ -72,6 +26,7 @@ import fomatterTime from "@/utils/tool";
 import Modals from "components/Modal/modal";
 import taskList from "api/taskList";
 import exportPDF from "api/exportPDF";
+import getAssetURL from "api/getAssetURL";
 
 const strategy = { flag: 1 };
 const cycle = { flag: 2 };
@@ -93,19 +48,17 @@ export default {
           label: "扫描策略",
           type: "select",
           prop: "target_teststra",
-          option: [],
-          key: "rule_key"
+          option: []
         },
         { label: "开始时间", type: "datetime", prop: "target_starttime" },
         {
           label: "周期",
           type: "select",
           prop: "target_cycle",
-          option: [],
-          key: "rule_key"
+          option: []
         },
-        { label: "资产url", type: "input", prop: "target_url" },
-        { label: "资产ip", type: "input", prop: "target_ip" }
+        { label: "资产url", type: "select", prop: "target_url",option: []},
+        { label: "资产ip", type: "select", prop: "target_ip", option: []}
       ],
       data: {
         target_name: "",
@@ -232,6 +185,7 @@ export default {
     };
   },
   created() {
+    this._getAssetURL();
     const params = this.$route.params;
     this.data.target_url = params.target_url;
     this.data.target_ip = params.target_ip;
@@ -310,8 +264,31 @@ export default {
     dataLoad(paramsObj) {
       this.params = Object.assign({}, this.defaultPage, paramsObj);
       this._taskList(this.params);
-    }
+    },
+    /*
+    * 任务列表根据任务Id点击跳转到任务执行
+    * */
+    rowClick(data) {
+      console.log(data)
+      this.$router.push({ path: '/taskexecution/process', query: { target_id:data.row.target_id}})
+    },
+  /**
+   * 资产添加列表url/ip下拉数据
+   *
+   */
+    _getAssetURL() {
+      const params = { username: getUserName() }
+    getAssetURL(params).then(res => {
+      this.format[4].option = res.lists.map(item => {
+        return { value: item.assets_url, name: item.assets_url };
+      })
+      this.format[5].option = res.lists.map(item => {
+        return { value: item.assets_ip, name: item.assets_ip };
+      })
+    })
   }
+
+}
 };
 </script>
 <style scoped>

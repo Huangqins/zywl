@@ -1,6 +1,6 @@
 <template>
   <div>
-      <Modal v-model="modal" :title="title"  @on-ok="asyncOK" @on-visible-change="visiblely">
+      <Modal v-model="modal" :title="title"  @on-ok="asyncOK" @on-visible-change="visiblely" :mask-closable="false">
         <Form ref="form" :model="data" :rules="ruleValidate" :label-width="width">
         <FormItem v-for="(item,index) in format" :key="index" :label="item.label"  :prop="item.prop">
             <template v-if="item.type === 'input'">

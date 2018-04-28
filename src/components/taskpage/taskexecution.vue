@@ -2,41 +2,42 @@
   <div class="whole">
       <div class="content">
             <div class="content-left dynamic">
-                <section class="dynamicPic">                  
+                <section class="dynamicPic">
                   <router-view class="wordClouds" name="left"></router-view>
                   <div class="floor">
-                      <span class="ring light"></span> 
+                      <span class="ring light"></span>
                       <span class="ring three">
                         <span class="spinnable"></span>
                       </span>
                       <span class="ring one">
                         <span class="spinnable"></span>
-                      </span> 
+                      </span>
                       <span class="ring two">
                         <span class="spinnable"></span>
-                      </span> 
-                  </div>                                                                                                                                                       
-                </section>                
+                      </span>
+                  </div>
+                </section>
             </div>
             <div class="content-center">
-                <ul>      
-                    <li class="brain"><router-link to="/taskexecution">任务执行</router-link></li>    
-                    <li class="brain"><router-link :to="{name: 'leaks', params: {taskID: taskID}}">漏洞列表</router-link></li>
-                    <li class="brain"><router-link to="/taskexecution/assetsManage">资产风险分布</router-link></li>
-                    <li class="brain"><router-link to="/taskexecution/assetManagement">资产码头</router-link></li>
+                <ul>
+                    <!--<li class="brain"><router-link :to="{ path: '/taskexecution/process' , query: { target_id: this.target_id}}">任务执行</router-link></li>-->
+                    <li class="brain"><router-link  to="/taskexecution/leaks">漏洞列表</router-link></li>
+                    <li class="brain"><router-link  to="/taskexecution/assetsManage">资产风险分布</router-link></li>
+                    <li class="brain"><router-link  to="/taskexecution/assetManagement">资产码头</router-link></li>
                     <li class="brain" ><router-link to="/taskexecution/assetSet">任务调度</router-link></li>
-                    <li class="brain" ><router-link to="/taskexecution/kbinfo">知识库</router-link></li> 
+                    <li class="brain" ><router-link to="/taskexecution/kbinfo">知识库</router-link></li>
                     <!-- <li class="brain"><router-link to="/taskexecution/">报告信息管理</router-link></li>   -->
                 </ul>
             </div>
             <div class="content-right">
-                 <router-view></router-view>                
+                 <router-view :key="key"></router-view>
             </div>
       </div>
   </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
+// import router from '@/router';
 import chart from "components/chart/chart";
 import cloud from "components/d3/wordCloud";
 import zhexiantu from "components/chart/zhexiantu";
@@ -64,15 +65,19 @@ export default {
   computed: {},
   mounted() {},
   created() {
-    // const params = { userName: this.userName, targetStruts: 0 };
-    //  taskTargetInfo(params).then(res => {
-    //    if (res.result === 0) {
-    //      this.taskID = res.targets[0].target_id
-    //    }
-    //  });
+    const params = { userName: this.userName, targetStruts: 0 };
+    // this._taskTargetInfo(params);
+  },
+  watch: {
+    '$route': (to, from) => {
+      console.log(to)
+    }
   },
   data() {
     return {
+      key: Date.now(),
+      //查询的任务id.
+      target_id: 0,
       // 当前用户下任务信息
       taskID: 0,
       //资产列表
@@ -222,7 +227,7 @@ export default {
         content: to.params.firstLogin === 1 ? isAssetOne(to.params.userTips) : isAssetTwo(),
         onOk: () => {
           if (to.params.firstLogin === 1) {
-            next();
+            next({path: '/taskexecution/assetSet'});
           } else {
             next("/assets/assetsManage");
           }
@@ -244,6 +249,13 @@ export default {
   },
   methods: {
     godetail() {},
+    _taskTargetInfo(params) {
+      taskTargetInfo(params).then(res => {
+          if (res.result === 0) {
+            this.target_id = res.targets[0].target_id
+          }
+        })
+    },
     rowClassName(row, index) {
       return "demo-table-info-row";
     },
@@ -369,13 +381,13 @@ export default {
   list-style-type: none;
   text-align: center;
 }
-.content ul li a {
-  height: 15%;
-  display: block;
-  padding: 14px 18px 14px 24px;
-  border-left: 2px solid #18252f;
-  color: #e4e5e5;
-}
+/*.content ul li a {*/
+  /*height: 15%;*/
+  /*display: block;*/
+  /*padding: 14px 18px 14px 24px;*/
+  /*border-left: 2px solid #18252f;*/
+  /*color: #e4e5e5;*/
+/*}*/
 .content ul li a:hover {
   color: #148ec5;
 }
@@ -390,10 +402,10 @@ export default {
 .content ul li span:hover{
   color: #148ec5;
 }
-.content ul li a:focus {
-  border-left: 2px solid #203a46;
-  color: #148ec5;
-}
+/*.content ul li a:focus {*/
+  /*border-left: 2px solid #203a46;*/
+  /*color: #148ec5;*/
+/*}*/
 .content-center {
   width: auto;
   z-index: 2;

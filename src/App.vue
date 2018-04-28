@@ -2,7 +2,7 @@
   <div id="app">
         <headers v-if="token"></headers>
 　　　　<router-view  :style="{marginTop: token ? '36px': 0}"></router-view>
-    </div>     
+    </div>
 </template>
 <script>
 import headers from "components/layout/headers";
@@ -70,4 +70,12 @@ body {
 .ivu-table th {
   height: 28px !important;
 }
+  /*路由active*/
+  .router-link-active {
+    /*height: 15%;*/
+    display: block;
+    /*padding: 14px 18px 14px 24px;*/
+    border-left: 2px solid #18252f;
+    color: #2d8cf0;
+  }
 </style>

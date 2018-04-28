@@ -1,6 +1,6 @@
 <template>
-<div>
- <Table  :columns="columns" :data="data"  :loading="loading" :height="height" >
+<div class="pageTable">
+ <Table  :columns="columns" :data="data"  :loading="loading" :height="height" @on-row-click="rowClick">
 
  </Table>
   <Page :total="dataTotal" size="small" :current="current" :placement="placement"  :page-size-opts="pageSizeOpts" show-total  show-sizer
@@ -68,10 +68,19 @@ export default {
     onChangehandle(pageNum) {
       this.pageNum = pageNum;
       this.$emit("dataLoad", { page: this.pageSize, rows:  pageNum });
+    },
+    rowClick(row, index) {
+      const data = { row, index }
+      if (this.$parent.rowClick) {
+        this.$emit('rowClick', data)
+      } else {
+        console.warn('请配置单行点击事件rowClick!')
+      }
     }
   }
 };
 </script>
-<style scoped>
+<style >
+
 
 </style>

@@ -2,10 +2,10 @@
   <div>
         <div class="timeAxis">
           <div class="taskSchedule">
-            <chart width="235px" height="235px" :option="options"></chart>       
-            <chart width="235px" height="235px" :option="optionTwo" id="optionTwo"></chart>      
-            <chart width="235px" height="235px" :option="optionThree" id="optionThree"></chart>     
-          </div>       
+            <chart width="235px" height="235px" :option="options"></chart>
+            <chart width="235px" height="235px" :option="optionTwo" id="optionTwo"></chart>
+            <chart width="235px" height="235px" :option="optionThree" id="optionThree"></chart>
+          </div>
         </div>
         <div class="clear"></div>
         <div class="list">
@@ -208,10 +208,9 @@ export default {
     };
   },
   created() {
-    this.taskID = this.$route.params.taskID;
+    // this.taskID = this.$route.params.taskID;
     const params = Object.assign({}, this.defaultPage, {
-      userName: getUserName(),
-      taskID: this.taskID
+      userName: getUserName()
     });
     this._leaksInfo(params);
 
