@@ -15,7 +15,7 @@
               </div>
           </section>
       </div>
-      <Modals :width="width" :format="format" :data="data" :title="title" ref="formValidate" :rules="rules" @asyncOK="asyncOK" :display="display"  :loading="loading"></Modals>
+      <Modals :width="width" :footer="footer"  :format="formatType" :data="dataType" :title="title" ref="formValidate" :rules="rules" @asyncOK="asyncOK" :display="display"  :loading="loading"></Modals>
   </div>
 </template>
 <script>
@@ -67,6 +67,9 @@ export default {
         assets_manger: "",
         assets_creatuser: ""
       },
+      dataCopy:{},
+      modalStatus:0,
+      footer: true,
       rules: {
         assetsName: [
           {
@@ -123,6 +126,8 @@ export default {
                     click: () => {
                       this.data = Object.assign({}, this.data, params.row);
                       // 打开
+                      this.footer=true,
+                      this.modalStatus = 0;
                       this.$refs.formValidate.open();
                     }
                   }
@@ -139,6 +144,25 @@ export default {
                   on: {
                     click: () => {
                       this.remove({ assets_id: params.row.assets_id });
+                    }
+                  }
+                }
+              ),
+                h(
+                'Button',
+                {
+                  props: {
+                    size: "small",
+                    icon: "social-buffer"
+                  },
+                  on: {
+                    click: () => {
+                      this.dataCopy = Object.assign({}, this.data, params.row);
+                      this.modalStatus = 1;
+                      this.footer = false;
+                      this.title = '详情';
+                      this.$refs.formValidate.open();
+                      //this._detail(params.row)
                     }
                   }
                 }
@@ -159,11 +183,26 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["userName"])
+    ...mapGetters(["userName"]),
+    formatType() {
+      return this.modalStatus === 0 ? this.format : this.formatCopy;
+    },
+    dataType() {
+      return this.modalStatus === 0 ? this.data : this.dataCopy
+    },
+
   },
   created() {
     this.params = Object.assign({}, this.defaultPage);
     this._assetsInfo(this.params);
+    const temp = JSON.parse(JSON.stringify(this.format))
+    const dataCopy = JSON.parse(JSON.stringify(this.data))
+    this.dataCopy = Object.assign({},dataCopy,{kb_vuln_des:'',kb_vuln_anly:''})
+    temp.forEach(item => {
+      console.log(item)
+         item.type = 'div'
+    })
+    this.formatCopy = temp;
   },
   methods: {
     dataLoad(paramsObj) {
@@ -181,6 +220,7 @@ export default {
     assetsAdd() {
       this.$refs.formValidate.open();
       this.data = {};
+      this.modalStatus = 0;
     },
     //提交
     asyncOK(data) {
