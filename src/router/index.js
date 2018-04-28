@@ -219,15 +219,17 @@ const router = new VueRouter({
             path: '/firstassetAdd',
             component: FirstassetAdd
         },
-        {   
+        {
             name: 'taskexecution',
             path: '/taskexecution',
-            component: Taskexecution,            
+            // redirect: '/taskexecution/process',
+            component: Taskexecution,
             children: [
                 {
-                    path: '',
+                    //任务进度需要任务Id进入
+                    path: 'process',
                     components: {
-                        default: Process,
+                        default: Process
                     }
                 },
                 {
@@ -236,7 +238,7 @@ const router = new VueRouter({
                         default: Holecloud
                     }
                 },
-                {   
+                {
                     name: 'leaks',
                     path: 'leaks',
                     components: {
@@ -262,7 +264,7 @@ const router = new VueRouter({
                         default: AssetManagement
                     }
                 },
-                {   
+                {
                     name: 'assetSet',
                     path: 'assetSet',
                     components: {

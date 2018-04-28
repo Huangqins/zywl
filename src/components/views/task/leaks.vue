@@ -208,10 +208,9 @@ export default {
     };
   },
   created() {
-    this.taskID = this.$route.params.taskID;
+    // this.taskID = this.$route.params.taskID;
     const params = Object.assign({}, this.defaultPage, {
-      userName: getUserName(),
-      taskID: this.taskID
+      userName: getUserName()
     });
     this._leaksInfo(params);
 

@@ -27,11 +27,13 @@
 <script>
 import chart from "components/chart/chart";
 import page from "components/page/page";
-import taskTargetInfo from "api/taskTargetInfo";
+// import taskTargetInfo from "api/taskTargetInfo";
 import { mapGetters } from "vuex";
 import timeLine from "api/timeLine";
 import leaksInfo from "api/leaksInfo";
-import exportPDF from "api/exportPDF";
+import targetProgress from  "api/targetProgress";
+import urlUseRate from "api/urlUseRate";
+
 let now = new Date();
 let year = now.getFullYear();
 let month = now.getMonth();
@@ -291,7 +293,7 @@ export default {
             type: "gauge",
             radius: "85%",
             detail: { formatter: "{value}%", fontSize: 20 },
-            data: [{ value: 30, name: "漏洞利用率" }],
+            data: [{ value: 0, name: "漏洞利用率" }],
             title: { color: "#E4E5E5", fontSize: 12 },
             splitLine: { show: false },
             axisTick: { show: false },
@@ -317,123 +319,68 @@ export default {
     },
     ...mapGetters(["userName"])
   },
-  mounted() {
-    function randomData() {
-      now = new Date(+now + oneDay);
-      value = value + Math.random() * 21 - 10;
-      return {
-        name: now.toString(),
-        value: [
-          [now.getFullYear(), now.getMonth() + 1, now.getDate()].join("/"),
-          Math.round(value)
-        ]
-      };
-    }
-    var now = +new Date();
-    var oneDay = 24 * 3600 * 1000;
-    var value = Math.random() * 1000;
-    for (var i = 0; i < 80; i++) {
-      this.linechartdata.push(randomData());
-    }
-    // this.mock =  setInterval(() => {
-    //   for (var i = 0; i < 5; i++) {
-    //     this.linechartdata.shift();
-    //     this.linechartdata.push(randomData());
-    //   }
-    //   this.linechart.series[0].linechartdata = this.linechartdata;
 
-    //     this.$refs.linechart.refresh();
-
-    // }, 1000);
-  },
   created() {
-    const params = { userName: this.userName, targetStruts: 0 };
-    this._taskTargetInfo(params);
+    this._targetProgress();this._targetNum();this._targetLesk();this._urlUseRate()
+    this.timer = setInterval(() => {
+      this._targetProgress();this._targetNum();this._targetLesk();this._urlUseRate()
+    },5000)
   },
   methods: {
-    // 导出
-    _exportPDF() {
-      const params = { target_id: this.id, target_name: this.target_name };
-      exportPDF(params).then(res => {
-        this.href =
-          process.env.NODE_ENV === "development"
-            ? host +  `/${res.path}`
-            : host + `/ZY/${res.path}`;
-        if (res.result === 0) {
-
-        }
-        // window.open(this.href)
-      });
-    },
     dataLoad(paramsObj) {
       const params = Object.assign({}, this.defaultPage, paramsObj);
-      // this._taskvulnList(params);
     },
-
-    //折线图
-    _lineChart(params) {
-      timeLine(params).then(res => {
-        console.log(res);
-      });
-      // lineChart(params).then(res => {
-      //   //  console.log(res)
-      // });
-    },
-    //任务完成情况
-    async _taskTargetInfo(params) {
-      let res = await taskTargetInfo(params);
-      if (res.targets.length > 0) {
-        this.taskInfo = res.targets;
-        this.id = res.targets[0].target_id;
-        this.target_name = res.targets[0].target_name;
-        const param = Object.assign({}, this.defaultPage, {
-          targetId: this.id
-        });
-        this._taskvulnList(param);
-        // this.getLesks({ targetId: this.id })
-        // this._lineChart({ target_id: this.id })
-
-        this.option.series[0].data[0].value = Number(
-          this.taskInfo[0].target_scaning
-        ).toFixed(2);
-        this.$refs.completionRate.refresh();
-        this.$refs.taskholeNum.refresh();
-        this.timer = setInterval(async () => {
-          res = await taskTargetInfo(params);
-          this.taskInfo = res.targets;
-          this._taskvulnList(param);
-          // this.getLesks({ targetId: this.id })
-
+  /**
+   * 任务执行进度
+   * params: target_id 来源$route.query.target_id
+   */
+   _targetProgress() {
+      const params = { target_id: this.$route.query.target_id}
+      targetProgress(params).then(res => {
+        if(res.result === 0) {
           this.option.series[0].data[0].value = Number(
-            this.taskInfo[0].target_scaning
+            res.target.target_scaning
           ).toFixed(2);
           this.$refs.completionRate.refresh();
-          this.$refs.taskholeNum.refresh();
-        }, 5000);
-      }
-    },
-    _timeLine(params) {
+        }
+      })
+  },
+    /*
+    * 任务漏洞数量
+    * params: taskID 来源$route.query.target_id
+    * */
+    _targetNum() {
+      const  params = { target_id: this.$route.query.target_id}
       timeLine(params).then(res => {
-        this.optipnTwo.series[0].data[0].value = res.vulnNum;
-      });
+        if (res.result === 0) {
+          this.optipnTwo.series[0].data[0].value = res.vulnNum;
+          this.$refs.taskholeNum.refresh();
+        }
+      })
     },
-    getLesks(params) {
-      leaksInfo(params).then(res => {
-        this.optipnTwo.series[0].data[0].value = res.total;
-      });
-    },
-    //当前任务下的漏洞列表
-    _taskvulnList(params) {
-      leaksInfo(params).then(res => {
-        //  console.log(res)
+  /*
+  * 资产风险检测列表
+  * params: targetId 来源$route.query.target_id
+  * */
+  _targetLesk() {
+    const  params = { targetId: this.$route.query.target_id}
+    leaksInfo(params).then(res => {
+      if (res.result === 0) {
         this.assetsList = res.rows;
-        this.optipnTwo.series[0].data[0].value = res.total;
-
-        console.log(this.optipnTwo.series[0].data[0].value);
-        this.$refs.taskholeNum.refresh();
-        // this.$set( this.optipnTwo.series[0].data, 0, {value: res.total})
-        // console.log(this.optipnTwo.series[0].data[0].value)
-      });
+      }
+    })
+  },
+    /**
+     * 漏洞利用率
+     * params:
+     */
+    _urlUseRate() {
+      const  params = { target_id: this.$route.query.target_id }
+      urlUseRate(params).then(res => {
+        if (res.result === 0)
+          this.optionthree.series[0].data[0].value = res.rate;
+          this.$refs.holeUtilization.refresh();
+      })
     }
   },
   destroyed() {

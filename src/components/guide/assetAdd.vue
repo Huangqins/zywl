@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="whole">  
+  <div class="whole">
               <Card class="card" tyle="">
                   <h2 slot="title" style="color:white;">请选择您的导入方式</h2>
                   <Row>
@@ -45,19 +45,22 @@
                                 </FormItem>
                             </Form>
                         </Tab-pane>
-                        <Tab-pane label="批量导入">             
-                            <Upload  multiple  action="*">
+                        <Tab-pane label="批量导入">
+                            <Upload  multiple  :action="uploadUrl" style="display: inline-block" :with-credentials="true" accept="">
                             <i-button type="ghost" icon="ios-cloud-upload-outline">导入文件</i-button>
-                            </Upload>           
-                        </Tab-pane>        
+                            </Upload>
+                            <Button type="ghost" icon="iso-cloud-download-outline" >
+                              <a :href="href" download="资产导入模板">资产模板下载</a>
+                            </Button>
+                        </Tab-pane>
                     </Tabs>
                     <Row class="primary" type="flex" align='middle' justify="center" >
                         <Col >
-                            <i-button type="primary"  @click="assetSubmit">提交</i-button> 
+                            <i-button type="primary"  @click="assetSubmit">提交</i-button>
                         </Col>
                     </Row>
-                  </Row>                 
-              </Card> 
+                  </Row>
+              </Card>
   </div>
 </div>
 </template>
@@ -65,6 +68,10 @@
 import assetAdd from "api/assetAdd";
 import { mapGetters } from "vuex";
 import message from "utils/message";
+const host =
+  process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
+// const host = process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
+const href = host + "/excel/asset.xlsx";
 
 export default {
   data() {
@@ -84,6 +91,8 @@ export default {
       }
     };
     return {
+      href: href,
+      uploadUrl: location.origin+ '/ZY/asset/assetsImport',
       password: "",
       handAddForm: {
         assets_name: "",
@@ -131,6 +140,9 @@ export default {
           });
         }
       });
+    },
+    download() {
+
     }
   }
 };
@@ -160,4 +172,3 @@ export default {
   color: white;
 }
 </style>
-       

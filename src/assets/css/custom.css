@@ -104,4 +104,10 @@
 .ivu-page .mini{
 padding-top: 3px;
 }
+a {
+  color: #fff;
+}
+.ivu-table-cell a {
+  color: #495060;
+}
 
