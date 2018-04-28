@@ -116,6 +116,32 @@ export default {
           key: "assets_ip",
           align: "center"
         },
+        {
+          title: "风险总数",
+          key: "assets_count",
+          align: "center"
+        },
+        {
+          title: "高风险",
+          key: "assets_count",
+          align: "center"
+        },
+        {
+          title: "中风险",
+          key: "assets_count",
+          align: "center"
+        },
+        {
+          title: "低风险",
+          key: "assets_count",
+          align: "center"
+        },
+        {
+          title: "风险利用情况",
+          key: "assets_count",
+          align: "center"
+        }
+
         // {
         //   title: "创建人",
         //   key: "assets_creatuser",

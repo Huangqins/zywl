@@ -498,7 +498,6 @@ export default {
       { label: "修复方案", type: "div", prop: "kb_vuln_anly"}
     ]
     this.formatCopy = this.formatCopy.concat(ret)
-console.log(this.dataCopy)
   },
   methods: {
     assetsAdd() {
