@@ -1,8 +1,8 @@
 <template>
     <div class="header">
-        <h2>智刃安全攻防平台</h2>      
+        <h2><router-link to="/homepage">智刃安全攻防平台</router-link></h2>      
         <span style="color:#fff;font-size:14px;">您好:<span style="color:white">{{userName}}</span>
-        <span ><router-link to="/homepage">首页</router-link></span>
+        <span ></span>
         </span>
         <Button type="ghost" shape="circle" icon="power" style="border: none" @click="loginOut"></Button>
     </div>
@@ -32,8 +32,8 @@ export default {
   top: 0;
   width: 100%;
   background-color: rgba(65, 67, 79);
-  height: 60px;
-  line-height: 60px;
+  height: 36px;
+  line-height: 36px;
   text-align: right;
   padding-right: 20px;
   letter-spacing: 2px;
@@ -43,7 +43,7 @@ export default {
   float: left;
   color:#fff;
   margin-left: 15px;
-  font-size: 30px;
+  font-size: 16px;
   font-family: "微软雅黑"
 }
 .router-link-active{
