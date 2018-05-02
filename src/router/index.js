@@ -9,7 +9,11 @@ const Historydata = (resolve) => {
         resolve(module)
     })
 }
-
+const Homepage = (resolve) => {
+    import('components/views/homepage').then(module => {
+        resolve(module)
+    })
+}
 const Regitser = (resolve) => {
     import('components/entry/register').then(module => {
         resolve(module)
@@ -130,6 +134,10 @@ const router = new VueRouter({
     routes: [
         { path: '*', redirect: '/404' },
         { path: '/404', component: () => import('components/views/404') },
+        {
+            path: '/homepage',
+            component: Homepage
+        },
         {
             path: '/',
             redirect: '/login'

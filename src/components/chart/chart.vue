@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div :id="id" :style="style"></div>
+    <div :id="id" :style="{width: width + 'px', height: height + 'px'}"></div>
 </div>
 </template>
 <script>
@@ -16,27 +16,19 @@ export default {
       type: String,
       default: "canvas"
     },
-    width: {
-      type: String,
-      default: "100%"
-    },
     height: {
-      type: String,
-      default: "100%"
+      type: [Number,String],
+      default: 300
+    },
+    width: {
+      type: [Number,String],
+      default: 400
     },
     option: {
       type: Object,
       default() {
         return {}
       }
-    }
-  },
-  computed: {
-    style() {
-      return {
-        height: this.height,
-        width: this.width,
-      };
     }
   },
   mounted() {

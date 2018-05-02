@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="taskSchedule">
-        <chart width="235px" height="235px" :option="option" id="completionRate" ref="completionRate"></chart>
-        <chart width="235px" height="235px" :option="optipnTwo" id="taskholeNum" ref="taskholeNum"></chart>
-        <chart width="235px" height="235px" :option="optipnThree" id="holeUtilization" ref='holeUtilization'></chart>
+        <chart width="235" height="235" :option="option" id="completionRate" ref="completionRate"></chart>
+        <chart width="235" height="235" :option="optipnTwo" id="taskholeNum" ref="taskholeNum"></chart>
+        <chart width="235" height="235" :option="optipnThree" id="holeUtilization" ref='holeUtilization'></chart>
     </div>
     <div class="clear"></div>
     <div class="line">
-       <chart width="350px" height="230px" :option="linechart"  ref=""></chart>
+       <chart width="350" height="230" :option="linechart"  ref=""></chart>
     </div>
     <div class="holetable">
       <Row>

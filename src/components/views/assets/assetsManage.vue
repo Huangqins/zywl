@@ -1,7 +1,7 @@
 <template>
 <div>
     <!-- <div class="safety">
-      
+
     </div> -->
     <div class="holeclassify">
               <h2>漏洞Top10榜单</h2>
@@ -20,7 +20,7 @@
                     <span v-else-if="index>=3">{{index}}</span>
                     <span>{{item.holeName}}</span>
                     <span>{{item.holeNum}}</span>
-                    </li>         
+                    </li>
                 </ul>
               </div>
     </div>
@@ -41,7 +41,7 @@
                     <span v-else-if="index>=3">{{index}}</span>
                     <span>{{item.holeName}}</span>
                     <span>{{item.holeNum}}</span>
-                    </li>         
+                    </li>
                 </ul>
               </div>
     </div>
@@ -55,6 +55,7 @@
 import assetsInfo from "api/assetsInfo";
 import topology from "components/chart/topology";
 import page from "components/page/page";
+import { getUserName } from '@/utils/auth';
 export default {
   name: "assetsManage",
   components: {
@@ -105,7 +106,7 @@ export default {
           title: "资产名称",
           key: "assets_name",
           align: "center"
-        },        
+        },
         {
           title: "资产URL",
           key: "assets_url",
@@ -152,12 +153,14 @@ export default {
       defaultPage: {
         area: 1,
         rows: 10,
-        page: 1
+        page: 1,
+        userName: getUserName()
       },
       loading: false
     };
   },
   created() {
+    const params = Object.assign({},this.defaultPage, )
     this._assetsInfo(this.defaultPage);
   },
   methods: {
@@ -202,7 +205,7 @@ height: 320px;
 }
 .List{
  width: 100%;
- 
+
 }
 .holeList{
   width: 100%;
@@ -221,10 +224,10 @@ font-size: 12px;
 line-height: 23px;
 border-bottom: 1px solid #21262F;
 }
-.holeList ul li:nth-child(12){  
+.holeList ul li:nth-child(12){
 border:none;
 }
-.holeList ul li span{ 
+.holeList ul li span{
 width: 30%;
 text-align: center;
 }

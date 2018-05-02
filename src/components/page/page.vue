@@ -1,6 +1,6 @@
 <template>
 <div class="pageTable">
- <Table  :columns="columns" :data="data"  :loading="loading" :height="height" @on-row-click="rowClick">
+ <Table  :columns="columns" :data="data"  :loading="loading" :height="tableHeight" @on-row-click="rowClick">
 
  </Table>
   <Page :total="dataTotal" size="small" :current="current" :placement="placement"  :page-size-opts="pageSizeOpts" show-total  show-sizer
@@ -9,6 +9,17 @@
 </template>
 <script>
 export default {
+  computed: {
+    tableHeight() {
+      if (this.data.length === 0) {
+        return 0
+      }else if (this.data.length >= 10) {
+        return +this.height
+      }else {
+        return 28 * (this.data.length + 1)
+      }
+    }
+  },
   props: {
     columns: {
       type: Array,
