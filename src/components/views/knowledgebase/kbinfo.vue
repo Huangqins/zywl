@@ -412,7 +412,9 @@ export default {
                   },
                   on: {
                     click: () => {
+                      
                       this.data = Object.assign({}, this.data, params.row);
+                      this.data.kb_vuln_level=`${levelSchema[params.row.kb_vuln_level]}`;
                       this.modalStatus = 0;
                       this.footer = true;
                       this.title = '修改';
@@ -452,11 +454,12 @@ export default {
                   on: {
                     click: () => {
                       this.dataCopy = Object.assign({}, this.data, params.row);
+                      this.dataCopy.kb_vuln_level=`${levelSchema[params.row.kb_vuln_level]}`;
                       this.modalStatus = 1;
                       this.footer = false;
                       this.title = '详情';
                       this.$refs.formValidate.open();
-                      this._detail(params.row)
+                      //this._detail(params.row)
                     }
                   }
                 }
@@ -482,6 +485,7 @@ export default {
       return this.modalStatus === 0 ? this.format : this.formatCopy;
     },
     dataType() {
+      console.log(this.modalStatus)
       return this.modalStatus === 0 ? this.data : this.dataCopy
     },
     ...mapGetters(["userName"])
@@ -493,7 +497,6 @@ export default {
     const dataCopy = JSON.parse(JSON.stringify(this.data))
     this.dataCopy = Object.assign({},dataCopy,{kb_vuln_des:'',kb_vuln_anly:''})
     temp.forEach(item => {
-      console.log(item)
          item.type = 'div'
     })
     this.formatCopy = temp;
@@ -504,7 +507,7 @@ export default {
       this.title = '新建';
       this.modalStatus = 0;
       this.$refs.formValidate.open();
-      this.data = {};
+      // this.data = {};
     },
     //提交
     asyncOK(data) {
@@ -566,9 +569,9 @@ export default {
       this._kbinfo(this.params);
     },
   //  详情显示
-    _detail(data) {
+    // _detail(data) {
 
-    }
+    // }
   }
 };
 </script>
