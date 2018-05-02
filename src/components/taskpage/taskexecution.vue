@@ -1,7 +1,7 @@
 <template>
   <div class="whole">
       <div class="content">
-            <div class="content-left dynamic">
+            <!-- <div class="content-left dynamic">
                 <section class="dynamicPic">
                   <router-view class="wordClouds" name="left"></router-view>
                   <div class="floor">
@@ -17,14 +17,14 @@
                       </span>
                   </div>
                 </section>
-            </div>
+            </div> -->
             <div class="content-center">
                 <ul>
                     <!--<li class="brain"><router-link :to="{ path: '/taskexecution/process' , query: { target_id: this.target_id}}">任务执行</router-link></li>-->
+                    <li class="brain" ><router-link to="/taskexecution/assetSet">任务调度</router-link></li>
                     <li class="brain"><router-link  to="/taskexecution/leaks">漏洞列表</router-link></li>
                     <li class="brain"><router-link  to="/taskexecution/assetsManage">资产风险分布</router-link></li>
-                    <li class="brain"><router-link  to="/taskexecution/assetManagement">资产码头</router-link></li>
-                    <li class="brain" ><router-link to="/taskexecution/assetSet">任务调度</router-link></li>
+                    <li class="brain"><router-link  to="/taskexecution/assetManagement">资产码头</router-link></li>                    
                     <li class="brain" ><router-link to="/taskexecution/kbinfo">知识库</router-link></li>
                     <!-- <li class="brain"><router-link to="/taskexecution/">报告信息管理</router-link></li>   -->
                 </ul>
@@ -379,7 +379,7 @@ export default {
 }
 .content ul li {
   list-style-type: none;
-  text-align: center;
+  text-align: left;
 }
 /*.content ul li a {*/
   /*height: 15%;*/
@@ -420,8 +420,6 @@ export default {
   margin-top: 10px;
   font-size: 15px;
   line-height: 50px;
-}
-.content-center ul li {
 }
 .content-right ul li {
   float: left;
