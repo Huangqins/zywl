@@ -17,6 +17,9 @@
             <template v-if="item.type === 'datetime'">
                 <DatePicker type="datetime" placeholder="请选择时间" v-model="data[item.prop]" ></DatePicker>
             </template>
+          <template v-if="item.type === 'textarea'">
+            <Input  v-model="data[item.prop]"  :placeholder="item.placeholder"  type="textarea" :autosize="{minRows: 2,maxRows: 5}"/>
+          </template>
             <template v-if="item.type === 'div'">
                   <div style="max-height: 130px;overflow: auto">{{data[item.prop]}}</div>
             </template>

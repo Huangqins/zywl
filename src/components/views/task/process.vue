@@ -6,9 +6,9 @@
         <chart width="235" height="235" :option="optipnThree" id="holeUtilization" ref='holeUtilization'></chart>
     </div>
     <div class="clear"></div>
-    <!-- <div class="line">
+    <div class="line">
        <chart width="350" height="230" :option="linechart"  ref=""></chart>
-    </div> -->
+    </div>
     <div class="holetable">
       <Row>
         <Col span="16" >

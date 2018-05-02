@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div class="whole">  
+      <div class="whole">
               <Card class="card" >
                   <h2 slot="title" style="color:white;">任务添加</h2>
                   <Row>
@@ -28,15 +28,15 @@
                                     <Input type="text" v-model="formItem.target_ip" placeholder="资产IP"></Input>
                                 </FormItem>
                             </Form>
-                        
+
                     <Row class="primary" type="flex" align='middle' justify="center" >
                         <Col >
-                            <i-button type="primary"  @click="cancel" class="button">取消</i-button> 
-                            <i-button type="primary"  @click="asyncOK">提交</i-button> 
+                            <i-button type="primary"  @click="cancel" class="button">取消</i-button>
+                            <i-button type="primary"  @click="asyncOK">提交</i-button>
                         </Col>
                     </Row>
-                  </Row>                 
-              </Card> 
+                  </Row>
+              </Card>
   </div>
 </div>
 </template>
@@ -82,7 +82,7 @@ export default {
   },
   methods: {
     cancel(){
-      //this.$router.push({path:"/taskexecution"})//点击取消跳到大首页
+      this.$router.push({path:"/homepage"})//点击取消跳到大首页
     },
     asyncOK(formItem) {
       this.formItem.userName = getUserName();
@@ -92,6 +92,10 @@ export default {
         if (res.result === 0) {
           this.loading = false;
           this.$router.push({path:"/taskexecution"})
+        } else if (res.result === 0) {
+          this.$Message.error({
+            content: '资产添加有误或资产不存在'
+          })
         }
       });
     },

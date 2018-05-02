@@ -8,11 +8,11 @@
                 <Button type="primary" icon="compose" @click="assetsAdd">添加</Button>
                 <Button type="primary" icon="log-in">导入</Button>
                 <Button type="primary" icon="log-out">导出</Button>
-              </div>  
+              </div>
               <div class="assetRight_pro">
-                <chart width=305 height=260 :option="options"></chart>   
-                <chart width=290 height=260 :option="optionOne" id="optionOne"></chart>  
-                <chart width=290 height=260 :option="optionTwo" id="optionTwo"></chart>     
+                <chart width=305 height=260 :option="options"></chart>
+                <chart width=290 height=260 :option="optionOne" id="optionOne"></chart>
+                <chart width=290 height=260 :option="optionTwo" id="optionTwo"></chart>
               </div>
               <div class="assetRight_content">
                   <page :columns="assets" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="pageLoading"> </page>
@@ -328,7 +328,9 @@ export default {
         { label: "验证手段", type: "input", prop: "kb_vuln_veme" },
         { label: "攻击Payload", type: "input", prop: "kb_vuln_payload" },
         { label: "漏洞类型", type: "input", prop: "vuln_type_name" },
-        { label: "漏洞分类", type: "input", prop: "kb_vuln_class" }
+        { label: "漏洞分类", type: "input", prop: "kb_vuln_class" },
+        { label: "风险描述", type: "textarea", prop: "kb_vuln_des" },
+        { label: "修复方案", type: "textarea", prop: "kb_vuln_anly"}
       ],
       formatCopy:[],
       data: {
@@ -342,7 +344,9 @@ export default {
         kb_vuln_veme:"",
         kb_vuln_payload:"",
         vuln_type_name: "",
-        kb_vuln_class:""
+        kb_vuln_class:"",
+        kb_vuln_des: "",
+        kb_vuln_anly: ""
       },
       dataCopy: {},
       rules: {
@@ -356,7 +360,7 @@ export default {
       },
       value: "",
       assets: [
-        
+
         {
           title: "风险编号",
           key: "kb_vuln_vnum",
@@ -493,15 +497,11 @@ export default {
          item.type = 'div'
     })
     this.formatCopy = temp;
-    const ret = [
-      { label: "风险描述", type: "div", prop: "kb_vuln_des" },
-      { label: "修复方案", type: "div", prop: "kb_vuln_anly"}
-    ]
-    this.formatCopy = this.formatCopy.concat(ret)
   },
   methods: {
     assetsAdd() {
       this.footer = true;
+      this.title = '新建';
       this.modalStatus = 0;
       this.$refs.formValidate.open();
       this.data = {};

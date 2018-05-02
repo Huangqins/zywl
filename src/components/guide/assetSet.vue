@@ -8,7 +8,7 @@
                 <Button type="primary" icon="compose" @click="taskAdd">添加</Button>
               </div>
               <div class="assetRight_content">
-                  <page :columns="tasks" :data="tasksList" :dataTotal="dataTotal" @dataLoad="dataLoad" :loading="pageLoading" @rowClick="rowClick"></page>
+                  <page :columns="tasks" :data="tasksList" :dataTotal="dataTotal" @dataLoad="dataLoad" :loading="pageLoading" ></page>
               </div>
           </section>
           <!-- <a :href="href" download ref="download"></a> -->
@@ -30,13 +30,36 @@ import getAssetURL from "api/getAssetURL";
 
 const strategy = { flag: 1 };
 const cycle = { flag: 2 };
+//添加任务验证
+
+
 export default {
   // name: "assetSet",
   components: {
     page,
     Modals
   },
+  watch: {
+    'data.target_url'(val) {
+      this.data.target_ip = this.urlIpMap[val]
+    }
+  },
   data() {
+    const addUrlValidate = (rule, value, callback) => {
+      if(!value && !this.data.target_ip) {
+        callback(new Error('url或者ip请至少填写一项'));
+      } else {
+        callback()
+      }
+    };
+
+    const addIpValidate = (rule, value, callback) => {
+      if(!value && !this.data.target_url) {
+        callback(new Error('url或者ip请至少填写一项'));
+      } else {
+        callback()
+      }
+    };
     return {
       href: "",
       pageLoading: false,
@@ -76,6 +99,12 @@ export default {
             message: "请填写任务名称",
             trigger: "blur"
           }
+        ],
+        target_url: [
+          { validator: addUrlValidate, trigger: 'change' }
+        ],
+        target_ip: [
+          { validator: addIpValidate, trigger: 'change' }
         ]
       },
       value: "",
@@ -150,6 +179,25 @@ export default {
                   attrs: {
                     type: 'application/pdf'
                   },
+                  style: {
+                    backgroundColor: '#19be6b',
+                    display: 'inline-block',
+                    marginBottom: '0',
+                    fontWeight: '400',
+                    textAlign: 'center',
+                    verticalAlign: 'middle',
+                    touchAction: 'manipulation',
+                    cursor: 'pointer',
+                    backgroundImage: 'none',
+                    border: '1px solid transparent',
+                    whiteSpace: 'nowrap',
+                    lineHeight: '1.5',
+                    color: '#fff',
+                    padding: '2px 7px',
+                    borderRadius:'3px'
+                    // lineHeight: '24px',
+                    // height: '24px'
+                  },
                   on: {
                     click: ev => {
                       if (params.row.export_url === "") {
@@ -169,6 +217,24 @@ export default {
                   }
                 },
                 params.row.export_url === "" ? "生成" : "下载"
+              ),
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "primary",
+                    size: "small",
+                    icon:"search"
+                  },
+                  style: {
+                    marginLeft: "5px"
+                  },
+                  on: {
+                    click: () => {
+                      this.$router.push({ path: '/taskexecution/process', query: { target_id:params.row.target_id}})
+                    }
+                  }
+                }
               )
             ]);
           }
@@ -178,10 +244,12 @@ export default {
       defaultPage: {
         area: 0,
         rows: 10,
-        page: 1
+        page: 1,
+        userName: getUserName()
       },
       dataTotal: 0,
-      params: {}
+      params: {},
+      urlIpMap:{}
     };
   },
   created() {
@@ -222,6 +290,11 @@ export default {
           this.$refs.formValidate.close();
           this.$router.push({ path: "/taskexecution" });
           this._taskList(this.params);
+        } else if (res.result === 2) {
+          this.$Message.error({
+            content: '资产填写有误或资产不存在'
+          })
+          this.loading = false;
         }
       });
     },
@@ -268,10 +341,10 @@ export default {
     /*
     * 任务列表根据任务Id点击跳转到任务执行
     * */
-    rowClick(data) {
-      console.log(data)
-      this.$router.push({ path: '/taskexecution/process', query: { target_id:data.row.target_id}})
-    },
+    // rowClick(data) {
+    //   console.log(data)
+    //   this.$router.push({ path: '/taskexecution/process', query: { target_id:data.row.target_id}})
+    // },
   /**
    * 资产添加列表url/ip下拉数据
    *
@@ -279,7 +352,9 @@ export default {
     _getAssetURL() {
       const params = { username: getUserName() }
     getAssetURL(params).then(res => {
+      this.urlIpMap = {}
       this.format[4].option = res.lists.map(item => {
+        this.urlIpMap[item.assets_url] = item.assets_ip
         return { value: item.assets_url, name: item.assets_url };
       })
       this.format[5].option = res.lists.map(item => {
