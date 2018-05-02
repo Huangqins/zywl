@@ -111,11 +111,10 @@ export default {
         .dispatch("Login", this.formItem)
         .then(res => {
           if (res.result === 0) {
-            if (res.isAsset === 0) {
+            if (res.isAsset === 1) {
               this.$router.push({ path: "/welcome" });
-            } else if (res.isAsset === 1) {
+            } else if (res.isAsset === 0) {
               const login_res = res;
-              // console.log(userTips)
               userTips({ userName: getUserName() }).then(res => {
                 if (res.result === 0) {
                   //登陆成功并存在资产
