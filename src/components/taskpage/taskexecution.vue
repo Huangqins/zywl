@@ -39,7 +39,6 @@
 import { mapGetters } from "vuex";
 // import router from '@/router';
 import chart from "components/chart/chart";
-import cloud from "components/d3/wordCloud";
 import zhexiantu from "components/chart/zhexiantu";
 import { getUserName } from "@/utils/auth";
 import taskTargetInfo from "api/taskTargetInfo";
@@ -59,7 +58,6 @@ export default {
   name: "taskexecution",
   components: {
     chart,
-    cloud,
     zhexiantu
   },
   computed: {},
