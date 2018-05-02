@@ -39,12 +39,12 @@
 <script>
 import register from "api/register";
 import checkUserName from "api/checkUserName";
-import particles from "components/layout/particles";
+// import particles from "components/layout/particles";
 
 export default {
   name: "register",
   components: {
-    particles
+    // particles
   },
   data() {
     const validatePass = (rule, value, callback) => {

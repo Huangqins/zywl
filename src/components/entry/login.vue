@@ -1,12 +1,12 @@
 <template>
   <div>
-      <div class="entry" style="border:none;width:180px;margin-top:10px;"> 
+      <div class="entry" style="border:none;width:180px;margin-top:10px;">
       <Form :model="formItem"  ref="formItem">
         <FormItem  prop="userName">
             <Input v-model="formItem.userName" placeholder="请输入用户名"/>
           </FormItem>
           <FormItem  prop="password">
-              <Input v-model="formItem.password" type="password" placeholder="请输入密码"/>              
+              <Input v-model="formItem.password" type="password" placeholder="请输入密码"/>
           </FormItem>
           <!-- <FormItem label="手机号码" >
               <Input v-model="phone"  placeholder="请输入手机号" style="width: 65%"/>
@@ -24,9 +24,9 @@
             <!-- 暂时隐藏注销按钮 -->
             <!-- <Button type="primary" @click="cancle" style="text-align:center;float:left">注销</Button> -->
             <Button type="ghost" @click="handleSubmit" style="text-align:center;float:right">登陆</Button>
-          </FormItem>    
+          </FormItem>
      </Form>
-   </div> 
+   </div>
     <div  class="entry circle-wrapper">
         <animation-circle></animation-circle>
        </div>
@@ -120,11 +120,25 @@ export default {
                 if (res.result === 0) {
                   //登陆成功并存在资产
                   this.$router.push({
-                    name: "taskexecution",
+                    name: "assetSet",
                     params: {
                       isAsset: login_res.isAsset,
                       firstLogin: login_res.firstLogin,
-                      userTips: res
+                      userTips: res,
+                      isTask: 0
+                    }
+                  });
+                } else if(res.result === -1) {
+                  this.$Message.error({
+                    content: '获取用户资产信息失败'
+                  })
+                } else if (res.result === 2) {
+                  this.$router.push({
+                    name: "taskexecution",
+                    params: {
+                      isAsset: login_res.isAsset,
+                      isTask: 1,
+                      firstLogin: login_res.firstLogin
                     }
                   });
                 }

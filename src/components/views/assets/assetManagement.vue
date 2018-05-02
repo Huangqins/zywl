@@ -1,5 +1,6 @@
 <template>
   <div>
+      <div class="whole">
           <section class="assetRight">
               <div class="assetRight_header">
                 <Input v-model="value" placeholder="区域" clearable style="width: 200px"></Input>
@@ -7,12 +8,13 @@
                 <Button type="primary" icon="compose" @click="assetsAdd">添加</Button>
                 <Button type="primary" icon="log-in">导入</Button>
                 <Button type="primary" icon="log-out">导出</Button>
-              </div>  
+              </div>
               <div class="assetRight_nav"></div>
               <div class="assetRight_content">
                   <page :columns="assets" :data="assetsList" :dataTotal="dataTotal" @dataLoad="dataLoad"  :loading="pageLoading"></page>
               </div>
           </section>
+      </div>
       <Modals :width="width" :footer="footer"  :format="formatType" :data="dataType" :title="title" ref="formValidate" :rules="rules" @asyncOK="asyncOK" :display="display"  :loading="loading"></Modals>
   </div>
 </template>
@@ -37,7 +39,7 @@ export default {
       loading: false,
       title: "新建",
       formValidate: false,
-      width: 90,
+      width:90,
       format: [
         { label: "资产名称", type: "input", prop: "assets_name" },
         { label: "资产URL", type: "input", prop: "assets_url" },
@@ -55,18 +57,18 @@ export default {
         assets_name: "",
         assets_url: "",
         assets_ip: "",
-        assets_port: "",
-        assets_proto: "",
-        assets_servers: "",
-        assets_region: "",
-        assets_type: "",
-        assets_important: "",
-        assets_os: "",
+        assets_port:"",
+        assets_proto:"",
+        assets_servers:"",
+        assets_region:"",
+        assets_type:"",
+        assets_important:"",
+        assets_os:"",
         assets_manger: "",
         assets_creatuser: ""
       },
-      dataCopy: {},
-      modalStatus: 0,
+      dataCopy:{},
+      modalStatus:0,
       footer: true,
       rules: {
         assetsName: [
@@ -109,52 +111,62 @@ export default {
           align: "center",
           render: (h, params) => {
             return h("div", [
-              h("Button", {
-                props: {
-                  type: "primary",
-                  size: "small",
-                  icon: "edit"
-                },
-                style: {
-                  marginRight: "5px"
-                },
-                on: {
-                  click: () => {
-                    this.data = Object.assign({}, this.data, params.row);
-                    // 打开
-                    (this.footer = true), (this.modalStatus = 0);
-                    this.$refs.formValidate.open();
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "primary",
+                    size: "small",
+                    icon: 'edit'
+                  },
+                  style: {
+                    marginRight: "5px"
+                  },
+                  on: {
+                    click: () => {
+                      this.data = Object.assign({}, this.data, params.row);
+                      // 打开
+                      this.footer=true,
+                      this.modalStatus = 0;
+                      this.$refs.formValidate.open();
+                    }
                   }
                 }
-              }),
-              h("Button", {
-                props: {
-                  type: "error",
-                  size: "small",
-                  icon: "trash-a"
-                },
-                on: {
-                  click: () => {
-                    this.remove({ assets_id: params.row.assets_id });
+              ),
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "error",
+                    size: "small",
+                    icon: "trash-a"
+                  },
+                  on: {
+                    click: () => {
+                      this.remove({ assets_id: params.row.assets_id });
+                    }
                   }
                 }
-              }),
-              h("Button", {
-                props: {
-                  size: "small",
-                  icon: "social-buffer"
-                },
-                on: {
-                  click: () => {
-                    this.dataCopy = Object.assign({}, this.data, params.row);
-                    this.modalStatus = 1;
-                    this.footer = false;
-                    this.title = "详情";
-                    this.$refs.formValidate.open();
-                    //this._detail(params.row)
+              ),
+                h(
+                'Button',
+                {
+                  props: {
+                    size: "small",
+                    icon: "social-buffer"
+                  },
+                  on: {
+                    click: () => {
+                      this.dataCopy = Object.assign({}, this.data, params.row);
+                      this.modalStatus = 1;
+                      this.footer = false;
+                      this.title = '详情';
+                      this.$refs.formValidate.open();
+                      //this._detail(params.row)
+                    }
                   }
                 }
-              })
+              )
             ]);
           }
         }
@@ -176,22 +188,20 @@ export default {
       return this.modalStatus === 0 ? this.format : this.formatCopy;
     },
     dataType() {
-      return this.modalStatus === 0 ? this.data : this.dataCopy;
-    }
+      return this.modalStatus === 0 ? this.data : this.dataCopy
+    },
+
   },
   created() {
     this.params = Object.assign({}, this.defaultPage);
     this._assetsInfo(this.params);
-    const temp = JSON.parse(JSON.stringify(this.format));
-    const dataCopy = JSON.parse(JSON.stringify(this.data));
-    this.dataCopy = Object.assign({}, dataCopy, {
-      kb_vuln_des: "",
-      kb_vuln_anly: ""
-    });
+    const temp = JSON.parse(JSON.stringify(this.format))
+    const dataCopy = JSON.parse(JSON.stringify(this.data))
+    this.dataCopy = Object.assign({},dataCopy,{kb_vuln_des:'',kb_vuln_anly:''})
     temp.forEach(item => {
-      console.log(item);
-      item.type = "div";
-    });
+      console.log(item)
+         item.type = 'div'
+    })
     this.formatCopy = temp;
   },
   methods: {
@@ -200,16 +210,11 @@ export default {
       this._assetsInfo(this.params);
     },
     _assetsInfo(params) {
-      this.pageLoading = true;
+      this.pageLoading=true;
       assetsInfo(params).then(res => {
-        if (res.rows[0] === null) {
-          this.assetsList = [];
-           this.pageLoading = false;
-        } else {
-          this.assetsList = res.rows;
-          this.dataTotal = res.total;
-          this.pageLoading = false;
-        }
+        this.assetsList = res.rows;
+        this.dataTotal = res.total;
+        this.pageLoading=false;
       });
     },
     assetsAdd() {
@@ -220,15 +225,22 @@ export default {
     //提交
     asyncOK(data) {
       if (data.assets_id) {
-        this.data.assets_creatuser = this.userName;
+        this.data.assets_creatuser = this.userName
+        this.loading = true;
         assetsUpdate(data).then(res => {
           if (res.result === 0) {
             this._assetsInfo(this.params);
+            this.loading = false;
             this.$refs.formValidate.close();
+          } else if (res.result === 2) {
+            this.$Message.warning({
+              content: '资产已存在'
+            })
+            this.loading = false;
           }
         });
       } else {
-        this.data.assets_creatuser = this.userName;
+        this.data.assets_creatuser = this.userName
         assetAdd(data).then(res => {
           if (res.result === 0) {
             this._assetsInfo(this.params);
@@ -257,10 +269,10 @@ export default {
   width: 100%;
   height: auto;
 }
-.assetRight_nav {
+.assetRight_nav{
   width: 100%;
   height: 280px;
-  margin-bottom: 20px;
+  margin-bottom:20px;
 }
 .assetRight_header {
   width: 100%;

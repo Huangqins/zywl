@@ -84,11 +84,11 @@ const Force = (resolve) => {
         resolve(module)
     })
 }
-const Particles = (resolve) => {
-    import('components/layout/particles').then(module => {
-        resolve(module)
-    })
-}
+// const Particles = (resolve) => {
+//     import('components/layout/particles').then(module => {
+//         resolve(module)
+//     })
+// }
 const Taskexecution = (resolve) => {
     import('components/taskpage/taskexecution').then(module => {
         resolve(module)
@@ -202,10 +202,10 @@ const router = new VueRouter({
             path: '/force',
             component: Force
         },
-        {
-            path: '/particles',
-            component: Particles
-        },
+        // {
+        //     path: '/particles',
+        //     component: Particles
+        // },
         {
             path: '/assetManagement',
             component: AssetManagement
@@ -222,7 +222,7 @@ const router = new VueRouter({
         {
             name: 'taskexecution',
             path: '/taskexecution',
-            // redirect: '/taskexecution/process',
+            // redirect: '/taskexecution/assetSet',
             component: Taskexecution,
             children: [
                 {

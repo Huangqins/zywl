@@ -34,7 +34,6 @@ const cycle = { flag: 2 };
 
 
 export default {
-  // name: "assetSet",
   components: {
     page,
     Modals
@@ -112,7 +111,8 @@ export default {
         {
           title: "任务名称",
           key: "target_name",
-          align: "center"
+          align: "center",
+          width: 250,
         },
         {
           title: "扫描进度",
@@ -134,6 +134,7 @@ export default {
           title: "开始时间",
           key: "target_starttime",
           align: "center",
+          width: 200,
           render: (h, params) => {
             return h(
               "span",
@@ -144,7 +145,21 @@ export default {
         {
           title: "结束时间",
           key: "target_endtime",
-          align: "center"
+          align: "center",
+          width: 200,
+          render: (h, params) => {
+            if (params.row.target_endtime) {
+              return h(
+                "span",
+                fomatterTime(new Date(params.row.target_endtime.time))
+              )
+            } else {
+              return h(
+                "span",
+                ''
+              )
+            }
+          }
         },
         {
           title: "创建人",
@@ -288,7 +303,7 @@ export default {
         if (res.result === 0) {
           this.loading = false;
           this.$refs.formValidate.close();
-          this.$router.push({ path: "/taskexecution" });
+          // this.$router.push({ path: "/taskexecution" });
           this._taskList(this.params);
         } else if (res.result === 2) {
           this.$Message.error({
