@@ -1,8 +1,8 @@
 <template>
     <div class="header">
-        <h2>智刃安全攻防平台</h2>      
+        <h2><router-link to="/homepage">智刃安全攻防平台</router-link></h2>      
         <span style="color:#fff;font-size:14px;">您好:<span style="color:white">{{userName}}</span>
-        <span ><router-link to="/homepage">首页</router-link></span>
+        <span ></span>
         </span>
         <Button type="ghost" shape="circle" icon="power" style="border: none" @click="loginOut"></Button>
     </div>
