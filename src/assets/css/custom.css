@@ -111,3 +111,25 @@ a {
   color: #495060;
 }
 
+
+.ivu-page-next, .ivu-page-prev{
+    background-color: rgba(255,255,255,0.1);
+}
+.ivu-table-wrapper{
+    margin-bottom: 15px;
+}
+.ivu-page-item{
+    background-color: rgba(255,255,255,0.1);
+}
+.ivu-select-selection{
+    background-color: rgba(255,255,255,0.1);
+}
+.ivu-select-dropdown{
+    background-color: transparent;
+}
+.ivu-page-options-elevator input{
+    background-color: rgba(255,255,255,0.1);
+}
+.ivu-select-single .ivu-select-selection{
+    border: 1px solid #fff;
+}
