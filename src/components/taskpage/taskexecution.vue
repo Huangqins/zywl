@@ -359,7 +359,6 @@ export default {
 }
 .content {
   width:100%;
-  margin-top: 100px;
 }
 .content-left{
   width: 18%;

@@ -2,9 +2,15 @@
   <div>
         <div class="timeAxis">
           <div class="taskSchedule">
-            <chart width="235" height="235" :option="options"></chart>       
-            <chart width="235" height="235" :option="optionTwo" id="optionTwo"></chart>      
-            <chart width="235" height="235" :option="optionThree" id="optionThree"></chart>     
+            <section >
+              <chart width="235" height="235" :option="options"></chart>   
+            </section>
+            <section >   
+              <chart width="235" height="235" :option="optionTwo" id="optionTwo"></chart>  
+            </section> 
+            <section >   
+               <chart width="235" height="235" :option="optionThree" id="optionThree"></chart>  
+            </section> 
           </div>       
         </div>
         <div class="clear"></div>
@@ -261,6 +267,11 @@ export default {
 .timeAxis h2 {
   height: auto;
   float: right;
+}
+.taskSchedule section{
+  width: 30%;
+  float: left;
+  padding-left: 60px;
 }
 .taskSchedule div {
   float: left;

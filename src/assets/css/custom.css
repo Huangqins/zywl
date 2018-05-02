@@ -10,7 +10,9 @@
     margin-bottom: 16px;
 }
 
-
+.ivu-input{
+    background-color: transparent;
+}
 /* 按钮样式 */
 
 /* .ivu-btn-dashed {
@@ -98,7 +100,7 @@
 }
 .ivu-select-single .ivu-select-selection{
     /* background: rgba(45, 140, 240, 0); */
-    border: 1px solid #5D90BB;
+    border: 1px solid #CCC;
     color: #495060;
 }
 .ivu-page .mini{
@@ -129,7 +131,4 @@ a {
 }
 .ivu-page-options-elevator input{
     background-color: transparent;
-}
-.ivu-select-single .ivu-select-selection{
-    border: 1px solid #fff;
 }

@@ -44,6 +44,7 @@ export default {
   color:#fff;
   margin-left: 15px;
   font-size: 30px;
+  font-family: "微软雅黑"
 }
 .router-link-active{
   display: inline ;
