@@ -32,8 +32,8 @@ export default {
   top: 0;
   width: 100%;
   background-color: rgba(65, 67, 79);
-  height: 60px;
-  line-height: 60px;
+  height: 36px;
+  line-height: 36px;
   text-align: right;
   padding-right: 20px;
   letter-spacing: 2px;
@@ -43,7 +43,7 @@ export default {
   float: left;
   color:#fff;
   margin-left: 15px;
-  font-size: 30px;
+  font-size: 16px;
   font-family: "微软雅黑"
 }
 .router-link-active{
