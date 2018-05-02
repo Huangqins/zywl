@@ -1,8 +1,8 @@
 <template>
 <div>
-    <!-- <div class="safety">
-
-    </div> -->
+    <div class="secOne">
+      
+   
     <div class="holeclassify">
               <h2>漏洞Top10榜单</h2>
               <span><Icon type="chevron-right"></Icon>目前已有XXX个漏洞进行排行</span>
@@ -46,6 +46,7 @@
               </div>
     </div>
     <div style="clear:both"></div>
+     </div>
     <div class="List">
       <page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page>
     </div>
@@ -170,8 +171,11 @@ export default {
     async _assetsInfo(params) {
       this.loading = true;
       const res = await assetsInfo(params);
-      if (res.result === 0) {
+      console.log(res.result)
+      if (res.rows[0] === null) {
         this.loading = false;
+        this.assetsList=[]
+      }else{
         this.assetsList = res.rows;
         this.total = res.total;
       }
@@ -186,10 +190,9 @@ export default {
 
 <style scoped>
 
-.safety{
-width: 45%;
-background: red;
-height: 320px;
+.secOne{
+  width: 100%;
+  
 }
  /* top10样式 */
 .holeclassify {
@@ -197,7 +200,6 @@ height: 320px;
   margin-right: 10px;
   color: #E4E5E5;
   float: left;
-  margin-bottom: 15px;
 }
 .holeclassify span{
   display: inline-block;
@@ -205,6 +207,7 @@ height: 320px;
 }
 .List{
  width: 100%;
+ margin-top: 20px;
 
 }
 .holeList{

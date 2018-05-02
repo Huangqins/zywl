@@ -3,7 +3,7 @@
   <div class="whole">
           <section class="assetRight">
               <div class="assetRight_header">
-                <Input v-model="value" placeholder="区域" clearable style="width: 200px"></Input>
+                <Input v-model="value" placeholder="区域" clearable style="width: 200px;"/>
                 <Button type="primary" icon="ios-search">搜索</Button>
                 <Button type="primary" icon="compose" @click="taskAdd">添加</Button>
               </div>
@@ -397,4 +397,5 @@ export default {
   padding: 25px;
   background: rgba(25, 38, 48,0.1);
 }
+
 </style>
