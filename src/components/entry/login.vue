@@ -111,9 +111,9 @@ export default {
         .dispatch("Login", this.formItem)
         .then(res => {
           if (res.result === 0) {
-            if (res.isAsset === 1) {
+            if (res.isAsset === 0) {
               this.$router.push({ path: "/welcome" });
-            } else if (res.isAsset === 0) {
+            } else if (res.isAsset === 1) {
               const login_res = res;
               userTips({ userName: getUserName() }).then(res => {
                 if (res.result === 0) {
@@ -124,7 +124,7 @@ export default {
                       isAsset: login_res.isAsset,
                       firstLogin: login_res.firstLogin,
                       userTips: res,
-                      isTask: 0
+                      isTask: 1
                     }
                   });
                 } else if(res.result === -1) {
@@ -136,7 +136,7 @@ export default {
                     name: "taskexecution",
                     params: {
                       isAsset: login_res.isAsset,
-                      isTask: 1,
+                      isTask: 0,
                       firstLogin: login_res.firstLogin
                     }
                   });

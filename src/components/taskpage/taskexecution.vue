@@ -42,13 +42,20 @@ import chart from "components/chart/chart";
 import zhexiantu from "components/chart/zhexiantu";
 import { getUserName } from "@/utils/auth";
 import taskTargetInfo from "api/taskTargetInfo";
-import { Modal } from 'iview'
+import { Modal } from "iview";
 const isAssetOne = ({ assets_name, datetime }) => {
   return `欢迎使用智刃安全攻防平台,距您上次进行攻防测试已经过了XXX天XXX小时XXX分钟，建议进行测试的资产为${assets_name}`;
 };
 const isAssetTwo = () => {
   return `欢迎使用智刃安全攻防平台, 是否要进行安全测试？`;
 };
+
+const isTask = ({ isTask }) => {
+
+    return `您目前尚无正在执行的任务，请添加任务`;
+
+};
+
 // const isAssetTwo = () => {
 //   return `欢迎使用智刃安全攻防平台,目前网络空间安全等级为XXX，安全情报监控显示，XXX资产暴露XXX问题，可能存在问题的资产有XXX。
 //     是否要进行安全测试？`;
@@ -67,8 +74,8 @@ export default {
     // this._taskTargetInfo(params);
   },
   watch: {
-    '$route': (to, from) => {
-      console.log(to)
+    $route: (to, from) => {
+      console.log(to);
     }
   },
   data() {
@@ -219,13 +226,18 @@ export default {
   },
   beforeRouteEnter: (to, from, next) => {
     if (from.fullPath === "/login") {
-      console.log(to.params)
+      console.log(to.params);
       Modal.confirm({
         title: `您好,${getUserName()}`,
-        content: to.params.firstLogin === 1 ? isAssetOne(to.params.userTips) : isAssetTwo(),
+        content:
+          to.params.firstLogin === 1
+            ? to.params.isTask === 1
+              ? isAssetOne(to.params.userTips)
+              : isTask(to.params.isTask)
+            : isAssetTwo(),
         onOk: () => {
           if (to.params.firstLogin === 1) {
-            next({path: '/taskexecution/assetSet'});
+            next({ path: "/taskexecution/assetSet" });
           } else {
             next("/assets/assetsManage");
           }
@@ -249,16 +261,16 @@ export default {
     godetail() {},
     _taskTargetInfo(params) {
       taskTargetInfo(params).then(res => {
-          if (res.result === 0) {
-            this.target_id = res.targets[0].target_id
-          }
-        })
+        if (res.result === 0) {
+          this.target_id = res.targets[0].target_id;
+        }
+      });
     },
     rowClassName(row, index) {
       return "demo-table-info-row";
     },
-    gotaskadd(){
-      this.$router.push({ path: '/assetSet' })
+    gotaskadd() {
+      this.$router.push({ path: "/assetSet" });
     }
   },
   computed: {
@@ -285,7 +297,7 @@ export default {
   margin: 0 0 -240px -200px;
   bottom: 0;
   left: 50%;
-  height:240px;
+  height: 240px;
   width: 320px;
   z-index: 1;
 }
@@ -356,18 +368,18 @@ export default {
   animation-direction: reverse;
 }
 .content {
-  width:100%;
+  width: 100%;
 }
-.content-left{
+.content-left {
   width: 18%;
   float: left;
   margin-left: 100px;
 }
-.content-center{
+.content-center {
   width: 20%;
   float: left;
 }
-.content-right{
+.content-right {
   width: 62%;
   float: left;
 }
@@ -378,33 +390,33 @@ export default {
   list-style-type: none;
   text-align: left;
 }
-.ivu-icon{
+.ivu-icon {
   margin-right: 15px;
 }
 /*.content ul li a {*/
-  /*height: 15%;*/
-  /*display: block;*/
-  /*padding: 14px 18px 14px 24px;*/
-  /*border-left: 2px solid #18252f;*/
-  /*color: #e4e5e5;*/
+/*height: 15%;*/
+/*display: block;*/
+/*padding: 14px 18px 14px 24px;*/
+/*border-left: 2px solid #18252f;*/
+/*color: #e4e5e5;*/
 /*}*/
 .content ul li a:hover {
   color: #148ec5;
 }
 .content ul li span {
   display: block;
-  height:75px;
+  height: 75px;
   line-height: 75px;
   text-align: center;
   color: #e4e5e5;
   border-left: 2px solid #18252f;
 }
-.content ul li span:hover{
+.content ul li span:hover {
   color: #148ec5;
 }
 /*.content ul li a:focus {*/
-  /*border-left: 2px solid #203a46;*/
-  /*color: #148ec5;*/
+/*border-left: 2px solid #203a46;*/
+/*color: #148ec5;*/
 /*}*/
 .content-center {
   width: auto;
