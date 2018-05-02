@@ -171,8 +171,11 @@ export default {
     async _assetsInfo(params) {
       this.loading = true;
       const res = await assetsInfo(params);
-      if (res.result === 0) {
+      console.log(res.result)
+      if (res.rows[0] === null) {
         this.loading = false;
+        this.assetsList=[]
+      }else{
         this.assetsList = res.rows;
         this.total = res.total;
       }

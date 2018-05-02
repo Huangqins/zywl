@@ -20,8 +20,7 @@
                 <span class="pictrue" >
                  <Table :columns="assets" :data="assetsData" :height="200" ></Table>
                 </span>
-            </div>
-              
+            </div>              
       </section>
       <section class="secTwo">
             <div class="attackPic">
@@ -53,15 +52,6 @@
                     <Table :columns="assets" :data="assetsData" :height="200" ></Table>
                 </li>
               </ul>
-          
-           <!-- <span class="Aipicture_text">互联网风险情况</span>
-            <Table :columns="assets" :data="assetsData" :height="200" ></Table>              
-            <span class="Aipicture_text">外部安全资源</span>
-            <Table :columns="assets" :data="assetsData" :height="200" ></Table>
-             <span class="Aipicture_text">主机风险情况</span>
-            <Table :columns="assets" :data="assetsData" :height="200" ></Table>           
-            <span class="Aipicture_text">主机风险情况</span>
-            <Table :columns="assets" :data="assetsData" :height="200" ></Table> -->
       </section>
   </div>
 </template>
@@ -225,4 +215,5 @@ export default {
   border: 1px solid #2b4e6f;
   margin-bottom:10px;
 }
+
 </style>

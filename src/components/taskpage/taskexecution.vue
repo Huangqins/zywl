@@ -21,11 +21,11 @@
             <div class="content-center">
                 <ul>
                     <!--<li class="brain"><router-link :to="{ path: '/taskexecution/process' , query: { target_id: this.target_id}}">任务执行</router-link></li>-->
-                    <li class="brain" ><router-link to="/taskexecution/assetSet">任务调度</router-link></li>
-                    <li class="brain"><router-link  to="/taskexecution/leaks">漏洞列表</router-link></li>
-                    <li class="brain"><router-link  to="/taskexecution/assetsManage">资产风险分布</router-link></li>
-                    <li class="brain"><router-link  to="/taskexecution/assetManagement">资产码头</router-link></li>                    
-                    <li class="brain" ><router-link to="/taskexecution/kbinfo">知识库</router-link></li>
+                    <li class="brain" ><router-link to="/taskexecution/assetSet"><Icon type="android-radio-button-on" ></Icon>任务调度</router-link></li>
+                    <li class="brain"><router-link  to="/taskexecution/leaks"><Icon type="bug"></Icon>漏洞列表</router-link></li>
+                    <li class="brain"><router-link  to="/taskexecution/assetsManage"><Icon type="podium"></Icon>资产风险分布</router-link></li>
+                    <li class="brain"><router-link  to="/taskexecution/assetManagement"><Icon type="ios-list-outline"></Icon>资产码头</router-link></li>                    
+                    <li class="brain" ><router-link to="/taskexecution/kbinfo"><Icon type="social-dropbox"></Icon>知识库</router-link></li>
                     <!-- <li class="brain"><router-link to="/taskexecution/">报告信息管理</router-link></li>   -->
                 </ul>
             </div>
@@ -380,6 +380,9 @@ export default {
 .content ul li {
   list-style-type: none;
   text-align: left;
+}
+.ivu-icon{
+  margin-right: 15px;
 }
 /*.content ul li a {*/
   /*height: 15%;*/
