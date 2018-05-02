@@ -8,7 +8,7 @@
                 <Button type="primary" icon="compose" @click="assetsAdd">添加</Button>
                 <Button type="primary" icon="log-in">导入</Button>
                 <Button type="primary" icon="log-out">导出</Button>
-              </div>  
+              </div>
               <div class="assetRight_nav"></div>
               <div class="assetRight_content">
                   <page :columns="assets" :data="assetsList" :dataTotal="dataTotal" @dataLoad="dataLoad"  :loading="pageLoading"></page>
@@ -90,7 +90,7 @@ export default {
           title: "资产名称",
           key: "assets_name",
           align: "center"
-        },        
+        },
         {
           title: "资产URL",
           key: "assets_url",
@@ -100,7 +100,7 @@ export default {
           title: "资产IP",
           key: "assets_ip",
           align: "center"
-        },        
+        },
         // {
         //   title: "创建人",
         //   key: "assets_creatuser",
@@ -211,7 +211,7 @@ export default {
     },
     _assetsInfo(params) {
       this.pageLoading=true;
-      assetsInfo(params).then(res => {        
+      assetsInfo(params).then(res => {
         this.assetsList = res.rows;
         this.dataTotal = res.total;
         this.pageLoading=false;
@@ -226,10 +226,17 @@ export default {
     asyncOK(data) {
       if (data.assets_id) {
         this.data.assets_creatuser = this.userName
+        this.loading = true;
         assetsUpdate(data).then(res => {
           if (res.result === 0) {
             this._assetsInfo(this.params);
+            this.loading = false;
             this.$refs.formValidate.close();
+          } else if (res.result === 2) {
+            this.$Message.warning({
+              content: '资产已存在'
+            })
+            this.loading = false;
           }
         });
       } else {

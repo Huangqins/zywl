@@ -24,7 +24,7 @@
                     <li class="brain" ><router-link to="/taskexecution/assetSet">任务调度</router-link></li>
                     <li class="brain"><router-link  to="/taskexecution/leaks">漏洞列表</router-link></li>
                     <li class="brain"><router-link  to="/taskexecution/assetsManage">资产风险分布</router-link></li>
-                    <li class="brain"><router-link  to="/taskexecution/assetManagement">资产码头</router-link></li>                    
+                    <li class="brain"><router-link  to="/taskexecution/assetManagement">资产码头</router-link></li>
                     <li class="brain" ><router-link to="/taskexecution/kbinfo">知识库</router-link></li>
                     <!-- <li class="brain"><router-link to="/taskexecution/">报告信息管理</router-link></li>   -->
                 </ul>
@@ -39,17 +39,23 @@
 import { mapGetters } from "vuex";
 // import router from '@/router';
 import chart from "components/chart/chart";
-import cloud from "components/d3/wordCloud";
+// import cloud from "components/d3/wordCloud";
 import zhexiantu from "components/chart/zhexiantu";
 import { getUserName } from "@/utils/auth";
 import taskTargetInfo from "api/taskTargetInfo";
 import { Modal } from 'iview'
-const isAssetOne = ({ assets_name, datetime }) => {
-  return `欢迎使用智刃安全攻防平台,距您上次进行攻防测试已经过了XXX天XXX小时XXX分钟，建议进行测试的资产为${assets_name}`;
+const isAssetOne = ({ assets_name, dateTime }) => {
+  return `欢迎使用智刃安全攻防平台,距您上次进行攻防测试已经过了${dateTime}分钟，建议进行测试的资产为${assets_name}`;
 };
 const isAssetTwo = () => {
   return `欢迎使用智刃安全攻防平台, 是否要进行安全测试？`;
 };
+
+const isTask = ({ isTask }) => {
+  if (isTask === 1) {
+    return `您当前资产尚无正在执行的任务,请添加任务`
+  }
+}
 // const isAssetTwo = () => {
 //   return `欢迎使用智刃安全攻防平台,目前网络空间安全等级为XXX，安全情报监控显示，XXX资产暴露XXX问题，可能存在问题的资产有XXX。
 //     是否要进行安全测试？`;
@@ -59,7 +65,7 @@ export default {
   name: "taskexecution",
   components: {
     chart,
-    cloud,
+    // cloud,
     zhexiantu
   },
   computed: {},
@@ -224,7 +230,7 @@ export default {
       console.log(to.params)
       Modal.confirm({
         title: `您好,${getUserName()}`,
-        content: to.params.firstLogin === 1 ? isAssetOne(to.params.userTips) : isAssetTwo(),
+        content: to.params.firstLogin === 1 ? (to.params.isTask === 0 ? isAssetOne(to.params.userTips): isTask(to.params)) : isAssetTwo(),
         onOk: () => {
           if (to.params.firstLogin === 1) {
             next({path: '/taskexecution/assetSet'});

@@ -2,10 +2,10 @@
   <div>
         <div class="timeAxis">
           <div class="taskSchedule">
-            <chart width="235" height="235" :option="options"></chart>       
-            <chart width="235" height="235" :option="optionTwo" id="optionTwo"></chart>      
-            <chart width="235" height="235" :option="optionThree" id="optionThree"></chart>     
-          </div>       
+            <chart width="235" height="235" :option="options" ref="chartOne"></chart>
+            <chart width="235" height="235" :option="optionTwo" id="optionTwo" ref="chartTwo"></chart>
+            <chart width="235" height="235" :option="optionThree" id="optionThree" ref="chartThree"></chart>
+          </div>
         </div>
         <div class="clear"></div>
         <div class="list">
@@ -18,6 +18,7 @@ import chart from "components/chart/chart";
 import zhexiantu from "components/chart/zhexiantu";
 import page from "components/page/page";
 import leaksInfo from "api/leaksInfo";
+import vulnTotal from "api/vulnTotal";
 import { getUserName } from "@/utils/auth";
 import vulnLevel from "api/vulnLevel";
 
@@ -78,8 +79,8 @@ export default {
             name: "业务指标",
             type: "gauge",
             radius: "85%",
-            detail: { formatter: "{value}%", fontSize: 18 },
-            data: [{ value: 90, name: "高风险" }],
+            detail: { formatter: "{value}", fontSize: 18 },
+            data: [{ value: 0, name: "高风险" }],
             title: { color: "#E4E5E5", fontSize: 12 },
             splitLine: { show: false },
             axisTick: { show: false },
@@ -102,8 +103,8 @@ export default {
             name: "业务指标",
             type: "gauge",
             radius: "85%",
-            detail: { formatter: "{value}%", fontSize: 18 },
-            data: [{ value: 60, name: "中风险" }],
+            detail: { formatter: "{value}", fontSize: 18 },
+            data: [{ value: 0, name: "中风险" }],
             title: { color: "#E4E5E5", fontSize: 12 },
             splitLine: { show: false },
             axisTick: { show: false },
@@ -126,8 +127,8 @@ export default {
             name: "业务指标",
             type: "gauge",
             radius: "85%",
-            detail: { formatter: "{value}%", fontSize: 18 },
-            data: [{ value: 20, name: "低风险" }],
+            detail: { formatter: "{value}", fontSize: 18 },
+            data: [{ value: 0, name: "低风险" }],
             title: { color: "#E4E5E5", fontSize: 12 },
             splitLine: { show: false },
             axisTick: { show: false },
@@ -213,10 +214,33 @@ export default {
       userName: getUserName()
     });
     this._leaksInfo(params);
-
+    this._vulnTotal();
     // this._vulnLevel({taskID:})
   },
   methods: {
+    _vulnTotal() {
+      vulnTotal({target_id : ''}).then(res => {
+        //
+        // this.option.series[0].data[0].value
+        if (res.result === 0) {
+          res.vulns.forEach(item => {
+            if (item.vuln_level === '1') {
+              this.option.series[0].data[0].value = item.vuln_total;
+              this.$refs.chartOne.refresh();
+            } else if (item.vuln_level === '2') {
+              this.optionTwo.series[0].data[0].value = item.vuln_total;
+              this.$refs.chartTwo.refresh();
+            } else if (item.vuln_level === '3') {
+              this.optionThree.series[0].data[0].value = item.vuln_total;
+              this.$refs.chartThree.refresh();
+            } else {
+            //  提示风险
+            }
+          })
+        }
+        console.log(res)
+      })
+    },
     godetail() {},
     rowClassName(row, index) {
       return "demo-table-info-row";

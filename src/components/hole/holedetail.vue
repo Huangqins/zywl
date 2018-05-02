@@ -6,9 +6,9 @@
                     <section class="holeStatus">
                         <p>漏洞状态</p>
                         <div class="holeimg">
-                            <img src="../../assets/hole.jpg" >
+                            <!--<img src="../../assets/hole.jpg" >-->
                         </div>
-                       
+
                         <div class="riskRating">
                             高风险
                         </div>
@@ -16,7 +16,7 @@
                     <section class="resultPicture">
                        <p>漏洞后果截图</p>
                        <div class="ristPicture">
-                           <li v-for="(item, index) in pictureList" :key="index"><img :src="item.src"/></li> 
+                           <li v-for="(item, index) in pictureList" :key="index"><img :src="item.src"/></li>
                        </div>
                     </section>
                 </div>
@@ -29,8 +29,8 @@
                                 <Card style="background:rgba(18,62,101,0.7);border:1px solid #51B3DA;">
                                     <p slot="title" style="color:white;font-size:25px">漏洞描述</p>
                                     <p>欢迎使用智刃安全攻防平台,目前网络空间安全等级为XXX，安全情报监控显示，XXX资产暴露XXX问题，可能存在问题的资产有XXX。</p>
-                                    <p>是否要进行安全测试？</p>                                    
-                                    
+                                    <p>是否要进行安全测试？</p>
+
                                 </Card>
                             </Col>
                         </Row>
@@ -41,8 +41,8 @@
                                 <Card style="background:rgba(18,62,101,0.7);border:1px solid #51B3DA;">
                                     <p slot="title" style="color:white;font-size:25px">漏洞方法</p>
                                     <p>欢迎使用智刃安全攻防平台,目前网络空间安全等级为XXX，安全情报监控显示，XXX资产暴露XXX问题，可能存在问题的资产有XXX。</p>
-                                    <p>是否要进行安全测试？</p>                                    
-                                    
+                                    <p>是否要进行安全测试？</p>
+
                                 </Card>
                             </Col>
                         </Row>
@@ -53,14 +53,14 @@
                                 <Card style="background:rgba(18,62,101,0.7);border:1px solid #51B3DA;">
                                     <p slot="title" style="color:white;font-size:25px">修复方案</p>
                                     <p>欢迎使用智刃安全攻防平台,目前网络空间安全等级为XXX，安全情报监控显示，XXX资产暴露XXX问题，可能存在问题的资产有XXX。</p>
-                                    <p>是否要进行安全测试？</p>  
+                                    <p>是否要进行安全测试？</p>
                                 </Card>
                             </Col>
                         </Row>
                     </section>
                 </div>
             </section>
-            
+
         </div>
   </div>
 </template>
@@ -87,13 +87,13 @@ export default {
                 {
                     src:"../../static/hole2.jpg"
                 },
-                
+
 
             ]
         }
     },
   created() {
-    
+
   }
 }
 </script>
@@ -102,7 +102,7 @@ export default {
    flex-direction:column;
    display: flex;
 }
-.All .item{ 
+.All .item{
   padding:10px;
 }
 .holeStatus{
@@ -118,7 +118,7 @@ export default {
 }
 .holeimg{
     width: 90px;
-    height: 100px;    
+    height: 100px;
     float: left;
 }
 .holeimg img{
@@ -127,7 +127,7 @@ export default {
    max-width:100%;
    max-height:100%;
    display:inline-block;
-   
+
 }
 .resultPicture{
     font-size:25px;
@@ -138,20 +138,20 @@ export default {
     list-style-type: none;
     width:100px;
     height:100px;
-    display: inline-block;    
+    display: inline-block;
     margin:5px 20px 5px 5px;
-    border-radius: 50%; 
+    border-radius: 50%;
     }
 .ristPicture li img{
     width:100px;
     height:100px;
     border-radius: 50%;
-   
-    cursor: pointer;  
+
+    cursor: pointer;
     transition: all 0.6s;
 }
 .ristPicture li img:hover{
-     transform: scale(1.4); 
+     transform: scale(1.4);
 }
 .resultPicture .ristPicture{
     width: auto;

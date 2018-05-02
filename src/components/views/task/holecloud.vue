@@ -33,10 +33,10 @@
 </template>
 <script>
 import chart from "components/chart/chart";
-import cloud from "components/d3/wordCloud";
+// import cloud from "components/d3/wordCloud";
 export default {
   components:{
-      cloud,
+      // cloud,
       chart
   },
   data(){

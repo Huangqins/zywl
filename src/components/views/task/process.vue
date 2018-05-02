@@ -12,10 +12,10 @@
     <div class="holetable">
       <Row>
         <Col span="16" >
-          <Table :columns="taskInfos" :data="taskInfosList"></Table>
+          <!--<Table :columns="taskInfos" :data="taskInfosList"></Table>-->
         </Col>
         <Col span="7" offset="1">
-          <Table :columns="taskInfoes" :data="taskInfoesList"></Table>
+          <!--<Table :columns="taskInfoes" :data="taskInfoesList"></Table>-->
         </Col>
       </Row>
       <Row>
@@ -342,6 +342,9 @@ export default {
             res.target.target_scaning
           ).toFixed(2);
           this.$refs.completionRate.refresh();
+        } else {
+          this.option.series[0].data[0].value = 0
+          this.$refs.completionRate.refresh();
         }
       })
   },
@@ -354,6 +357,9 @@ export default {
       timeLine(params).then(res => {
         if (res.result === 0) {
           this.optipnTwo.series[0].data[0].value = res.vulnNum;
+          this.$refs.taskholeNum.refresh();
+        } else {
+          this.optipnTwo.series[0].data[0].value = 0;
           this.$refs.taskholeNum.refresh();
         }
       })
@@ -377,9 +383,13 @@ export default {
     _urlUseRate() {
       const  params = { target_id: this.$route.query.target_id }
       urlUseRate(params).then(res => {
-        if (res.result === 0)
+        if (res.result === 0) {
           this.optionthree.series[0].data[0].value = res.rate;
           this.$refs.holeUtilization.refresh();
+        } else {
+          this.optionthree.series[0].data[0].value = 0;
+          this.$refs.holeUtilization.refresh();
+        }
       })
     }
   },

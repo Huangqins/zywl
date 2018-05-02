@@ -58,7 +58,7 @@ transform: scale(1.5,1.5)
   height: 400px;
   text-align: center;
   /* background:rgba(84,107,219,0.1); */
-  background: url("../../assets/card.svg") no-repeat 100%;
+  /* background: url("../../assets/card.svg") no-repeat 100%; */
   background-size: contain;
   padding: 90px 0 0 80px;
   /* -moz-box-shadow:-2px -3px 20px #3889D9, 1px 6px 20px #3889D9, 4px -2px 20px #3889D9, -2px 6px 20px #3889D9;
