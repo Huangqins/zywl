@@ -420,6 +420,7 @@ export default {
   margin-top: 10px;
   font-size: 15px;
   line-height: 50px;
+  padding-left: 10px;
 }
 .content-right ul li {
   float: left;
