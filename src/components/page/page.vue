@@ -3,8 +3,8 @@
  <Table  :columns="columns" :data="data"  :loading="loading" :height="tableHeight" @on-row-click="rowClick">
 
  </Table>
-  <Page :total="dataTotal" size="small" :current="current" :placement="placement"  :page-size-opts="pageSizeOpts" show-total  show-sizer
-  @on-change="onPageChange" @on-page-size-change="onChangehandle" show-elevator></Page>
+  <Page  v-show="dataTotal >= threshold"  :total="dataTotal" size="small" :current="current" :placement="placement"  :page-size-opts="pageSizeOpts" show-total  show-sizer
+  @on-change="onPageChange" @on-page-size-change="onChangehandle" show-elevator ></Page>
   </div>
 </template>
 <script>
@@ -58,6 +58,10 @@ export default {
     height: {
       type: [Number,String],
       default: 308
+    },
+    threshold: {
+      type: Number,
+      default: 10
     }
   },
   data() {
