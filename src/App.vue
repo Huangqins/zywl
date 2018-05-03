@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-        <!-- <headers v-if="token"></headers> -->
 　　　　<router-view ></router-view>
     </div>
 </template>

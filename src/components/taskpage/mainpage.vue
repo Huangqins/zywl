@@ -67,44 +67,175 @@
     </div>
 </template>
 <script>
-import { removeToken, removeUserName, getUserName } from "@/utils/auth";
 import { mapGetters } from "vuex";
-export default {
-        data () {
-            return {
-                key: Date.now(),
-                isCollapsed: false
-            }
-        },
-        computed: {
-             ...mapGetters(["userName"]),
-            rotateIcon () {
-                return [
-                    'menu-icon',
-                    this.isCollapsed ? 'rotate-icon' : ''
-                ];
-            },
-            menuitemClasses () {
-                return [
-                    'menu-item',
-                    this.isCollapsed ? 'collapsed-menu' : ''
-                ]
-            }
-        },
-        methods: {
-            collapsedSider () {
-                this.$refs.side1.toggleCollapse();
-            },
-            loginOut() {
-                this.$store.commit("REMOVE_TOKEN");
-                removeToken();
-                removeUserName();
-                this.$router.push({ path: "/login" });
-            }
-        }
-    }
-</script>
+import router from "@/router";
+import chart from "components/chart/chart";
+import zhexiantu from "components/chart/zhexiantu";
+import { getUserName } from "@/utils/auth";
+import taskTargetInfo from "api/taskTargetInfo";
+import taskList from "api/taskList";
+import { Modal } from "iview";
+const state_one = ({ assets_name, datetime }) => {
+  return `欢迎使用智刃安全攻防平台,距您上次进行攻防测试已经过了XXX天XXX小时XXX分钟，建议进行测试的资产为${assets_name}`;
+};
+const state_two = () => {
+  return `欢迎使用智刃安全攻防平台, 是否要进行安全测试？`;
+};
 
+// const isTask = () => {
+//
+//     return `您目前尚无正在执行的任务，请添加任务`;
+//
+// };
+
+// const isAssetTwo = () => {
+//   return `欢迎使用智刃安全攻防平台,目前网络空间安全等级为XXX，安全情报监控显示，XXX资产暴露XXX问题，可能存在问题的资产有XXX。
+//     是否要进行安全测试？`;
+// };
+
+export default {
+  name: "taskexecution",
+  components: {
+    chart,
+    zhexiantu
+  },
+  created() {
+    const params = { userName: this.userName, targetStruts: 0 };
+    // this._taskTargetInfo(params);
+  },
+  watch: {
+    $route: (to, from) => {
+      console.log(to);
+    }
+  },
+  data() {
+    return {
+      key: Date.now(),
+      //查询的任务id.
+      target_id: 0,
+      // 当前用户下任务信息
+      taskID: 0,
+      //资产列表
+      loading: false,
+      isCollapsed: false
+    };
+  },
+  beforeRouteEnter: (to, from, next) => {
+    if (from.fullPath === "/login") {
+      const userInfo = to.params;
+      console.log(userInfo);
+      //是否第一次登陆,否
+      if (userInfo.firstLogin === 1) {
+        //  判断任务是否结束
+        if (userInfo.userTips.dateTime === 0) {
+          //  任务未结束,提示未完成任务，跳转到任务执行页
+          taskList({ userName: getUserName() }).then(res => {
+            if (res.result === 0) {
+              let taskId = res.targets[0].target_id;
+              let taskName = res.targets[0].target_name;
+              Modal.success({
+                title: `您好,${getUserName()}`,
+                content: `您好，您当前有未执行完毕的任务:${taskName},即将进入任务执行页`,
+                loading: true,
+                onOk: () => {
+                  setTimeout(() => {
+                    Modal.remove();
+                    router.push({
+                      path: "/mainpage/process",
+                      query: { target_id: taskId }
+                    });
+                  }, 2000);
+                }
+              });
+            }
+          });
+          //  需要查询任务id
+        } else {
+          //  任务结束，提示任务已结束多久，建议需要进行监测的资产。使用userInfo
+          Modal.confirm({
+            title: `您好, ${getUserName()}`,
+            content: state_one(userInfo.userTips),
+            onOk: () => {
+              //跳转任务列表
+              next({ path: "/mainpage/assetSet" });
+            },
+            onCancel: () => {
+              next("/taskhomepage");
+            }
+          });
+        }
+      } else {
+        //  当日第一次登陆
+        if (userInfo.userTips.dateTime === 0) {
+          //  任务未结束,提示未完成任务，跳转到任务执行页
+          //  任务未结束,提示未完成任务，跳转到任务执行页
+          //  需要查询任务id
+          taskList({ userName: getUserName() }).then(res => {
+            if (res.result === 0) {
+              let taskId = res.targets[0].target_id;
+              router.push({
+                path: "/mainpage/process",
+                query: { target_id: taskId }
+              });
+            }
+          });
+        } else {
+          //  任务结束,是否进行安全监测
+          Modal.confirm({
+            title: `您好,${getUserName()}`,
+            content: state_two(),
+            onOk: () => {
+              //  跳转安全监测页面(尚无,用任务列表页代替)
+              next({ path: "/mainpage/assetSet" });
+            },
+            onCancel: () => {
+              next("/taskhomepage");
+            }
+          });
+        }
+      }
+    }
+    next();
+  },
+  beforeRouteLeave: (to, from, next) => {
+    // Modal.remove();
+    // next();
+  },
+  methods: {
+    collapsedSider() {
+      this.$refs.side1.toggleCollapse();
+    },
+    loginOut() {
+      this.$store.commit("REMOVE_TOKEN");
+      removeToken();
+      removeUserName();
+      this.$router.push({ path: "/login" });
+    },
+    _taskTargetInfo(params) {
+      taskTargetInfo(params).then(res => {
+        if (res.result === 0) {
+          this.target_id = res.targets[0].target_id;
+        }
+      });
+    },
+    rowClassName(row, index) {
+      return "demo-table-info-row";
+    },
+    gotaskadd() {
+      this.$router.push({ path: "/assetSet" });
+    }
+  },
+  computed: {
+    ...mapGetters(["userName"]),
+    rotateIcon() {
+      return ["menu-icon", this.isCollapsed ? "rotate-icon" : ""];
+    },
+    menuitemClasses() {
+      return ["menu-item", this.isCollapsed ? "collapsed-menu" : ""];
+    }
+  }
+};
+</script>
 <style scoped>
 .log{
     display: block;

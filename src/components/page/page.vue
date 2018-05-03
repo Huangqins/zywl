@@ -1,7 +1,6 @@
 <template>
 <div class="pageTable">
- <Table  :columns="columns" :data="data"  :loading="loading" :height="tableHeight" @on-row-click="rowClick">
-
+ <Table  :columns="columns" :data="data"  :loading="loading" :height="tableHeight">
  </Table>
   <Page  v-show="dataTotal >= threshold"  :total="dataTotal" size="small" :current="current" :placement="placement"  :page-size-opts="pageSizeOpts" show-total  show-sizer
   @on-change="onPageChange" @on-page-size-change="onChangehandle" show-elevator ></Page>
@@ -83,14 +82,6 @@ export default {
     onChangehandle(pageNum) {
       this.pageNum = pageNum;
       this.$emit("dataLoad", { page: this.pageSize, rows:  pageNum });
-    },
-    rowClick(row, index) {
-      const data = { row, index }
-      if (this.$parent.rowClick) {
-        this.$emit('rowClick', data)
-      } else {
-        console.warn('请配置单行点击事件rowClick!')
-      }
     }
   }
 };

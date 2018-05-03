@@ -3,11 +3,11 @@
     <div class="taskSchedule">
         <chart width="235" height="235" :option="option" id="completionRate" ref="completionRate"></chart>
         <chart width="235" height="235" :option="optipnTwo" id="taskholeNum" ref="taskholeNum"></chart>
-        <chart width="235" height="235" :option="optipnThree" id="holeUtilization" ref='holeUtilization'></chart>
+        <chart width="235" height="235" :option="optionthree" id="holeUtilization" ref='holeUtilization'></chart>
     </div>
     <div class="clear"></div>
     <div class="line">
-       <!--<chart width="350" height="230" :option="linechart"  ref="linechart"></chart>-->
+       <chart width="450" height="300" :option="linechart"  ref="linechart"></chart>
     </div>
     <div class="holetable">
       <Row>
@@ -23,7 +23,7 @@
           <page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width" height=120></page>
         </Col>
         <Col span="12">
-          <chart width="450" height="450" :option="linechart"  ref="linechart"></chart>
+        
         </Col>
       </Row>
     </div>
@@ -296,13 +296,6 @@ export default {
     };
   },
   computed: {
-    optipnThree() {
-      setInterval(() => {
-        this.optionthree.series[0].data[0].value =
-          (Math.random() * 100).toFixed(2) - 0;
-      }, 2000);
-      return this.optionthree;
-    },
     ...mapGetters(["userName"])
   },
 
