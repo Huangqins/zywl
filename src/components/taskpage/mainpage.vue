@@ -1,7 +1,7 @@
 <template>
    <div class="layout">
         <Layout >
-            <Sider ref="side1" hide-trigger collapsible :collapsed-width="48" v-model="isCollapsed" style="background:transparent; min-width:48px;  max-width: 128px;">
+            <Sider ref="side1" hide-trigger collapsible :collapsed-width="48" v-model="isCollapsed" style="background:transparent; min-width:48px;  max-width: 100px;">
                 <span class="log"><img src="../../assets/60.png" alt=""></span>                      
                 <Menu active-name="1-2" theme="dark" width="auto" :class="menuitemClasses">            
                     <router-link to="/mainpage/homepage">
@@ -16,34 +16,41 @@
                             <span>任务调度</span>
                         </MenuItem>
                     </router-link>
-                    <router-link  to="/mainpage/leaks">
-                        <MenuItem name="1-3">
-                            <Icon type="bug"></Icon>
-                            <span>漏洞列表</span>
-                        </MenuItem>
-                    </router-link>
-                    <router-link  to="/mainpage/assetsManage">
-                        <MenuItem name="1-4">
-                            <Icon type="podium"></Icon>
-                            <span>资产风险分布</span>
-                        </MenuItem>
-                    </router-link>
                     <router-link  to="/mainpage/assetManagement">
                         <MenuItem name="1-5">
                             <Icon type="ios-list-outline"></Icon>
                             <span>资产码头</span>
                         </MenuItem>
                     </router-link>
+                    <router-link  to="/mainpage/assetsManage">
+                        <MenuItem name="1-4">
+                            <Icon type="podium"></Icon>
+                            <span>风险态势</span>
+                        </MenuItem>
+                    </router-link>
+                    <router-link  to="/mainpage/leaks">
+                        <MenuItem name="1-3">
+                            <Icon type="bug"></Icon>
+                            <span>风险详情</span>
+                        </MenuItem>
+                    </router-link>                  
+                    
                     <router-link to="/mainpage/kbinfo">
                         <MenuItem name="1-6">
                             <Icon type="social-dropbox"></Icon>
-                            <span>知识库</span>        
+                            <span>知识管理</span>        
+                        </MenuItem>
+                    </router-link>
+                    <router-link to="/mainpage">
+                        <MenuItem name="1-7">
+                            <Icon type="settings"></Icon>
+                            <span>系统管理</span>        
                         </MenuItem>
                     </router-link>
                 </Menu>
             </Sider>
             <Layout>
-                <Header :style="{padding: 0}" class="layout-header-bar">
+                <Header :style="{padding: 0,background:''}" class="layout-header-bar">
                     <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '10px 10px 0',color:'white',float:'left'}" type="navicon-round" size="20"></Icon>
                     <div class="headers">
                         <span style="color:#fff;font-size:14px;">您好:<span style="color:white">{{userName}}</span>
@@ -237,7 +244,7 @@ export default {
     margin-left: -8px;
 }
 .ivu-layout{
-    background: rgba(23,29,37,.1);
+    background:transparent;
 }
 .ivu-menu-item>i{
     margin-right:0px;
@@ -245,6 +252,7 @@ export default {
     .ivu-layout-header{
         height: 30px;
         line-height: 30px;
+       background: transparent;
     }
     .ivu-menu-vertical .ivu-menu-item, .ivu-menu-vertical .ivu-menu-submenu-title{
         padding:14px 14px 14px 10px;
@@ -308,7 +316,7 @@ export default {
     .headers {
         
         width: 100%;
-        background-color: rgba(65, 67, 79);
+        /* background-color: rgba(65, 67, 79); */
         height: 36px;
         line-height: 36px;
         text-align: right;
