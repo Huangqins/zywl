@@ -89,11 +89,11 @@ const Force = (resolve) => {
 //         resolve(module)
 //     })
 // }
-const Taskexecution = (resolve) => {
-    import('components/taskpage/taskexecution').then(module => {
-        resolve(module)
-    })
-}
+// const Taskexecution = (resolve) => {
+//     import('components/taskpage/taskexecution').then(module => {
+//         resolve(module)
+//     })
+// }
 const Process = (resolve) => {
     import('components/views/task/process').then(module => {
         resolve(module)

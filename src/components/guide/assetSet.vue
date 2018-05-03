@@ -246,7 +246,7 @@ export default {
                   },
                   on: {
                     click: () => {
-                      this.$router.push({ path: '/taskexecution/process', query: { target_id:params.row.target_id}})
+                      this.$router.push({ path: '/mainpage/process', query: { target_id:params.row.target_id}})
                     }
                   }
                 }
