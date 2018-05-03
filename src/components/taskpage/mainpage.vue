@@ -10,31 +10,31 @@
                         </MenuItem>
                     </router-link>
                     <router-link to="/mainpage/assetSet">
-                        <MenuItem name="1-1">
+                        <MenuItem name="1-2">
                             <Icon type="android-radio-button-on" ></Icon>
                             <span>任务调度</span>
                         </MenuItem>
                     </router-link>
                     <router-link  to="/mainpage/leaks">
-                        <MenuItem name="1-2">
+                        <MenuItem name="1-3">
                             <Icon type="bug"></Icon>
                             <span>漏洞列表</span>
                         </MenuItem>
                     </router-link>
                     <router-link  to="/mainpage/assetsManage">
-                        <MenuItem name="1-3">
+                        <MenuItem name="1-4">
                             <Icon type="podium"></Icon>
                             <span>资产风险分布</span>
                         </MenuItem>
                     </router-link>
                     <router-link  to="/mainpage/assetManagement">
-                        <MenuItem name="1-4">
+                        <MenuItem name="1-5">
                             <Icon type="ios-list-outline"></Icon>
                             <span>资产码头</span>
                         </MenuItem>
                     </router-link>
                     <router-link to="/mainpage/kbinfo">
-                        <MenuItem name="1-5">
+                        <MenuItem name="1-6">
                             <Icon type="social-dropbox"></Icon>
                             <span>知识库</span>        
                         </MenuItem>
