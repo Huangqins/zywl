@@ -172,22 +172,7 @@ export default {
           width: 150,
           render: (h, params) => {
             return h("div", [
-              h(
-                "Button",
-                {
-                  props: {
-                    type: "error",
-                    size: "small",
-                    icon:"trash-a"
-                  },
-                  style: {
-                    marginRight: "5px"
-                  },
-                  on: {
-                    click: () => {}
-                  }
-                }
-              ),
+              
               h(
                 "a",
                 {
@@ -248,6 +233,22 @@ export default {
                     click: () => {
                       this.$router.push({ path: '/mainpage/process', query: { target_id:params.row.target_id}})
                     }
+                  }
+                }
+              ),
+              h(
+                "Button",
+                {
+                  props: {
+                    type: "error",
+                    size: "small",
+                    icon:"trash-a"
+                  },
+                  style: {
+                    marginLeft: "5px"
+                  },
+                  on: {
+                    click: () => {}
                   }
                 }
               )

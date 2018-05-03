@@ -1,8 +1,9 @@
 <template>
    <div class="layout">
-        <Layout>
-            <Sider ref="side1" hide-trigger collapsible :collapsed-width="48" v-model="isCollapsed">
-                <Menu active-name="1-2" theme="dark" width="auto" :class="menuitemClasses">
+        <Layout >
+            <Sider ref="side1" hide-trigger collapsible :collapsed-width="48" v-model="isCollapsed" style="background:transparent; min-width:48px;  max-width: 128px;">
+                <span class="log"><img src="../../assets/60.png" alt=""></span>                      
+                <Menu active-name="1-2" theme="dark" width="auto" :class="menuitemClasses">            
                     <router-link to="/mainpage/homepage">
                         <MenuItem name="1-1">
                             <Icon type="ios-home"></Icon>
@@ -43,9 +44,15 @@
             </Sider>
             <Layout>
                 <Header :style="{padding: 0}" class="layout-header-bar">
-                    <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '5px 10px 0'}" type="navicon-round" size="20"></Icon>
+                    <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '10px 10px 0',color:'white',float:'left'}" type="navicon-round" size="20"></Icon>
+                    <div class="headers">
+                        <span style="color:#fff;font-size:14px;">您好:<span style="color:white">{{userName}}</span>
+                        <span ></span>
+                        </span>
+                        <Button type="ghost" shape="circle" icon="power" style="border: none" @click="loginOut"></Button>
+                    </div>
                 </Header>
-                <Content :style="{ background: '#fff', minHeight: '906px'}">
+                <Content :style="{  minHeight: '946px'}">
                     <router-view :key="key"></router-view> 
                 </Content>
             </Layout>
@@ -53,7 +60,9 @@
     </div>
 </template>
 <script>
-    export default {
+import { removeToken, removeUserName, getUserName } from "@/utils/auth";
+import { mapGetters } from "vuex";
+export default {
         data () {
             return {
                 key: Date.now(),
@@ -61,6 +70,7 @@
             }
         },
         computed: {
+             ...mapGetters(["userName"]),
             rotateIcon () {
                 return [
                     'menu-icon',
@@ -77,12 +87,27 @@
         methods: {
             collapsedSider () {
                 this.$refs.side1.toggleCollapse();
+            },
+            loginOut() {
+                this.$store.commit("REMOVE_TOKEN");
+                removeToken();
+                removeUserName();
+                this.$router.push({ path: "/login" });
             }
         }
     }
 </script>
 
 <style scoped>
+.log{
+    display: block;
+    width: 60px;
+    height: 60px;
+    margin-left: -8px;
+}
+.ivu-layout{
+    background: rgba(23,29,37,.1);
+}
 .ivu-menu-item>i{
     margin-right:0px;
 }
@@ -96,7 +121,7 @@
 
     .layout{
         /* border: 1px solid #d7dde4; */
-        background: #f5f7f9;
+        /* background: #f5f7f9; */
         position: relative;
         border-radius: 4px;
         overflow: hidden;
@@ -105,13 +130,13 @@
         max-width: 99px;
     }
     .layout-header-bar{
-        background: #fff;
+        /* background: #fff; */
         box-shadow: 0 1px 1px rgba(0,0,0,.1);
     }
     .layout-logo-left{
         width: 90%;
         height: 30px;
-        background: #5b6270;
+        /* background: #5b6270; */
         border-radius: 3px;
         margin: 15px auto;
     }
@@ -120,6 +145,9 @@
     }
     .rotate-icon{
         transform: rotate(-90deg);
+    }
+    .ivu-menu-dark{
+        background:transparent;
     }
     .menu-item span{
         display: inline-block;
@@ -145,5 +173,28 @@
         transition: font-size .2s ease .2s, transform .2s ease .2s;
         vertical-align: middle;
         font-size: 22px;
+    }
+    .headers {
+        
+        width: 100%;
+        background-color: rgba(65, 67, 79);
+        height: 36px;
+        line-height: 36px;
+        text-align: right;
+        padding-right: 20px;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+        }
+        .headers h2{
+        float: left;
+        color:#fff;
+        margin-left: 15px;
+        font-size: 16px;
+        font-family: "微软雅黑"
+        }
+        .router-link-active{
+        display: inline ;
+        border-left: none;
+        color: #fff;
     }
 </style>

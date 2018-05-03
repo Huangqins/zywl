@@ -150,18 +150,7 @@ export default {
                   }
                 }
               }),
-              h("Button", {
-                props: {
-                  type: "error",
-                  size: "small",
-                  icon: "trash-a"
-                },
-                on: {
-                  click: () => {
-                    this.remove({ assets_id: params.row.assets_id });
-                  }
-                }
-              }),
+              
               h("Button", {
                 props: {
                   size: "small",
@@ -175,6 +164,21 @@ export default {
                     this.title = "详情";
                     this.$refs.formValidate.open();
                     //this._detail(params.row)
+                  }
+                }
+              }),
+              h("Button", {
+                props: {
+                  type: "error",
+                  size: "small",
+                  icon: "trash-a"
+                },
+                style: {
+                  marginLeft: "5px"
+                },
+                on: {
+                  click: () => {
+                    this.remove({ assets_id: params.row.assets_id });
                   }
                 }
               })
