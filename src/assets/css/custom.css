@@ -137,3 +137,7 @@ a {
     min-width:128px;
     max-width: 120px;
 }
+
+.ivu-menu-dark.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu), .ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu-title-active:not(.ivu-menu-submenu) {
+    padding-right: 2px;
+}
