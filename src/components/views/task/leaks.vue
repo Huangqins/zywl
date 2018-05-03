@@ -244,13 +244,13 @@ export default {
           res.vulns.forEach(item => {
             if (item.vuln_level === '1') {
               this.high = item.vuln_total;
-              this.$refs.chartOne.refresh();
+              // this.$refs.chartOne.refresh();
             } else if (item.vuln_level === '2') {
               this.optionTwo.series[0].data[0].value = item.vuln_total;
-              this.$refs.chartTwo.refresh();
+              // this.$refs.chartTwo.refresh();
             } else if (item.vuln_level === '3') {
               this.optionThree.series[0].data[0].value = item.vuln_total;
-              this.$refs.chartThree.refresh();
+              // this.$refs.chartThree.refresh();
             } else {
             //  提示风险
             }
