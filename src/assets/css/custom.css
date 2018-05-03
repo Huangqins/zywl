@@ -12,7 +12,10 @@
 
 .ivu-input{
     background-color: transparent;
-    /* color: #fff; */
+    color: #ccc;
+}
+.ivu-select-selected-value{
+    color: #ccc;
 }
 /* 按钮样式 */
 
@@ -100,9 +103,9 @@
     color: #E4E5E5;
 }
 .ivu-select-single .ivu-select-selection{
-    /* background: rgba(45, 140, 240, 0); */
+    background: rgba(45, 140, 240, 0);
     border: 1px solid #CCC;
-    color: white;
+    /* color: white; */
 }
 .ivu-page .mini{
 padding-top: 3px;
@@ -125,7 +128,7 @@ a {
     background-color: transparent;
 }
 .ivu-select-selection{
-    background-color: transparent;
+    /* background-color: transparent; */
 }
 .ivu-select-dropdown{
     /* background-color: transparent; */

@@ -128,19 +128,19 @@ export default {
 </script>
 <style scoped>
 .secOne {
-  width: 25%;
+  width: 32%;
   height: 100%;
   color: white;
   float: left;
-  margin: 15px 15px 10px 20px;
+  margin: 0px 0px 10px 0px;
   box-sizing: border-box;
 }
 .secTwo {
-  width: 40%;
+  width: 35%;
   height: 100%;
   color: white;
   float: left;
-  margin: 15px 0 10px 0;
+  margin: 0px 15px 10px 15px;
   box-sizing: border-box;
 }
 .secThree {
@@ -148,18 +148,18 @@ export default {
   height: 100%;
   color: white;
   float: left;
-  margin: 15px 15px 10px 20px;
+  margin: 0px 0px 10px 0px;
   box-sizing: border-box;
 }
 .secOne_left span {
   display: block;
 }
 .Aipicture {
-  width: 480px;
+  /* width: 480px; */
   height: 300px;
   border: 1px solid #2b4e6f;
   padding: 8px;
-  margin: 0 10px 10px 0px;
+  margin: 0 0px 10px 0px;
 }
 .Aipicture_text {
   font-size: 18px;
@@ -176,18 +176,18 @@ export default {
   height: 255px;
 }
 .stylebook {
-  width: 480px;
+  /* width: 480px; */
   height: 100px;
   border: 1px solid #2b4e6f;
   padding: 8px;
-  margin: 0 10px 10px 0px;
+  margin: 0 0px 10px 0px;
 }
 .attack {
-  width: 480px;
+  /* width: 480px; */
   height: 300px;
   border: 1px solid #2b4e6f;
   padding: 8px;
-  margin: 0 10px 10px 0px;
+  margin: 0 0px 10px 0px;
 }
 .attack span {
   display: block;

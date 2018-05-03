@@ -129,6 +129,11 @@ const FirstassetAdd = (resolve) => {
         resolve(module)
     })
 }
+const Mainpage = (resolve) => {
+    import('components/taskpage/mainpage').then(module => {
+        resolve(module)
+    })
+}
 const router = new VueRouter({
     // mode: 'history',
     routes: [
@@ -220,10 +225,15 @@ const router = new VueRouter({
             component: FirstassetAdd
         },
         {
-            name: 'taskexecution',
-            path: '/taskexecution',
+            name:"mainpage",
+            path: '/mainpage',
+            component: Mainpage
+        },
+        {
+            name: 'mainpage',
+            path: '/mainpage',
             // redirect: '/taskexecution/assetSet',
-            component: Taskexecution,
+            component: Mainpage,
             children: [
                 {
                     //任务进度需要任务Id进入
@@ -269,6 +279,13 @@ const router = new VueRouter({
                     path: 'assetSet',
                     components: {
                         default: Assetset
+                    }
+                },
+                {
+                    name: 'homepage',
+                    path: 'homepage',
+                    components: {
+                        default: Homepage
                     }
                 }
             ]
