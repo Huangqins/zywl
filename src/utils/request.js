@@ -15,13 +15,13 @@ import {
 // 创建axios实例
 const baseURL = location.origin
 // 取消Token(解决重复发送相同请求)
-let pending = []; 
+let pending = [];
 let cancelToken = axios.CancelToken;
 let removePending = (config) => {
   for (let p in pending) {
     if (pending[p].u === config.url + '&' + JSON.stringify(config.data)) {
-      pending[p].f(); 
-      pending.splice(p, 1); 
+      pending[p].f();
+      pending.splice(p, 1);
     }
   }
 }
@@ -34,7 +34,7 @@ const service = axios.create({
 // 保存请求路径参数
 let requestPath = ''
 service.interceptors.request.use(config => {
-  removePending(config); 
+  removePending(config);
   requestPath = config.url
   config.cancelToken = new cancelToken((c) => {
     pending.push({
@@ -68,7 +68,7 @@ service.interceptors.response.use(response => {
     // 清除store信息
     store.commit('REMOVE_TOKEN');
     store.commit('REMOVE_USER_NAME');
-    // router.push({ path: '/login' })
+    router.push({ path: '/login' })
   }
   return response.data
 }, error => {

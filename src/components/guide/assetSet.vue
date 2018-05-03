@@ -310,6 +310,8 @@ export default {
             content: '资产填写有误或资产不存在'
           })
           this.loading = false;
+        } else {
+          this.loading = false;
         }
       });
     },

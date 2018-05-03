@@ -112,19 +112,19 @@ export default {
         .then(res => {
           if (res.result === 0) {
             if (res.isAsset === 0) {
+              //无资产,欢迎页导入资产
               this.$router.push({ path: "/welcome" });
             } else if (res.isAsset === 1) {
+              //有资产的情况
               const login_res = res;
-              userTips({ userName: getUserName() }).then(res => {
+              userTips({ userName: getUserName()}).then(res => {
                 if (res.result === 0) {
-                  //登陆成功并存在资产
+                  //登陆成功有资产且有任务,默认显示任务调度页面
                   this.$router.push({
                     name: "assetSet",
                     params: {
-                      isAsset: login_res.isAsset,
-                      firstLogin: login_res.firstLogin,
-                      userTips: res,
-                      isTask: 1
+                      firstLogin: login_res.firstLogin,//是否当然首次登陆
+                      userTips: res,//下一页面判断任务是否结束
                     }
                   });
                 } else if(res.result === -1) {
@@ -132,14 +132,8 @@ export default {
                     content: '获取用户资产信息失败'
                   })
                 } else if (res.result === 2) {
-                  this.$router.push({
-                    name: "taskexecution",
-                    params: {
-                      isAsset: login_res.isAsset,
-                      isTask: 0,
-                      firstLogin: login_res.firstLogin
-                    }
-                  });
+                  // 登陆成功有资产无任务,直接走到大首页
+                  this.$router.push({ path: "/taskhomepage"});
                 }
               });
             }

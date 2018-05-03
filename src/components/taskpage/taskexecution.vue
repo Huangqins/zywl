@@ -24,7 +24,7 @@
                     <li class="brain" ><router-link to="/taskexecution/assetSet"><Icon type="android-radio-button-on" ></Icon>任务调度</router-link></li>
                     <li class="brain"><router-link  to="/taskexecution/leaks"><Icon type="bug"></Icon>漏洞列表</router-link></li>
                     <li class="brain"><router-link  to="/taskexecution/assetsManage"><Icon type="podium"></Icon>资产风险分布</router-link></li>
-                    <li class="brain"><router-link  to="/taskexecution/assetManagement"><Icon type="ios-list-outline"></Icon>资产码头</router-link></li>                    
+                    <li class="brain"><router-link  to="/taskexecution/assetManagement"><Icon type="ios-list-outline"></Icon>资产码头</router-link></li>
                     <li class="brain" ><router-link to="/taskexecution/kbinfo"><Icon type="social-dropbox"></Icon>知识库</router-link></li>
                     <!-- <li class="brain"><router-link to="/taskexecution/">报告信息管理</router-link></li>   -->
                 </ul>
@@ -42,19 +42,21 @@ import chart from "components/chart/chart";
 import zhexiantu from "components/chart/zhexiantu";
 import { getUserName } from "@/utils/auth";
 import taskTargetInfo from "api/taskTargetInfo";
+import taskList from "api/taskList";
 import { Modal } from "iview";
-const isAssetOne = ({ assets_name, datetime }) => {
+import router from '@/router';
+const state_one = ({ assets_name, datetime }) => {
   return `欢迎使用智刃安全攻防平台,距您上次进行攻防测试已经过了XXX天XXX小时XXX分钟，建议进行测试的资产为${assets_name}`;
 };
-const isAssetTwo = () => {
+const state_two = () => {
   return `欢迎使用智刃安全攻防平台, 是否要进行安全测试？`;
 };
 
-const isTask = ({ isTask }) => {
-
-    return `您目前尚无正在执行的任务，请添加任务`;
-
-};
+// const isTask = () => {
+//
+//     return `您目前尚无正在执行的任务，请添加任务`;
+//
+// };
 
 // const isAssetTwo = () => {
 //   return `欢迎使用智刃安全攻防平台,目前网络空间安全等级为XXX，安全情报监控显示，XXX资产暴露XXX问题，可能存在问题的资产有XXX。
@@ -226,30 +228,98 @@ export default {
   },
   beforeRouteEnter: (to, from, next) => {
     if (from.fullPath === "/login") {
-      console.log(to.params);
-      Modal.confirm({
-        title: `您好,${getUserName()}`,
-        content:
-          to.params.firstLogin === 1
-            ? to.params.isTask === 1
-              ? isAssetOne(to.params.userTips)
-              : isTask(to.params.isTask)
-            : isAssetTwo(),
-        onOk: () => {
-          if (to.params.firstLogin === 1) {
-            next({ path: "/taskexecution/assetSet" });
-          } else {
-            next("/assets/assetsManage");
-          }
-        },
-        onCancel: () => {
-          if (to.params.firstLogin === 0) {
-            next("/taskhomepage");
-          } else {
-            next();
-          }
+      const userInfo = to.params
+      console.log(userInfo);
+      //是否第一次登陆,否
+      if (userInfo.firstLogin === 1) {
+      //  判断任务是否结束
+        if(userInfo.userTips.dateTime === 0) {
+          //  任务未结束,提示未完成任务，跳转到任务执行页
+          taskList({ userName: getUserName() }).then(res => {
+            if (res.result === 0) {
+              let taskId = res.targets[0].target_id;
+              let taskName = res.targets[0].target_name;
+              Modal.success({
+                title: `您好,${getUserName()}`,
+                content: `您好，您当前有未执行完毕的任务:${taskName},即将进入任务执行页`,
+                loading: true,
+                onOk: () => {
+                  setTimeout(() => {
+                    Modal.remove()
+                    router.push({ path: '/taskexecution/process', query: { target_id: taskId }})
+                  },2000)
+                }
+              })
+            }
+          })
+        //  需要查询任务id
+
+        } else {
+          //  任务结束，提示任务已结束多久，建议需要进行监测的资产。使用userInfo
+          Modal.confirm({
+            title: `您好, ${getUserName()}`,
+            content: state_one(userInfo.userTips),
+            onOk: () => {
+              //跳转任务列表
+              next({ path: "/taskexecution/assetSet" });
+            },
+            onCancel: () => {
+              next("/taskhomepage");
+            }
+          })
         }
-      });
+      }else {
+      //  当日第一次登陆
+        if(userInfo.userTips.dateTime === 0) {
+          //  任务未结束,提示未完成任务，跳转到任务执行页
+          //  任务未结束,提示未完成任务，跳转到任务执行页
+          //  需要查询任务id
+          taskList({ userName: getUserName() }).then(res => {
+            if (res.result === 0) {
+              let taskId = res.targets[0].target_id;
+              this.$router.push({ path: '/taskexecution/process', query: { target_id: taskId }})
+            }
+          })
+        } else {
+          //  任务结束,是否进行安全监测
+          Modal.confirm({
+            title: `您好,${getUserName()}`,
+            content: state_two(),
+            onOk: () => {
+            //  跳转安全监测页面(尚无,用任务列表页代替)
+              next({ path: "/taskexecution/assetSet" });
+            },
+            onCancel: () => {
+              next("/taskhomepage");
+            }
+          })
+        }
+      }
+      // Modal.confirm({
+      //   title: `您好,${getUserName()}`,
+      //   content:  to.params.firstLogin === 1  ? (to.params.isTask === 1? isAssetOne(to.params.userTips) : isTask(to.params.isTask)) : isAssetTwo(),
+      //   onOk: () => {
+      //     if (to.params.firstLogin === 1) {
+      //       next({ path: "/taskexecution/assetSet" });
+      //     } else {
+      //       next("/assets/assetsManage");
+      //     }
+      //   },
+      //   onCancel: () => {
+      //     if (to.params.firstLogin === 0) {
+      //       next("/taskhomepage");
+      //     } else {
+      //       next();
+      //     }
+      //   }
+      // });
+      // 当然首次登陆
+      // if (to.params.firstLogin === 0) {
+      //    Modal.confirm({
+      //      title: `您好,${getUserName()}`,
+      //      content:
+      //    })
+      // }
     }
     next();
   },

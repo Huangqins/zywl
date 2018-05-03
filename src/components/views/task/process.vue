@@ -321,7 +321,7 @@ export default {
   },
 
   created() {
-    this._targetProgress();this._targetNum();this._targetLesk();this._urlUseRate()
+    // this._targetProgress();this._targetNum();this._targetLesk();this._urlUseRate()
     this.timer = setInterval(() => {
       this._targetProgress();this._targetNum();this._targetLesk();this._urlUseRate()
     },5000)
