@@ -1,7 +1,7 @@
 <template>
   <div id="app">
         <headers v-if="token"></headers>
-　　　　<router-view  :style="{marginTop: token ? '60px': 0}"></router-view>
+　　　　<router-view  :style="{marginTop: token ? '36px': 0}"></router-view>
     </div>
 </template>
 <script>
