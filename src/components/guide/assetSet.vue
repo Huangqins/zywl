@@ -31,7 +31,11 @@ import getAssetURL from "api/getAssetURL";
 const strategy = { flag: 1 };
 const cycle = { flag: 2 };
 //添加任务验证
-
+const taskStatus  = {
+  '0' : '',
+  '1' : '已完成',
+  '-2': '失败'
+}
 
 export default {
   components: {
@@ -128,7 +132,13 @@ export default {
         {
           title: "任务状态",
           key: "target_struts",
-          align: "center"
+          align: "center",
+          render: (h ,params) => {
+            return h(
+              "span",
+              taskStatus[params.row.target_struts]
+            )
+          }
         },
         {
           title: "开始时间",
@@ -161,11 +171,11 @@ export default {
             }
           }
         },
-        {
-          title: "创建人",
-          key: "target_tast_oper",
-          align: "center"
-        },
+        // {
+        //   title: "创建人",
+        //   key: "target_tast_oper",
+        //   align: "center"
+        // },
         {
           title: "操作",
           align: "center",
