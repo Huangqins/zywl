@@ -1,9 +1,5 @@
 <template>
     <div class="header">
-        <!-- <h2><router-link to="/homepage">智刃安全攻防平台</router-link></h2>       -->
-        <div class="logo">
-          <img src="../../assets/logo1.png" alt="">
-        </div>
         <span style="color:#fff;font-size:14px;">您好:<span style="color:white">{{userName}}</span>
         <span ></span>
         </span>
@@ -54,17 +50,7 @@ export default {
   border-left: none;
   color: #fff;
   }
-.logo{
-  width: 196px;
-  height: 29px;
-  float: left;
-  margin-top: 3px;
-  margin-left: 9px;
-}
-.logo img{
-  width: 100%;
-  height: 100%;
-}
+
 </style>
 
 

@@ -1,8 +1,8 @@
 <template>
-    <div class="layout">
-        <Layout>
-            <Sider ref="side1" hide-trigger collapsible :collapsed-width="48" v-model="isCollapsed">
-                <!-- <span class="log"><img src="../../assets/60.png" alt=""></span>                       -->
+   <div class="layout">
+        <Layout >
+            <Sider ref="side1" hide-trigger collapsible :collapsed-width="48" v-model="isCollapsed" style="background:transparent; min-width:48px;  max-width: 128px;">
+                <span class="log"><img src="../../assets/60.png" alt=""></span>                      
                 <Menu active-name="1-2" theme="dark" width="auto" :class="menuitemClasses">            
                     <router-link to="/mainpage/homepage">
                         <MenuItem name="1-1">
@@ -44,7 +44,7 @@
             </Sider>
             <Layout>
                 <Header :style="{padding: 0}" class="layout-header-bar">
-                    <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '8px 10px 0',color:'white',float:'left'}" type="navicon-round" size="20"></Icon>
+                    <Icon @click.native="collapsedSider" :class="rotateIcon" :style="{margin: '10px 10px 0',color:'white',float:'left'}" type="navicon-round" size="20"></Icon>
                     <div class="headers">
                         <span style="color:#fff;font-size:14px;">您好:<span style="color:white">{{userName}}</span>
                         <span ></span>
@@ -276,6 +276,9 @@ export default {
     }
     .rotate-icon{
         transform: rotate(-90deg);
+    }
+    .ivu-menu-dark{
+        background:transparent;
     }
     .menu-item span{
         display: inline-block;

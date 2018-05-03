@@ -576,6 +576,7 @@ export default {
 };
 </script>
 <style scoped>
+
 .whole {
   width: 100%;
   color: #e4e5e5;

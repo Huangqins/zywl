@@ -107,8 +107,10 @@
     border: 1px solid #CCC;
     /* color: white; */
 }
-.ivu-page .mini{
-padding-top: 3px;
+.ivu-page{
+    padding-top: 3px;
+    float: right;
+    margin-right: 20px;
 }
 a {
   color: #fff;
@@ -127,12 +129,11 @@ a {
 .ivu-page-item{
     background-color: transparent;
 }
-.ivu-select-selection{
-    /* background-color: transparent; */
-}
-.ivu-select-dropdown{
-    /* background-color: transparent; */
-}
+
 .ivu-page-options-elevator input{
     background-color: transparent;
+}
+.ivu-layout-sider{
+    min-width:128px;
+    max-width: 120px;
 }
