@@ -7,7 +7,7 @@
     </div>
     <div class="clear"></div>
     <div class="line">
-       <chart width="350" height="230" :option="linechart"  ref=""></chart>
+       <!--<chart width="350" height="230" :option="linechart"  ref="linechart"></chart>-->
     </div>
     <div class="holetable">
       <Row>
@@ -18,8 +18,13 @@
           <!--<Table :columns="taskInfoes" :data="taskInfoesList"></Table>-->
         </Col>
       </Row>
-      <Row>
-        <Col span="24"><page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width" height=120></page></Col>
+      <Row :gutter="16">
+        <Col span="12">
+          <page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width" height=120></page>
+        </Col>
+        <Col span="12">
+          <chart width="450" height="450" :option="linechart"  ref="linechart"></chart>
+        </Col>
       </Row>
     </div>
   </div>
@@ -177,7 +182,7 @@ export default {
       linechartdata: [],
       linechart: {
         title: {
-          text: "任务漏洞折线图",
+          text: "任务执行阶段图",
           textStyle: {
             color: "#E4E5E5"
           }
@@ -202,37 +207,18 @@ export default {
           }
         },
         xAxis: {
-          type: "time",
-          splitLine: {
-            show: false
-          },
-          axisLine: {
-            lineStyle: {
-              color: "#E4E5E5"
-            }
-          }
+          type: 'category',
+          boundaryGap: false,
+          data: []
         },
         yAxis: {
-          type: "value",
-          boundaryGap: [0, "100%"],
-          splitLine: {
-            show: false
-          },
-          axisLine: {
-            lineStyle: {
-              color: "white"
-            }
-          }
+          type: 'value'
         },
-        series: [
-          {
-            name: "模拟数据",
-            type: "line",
-            showSymbol: false,
-            hoverAnimation: false,
-            linechartdata: []
-          }
-        ]
+        series: [{
+          data: [],
+          type: 'line',
+          areaStyle: {}
+        }]
       },
       //任务完成率
       option: {
@@ -321,7 +307,7 @@ export default {
   },
 
   created() {
-    // this._targetProgress();this._targetNum();this._targetLesk();this._urlUseRate()
+    this._targetProgress();this._targetNum();this._targetLesk();this._urlUseRate()
     this.timer = setInterval(() => {
       this._targetProgress();this._targetNum();this._targetLesk();this._urlUseRate()
     },5000)
@@ -338,9 +324,16 @@ export default {
       const params = { target_id: this.$route.query.target_id}
       targetProgress(params).then(res => {
         if(res.result === 0) {
-          this.option.series[0].data[0].value = Number(
-            res.target.target_scaning
-          ).toFixed(2);
+          let scaning = Number(res.target.target_scaning).toFixed(2);
+          this.option.series[0].data[0].value = scaning;
+          let temp = [];
+          for (let i = 1; i <= scaning; i++) {
+            temp.push(i)
+          };
+          //进度纵坐标
+          this.linechart.series[0].data = temp;
+          this.linechart.xAxis.data = res.target.target_rftime.split(',');
+          this.$refs.linechart.refresh();
           this.$refs.completionRate.refresh();
         } else {
           this.option.series[0].data[0].value = 0
