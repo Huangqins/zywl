@@ -2,15 +2,26 @@
   <div>
         <div class="timeAxis">
           <div class="taskSchedule">
+            
             <section>
-              <chart width="235" height="235" :option="options" ref="chartOne"></chart>
+              <span class="high">高风险</span>
+              <div class="Num red">{{high}}</div>
+            </section>
+              <!-- <chart width="235" height="235" :option="options" ref="chartOne"></chart> -->
+
+            
+            
+              <!-- <chart width="235" height="235" :option="optionTwo" id="optionTwo" ref="chartTwo"></chart> -->
+            <section>
+              <span class="middle">中风险</span>
+              <div class="Num yell">121</div>
             </section>
             <section>
-              <chart width="235" height="235" :option="optionTwo" id="optionTwo" ref="chartTwo"></chart>
+              <span class="low">低风险</span>
+              <div class="Num blu">121</div>
             </section>
-            <section>
-              <chart width="235" height="235" :option="optionThree" id="optionThree" ref="chartThree"></chart>
-            </section>     
+              <!-- <chart width="235" height="235" :option="optionThree" id="optionThree" ref="chartThree"></chart> -->
+                 
           </div>
         </div>
         <div class="clear"></div>
@@ -76,6 +87,7 @@ export default {
   data() {
     return {
       taskID: "",
+      high:"",
       option: {
         tooltip: {
           formatter: "{a} <br/>{b} : {c}%"
@@ -231,7 +243,7 @@ export default {
         if (res.result === 0) {
           res.vulns.forEach(item => {
             if (item.vuln_level === '1') {
-              this.option.series[0].data[0].value = item.vuln_total;
+              this.high = item.vuln_total;
               this.$refs.chartOne.refresh();
             } else if (item.vuln_level === '2') {
               this.optionTwo.series[0].data[0].value = item.vuln_total;
@@ -292,13 +304,52 @@ export default {
   height: auto;
   float: right;
 }
+.taskSchedule{
+  display: flex;
+  flex-direction: row;
+  color: seashell;
+}
 .taskSchedule section{
-  width: 30%;
-  padding-left: 60px;
+  flex: 1;
+  margin:20px 160px;
+  border: 1px solid #e4e5e5;
+  border-radius: 4px;
+  height: 100px;
+  line-height: 98px;
+  font-size: 16px;
+  text-align: center;
+  
+}
+.taskSchedule span{
+  display:block;
+  width: 36%;
+  text-align: center;  
+  height: 100%;
   float: left;
 }
-.taskSchedule div {
-  float: left;
+.high{
+   background: red;
+}
+.Num{
+  width: 64%;  
+  float: right; 
+  font-size: 26px;
+  font-weight: 700; 
+}
+.middle{
+  background: #FFD572;
+}
+.low{
+  background: #95DCF2;
+}
+.red{
+  color:red;
+}
+.yell{
+  color:  #FFD572;
+}
+.blu{
+  color: #95DCF2;
 }
 .clear {
   clear: both;
