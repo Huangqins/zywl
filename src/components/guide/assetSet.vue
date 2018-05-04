@@ -33,7 +33,7 @@ const strategy = { flag: 1 };
 const cycle = { flag: 2 };
 //添加任务验证
 const taskStatus = {
-  "0": "",
+  "0": "未完成",
   "1": "已完成",
   "-2": "失败"
 };
@@ -116,17 +116,17 @@ export default {
           align: "center",
           width: 250
         },
-        {
-          title: "扫描进度",
-          key: "target_scaning",
-          align: "center",
-          render: (h, params) => {
-            return h(
-              "span",
-              `${Number(params.row.target_scaning).toFixed(2)}%`
-            );
-          }
-        },
+        // {
+        //   title: "扫描进度",
+        //   key: "target_scaning",
+        //   align: "center",
+        //   render: (h, params) => {
+        //     return h(
+        //       "span",
+        //       `${Number(params.row.target_scaning).toFixed(2)}%`
+        //     );
+        //   }
+        // },
         {
           title: "任务状态",
           key: "target_struts",
@@ -201,19 +201,6 @@ export default {
                   },
                   on: {
                     click: ev => {
-                      // if (params.row.export_url === "") {
-                      //   exportPDF(params.row).then(res => {
-                      //     if (res.result === 0) {
-                      //       ev.target.download = params.row.target_name;
-                      //       ev.target.href = location.origin + "/ZY" + res.path;
-                      //       ev.target.innerText = "下载";
-                      //     }
-                      //   });
-                      // } else {
-                      //   ev.target.download = params.row.target_name;
-                      //   ev.target.href =
-                      //     location.origin + "/ZY" + params.row.export_url;
-                      // }
                       if (params.row.export_url === "") {
                         this.$Modal.confirm({
                           title: "请输入报告名称",
