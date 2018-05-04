@@ -178,6 +178,7 @@ export default {
       }else{
         this.assetsList = res.rows;
         this.total = res.total;
+         this.loading = false;
       }
     },
     dataLoad(paramsObj) {

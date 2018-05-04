@@ -27,7 +27,7 @@
                   <Icon type="ios-loop-strong"></Icon>
               </a>
               <ul>
-                  <li v-for="(item,index) in movieList" :key="index">
+                  <li v-for="(item,index) in taskListItem" :key="index">
                       <a :href="item.url" target="_blank">{{ item.name }}</a>
                       <span>
                           <Icon type="ios-star" v-for="n in 4" :key="n"></Icon><Icon type="ios-star" v-if="item.rate >= 9.5"></Icon><Icon type="ios-star-half" v-else></Icon>
@@ -55,7 +55,7 @@
                   <Icon type="ios-loop-strong"></Icon>
               </a>
               <ul>
-                  <li v-for="(item,index) in movieList" :key="index">
+                  <li v-for="(item,index) in taskListItem" :key="index">
                       <a :href="item.url" target="_blank">{{ item.name }}</a>
                       <span>
                           <Icon type="ios-star" v-for="n in 4" :key="n"></Icon><Icon type="ios-star" v-if="item.rate >= 9.5"></Icon><Icon type="ios-star-half" v-else></Icon>
@@ -76,7 +76,7 @@ import page from "components/page/page";
 import { mapGetters } from "vuex";
 import timeLine from "api/timeLine";
 import leaksInfo from "api/leaksInfo";
-import targetProgress from  "api/targetProgress";
+import targetProgress from "api/targetProgress";
 import urlUseRate from "api/urlUseRate";
 
 let now = new Date();
@@ -106,33 +106,32 @@ export default {
   },
   data() {
     return {
-      movieList: [
-                    {
-                        name: 'The Shawshank Redemption',
-                        url: 'https://movie.douban.com/subject/1292052/',
-                        rate: 9.6
-                    },
-                    {
-                        name: 'Leon:The Professional',
-                        url: 'https://movie.douban.com/subject/1295644/',
-                        rate: 9.4
-                    },
-                    {
-                        name: 'Farewell to My Concubine',
-                        url: 'https://movie.douban.com/subject/1291546/',
-                        rate: 9.5
-                    },
-                    {
-                        name: 'Forrest Gump',
-                        url: 'https://movie.douban.com/subject/1292720/',
-                        rate: 9.4
-                    },
-                    
-                ],
-      formCustom:{},
+      taskListItem: [
+        {
+          name: "The Shawshank Redemption",
+          url: "https://movie.douban.com/subject/1292052/",
+          rate: 9.6
+        },
+        {
+          name: "Leon:The Professional",
+          url: "https://movie.douban.com/subject/1295644/",
+          rate: 9.4
+        },
+        {
+          name: "Farewell to My Concubine",
+          url: "https://movie.douban.com/subject/1291546/",
+          rate: 9.5
+        },
+        {
+          name: "Forrest Gump",
+          url: "https://movie.douban.com/subject/1292720/",
+          rate: 9.4
+        }
+      ],
+      formCustom: {},
       target_name: "",
       id: "",
-      href:'',
+      href: "",
       width: "800px",
       loading: false,
       assetsList: [],
@@ -142,76 +141,76 @@ export default {
         rows: 10,
         page: 1
       },
-      taskInfos:[
+      taskInfos: [
         {
-          title: '任务名称',
-          key: 'name'
+          title: "任务名称",
+          key: "name"
         },
         {
-          title: '任务状态',
-          key: 'age'
+          title: "任务状态",
+          key: "age"
         },
         {
-          title: '开始时间',
-          key: 'date'
+          title: "开始时间",
+          key: "date"
         },
         {
-          title: '结束时间',
-          key: 'date'
+          title: "结束时间",
+          key: "date"
         }
       ],
       taskInfoes: [
         {
-          title: 'url',
-          key: 'name'
+          title: "url",
+          key: "name"
         },
         {
-          title: '利用时间',
-          key: 'date'
+          title: "利用时间",
+          key: "date"
         }
       ],
       taskInfoesList: [
         {
-          name: 'John Brown',
-          date: '2016-10-03'
+          name: "John Brown",
+          date: "2016-10-03"
         },
         {
-          name: 'John Brown',
-          date: '2016-10-03'
+          name: "John Brown",
+          date: "2016-10-03"
         },
         {
-          name: 'John Brown',
-          date: '2016-10-03'
+          name: "John Brown",
+          date: "2016-10-03"
         },
         {
-          name: 'John Brown',
-          date: '2016-10-03'
+          name: "John Brown",
+          date: "2016-10-03"
         }
       ],
       taskInfosList: [
         {
-          name: 'John Brown',
+          name: "John Brown",
           age: 18,
-          address: 'New York No. 1 Lake Park',
-          date: '2016-10-03'
+          address: "New York No. 1 Lake Park",
+          date: "2016-10-03"
         },
         {
-          name: 'Jim Green',
+          name: "Jim Green",
           age: 24,
-          address: 'London No. 1 Lake Park',
-          date: '2016-10-01'
+          address: "London No. 1 Lake Park",
+          date: "2016-10-01"
         },
         {
-          name: 'Joe Black',
+          name: "Joe Black",
           age: 30,
-          address: 'Sydney No. 1 Lake Park',
-          date: '2016-10-02'
+          address: "Sydney No. 1 Lake Park",
+          date: "2016-10-02"
         },
         {
-          name: 'Jon Snow',
+          name: "Jon Snow",
           age: 26,
-          address: 'Ottawa No. 2 Lake Park',
-          date: '2016-10-04'
+          address: "Ottawa No. 2 Lake Park",
+          date: "2016-10-04"
         }
       ],
       assetsColums: [
@@ -248,7 +247,7 @@ export default {
         title: {
           text: "任务执行阶段图",
           textStyle: {
-            color: "#E4E5E5",
+            color: "#E4E5E5"
           }
         },
         tooltip: {
@@ -271,7 +270,7 @@ export default {
           }
         },
         xAxis: {
-          type: 'category',
+          type: "category",
           boundaryGap: false,
           data: [],
           axisLabel: {
@@ -279,21 +278,22 @@ export default {
               color: "#CCCCCC"
             }
           }
-          
         },
         yAxis: {
-          type: 'value',
+          type: "value",
           axisLabel: {
             textStyle: {
               color: "#CCCCCC"
             }
           }
         },
-        series: [{
-          data: [],
-          type: 'line',
-          areaStyle: {}
-        }]
+        series: [
+          {
+            data: [],
+            type: "line",
+            areaStyle: {}
+          }
+        ]
       },
       //任务完成率
       option: {
@@ -375,46 +375,52 @@ export default {
   },
 
   created() {
-    this._targetProgress();this._targetNum();this._targetLesk();this._urlUseRate()
+    this._targetProgress();
+    this._targetNum();
+    this._targetLesk();
+    this._urlUseRate();
     this.timer = setInterval(() => {
-      this._targetProgress();this._targetNum();this._targetLesk();this._urlUseRate()
-    },5000)
+      this._targetProgress();
+      this._targetNum();
+      this._targetLesk();
+      this._urlUseRate();
+    }, 5000);
   },
   methods: {
     dataLoad(paramsObj) {
       const params = Object.assign({}, this.defaultPage, paramsObj);
     },
-  /**
-   * 任务执行进度
-   * params: target_id 来源$route.query.target_id
-   */
-   _targetProgress() {
-      const params = { target_id: this.$route.query.target_id}
+    /**
+     * 任务执行进度
+     * params: target_id 来源$route.query.target_id
+     */
+    _targetProgress() {
+      const params = { target_id: this.$route.query.target_id };
       targetProgress(params).then(res => {
-        if(res.result === 0) {
+        if (res.result === 0) {
           let scaning = Number(res.target.target_scaning).toFixed(2);
           this.option.series[0].data[0].value = scaning;
           let temp = [];
           for (let i = 1; i <= scaning; i++) {
-            temp.push(i)
-          };
+            temp.push(i);
+          }
           //进度纵坐标
           this.linechart.series[0].data = temp;
-          this.linechart.xAxis.data = res.target.target_rftime.split(',');
+          this.linechart.xAxis.data = res.target.target_rftime.split(",");
           this.$refs.linechart.refresh();
           this.$refs.completionRate.refresh();
         } else {
-          this.option.series[0].data[0].value = 0
+          this.option.series[0].data[0].value = 0;
           this.$refs.completionRate.refresh();
         }
-      })
-  },
+      });
+    },
     /*
     * 任务漏洞数量
     * params: taskID 来源$route.query.target_id
     * */
     _targetNum() {
-      const  params = { target_id: this.$route.query.target_id}
+      const params = { target_id: this.$route.query.target_id };
       timeLine(params).then(res => {
         if (res.result === 0) {
           this.optipnTwo.series[0].data[0].value = res.vulnNum;
@@ -423,26 +429,26 @@ export default {
           this.optipnTwo.series[0].data[0].value = 0;
           this.$refs.taskholeNum.refresh();
         }
-      })
+      });
     },
-  /*
+    /*
   * 资产风险检测列表
   * params: targetId 来源$route.query.target_id
   * */
-  _targetLesk() {
-    const  params = { targetId: this.$route.query.target_id}
-    leaksInfo(params).then(res => {
-      if (res.result === 0) {
-        this.assetsList = res.rows;
-      }
-    })
-  },
+    _targetLesk() {
+      const params = { targetId: this.$route.query.target_id };
+      leaksInfo(params).then(res => {
+        if (res.result === 0) {
+          this.assetsList = res.rows;
+        }
+      });
+    },
     /**
      * 漏洞利用率
      * params:
      */
     _urlUseRate() {
-      const  params = { target_id: this.$route.query.target_id }
+      const params = { target_id: this.$route.query.target_id };
       urlUseRate(params).then(res => {
         if (res.result === 0) {
           this.optionthree.series[0].data[0].value = res.rate;
@@ -451,7 +457,7 @@ export default {
           this.optionthree.series[0].data[0].value = 0;
           this.$refs.holeUtilization.refresh();
         }
-      })
+      });
     }
   },
   destroyed() {
@@ -460,25 +466,25 @@ export default {
 };
 </script>
 <style scoped>
-.ivu-card-head{
-  padding:6px 16px;
+.ivu-card-head {
+  padding: 6px 16px;
 }
-.ivu-card-extra{
-  top:7px;
+.ivu-card-extra {
+  top: 7px;
 }
-.ivu-card-body ul li span{
+.ivu-card-body ul li span {
   float: right;
 }
-.ivu-card-head p{
+.ivu-card-head p {
   color: white;
 }
-.ivu-card{
+.ivu-card {
   background: transparent;
 }
-.ivu-card-body ul li{
+.ivu-card-body ul li {
   list-style: none;
 }
-.ivu-input{
+.ivu-input {
   text-align: right;
 }
 .taskSchedule {
@@ -486,17 +492,17 @@ export default {
   display: flex;
   flex-direction: row;
   color: seashell;
+  justify-content: space-around;
 }
-.taskSchedule section{
+.taskSchedule section {
   flex: 1;
-  margin:20px 160px;
+  /* margin:20px 160px; */
   /* border: 1px solid #e4e5e5;
   border-radius: 4px;
   height: 100px;
   line-height: 98px;
   font-size: 16px;
   text-align: center; */
-  
 }
 .line {
   width: 100%;
