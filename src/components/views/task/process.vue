@@ -488,13 +488,6 @@ export default {
 }
 .taskSchedule section {
   flex: 1;
-  /* margin:20px 160px; */
-  /* border: 1px solid #e4e5e5;
-  border-radius: 4px;
-  height: 100px;
-  line-height: 98px;
-  font-size: 16px;
-  text-align: center; */
 }
 .secTwo {
   width: 100%;

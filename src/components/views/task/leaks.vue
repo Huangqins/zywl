@@ -1,6 +1,6 @@
 <template>
   <div>
-          <div class="taskSchedule">
+          <div class="leaks">
             
             <section>
               <span class="high">高风险</span>
@@ -22,7 +22,7 @@
               <!-- <chart width="235" height="235" :option="optionThree" id="optionThree" ref="chartThree"></chart> -->
                  
           </div>
-       <div class="secTwo">
+       <div class="leaksTwo">
           <section></section>
           <section></section>
           <section></section>
@@ -306,12 +306,12 @@ export default {
   height: auto;
   float: right;
 }
-.taskSchedule{
+.leaks{
   display: flex;
   flex-direction: row;
   color: seashell;
 }
-.taskSchedule section{
+.leaks section{
   flex: 1;
   margin:20px 160px;
   border: 1px solid #e4e5e5;
@@ -322,18 +322,18 @@ export default {
   text-align: center;
   
 }
-.taskSchedule span{
+.leaks span{
   display:block;
   width: 36%;
   text-align: center;  
   height: 100%;
   float: left;
 }
-.secTwo {
+.leaksTwo {
   display: flex;
   flex-direction: row;
 }
-.secTwo section{
+.leaksTwo section{
   flex: 1;
   margin:40px 160px;
   height: 200px;
