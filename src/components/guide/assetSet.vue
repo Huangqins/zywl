@@ -179,8 +179,8 @@ export default {
                 {
                   attrs: {
                     type: "application/pdf",
-                    href:  location.origin + "/ZY" + params.row.export_url,
-                    download: params.row.pdf_name
+                    href:  params.row.export_url? location.origin + "/ZY" + params.row.export_url : null,
+                    download: params.row.pdf_name ? params.row.pdf_name : false
                   },
                   style: {
                     backgroundColor: "#19be6b",
@@ -198,8 +198,6 @@ export default {
                     color: "#fff",
                     padding: "2px 7px",
                     borderRadius: "3px"
-                    // lineHeight: '24px',
-                    // height: '24px'
                   },
                   on: {
                     click: ev => {
@@ -234,14 +232,12 @@ export default {
                             });
                           },
                           onOk: () => {
-                            console.log("111");
                             exportPDF({
                               target_id: params.row.target_id,
                               target_name: this.fileName
                             }).then(res => {
                               if (res.result === 0) {
-                                ev.target.href =
-                                  location.origin + "/ZY" + res.path;
+                                this._taskList(this.params);
                                 ev.target.innerText = "下载";
                               } else {
                                 ev.target.innerText = "生成";
