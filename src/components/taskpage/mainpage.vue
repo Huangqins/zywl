@@ -141,8 +141,10 @@ export default {
                   setTimeout(() => {
                     Modal.remove();
                     router.push({
-                      path: "/mainpage/process",
-                      query: { target_id: taskId }
+                      // path: "/mainpage/process",
+                      // query: { target_id: taskId }
+                      name: 'process',
+                      params: { target_id:  taskId,  targetInfo:  res.targets[0]}
                     });
                   }, 2000);
                 }

@@ -22,14 +22,11 @@
                   <Icon type="ios-film-outline"></Icon>
                   风险信息
               </p>
-              <a href="#" slot="extra" @click.prevent="changeLimit">
-                  <Icon type="ios-loop-strong"></Icon>
-              </a>
               <ul>
                   <li v-for="(item,index) in taskListItem" :key="index">
-                      {{ item.target_name }}
+                      {{ item.target_info_name }}
                       <span>
-                          {{ item.rate }}
+                          {{ item.target_info_des }}
                       </span>
                   </li>
               </ul>
@@ -46,9 +43,6 @@
                   <Icon type="ios-film-outline"></Icon>
                  发现主机
               </p>
-              <a href="#" slot="extra" @click.prevent="changeLimit">
-                  <Icon type="ios-loop-strong"></Icon>
-              </a>
               <ul>
                   <li v-for="(item,index) in taskListItem" :key="index">
                      {{ item.name }}
@@ -80,6 +74,7 @@ import timeLine from "api/timeLine";
 import leaksInfo from "api/leaksInfo";
 import targetProgress from "api/targetProgress";
 import urlUseRate from "api/urlUseRate";
+import fomatterTime from "@/utils/tool";
 
 let now = new Date();
 let year = now.getFullYear();
@@ -110,9 +105,24 @@ export default {
     return {
       taskListItem: [
         {
-          target_name: "",
-          target_createtime: 0,
-          target_endtime: 0
+          target_info_key: "target_name",
+          target_info_name: "任务名称",
+          target_info_des: 0
+        },
+        {
+          target_info_key: "target_scaning",
+          target_info_name: "任务执行进度",
+          target_info_des: 2
+        },
+        {
+          target_info_key: "target_startTime",
+          target_info_name: "开始时间",
+          target_info_des: 4
+        },
+        {
+          target_info_key: "target_endTime",
+          target_info_name: "结束时间",
+          target_info_des: 4
         }
       ],
       formCustom: {},
@@ -273,8 +283,8 @@ export default {
             name: "业务指标",
             type: "gauge",
             radius: "85%",
-            detail: { formatter: "{value}%", fontSize: 20 },
-            data: [{ value: 0, name: "完成率" }],
+            detail: { formatter: "{value}", fontSize: 20 },
+            data: [{ value: 0, name: "执行阶段" }],
             title: { color: "#E4E5E5", fontSize: 12 },
             splitLine: { show: false },
             axisTick: { show: false },
@@ -341,8 +351,18 @@ export default {
   computed: {
     ...mapGetters(["userName"])
   },
-
   created() {
+    console.log(this.$route);
+    let taskInfo = this.$route.params.targetInfo;
+    taskInfo.target_startTime = fomatterTime(
+      new Date(taskInfo.target_starttime.time)
+    );
+    taskInfo.target_endTime = taskInfo.target_endtime
+      ? fomatterTime(new Date(taskInfo.target_endtime.time))
+      : "";
+    this.taskListItem.forEach(item => {
+      item.target_info_des = taskInfo[item.target_info_key];
+    });
     this._targetProgress();
     this._targetNum();
     this._targetLesk();
@@ -366,7 +386,11 @@ export default {
       const params = { target_id: this.$route.params.target_id };
       targetProgress(params).then(res => {
         if (res.result === 0) {
-          let scaning = Number(res.target.target_scaning).toFixed(2);
+          let scaning = res.target.target_scaning;
+          // console.log(scaning)
+          if (scaning == "10") {
+            clearInterval(this.timer);
+          }
           this.option.series[0].data[0].value = scaning;
           let temp = [];
           for (let i = 1; i <= scaning; i++) {
