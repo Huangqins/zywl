@@ -1,6 +1,5 @@
 <template>
   <div>
-        <div class="timeAxis">
           <div class="taskSchedule">
             
             <section>
@@ -23,8 +22,11 @@
               <!-- <chart width="235" height="235" :option="optionThree" id="optionThree" ref="chartThree"></chart> -->
                  
           </div>
-        </div>
-        <div class="clear"></div>
+       <div class="secTwo">
+          <section></section>
+          <section></section>
+          <section></section>
+       </div>
         <div class="list">
             <page :columns="leaksColums" :data="leaksList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" ></page>
         </div>
@@ -326,6 +328,16 @@ export default {
   text-align: center;  
   height: 100%;
   float: left;
+}
+.secTwo {
+  display: flex;
+  flex-direction: row;
+}
+.secTwo section{
+  flex: 1;
+  margin:40px 160px;
+  height: 200px;
+  background: #ccc;
 }
 .high{
    background: red;
