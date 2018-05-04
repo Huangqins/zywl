@@ -33,7 +33,7 @@ const strategy = { flag: 1 };
 const cycle = { flag: 2 };
 //添加任务验证
 const taskStatus = {
-  "0": "未完成",
+  "0": "进行中",
   "1": "已完成",
   "-2": "失败"
 };
