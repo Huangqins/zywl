@@ -164,7 +164,7 @@ export default {
         },
         {
           title: "报告名称",
-          key: "target_reportname",
+          key: "pdf_name",
           align: "center"
         },
         {
@@ -215,7 +215,7 @@ export default {
                       // }
                       if (params.row.export_url === "") {
                         this.$Modal.confirm({
-                          title: "请输入您要命名的文件名",
+                          title: "请输入报告名称",
                           render: h => {
                             return h("Input", {
                               props: {

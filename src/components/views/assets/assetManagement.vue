@@ -216,7 +216,6 @@ export default {
       kb_vuln_anly: ""
     });
     temp.forEach(item => {
-      console.log(item);
       item.type = "div";
     });
     this.formatCopy = temp;
