@@ -31,11 +31,11 @@ import getAssetURL from "api/getAssetURL";
 const strategy = { flag: 1 };
 const cycle = { flag: 2 };
 //添加任务验证
-const taskStatus  = {
-  '0' : '',
-  '1' : '已完成',
-  '-2': '失败'
-}
+const taskStatus = {
+  "0": "",
+  "1": "已完成",
+  "-2": "失败"
+};
 
 export default {
   components: {
@@ -43,27 +43,28 @@ export default {
     Modals
   },
   watch: {
-    'data.target_url'(val) {
-      this.data.target_ip = this.urlIpMap[val]
+    "data.target_url"(val) {
+      this.data.target_ip = this.urlIpMap[val];
     }
   },
   data() {
     const addUrlValidate = (rule, value, callback) => {
-      if(!value && !this.data.target_ip) {
-        callback(new Error('url或者ip请至少填写一项'));
+      if (!value && !this.data.target_ip) {
+        callback(new Error("url或者ip请至少填写一项"));
       } else {
-        callback()
+        callback();
       }
     };
 
     const addIpValidate = (rule, value, callback) => {
-      if(!value && !this.data.target_url) {
-        callback(new Error('url或者ip请至少填写一项'));
+      if (!value && !this.data.target_url) {
+        callback(new Error("url或者ip请至少填写一项"));
       } else {
-        callback()
+        callback();
       }
     };
     return {
+      fileName: "",
       href: "",
       pageLoading: false,
       loading: false,
@@ -83,8 +84,8 @@ export default {
           prop: "target_cycle",
           option: []
         },
-        { label: "资产url", type: "select", prop: "target_url",option: []},
-        { label: "资产ip", type: "select", prop: "target_ip", option: []}
+        { label: "资产url", type: "select", prop: "target_url", option: [] },
+        { label: "资产ip", type: "select", prop: "target_ip", option: [] }
       ],
       data: {
         target_name: "",
@@ -103,12 +104,8 @@ export default {
             trigger: "blur"
           }
         ],
-        target_url: [
-          { validator: addUrlValidate, trigger: 'change' }
-        ],
-        target_ip: [
-          { validator: addIpValidate, trigger: 'change' }
-        ]
+        target_url: [{ validator: addUrlValidate, trigger: "change" }],
+        target_ip: [{ validator: addIpValidate, trigger: "change" }]
       },
       value: "",
       tasks: [
@@ -116,7 +113,7 @@ export default {
           title: "任务名称",
           key: "target_name",
           align: "center",
-          width: 250,
+          width: 250
         },
         {
           title: "扫描进度",
@@ -133,11 +130,8 @@ export default {
           title: "任务状态",
           key: "target_struts",
           align: "center",
-          render: (h ,params) => {
-            return h(
-              "span",
-              taskStatus[params.row.target_struts]
-            )
+          render: (h, params) => {
+            return h("span", taskStatus[params.row.target_struts]);
           }
         },
         {
@@ -162,12 +156,9 @@ export default {
               return h(
                 "span",
                 fomatterTime(new Date(params.row.target_endtime.time))
-              )
+              );
             } else {
-              return h(
-                "span",
-                ''
-              )
+              return h("span", "");
             }
           }
         },
@@ -182,86 +173,111 @@ export default {
           width: 150,
           render: (h, params) => {
             return h("div", [
-              
               h(
                 "a",
                 {
                   attrs: {
-                    type: 'application/pdf'
+                    type: "application/pdf"
                   },
                   style: {
-                    backgroundColor: '#19be6b',
-                    display: 'inline-block',
-                    marginBottom: '0',
-                    fontWeight: '400',
-                    textAlign: 'center',
-                    verticalAlign: 'middle',
-                    touchAction: 'manipulation',
-                    cursor: 'pointer',
-                    backgroundImage: 'none',
-                    border: '1px solid transparent',
-                    whiteSpace: 'nowrap',
-                    lineHeight: '1.5',
-                    color: '#fff',
-                    padding: '2px 7px',
-                    borderRadius:'3px'
+                    backgroundColor: "#19be6b",
+                    display: "inline-block",
+                    marginBottom: "0",
+                    fontWeight: "400",
+                    textAlign: "center",
+                    verticalAlign: "middle",
+                    touchAction: "manipulation",
+                    cursor: "pointer",
+                    backgroundImage: "none",
+                    border: "1px solid transparent",
+                    whiteSpace: "nowrap",
+                    lineHeight: "1.5",
+                    color: "#fff",
+                    padding: "2px 7px",
+                    borderRadius: "3px"
                     // lineHeight: '24px',
                     // height: '24px'
                   },
                   on: {
                     click: ev => {
+                      // if (params.row.export_url === "") {
+                      //   exportPDF(params.row).then(res => {
+                      //     if (res.result === 0) {
+                      //       ev.target.download = params.row.target_name;
+                      //       ev.target.href = location.origin + "/ZY" + res.path;
+                      //       ev.target.innerText = "下载";
+                      //     }
+                      //   });
+                      // } else {
+                      //   ev.target.download = params.row.target_name;
+                      //   ev.target.href =
+                      //     location.origin + "/ZY" + params.row.export_url;
+                      // }
                       if (params.row.export_url === "") {
-                        exportPDF(params.row).then(res => {
-                          if (res.result === 0) {
-                            ev.target.download = params.row.target_name;
-                            ev.target.href = location.origin + "/ZY" + res.path;
-                            ev.target.innerText = "下载";
+                        this.$Modal.confirm({
+                          title: "请输入您要命名的文件名",
+                          render: h => {
+                            return h("Input", {
+                              props: {
+                                value: this.fileName,
+                                autofocus: true,
+                                placeholder: "请输入文件名"
+                              },
+                              on: {
+                                input: val => {
+                                  this.fileName = val;
+                                }
+                              }
+                            });
+                          },
+                          onOk: () => {
+                            exportPDF({ target_id: params.row.target_id,target_name:  this.fileName}).then(res => {
+                              if (res.result === 0) {
+                                  ev.target.href = location.origin + "/ZY" + res.path;
+                                  ev.target.innerText = "下载";
+                              } else {
+                                ev.target.innerText = "生成";
+                              }
+                            })
                           }
                         });
-                      } else {
-                        ev.target.download = params.row.target_name;
-                        ev.target.href =
-                          location.origin + "/ZY" + params.row.export_url;
                       }
                     }
                   }
                 },
                 params.row.export_url === "" ? "生成" : "下载"
               ),
-              h(
-                "Button",
-                {
-                  props: {
-                    type: "primary",
-                    size: "small",
-                    icon:"search"
-                  },
-                  style: {
-                    marginLeft: "5px"
-                  },
-                  on: {
-                    click: () => {
-                      this.$router.push({ path: '/mainpage/process', query: { target_id:params.row.target_id}})
-                    }
+              h("Button", {
+                props: {
+                  type: "primary",
+                  size: "small",
+                  icon: "search"
+                },
+                style: {
+                  marginLeft: "5px"
+                },
+                on: {
+                  click: () => {
+                    this.$router.push({
+                      path: "/mainpage/process",
+                      query: { target_id: params.row.target_id }
+                    });
                   }
                 }
-              ),
-              h(
-                "Button",
-                {
-                  props: {
-                    type: "error",
-                    size: "small",
-                    icon:"trash-a"
-                  },
-                  style: {
-                    marginLeft: "5px"
-                  },
-                  on: {
-                    click: () => {}
-                  }
+              }),
+              h("Button", {
+                props: {
+                  type: "error",
+                  size: "small",
+                  icon: "trash-a"
+                },
+                style: {
+                  marginLeft: "5px"
+                },
+                on: {
+                  click: () => {}
                 }
-              )
+              })
             ]);
           }
         }
@@ -275,7 +291,7 @@ export default {
       },
       dataTotal: 0,
       params: {},
-      urlIpMap:{}
+      urlIpMap: {}
     };
   },
   created() {
@@ -318,8 +334,8 @@ export default {
           this._taskList(this.params);
         } else if (res.result === 2) {
           this.$Message.error({
-            content: '资产填写有误或资产不存在'
-          })
+            content: "资产填写有误或资产不存在"
+          });
           this.loading = false;
         } else {
           this.loading = false;
@@ -373,25 +389,24 @@ export default {
     //   console.log(data)
     //   this.$router.push({ path: '/taskexecution/process', query: { target_id:data.row.target_id}})
     // },
-  /**
-   * 资产添加列表url/ip下拉数据
-   *
-   */
+    /**
+     * 资产添加列表url/ip下拉数据
+     *
+     */
     _getAssetURL() {
-      const params = { username: getUserName() }
-    getAssetURL(params).then(res => {
-      this.urlIpMap = {}
-      this.format[4].option = res.lists.map(item => {
-        this.urlIpMap[item.assets_url] = item.assets_ip
-        return { value: item.assets_url, name: item.assets_url };
-      })
-      this.format[5].option = res.lists.map(item => {
-        return { value: item.assets_ip, name: item.assets_ip };
-      })
-    })
+      const params = { username: getUserName() };
+      getAssetURL(params).then(res => {
+        this.urlIpMap = {};
+        this.format[4].option = res.lists.map(item => {
+          this.urlIpMap[item.assets_url] = item.assets_ip;
+          return { value: item.assets_url, name: item.assets_url };
+        });
+        this.format[5].option = res.lists.map(item => {
+          return { value: item.assets_ip, name: item.assets_ip };
+        });
+      });
+    }
   }
-
-}
 };
 </script>
 <style scoped>
@@ -408,7 +423,6 @@ export default {
   width: 100%;
   height: auto;
   padding: 25px;
-  background: rgba(25, 38, 48,0.1);
+  background: rgba(25, 38, 48, 0.1);
 }
-
 </style>

@@ -1,7 +1,7 @@
 <template>
    <div class="layout">
         <Layout >
-            <Sider ref="side1" hide-trigger collapsible :collapsed-width="48" v-model="isCollapsed" style="background:transparent; min-width:48px;  max-width: 100px;">
+            <Sider ref="side1" hide-trigger collapsible :collapsed-width="48" v-model="isCollapsed" style="background:transparent; min-width:48px;  max-width: 103px;">
                 <span class="log"><img src="../../assets/60.png" alt=""></span>                      
                 <Menu active-name="1-2" theme="dark" width="auto" :class="menuitemClasses">            
                     <router-link to="/mainpage/homepage">
@@ -314,7 +314,6 @@ export default {
         font-size: 22px;
     }
     .headers {
-        
         width: 100%;
         /* background-color: rgba(65, 67, 79); */
         height: 36px;
