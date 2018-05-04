@@ -21,16 +21,15 @@
             <Card style="width:600px;margin-bottom:20px;">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
-                  任务信息
+                  风险信息
               </p>
               <a href="#" slot="extra" @click.prevent="changeLimit">
                   <Icon type="ios-loop-strong"></Icon>
               </a>
               <ul>
                   <li v-for="(item,index) in taskListItem" :key="index">
-                      <a :href="item.url" target="_blank">{{ item.name }}</a>
+                      {{ item.name }}
                       <span>
-                          <Icon type="ios-star" v-for="n in 4" :key="n"></Icon><Icon type="ios-star" v-if="item.rate >= 9.5"></Icon><Icon type="ios-star-half" v-else></Icon>
                           {{ item.rate }}
                       </span>
                   </li>
@@ -56,9 +55,8 @@
               </a>
               <ul>
                   <li v-for="(item,index) in taskListItem" :key="index">
-                      <a :href="item.url" target="_blank">{{ item.name }}</a>
+                     {{ item.name }}
                       <span>
-                          <Icon type="ios-star" v-for="n in 4" :key="n"></Icon><Icon type="ios-star" v-if="item.rate >= 9.5"></Icon><Icon type="ios-star-half" v-else></Icon>
                           {{ item.rate }}
                       </span>
                   </li>
