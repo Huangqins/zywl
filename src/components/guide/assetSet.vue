@@ -171,11 +171,11 @@ export default {
             }
           }
         },
-        // {
-        //   title: "创建人",
-        //   key: "target_tast_oper",
-        //   align: "center"
-        // },
+        {
+          title: "报告名称",
+          key: "target_reportname",
+          align: "center"
+        },
         {
           title: "操作",
           align: "center",
