@@ -27,6 +27,7 @@ import Modals from "components/Modal/modal";
 import taskList from "api/taskList";
 import exportPDF from "api/exportPDF";
 import getAssetURL from "api/getAssetURL";
+import deleteTask from "api/deleteTask";
 
 const strategy = { flag: 1 };
 const cycle = { flag: 2 };
@@ -177,7 +178,9 @@ export default {
                 "a",
                 {
                   attrs: {
-                    type: "application/pdf"
+                    type: "application/pdf",
+                    href:  location.origin + "/ZY" + params.row.export_url,
+                    download: params.row.pdf_name
                   },
                   style: {
                     backgroundColor: "#19be6b",
@@ -231,14 +234,19 @@ export default {
                             });
                           },
                           onOk: () => {
-                            exportPDF({ target_id: params.row.target_id,target_name:  this.fileName}).then(res => {
+                            console.log("111");
+                            exportPDF({
+                              target_id: params.row.target_id,
+                              target_name: this.fileName
+                            }).then(res => {
                               if (res.result === 0) {
-                                  ev.target.href = location.origin + "/ZY" + res.path;
-                                  ev.target.innerText = "下载";
+                                ev.target.href =
+                                  location.origin + "/ZY" + res.path;
+                                ev.target.innerText = "下载";
                               } else {
                                 ev.target.innerText = "生成";
                               }
-                            })
+                            });
                           }
                         });
                       }
@@ -275,7 +283,9 @@ export default {
                   marginLeft: "5px"
                 },
                 on: {
-                  click: () => {}
+                  click: () => {
+                    this.taskDelete(params.row)
+                  }
                 }
               })
             ]);
@@ -320,7 +330,16 @@ export default {
     taskAdd() {
       this.$refs.formValidate.open();
     },
-    taskDelete() {},
+    taskDelete(params) {
+      deleteTask(params).then(res => {
+        if (res.result === 0) {
+          // this.$Message(`删除成功`)
+          this._taskList(this.params);
+        } else {
+          // this.$Message(`删除失败`)
+        }
+      })
+    },
     //提交
     asyncOK(data) {
       this.data.userName = getUserName();

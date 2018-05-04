@@ -68,6 +68,7 @@
 import assetAdd from "api/assetAdd";
 import { mapGetters } from "vuex";
 import message from "utils/message";
+
 const host =
   process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
 // const host = process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
@@ -92,7 +93,7 @@ export default {
     };
     return {
       href: href,
-      uploadUrl: location.origin+ '/ZY/asset/assetsImport',
+      uploadUrl: location.origin + "/ZY/asset/assetsImport",
       password: "",
       handAddForm: {
         assets_name: "",
@@ -141,9 +142,7 @@ export default {
         }
       });
     },
-    download() {
-
-    }
+    download() {}
   }
 };
 </script>
