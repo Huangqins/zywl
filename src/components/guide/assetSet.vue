@@ -316,10 +316,10 @@ export default {
     taskDelete(params) {
       deleteTask(params).then(res => {
         if (res.result === 0) {
-          // this.$Message(`删除成功`)
+          this.$Message.success(`删除成功`)
           this._taskList(this.params);
         } else {
-          // this.$Message(`删除失败`)
+          this.$Message.error(`删除失败`)
         }
       })
     },
