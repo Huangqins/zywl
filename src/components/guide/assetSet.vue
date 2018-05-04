@@ -231,14 +231,18 @@ export default {
                             });
                           },
                           onOk: () => {
-                            exportPDF({ target_id: params.row.target_id,target_name:  this.fileName}).then(res => {
+                            exportPDF({
+                              target_id: params.row.target_id,
+                              target_name: this.fileName
+                            }).then(res => {
                               if (res.result === 0) {
-                                  ev.target.href = location.origin + "/ZY" + res.path;
-                                  ev.target.innerText = "下载";
+                                ev.target.href =
+                                  location.origin + "/ZY" + res.path;
+                                ev.target.innerText = "下载";
                               } else {
                                 ev.target.innerText = "生成";
                               }
-                            })
+                            });
                           }
                         });
                       }
@@ -259,8 +263,8 @@ export default {
                 on: {
                   click: () => {
                     this.$router.push({
-                      path: "/mainpage/process",
-                      query: { target_id: params.row.target_id }
+                      name: "process",
+                      params: { targetInfo: params.row, target_id: params.row.target_id}
                     });
                   }
                 }

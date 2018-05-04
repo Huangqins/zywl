@@ -28,7 +28,7 @@
               </a>
               <ul>
                   <li v-for="(item,index) in taskListItem" :key="index">
-                      {{ item.name }}
+                      {{ item.target_name }}
                       <span>
                           {{ item.rate }}
                       </span>
@@ -106,24 +106,9 @@ export default {
     return {
       taskListItem: [
         {
-          name: "The Shawshank Redemption",
-          url: "https://movie.douban.com/subject/1292052/",
-          rate: 9.6
-        },
-        {
-          name: "Leon:The Professional",
-          url: "https://movie.douban.com/subject/1295644/",
-          rate: 9.4
-        },
-        {
-          name: "Farewell to My Concubine",
-          url: "https://movie.douban.com/subject/1291546/",
-          rate: 9.5
-        },
-        {
-          name: "Forrest Gump",
-          url: "https://movie.douban.com/subject/1292720/",
-          rate: 9.4
+          target_name: "",
+          target_createtime: 0,
+          target_endtime: 0
         }
       ],
       formCustom: {},
@@ -373,6 +358,7 @@ export default {
   },
 
   created() {
+    console.log(this.$route)
     this._targetProgress();
     this._targetNum();
     this._targetLesk();
@@ -393,7 +379,7 @@ export default {
      * params: target_id 来源$route.query.target_id
      */
     _targetProgress() {
-      const params = { target_id: this.$route.query.target_id };
+      const params = { target_id: this.$route.params.target_id };
       targetProgress(params).then(res => {
         if (res.result === 0) {
           let scaning = Number(res.target.target_scaning).toFixed(2);
@@ -418,7 +404,7 @@ export default {
     * params: taskID 来源$route.query.target_id
     * */
     _targetNum() {
-      const params = { target_id: this.$route.query.target_id };
+      const params = { target_id: this.$route.params.target_id };
       timeLine(params).then(res => {
         if (res.result === 0) {
           this.optipnTwo.series[0].data[0].value = res.vulnNum;
@@ -434,7 +420,7 @@ export default {
   * params: targetId 来源$route.query.target_id
   * */
     _targetLesk() {
-      const params = { targetId: this.$route.query.target_id };
+      const params = { targetId: this.$route.params.target_id };
       leaksInfo(params).then(res => {
         if (res.result === 0) {
           this.assetsList = res.rows;
@@ -446,7 +432,7 @@ export default {
      * params:
      */
     _urlUseRate() {
-      const params = { target_id: this.$route.query.target_id };
+      const params = { target_id: this.$route.params.target_id };
       urlUseRate(params).then(res => {
         if (res.result === 0) {
           this.optionthree.series[0].data[0].value = res.rate;

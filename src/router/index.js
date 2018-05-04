@@ -237,7 +237,8 @@ const router = new VueRouter({
             children: [
                 {
                     //任务进度需要任务Id进入
-                    path: 'process',
+                    name: 'process',
+                    path: 'process/:target_id',
                     components: {
                         default: Process
                     }
