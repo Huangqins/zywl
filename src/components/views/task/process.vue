@@ -468,7 +468,7 @@ export default {
   float: right;
 }
 .ivu-card-head p {
-  color: white;
+  color: #FBFBFB;
 }
 .ivu-card {
   background: transparent;
@@ -483,7 +483,7 @@ export default {
   /* color: #e4e5e5; */
   display: flex;
   flex-direction: row;
-  color: seashell;
+  color: #FBFBFB;
   justify-content: space-around;
 }
 .taskSchedule section {

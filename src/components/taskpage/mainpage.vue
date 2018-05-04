@@ -267,6 +267,9 @@ export default {
         border-radius: 4px;
         overflow: hidden;
     }
+    .layout span{
+      color: #FBFBFB;
+    }
     .ivu-layout-sider{
         max-width: 99px;
     }
