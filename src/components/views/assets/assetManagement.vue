@@ -9,7 +9,11 @@
                 <Button type="primary" icon="log-in">导入</Button>
                 <Button type="primary" icon="log-out">导出</Button>
               </div>
-              <div class="assetRight_nav"></div>
+              <div class="assetRight_nav">
+                <section></section>
+                <section></section>
+                <section></section>
+              </div>
               <div class="assetRight_content">
                   <page :columns="assets" :data="assetsList" :dataTotal="dataTotal" @dataLoad="dataLoad"  :loading="pageLoading"></page>
               </div>
@@ -299,7 +303,14 @@ export default {
 .assetRight_nav {
   width: 100%;
   height: 280px;
+  display: flex;
+  flex-flow: row;
   margin-bottom: 20px;
+}
+.assetRight_nav section{
+ flex:1;
+ margin: 20px 60px;
+ background: #cccccc;
 }
 .assetRight_header {
   width: 100%;
