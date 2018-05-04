@@ -12,13 +12,12 @@
       </section>
     </div>
     <div class="clear"></div>
-    <div class="line">
-       <chart width="1500" height="300" :option="linechart"  ref="linechart"></chart>
-    </div>
-    <div class="holetable">
-      <Row>
-        <Col span="11" >
-            <Card style="width:600px;margin-bottom:20px;">
+    <div class="secTwo">
+      <section>
+        <chart width="769" height="300" :option="linechart"  ref="linechart"></chart>
+      </section>
+       <section>
+         <Card style="width:700px;margin-bottom:20px;margin:72px auto;">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                   风险信息
@@ -35,17 +34,14 @@
                   </li>
               </ul>
             </Card>
-        </Col>
-        <Col span="12"  offset="1">
-          <page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width" height=120></page>
-        </Col>
-        
-      </Row>
-      <Row :gutter="16">
-        
-        <Col span="12">
-          <!-- <Table :columns="taskInfoes" :data="taskInfoesList"></Table>    -->
-          <Card style="width:600px">
+       </section>
+
+    </div>
+    <div class="holetable">
+      <Row>
+        <Col span="11">
+         
+          <Card style="width:630px;margin-left:140px;">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                  发现主机
@@ -63,6 +59,14 @@
               </ul>
             </Card>
         </Col>
+        <Col span="10"  offset="2">
+          <page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width" height=120></page>
+        </Col>
+        
+      </Row>
+      <Row :gutter="16">
+        
+        
       </Row>
     </div>
   </div>
@@ -115,7 +119,7 @@ export default {
       target_name: "",
       id: "",
       href: "",
-      width: "800px",
+      width: "500px",
       loading: false,
       assetsList: [],
       total: 0,
@@ -227,12 +231,6 @@ export default {
       mock: "",
       linechartdata: [],
       linechart: {
-        title: {
-          text: "任务执行阶段图",
-          textStyle: {
-            color: "#E4E5E5"
-          }
-        },
         tooltip: {
           trigger: "axis",
           // formatter: function(params) {
@@ -488,9 +486,15 @@ export default {
   font-size: 16px;
   text-align: center; */
 }
-.line {
+.secTwo {
   width: 100%;
   padding: 0 40px;
+  display: flex;
+  flex-direction: row;
+}
+.secTwo section{
+  flex: 1;
+  margin: 20px 60px;
 }
 .clear {
   clear: both;
