@@ -1,29 +1,69 @@
 <template>
   <div>
     <div class="taskSchedule">
+      <section>
         <chart width="235" height="235" :option="option" id="completionRate" ref="completionRate"></chart>
+      </section>
+      <section>
         <chart width="235" height="235" :option="optipnTwo" id="taskholeNum" ref="taskholeNum"></chart>
+      </section> 
+      <section> 
         <chart width="235" height="235" :option="optionthree" id="holeUtilization" ref='holeUtilization'></chart>
+      </section>
     </div>
     <div class="clear"></div>
     <div class="line">
-       <chart width="450" height="300" :option="linechart"  ref="linechart"></chart>
+       <chart width="1500" height="300" :option="linechart"  ref="linechart"></chart>
     </div>
     <div class="holetable">
       <Row>
-        <Col span="16" >
-          <!--<Table :columns="taskInfos" :data="taskInfosList"></Table>-->
+        <Col span="11" >
+            <Card style="width:600px;margin-bottom:20px;">
+              <p slot="title">
+                  <Icon type="ios-film-outline"></Icon>
+                  任务信息
+              </p>
+              <a href="#" slot="extra" @click.prevent="changeLimit">
+                  <Icon type="ios-loop-strong"></Icon>
+              </a>
+              <ul>
+                  <li v-for="(item,index) in movieList" :key="index">
+                      <a :href="item.url" target="_blank">{{ item.name }}</a>
+                      <span>
+                          <Icon type="ios-star" v-for="n in 4" :key="n"></Icon><Icon type="ios-star" v-if="item.rate >= 9.5"></Icon><Icon type="ios-star-half" v-else></Icon>
+                          {{ item.rate }}
+                      </span>
+                  </li>
+              </ul>
+            </Card>
         </Col>
-        <Col span="7" offset="1">
-          <!--<Table :columns="taskInfoes" :data="taskInfoesList"></Table>-->
-        </Col>
-      </Row>
-      <Row :gutter="16">
-        <Col span="12">
+        <Col span="12"  offset="1">
           <page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width" height=120></page>
         </Col>
-        <Col span="12">
         
+      </Row>
+      <Row :gutter="16">
+        
+        <Col span="12">
+          <!-- <Table :columns="taskInfoes" :data="taskInfoesList"></Table>    -->
+          <Card style="width:600px">
+              <p slot="title">
+                  <Icon type="ios-film-outline"></Icon>
+                 发现主机
+              </p>
+              <a href="#" slot="extra" @click.prevent="changeLimit">
+                  <Icon type="ios-loop-strong"></Icon>
+              </a>
+              <ul>
+                  <li v-for="(item,index) in movieList" :key="index">
+                      <a :href="item.url" target="_blank">{{ item.name }}</a>
+                      <span>
+                          <Icon type="ios-star" v-for="n in 4" :key="n"></Icon><Icon type="ios-star" v-if="item.rate >= 9.5"></Icon><Icon type="ios-star-half" v-else></Icon>
+                          {{ item.rate }}
+                      </span>
+                  </li>
+              </ul>
+            </Card>
         </Col>
       </Row>
     </div>
@@ -66,6 +106,30 @@ export default {
   },
   data() {
     return {
+      movieList: [
+                    {
+                        name: 'The Shawshank Redemption',
+                        url: 'https://movie.douban.com/subject/1292052/',
+                        rate: 9.6
+                    },
+                    {
+                        name: 'Leon:The Professional',
+                        url: 'https://movie.douban.com/subject/1295644/',
+                        rate: 9.4
+                    },
+                    {
+                        name: 'Farewell to My Concubine',
+                        url: 'https://movie.douban.com/subject/1291546/',
+                        rate: 9.5
+                    },
+                    {
+                        name: 'Forrest Gump',
+                        url: 'https://movie.douban.com/subject/1292720/',
+                        rate: 9.4
+                    },
+                    
+                ],
+      formCustom:{},
       target_name: "",
       id: "",
       href:'',
@@ -184,7 +248,7 @@ export default {
         title: {
           text: "任务执行阶段图",
           textStyle: {
-            color: "#E4E5E5"
+            color: "#E4E5E5",
           }
         },
         tooltip: {
@@ -209,10 +273,21 @@ export default {
         xAxis: {
           type: 'category',
           boundaryGap: false,
-          data: []
+          data: [],
+          axisLabel: {
+            textStyle: {
+              color: "#CCCCCC"
+            }
+          }
+          
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          axisLabel: {
+            textStyle: {
+              color: "#CCCCCC"
+            }
+          }
         },
         series: [{
           data: [],
@@ -385,19 +460,53 @@ export default {
 };
 </script>
 <style scoped>
-.taskSchedule {
-  color: #e4e5e5;
+.ivu-card-head{
+  padding:6px 16px;
 }
-.taskSchedule div {
-  float: left;
+.ivu-card-extra{
+  top:7px;
+}
+.ivu-card-body ul li span{
+  float: right;
+}
+.ivu-card-head p{
+  color: white;
+}
+.ivu-card{
+  background: transparent;
+}
+.ivu-card-body ul li{
+  list-style: none;
+}
+.ivu-input{
+  text-align: right;
+}
+.taskSchedule {
+  /* color: #e4e5e5; */
+  display: flex;
+  flex-direction: row;
+  color: seashell;
+}
+.taskSchedule section{
+  flex: 1;
+  margin:20px 160px;
+  /* border: 1px solid #e4e5e5;
+  border-radius: 4px;
+  height: 100px;
+  line-height: 98px;
+  font-size: 16px;
+  text-align: center; */
+  
 }
 .line {
   width: 100%;
+  padding: 0 40px;
 }
 .clear {
   clear: both;
 }
 .holetable {
   width: 100%;
+  padding: 0 40px;
 }
 </style>
