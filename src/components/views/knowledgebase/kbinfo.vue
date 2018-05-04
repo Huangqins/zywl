@@ -10,9 +10,16 @@
                 <Button type="primary" icon="log-out">导出</Button>
               </div>
               <div class="assetRight_pro">
-                <chart width=305 height=260 :option="options"></chart>
-                <chart width=290 height=260 :option="optionOne" id="optionOne"></chart>
-                <chart width=290 height=260 :option="optionTwo" id="optionTwo"></chart>
+                <section>
+                   <chart width=305 height=260 :option="options"></chart>
+                </section>
+                <section>
+                  <chart width=290 height=260 :option="optionOne" id="optionOne"></chart>
+                </section>
+                <section>
+                  <chart width=290 height=260 :option="optionTwo" id="optionTwo"></chart>
+                </section>
+                
               </div>
               <div class="assetRight_content">
                   <page :columns="assets" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="pageLoading"> </page>
@@ -589,7 +596,12 @@ export default {
 .assetRight_pro {
   width: 100%;
   height: 280px;
+  display: flex;
   margin-bottom: 20px;
+}
+.assetRight_pro section{
+ flex: 1;
+ margin: 20px 60px;
 }
 .assetRight_header {
   width: 100%;
