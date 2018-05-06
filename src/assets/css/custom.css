@@ -87,7 +87,9 @@
 .ivu-table::before {
     background-color: transparent;
 }
-
+.table .ivu-table-header{
+    display: none;
+}
 .ivu-table::after {
     background-color: transparent;
 }

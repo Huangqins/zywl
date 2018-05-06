@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="table">
     <div class="taskSchedule">
       <section>
         <chart width="235" height="235" :option="option" id="completionRate" ref="completionRate"></chart>
@@ -18,10 +18,10 @@
     </div>
     <div class="secTwo">
       <section>
-          <Card style="width:700px;margin-bottom:20px;margin:42px auto;">
+          <Card >
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
-                  风险信息
+                任务信息
               </p>
               <ul>
                   <li v-for="(item,index) in taskListItem" :key="index">
@@ -34,28 +34,25 @@
           </Card>
       </section>    
       <section>
-          <Card style="width:700px;margin-bottom:20px;margin:42px auto;">
+          <Card >
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                   域名信息
               </p>
               <ul>
-                  <li v-for="(item,index) in taskListItem" :key="index">
+                  <li v-for="(item,index) in domain_info" :key="index">
                       {{ item.target_info_name }}
-                      <span>
-                          {{ item.target_info_des }}
+                      <span v-html="item.target_info_des">
+                          <!-- {{  }} -->
                       </span>
                   </li>
               </ul>
           </Card>
       </section>
-
     </div>
     <div class="holetable">
-      <Row>
-        <Col span="10">
-         
-          <Card style="width:700px;margin-left:79px;">
+      <section>
+        <Card>
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                  发现主机
@@ -68,17 +65,19 @@
                       </span>
                   </li>
               </ul>
+        </Card>
+      </section>       
+      <section>
+          <Card >
+              <p slot="title">
+                  <Icon type="ios-film-outline"></Icon>
+                 风险信息
+              </p>
+              <ul>
+                  <page class="table" :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width" height=120></page>
+              </ul>
             </Card>
-        </Col>
-        <Col span="10"  offset="4">
-          <page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width" height=120></page>
-        </Col>
-        
-      </Row>
-      <Row :gutter="16">
-        
-        
-      </Row>
+      </section>  
     </div>
   </div>
 </template>
@@ -153,6 +152,13 @@ export default {
           target_info_key: "target_endTime",
           target_info_name: "结束时间",
           target_info_des: 4
+        }
+      ],
+      domain_info: [
+        {
+          target_info_key: "target_domain_info",
+          target_info_name: "域名信息",
+          target_info_des: ""
         }
       ],
       formCustom: {},
@@ -280,28 +286,16 @@ export default {
           },
           formatter: "{c}</br>{b}"
         },
-        xAxis: [
-          {
-            type: "category",
-            boundaryGap: false,
-            data: [],
-            axisLabel: {
-              textStyle: {
-                color: "#CCCCCC"
-              }
-            }
-          },
-          {
-            type: "category",
-            boundaryGap: false,
-            data: [],
-            axisLabel: {
-              textStyle: {
-                color: "#CCCCCC"
-              }
+        xAxis: {
+          type: "category",
+          boundaryGap: false,
+          data: [],
+          axisLabel: {
+            textStyle: {
+              color: "#CCCCCC"
             }
           }
-        ],
+        },
         yAxis: {
           type: "category",
           nameTextStyle: {
@@ -318,11 +312,6 @@ export default {
         series: [
           {
             data: [],
-            type: "line"
-          },
-          {
-            data: [],
-            xAxisIndex: 1,
             type: "line"
           }
         ]
@@ -419,7 +408,9 @@ export default {
       ? fomatterTime(new Date(taskInfo.target_endtime.time))
       : "";
     this.taskListItem.forEach(item => {
-      console.log(taskInfo[item.target_info_key]);
+      item.target_info_des = taskInfo[item.target_info_key];
+    });
+    this.domain_info.forEach(item => {
       item.target_info_des = taskInfo[item.target_info_key];
     });
     this._targetProgress();
@@ -453,17 +444,16 @@ export default {
           this.option.series[0].data[0].value = scaning;
           let temp = [];
           for (let i = 1; i <= scaning; i++) {
-            temp.push(10);
+            temp.push(task_status[i]);
           }
+          console.log(temp);
           //进度纵坐标
           this.linechart.series[0].data = temp;
-          this.linechart.series[1].data = temp;
           let ret = [];
           res.target.target_rftime.split(",").forEach(item => {
             ret.push(item.split(" ")[1]);
           });
-          this.linechart.xAxis[0].data = ret;
-          this.linechart.xAxis[1].data = ret;
+          this.linechart.xAxis.data = ret;
           this.$refs.linechart.refresh();
           this.$refs.completionRate.refresh();
         } else {
@@ -559,7 +549,7 @@ export default {
   padding: 0 50px;
 }
 .timeProcess section {
-  flex: 0 0 30px;
+  flex: 0 0 20px;
 }
 .secTwo {
   width: 100%;
@@ -569,16 +559,26 @@ export default {
 }
 .secTwo section {
   flex: 1;
-  margin: 0px 60px;
+  margin: 0px 20px;
 }
 .clear {
   clear: both;
 }
 .holetable {
   width: 100%;
-  padding: 0 20px;
+  padding: 0 40px;
+  display: flex;
+  flex-direction: row;
+}
+.holetable section {
+  margin: 0px 20px;
+  flex: 1;
 }
 .ivu-card-body li {
   color: #fbfbfb;
+}
+.ivu-card {
+  width: 95%;
+  margin: 22px auto;
 }
 </style>
