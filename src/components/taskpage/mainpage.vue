@@ -105,7 +105,6 @@ export default {
   },
   watch: {
     $route: (to, from) => {
-      console.log(to);
     }
   },
   data() {
@@ -121,7 +120,7 @@ export default {
     };
   },
   beforeRouteEnter: (to, from, next) => {
-    if (from.fullPath === "/login") {
+    if (from.fullPath === "/login") {    
       const userInfo = to.params;
       console.log(userInfo);
       //是否第一次登陆,否
@@ -145,7 +144,7 @@ export default {
                       // query: { target_id: taskId }
                       name: 'process',
                       params: { target_id:  taskId,  targetInfo:  res.targets[0]}
-                    });
+                    });      
                   }, 2000);
                 }
               });
@@ -198,10 +197,6 @@ export default {
       }
     }
     next();
-  },
-  beforeRouteLeave: (to, from, next) => {
-    // Modal.remove();
-    // next();
   },
   methods: {
     collapsedSider() {
@@ -267,9 +262,9 @@ export default {
         border-radius: 4px;
         overflow: hidden;
     }
-    .layout span{
+    /* .layout span{
       color: #FBFBFB;
-    }
+    } */
     .ivu-layout-sider{
         max-width: 99px;
     }
@@ -330,7 +325,7 @@ export default {
         }
         .headers h2{
         float: left;
-        color:#fff;
+        color:#FBFBFB;
         margin-left: 15px;
         font-size: 16px;
         font-family: "微软雅黑"
@@ -338,6 +333,6 @@ export default {
         .router-link-active{
         display: inline ;
         border-left: none;
-        color: #fff;
+        color: #FBFBFB;
     }
 </style>
