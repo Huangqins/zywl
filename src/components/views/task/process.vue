@@ -112,6 +112,19 @@ const levelSchema = {
 const host =
   process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
 // const host = process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
+
+const task_status = {
+  "1": "目标确立",
+  "2": "信息收集",
+  "3": "威胁建模",
+  "4": "漏洞分析",
+  "5": "渗透攻击",
+  "6": "定点攻击",
+  "7": "漏洞利用",
+  "8": "系统提权",
+  "9": "敏感信息获取",
+  "10": "报告生成"
+};
 export default {
   components: {
     chart,
@@ -231,7 +244,8 @@ export default {
         {
           title: "风险名称",
           key: "vuln_name",
-          align: "center"
+          align: "center",
+          width: 200
         },
         {
           title: "风险类型",
@@ -249,7 +263,8 @@ export default {
         {
           title: "payload",
           key: "vuln_Payload",
-          align: "center"
+          align: "center",
+          width: 200
         }
       ],
       taskInfo: [],
@@ -262,7 +277,8 @@ export default {
           trigger: "axis",
           axisPointer: {
             animation: false
-          }
+          },
+          formatter: '{c}</br>{b}'
         },
         xAxis: {
           type: "category",
@@ -275,18 +291,22 @@ export default {
           }
         },
         yAxis: {
-          type: "value",
+          type: "category",
+          nameTextStyle: {
+            width: 200
+          },
           axisLabel: {
             textStyle: {
               color: "#CCCCCC"
-            }
+            },
+            interval: 0,
+            rotate: 20
           }
         },
         series: [
           {
             data: [],
-            type: "line",
-            areaStyle: {}
+            type: "line"
           }
         ]
       },
@@ -300,7 +320,9 @@ export default {
             name: "业务指标",
             type: "gauge",
             radius: "85%",
-            detail: { formatter: "{value}", fontSize: 20 },
+            detail: { formatter: function(value) {
+              return task_status[value]
+            }, fontSize: 20 },
             data: [{ value: 0, name: "执行阶段" }],
             title: { color: "#E4E5E5", fontSize: 12 },
             splitLine: { show: false },
@@ -411,11 +433,16 @@ export default {
           this.option.series[0].data[0].value = scaning;
           let temp = [];
           for (let i = 1; i <= scaning; i++) {
-            temp.push(i);
+            temp.push(task_status[i]);
           }
+          console.log(temp)
           //进度纵坐标
           this.linechart.series[0].data = temp;
-          this.linechart.xAxis.data = res.target.target_rftime.split(",");
+          let ret = []
+          res.target.target_rftime.split(",").forEach(item => {
+            ret.push(item.split(" ")[1])
+          })
+          this.linechart.xAxis.data =ret;
           this.$refs.linechart.refresh();
           this.$refs.completionRate.refresh();
         } else {
