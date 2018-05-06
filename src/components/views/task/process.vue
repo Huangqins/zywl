@@ -18,10 +18,10 @@
     </div>
     <div class="secTwo">
       <section>
-          <Card style="width:700px;margin-bottom:20px;margin:42px auto;">
+          <Card >
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
-                  风险信息
+                任务信息
               </p>
               <ul>
                   <li v-for="(item,index) in taskListItem" :key="index">
@@ -34,7 +34,7 @@
           </Card>
       </section>    
       <section>
-          <Card style="width:700px;margin-bottom:20px;margin:42px auto;">
+          <Card >
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                   域名信息
@@ -49,13 +49,10 @@
               </ul>
           </Card>
       </section>
-
     </div>
     <div class="holetable">
-      <Row>
-        <Col span="10">
-         
-          <Card style="width:700px;margin-left:79px;">
+      <section>
+        <Card>
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                  发现主机
@@ -68,17 +65,19 @@
                       </span>
                   </li>
               </ul>
+        </Card>
+      </section>       
+      <section>
+          <Card >
+              <p slot="title">
+                  <Icon type="ios-film-outline"></Icon>
+                 风险信息
+              </p>
+              <ul>
+                  <page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width" height=120></page>
+              </ul>
             </Card>
-        </Col>
-        <Col span="10"  offset="4">
-          <page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width" height=120></page>
-        </Col>
-        
-      </Row>
-      <Row :gutter="16">
-        
-        
-      </Row>
+      </section>  
     </div>
   </div>
 </template>
@@ -538,7 +537,7 @@ export default {
   padding:0 50px;
 }
 .timeProcess section{
-   flex:0 0 30px;
+   flex:0 0 20px;
 } 
 .secTwo {
   width: 100%;
@@ -548,16 +547,26 @@ export default {
 }
 .secTwo section {
   flex: 1;
-  margin: 0px 60px;
+  margin: 0px 20px;
 }
 .clear {
   clear: both;
 }
 .holetable {
   width: 100%;
-  padding:0 20px;
+  padding: 0 40px;
+  display: flex;
+  flex-direction: row;
+}
+.holetable section{
+   margin: 0px 20px;
+   flex:1;
 }
 .ivu-card-body li {
   color: #fbfbfb;
+}
+.ivu-card{
+  width: 95%;
+  margin: 22px auto;
 }
 </style>
