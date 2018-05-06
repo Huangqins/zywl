@@ -134,6 +134,11 @@ const Mainpage = (resolve) => {
         resolve(module)
     })
 }
+const Vulndetail = (resolve) => {
+    import('components/views/task/vulndetail').then(module => {
+        resolve(module)
+    })
+}
 const router = new VueRouter({
     // mode: 'history',
     routes: [
@@ -219,6 +224,7 @@ const router = new VueRouter({
             path: '/kbinfo',
             component: Kbinfo
         },
+        
         {
             name:"firstassetAdd",
             path: '/firstassetAdd',
@@ -288,7 +294,12 @@ const router = new VueRouter({
                     components: {
                         default: Homepage
                     }
-                }
+                },
+                {
+                    name:"vulndetail",
+                    path: 'vulndetail',
+                    component: Vulndetail   
+                },
             ]
         }
     ].concat(assetsRoutes)
