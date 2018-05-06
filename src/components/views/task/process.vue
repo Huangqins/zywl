@@ -11,13 +11,14 @@
         <chart width="235" height="235" :option="optionthree" id="holeUtilization" ref='holeUtilization'></chart>
       </section>
     </div>
-    <div class="clear"></div>
+    <div class="timeProcess">
+      <section>
+        <chart  height="160" width="1000" :option="linechart"  ref="linechart"></chart>
+      </section>
+    </div>
     <div class="secTwo">
       <section>
-        <chart width="769" height="300" :option="linechart"  ref="linechart"></chart>
-      </section>
-       <section>
-         <Card style="width:700px;margin-bottom:20px;margin:72px auto;">
+          <Card style="width:700px;margin-bottom:20px;margin:42px auto;">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                   风险信息
@@ -30,15 +31,31 @@
                       </span>
                   </li>
               </ul>
-            </Card>
-       </section>
+          </Card>
+      </section>    
+      <section>
+          <Card style="width:700px;margin-bottom:20px;margin:42px auto;">
+              <p slot="title">
+                  <Icon type="ios-film-outline"></Icon>
+                  域名信息
+              </p>
+              <ul>
+                  <li v-for="(item,index) in taskListItem" :key="index">
+                      {{ item.target_info_name }}
+                      <span>
+                          {{ item.target_info_des }}
+                      </span>
+                  </li>
+              </ul>
+          </Card>
+      </section>
 
     </div>
     <div class="holetable">
       <Row>
-        <Col span="11">
+        <Col span="10">
          
-          <Card style="width:630px;margin-left:140px;">
+          <Card style="width:700px;margin-left:79px;">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                  发现主机
@@ -53,7 +70,7 @@
               </ul>
             </Card>
         </Col>
-        <Col span="10"  offset="2">
+        <Col span="10"  offset="4">
           <page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width" height=120></page>
         </Col>
         
@@ -129,7 +146,7 @@ export default {
       target_name: "",
       id: "",
       href: "",
-      width: "500px",
+      width: "400px",
       loading: false,
       assetsList: [],
       total: 0,
@@ -352,7 +369,6 @@ export default {
     ...mapGetters(["userName"])
   },
   created() {
-    console.log(this.$route);
     let taskInfo = this.$route.params.targetInfo;
     taskInfo.target_startTime = fomatterTime(
       new Date(taskInfo.target_starttime.time)
@@ -361,6 +377,7 @@ export default {
       ? fomatterTime(new Date(taskInfo.target_endtime.time))
       : "";
     this.taskListItem.forEach(item => {
+      console.log(taskInfo[item.target_info_key]);
       item.target_info_des = taskInfo[item.target_info_key];
     });
     this._targetProgress();
@@ -468,7 +485,7 @@ export default {
   float: right;
 }
 .ivu-card-head p {
-  color: #FBFBFB;
+  color: #fbfbfb;
 }
 .ivu-card {
   background: transparent;
@@ -483,27 +500,37 @@ export default {
   /* color: #e4e5e5; */
   display: flex;
   flex-direction: row;
-  color: #FBFBFB;
+  color: #fbfbfb;
   justify-content: space-around;
 }
 .taskSchedule section {
   flex: 1;
 }
+.timeProcess{
+  display: flex;
+  padding:0 50px;
+}
+.timeProcess section{
+   flex:0 0 30px;
+} 
 .secTwo {
   width: 100%;
   padding: 0 40px;
   display: flex;
   flex-direction: row;
 }
-.secTwo section{
+.secTwo section {
   flex: 1;
-  margin: 20px 60px;
+  margin: 0px 60px;
 }
 .clear {
   clear: both;
 }
 .holetable {
   width: 100%;
-  padding: 0 40px;
+  padding:0 20px;
+}
+.ivu-card-body li {
+  color: #fbfbfb;
 }
 </style>
