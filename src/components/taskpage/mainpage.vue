@@ -175,8 +175,8 @@ export default {
             if (res.result === 0) {
               let taskId = res.targets[0].target_id;
               router.push({
-                path: "/mainpage/process",
-                query: { target_id: taskId }
+               name: 'process',
+               params: { target_id:  taskId,  targetInfo:  res.targets[0]}
               });
             }
           });
