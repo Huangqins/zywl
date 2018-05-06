@@ -278,18 +278,30 @@ export default {
           axisPointer: {
             animation: false
           },
-          formatter: '{c}</br>{b}'
+          formatter: "{c}</br>{b}"
         },
-        xAxis: {
-          type: "category",
-          boundaryGap: false,
-          data: [],
-          axisLabel: {
-            textStyle: {
-              color: "#CCCCCC"
+        xAxis: [
+          {
+            type: "category",
+            boundaryGap: false,
+            data: [],
+            axisLabel: {
+              textStyle: {
+                color: "#CCCCCC"
+              }
+            }
+          },
+          {
+            type: "category",
+            boundaryGap: false,
+            data: [],
+            axisLabel: {
+              textStyle: {
+                color: "#CCCCCC"
+              }
             }
           }
-        },
+        ],
         yAxis: {
           type: "category",
           nameTextStyle: {
@@ -307,6 +319,11 @@ export default {
           {
             data: [],
             type: "line"
+          },
+          {
+            data: [],
+            xAxisIndex: 1,
+            type: "line"
           }
         ]
       },
@@ -320,9 +337,12 @@ export default {
             name: "业务指标",
             type: "gauge",
             radius: "85%",
-            detail: { formatter: function(value) {
-              return task_status[value]
-            }, fontSize: 20 },
+            detail: {
+              formatter: function(value) {
+                return task_status[value];
+              },
+              fontSize: 20
+            },
             data: [{ value: 0, name: "执行阶段" }],
             title: { color: "#E4E5E5", fontSize: 12 },
             splitLine: { show: false },
@@ -433,16 +453,17 @@ export default {
           this.option.series[0].data[0].value = scaning;
           let temp = [];
           for (let i = 1; i <= scaning; i++) {
-            temp.push(task_status[i]);
+            temp.push(10);
           }
-          console.log(temp)
           //进度纵坐标
           this.linechart.series[0].data = temp;
-          let ret = []
+          this.linechart.series[1].data = temp;
+          let ret = [];
           res.target.target_rftime.split(",").forEach(item => {
-            ret.push(item.split(" ")[1])
-          })
-          this.linechart.xAxis.data =ret;
+            ret.push(item.split(" ")[1]);
+          });
+          this.linechart.xAxis[0].data = ret;
+          this.linechart.xAxis[1].data = ret;
           this.$refs.linechart.refresh();
           this.$refs.completionRate.refresh();
         } else {
@@ -533,13 +554,13 @@ export default {
 .taskSchedule section {
   flex: 1;
 }
-.timeProcess{
+.timeProcess {
   display: flex;
-  padding:0 50px;
+  padding: 0 50px;
 }
-.timeProcess section{
-   flex:0 0 30px;
-} 
+.timeProcess section {
+  flex: 0 0 30px;
+}
 .secTwo {
   width: 100%;
   padding: 0 40px;
@@ -555,7 +576,7 @@ export default {
 }
 .holetable {
   width: 100%;
-  padding:0 20px;
+  padding: 0 20px;
 }
 .ivu-card-body li {
   color: #fbfbfb;
