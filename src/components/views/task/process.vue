@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="table">
     <div class="taskSchedule">
       <section>
         <chart width="235" height="235" :option="option" id="completionRate" ref="completionRate"></chart>
@@ -40,10 +40,10 @@
                   域名信息
               </p>
               <ul>
-                  <li v-for="(item,index) in taskListItem" :key="index">
+                  <li v-for="(item,index) in domain_info" :key="index">
                       {{ item.target_info_name }}
-                      <span>
-                          {{ item.target_info_des }}
+                      <span v-html="item.target_info_des">
+                          <!-- {{  }} -->
                       </span>
                   </li>
               </ul>
@@ -74,7 +74,7 @@
                  风险信息
               </p>
               <ul>
-                  <page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width" height=120></page>
+                  <page class="table" :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width" height=120></page>
               </ul>
             </Card>
       </section>  
@@ -152,6 +152,13 @@ export default {
           target_info_key: "target_endTime",
           target_info_name: "结束时间",
           target_info_des: 4
+        }
+      ],
+      domain_info: [
+        {
+          target_info_key: "target_domain_info",
+          target_info_name: "域名信息",
+          target_info_des: ""
         }
       ],
       formCustom: {},
@@ -277,7 +284,7 @@ export default {
           axisPointer: {
             animation: false
           },
-          formatter: '{c}</br>{b}'
+          formatter: "{c}</br>{b}"
         },
         xAxis: {
           type: "category",
@@ -319,9 +326,12 @@ export default {
             name: "业务指标",
             type: "gauge",
             radius: "85%",
-            detail: { formatter: function(value) {
-              return task_status[value]
-            }, fontSize: 20 },
+            detail: {
+              formatter: function(value) {
+                return task_status[value];
+              },
+              fontSize: 20
+            },
             data: [{ value: 0, name: "执行阶段" }],
             title: { color: "#E4E5E5", fontSize: 12 },
             splitLine: { show: false },
@@ -398,7 +408,9 @@ export default {
       ? fomatterTime(new Date(taskInfo.target_endtime.time))
       : "";
     this.taskListItem.forEach(item => {
-      console.log(taskInfo[item.target_info_key]);
+      item.target_info_des = taskInfo[item.target_info_key];
+    });
+    this.domain_info.forEach(item => {
       item.target_info_des = taskInfo[item.target_info_key];
     });
     this._targetProgress();
@@ -434,14 +446,14 @@ export default {
           for (let i = 1; i <= scaning; i++) {
             temp.push(task_status[i]);
           }
-          console.log(temp)
+          console.log(temp);
           //进度纵坐标
           this.linechart.series[0].data = temp;
-          let ret = []
+          let ret = [];
           res.target.target_rftime.split(",").forEach(item => {
-            ret.push(item.split(" ")[1])
-          })
-          this.linechart.xAxis.data =ret;
+            ret.push(item.split(" ")[1]);
+          });
+          this.linechart.xAxis.data = ret;
           this.$refs.linechart.refresh();
           this.$refs.completionRate.refresh();
         } else {
@@ -532,13 +544,13 @@ export default {
 .taskSchedule section {
   flex: 1;
 }
-.timeProcess{
+.timeProcess {
   display: flex;
-  padding:0 50px;
+  padding: 0 50px;
 }
-.timeProcess section{
-   flex:0 0 20px;
-} 
+.timeProcess section {
+  flex: 0 0 20px;
+}
 .secTwo {
   width: 100%;
   padding: 0 40px;
@@ -558,14 +570,14 @@ export default {
   display: flex;
   flex-direction: row;
 }
-.holetable section{
-   margin: 0px 20px;
-   flex:1;
+.holetable section {
+  margin: 0px 20px;
+  flex: 1;
 }
 .ivu-card-body li {
   color: #fbfbfb;
 }
-.ivu-card{
+.ivu-card {
   width: 95%;
   margin: 22px auto;
 }
