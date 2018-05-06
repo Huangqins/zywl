@@ -39,9 +39,9 @@
                   <Icon type="ios-film-outline"></Icon>
                   域名信息
               </p>
-              <ul>
+              <ul class="scrollUl">
                   <li v-for="(item,index) in domain_info" :key="index">
-                      {{ item.target_info_name }}
+                      <!-- {{ item.target_info_name }} -->
                       <span v-html="item.target_info_des">
                           <!-- {{  }} -->
                       </span>
@@ -58,10 +58,10 @@
                  发现主机
               </p>
               <ul>
-                  <li v-for="(item,index) in taskListItem" :key="index">
-                     {{ item.name }}
-                      <span>
-                          {{ item.rate }}
+                  <li v-for="(item,index) in hostListItem" :key="index">
+                      {{ item.target_info_name }}
+                      <span style="color:red;">
+                           {{ item.target_info_des }}
                       </span>
                   </li>
               </ul>
@@ -91,6 +91,7 @@ import leaksInfo from "api/leaksInfo";
 import targetProgress from "api/targetProgress";
 import urlUseRate from "api/urlUseRate";
 import fomatterTime from "@/utils/tool";
+import getAssetsHost from "api/getAssetsHost";
 
 let now = new Date();
 let year = now.getFullYear();
@@ -122,7 +123,8 @@ const task_status = {
   "7": "漏洞利用",
   "8": "系统提权",
   "9": "敏感信息获取",
-  "10": "报告生成"
+  "10": "报告生成",
+  "11": "任务进度"
 };
 export default {
   components: {
@@ -135,23 +137,28 @@ export default {
       taskListItem: [
         {
           target_info_key: "target_name",
-          target_info_name: "任务名称",
+          target_info_name: "地址",
           target_info_des: 0
         },
         {
           target_info_key: "target_scaning",
-          target_info_name: "任务执行进度",
-          target_info_des: 2
+          target_info_name: "服务器",
+          target_info_des: 0
         },
         {
           target_info_key: "target_startTime",
-          target_info_name: "开始时间",
-          target_info_des: 4
+          target_info_name: "操作系统",
+          target_info_des: 0
         },
         {
           target_info_key: "target_endTime",
-          target_info_name: "结束时间",
-          target_info_des: 4
+          target_info_name: "识别技术",
+          target_info_des: 0
+        },
+        {
+          target_info_key: "target_endTime",
+          target_info_name: "可响应",
+          target_info_des: 0
         }
       ],
       domain_info: [
@@ -161,6 +168,7 @@ export default {
           target_info_des: ""
         }
       ],
+      hostListItem: [],
       formCustom: {},
       target_name: "",
       id: "",
@@ -410,18 +418,17 @@ export default {
     this.taskListItem.forEach(item => {
       item.target_info_des = taskInfo[item.target_info_key];
     });
-    this.domain_info.forEach(item => {
-      item.target_info_des = taskInfo[item.target_info_key];
-    });
     this._targetProgress();
     this._targetNum();
     this._targetLesk();
     this._urlUseRate();
+    this._getAssetsHost();
     this.timer = setInterval(() => {
       this._targetProgress();
       this._targetNum();
       this._targetLesk();
       this._urlUseRate();
+      this._getAssetsHost();
     }, 5000);
   },
   methods: {
@@ -444,7 +451,7 @@ export default {
           this.option.series[0].data[0].value = scaning;
           let temp = [];
           for (let i = 1; i <= scaning; i++) {
-            temp.push(task_status[i]);
+            temp.push(task_status["11"]);
           }
           console.log(temp);
           //进度纵坐标
@@ -456,6 +463,9 @@ export default {
           this.linechart.xAxis.data = ret;
           this.$refs.linechart.refresh();
           this.$refs.completionRate.refresh();
+          this.domain_info.forEach(item => {
+            item.target_info_des = res.target[item.target_info_key];
+          });
         } else {
           this.option.series[0].data[0].value = 0;
           this.$refs.completionRate.refresh();
@@ -487,6 +497,9 @@ export default {
       leaksInfo(params).then(res => {
         if (res.result === 0) {
           this.assetsList = res.rows;
+          // this.domain_info.forEach(item => {
+          //   item.target_info_des = taskInfo[item.target_info_key];
+          // });
         }
       });
     },
@@ -503,6 +516,24 @@ export default {
         } else {
           this.optionthree.series[0].data[0].value = 0;
           this.$refs.holeUtilization.refresh();
+        }
+      });
+    },
+    // 发现主机
+    _getAssetsHost() {
+      const params = { target_id: this.$route.params.target_id };
+      getAssetsHost(params).then(res => {
+        if (res.result === 0) {
+          this.hostListItem = [];
+          if (res.rows && res.rows.length > 0) {
+            res.rows.forEach(item => {
+              this.hostListItem.push({
+                target_info_key: "assets_url",
+                target_info_name: `${item.assets_url}`,
+                target_info_des: "已发现目标"
+              });
+            });
+          }
         }
       });
     }
@@ -580,5 +611,9 @@ export default {
 .ivu-card {
   width: 95%;
   margin: 22px auto;
+}
+.scrollUl {
+  max-height: 169px;
+  overflow: auto;
 }
 </style>
