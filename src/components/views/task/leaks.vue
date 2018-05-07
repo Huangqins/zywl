@@ -310,6 +310,7 @@ export default {
   display: flex;
   flex-direction: row;
   color: seashell;
+  justify-content: space-around;
 }
 .leaks section{
   flex: 1;

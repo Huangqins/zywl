@@ -1,14 +1,18 @@
 <template>
   <div class="table">
     <div class="taskSchedule">
-      <section>
-        <chart width="235px" height="235px" :option="option" id="completionRate" ref="completionRate"></chart>
+      <section >
+        <!-- <chart width="235px" height="235px" :option="option" id="completionRate" ref="completionRate"></chart> -->
       </section>
-      <section>
-        <chart width="235px" height="235px" :option="optipnTwo" id="taskholeNum" ref="taskholeNum"></chart>
+      <section class="circle">
+        <!-- <chart width="235px" height="235px" :option="optipnTwo" id="taskholeNum" ref="taskholeNum"></chart> -->
+        <span class="middle">任务漏洞量</span>
+        <div class="Num yell">121</div>
       </section>
-      <section>
-        <chart width="235px" height="235px" :option="optionthree" id="holeUtilization" ref='holeUtilization'></chart>
+      <section class="circle">
+        <span class="low">漏洞利用率</span>
+        <div class="Num blu">121</div>
+        <!-- <chart width="235px" height="235px" :option="optionthree" id="holeUtilization" ref='holeUtilization'></chart> -->
       </section>
     </div>
     <div class="timeProcess">
@@ -599,8 +603,28 @@ export default {
   color: #fbfbfb;
   justify-content: space-around;
 }
+ .circle{
+  border: 1px solid #e4e5e5;
+  border-radius:3px;
+} 
 .taskSchedule section {
   flex: 1;
+  
+  margin:20px 160px;
+  height: 100px;
+  line-height: 98px;
+  
+  font-size: 16px;
+  text-align: center;
+  
+}
+
+.taskSchedule span {
+    display: block;
+    width: 36%;
+    text-align: center;
+    height: 100%;
+    float: left;
 }
 .timeProcess {
   display: flex;
@@ -620,6 +644,7 @@ export default {
 .secTwo section {
   flex: 1;
   margin: 0px 20px;
+ 
 }
 .clear {
   clear: both;
@@ -644,5 +669,29 @@ export default {
 .scrollUl {
   max-height: 169px;
   overflow: auto;
+}
+.high{
+   background: red;
+}
+.Num{
+  width: 64%;  
+  float: right; 
+  font-size: 26px;
+  font-weight: 700; 
+}
+.middle{
+  background: #FFD572;
+}
+.low{
+  background: #95DCF2;
+}
+.red{
+  color:red;
+}
+.yell{
+  color:  #FFD572;
+}
+.blu{
+  color: #95DCF2;
 }
 </style>
