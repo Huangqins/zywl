@@ -7,11 +7,11 @@
       <section class="circle">
         <!-- <chart width="235px" height="235px" :option="optipnTwo" id="taskholeNum" ref="taskholeNum"></chart> -->
         <span class="middle">任务漏洞量</span>
-        <div class="Num yell">121</div>
+        <div class="Num yell">{{vuln_Num}}</div>
       </section>
       <section class="circle">
         <span class="low">漏洞利用率</span>
-        <div class="Num blu">121</div>
+        <div class="Num blu">{{vuln_rate}}</div>
         <!-- <chart width="235px" height="235px" :option="optionthree" id="holeUtilization" ref='holeUtilization'></chart> -->
       </section>
     </div>
@@ -138,6 +138,8 @@ export default {
   },
   data() {
     return {
+      vuln_Num:"",
+      vuln_rate:"",
       taskListItem: [
         {
           target_info_key: "target_name",
@@ -510,10 +512,10 @@ export default {
       const params = { target_id: this.$route.params.target_id };
       timeLine(params).then(res => {
         if (res.result === 0) {
-          this.optipnTwo.series[0].data[0].value = res.vulnNum;
+          this.vuln_Num= res.vulnNum;
           this.$refs.taskholeNum.refresh();
         } else {
-          this.optipnTwo.series[0].data[0].value = 0;
+          this.vuln_Num = 0;
           this.$refs.taskholeNum.refresh();
         }
       });
@@ -542,10 +544,10 @@ export default {
       const params = { target_id: this.$route.params.target_id };
       urlUseRate(params).then(res => {
         if (res.result === 0) {
-          this.optionthree.series[0].data[0].value = res.rate;
+          this.vuln_rate = res.rate+'%';
           this.$refs.holeUtilization.refresh();
         } else {
-          this.optionthree.series[0].data[0].value = 0;
+            this.vuln_rate = 0+'%'
           this.$refs.holeUtilization.refresh();
         }
       });
