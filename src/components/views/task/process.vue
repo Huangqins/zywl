@@ -3,13 +3,17 @@
     <div class="taskSchedule">
       <section>
         <!-- <chart width="235px" height="235px" :option="option" id="completionRate" ref="completionRate"></chart> -->
-        <percent-chart></percent-chart>
+        <percent-chart :option="percentOption"></percent-chart>
       </section>
-      <section>
-        <chart width="235px" height="235px" :option="optipnTwo" id="taskholeNum" ref="taskholeNum"></chart>
+      <section class="circle">
+        <!-- <chart width="235px" height="235px" :option="optipnTwo" id="taskholeNum" ref="taskholeNum"></chart> -->
+        <span class="middle">任务漏洞量</span>
+        <div class="Num yell">121</div>
       </section>
-      <section>
-        <chart width="235px" height="235px" :option="optionthree" id="holeUtilization" ref='holeUtilization'></chart>
+      <section class="circle">
+        <span class="low">漏洞利用率</span>
+        <div class="Num blu">121</div>
+        <!-- <chart width="235px" height="235px" :option="optionthree" id="holeUtilization" ref='holeUtilization'></chart> -->
       </section>
     </div>
     <div class="timeProcess">
@@ -75,7 +79,7 @@
                  风险信息
               </p>
               <ul>
-                  <page class="table" :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width" height=120></page>
+                  <page class="table"   :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width" height=120></page>
               </ul>
             </Card>
       </section>
@@ -137,6 +141,51 @@ export default {
   },
   data() {
     return {
+      percent: 0, //伪进度最大为9
+      scaning: 0, //任务阶段
+      percentOption: {
+        title: {
+          text: "0%",
+          subtext: "",
+          x: "center",
+          y: "center",
+          textStyle: {
+            fontWeight: "normal",
+            color: "#fff",
+            fontSize: "16"
+          }
+        },
+        series: [
+          {
+            name: "访问来源",
+            type: "pie",
+            radius: ["50%", "60%"],
+            avoidLabelOverlap: false,
+            hoverAnimation: false,
+            label: {
+              normal: {
+                show: false,
+                position: "center"
+              }
+            },
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
+            data: [
+              { value: 0, name: "1" },
+              {
+                value: 0,
+                name: "2",
+                itemStyle: {
+                  color: "#ccc"
+                }
+              }
+            ]
+          }
+        ]
+      },
       taskListItem: [
         {
           target_info_key: "target_name",
@@ -282,6 +331,34 @@ export default {
           key: "vuln_Payload",
           align: "center",
           width: 200
+        },
+        {
+          title: "操作",
+          align: "center",
+          width: 60,
+          render: (h, params) => {
+            return h("div", [
+              h("Button", {
+                props: {
+                  type: "primary",
+                  size: "small",
+                  icon: "search"
+                },
+                on: {
+                  click: () => {
+                    // console.log(params.row)
+                    this.$router.push({
+                      name: "vulndetail",
+                      params: {
+                        targetId: this.$route.params.target_id,
+                        vulnId: params.row.vuln_id
+                      }
+                    });
+                  }
+                }
+              })
+            ]);
+          }
         }
       ],
       taskInfo: [],
@@ -447,20 +524,47 @@ export default {
       targetProgress(params).then(res => {
         if (res.result === 0) {
           let scaning = res.target.target_scaning;
-          // console.log(scaning)
+          // if (scaning > this.scaning) {
+          //   this.percent = 0;
+          // }
+          this.percentOption.title.text = `${scaning * 10}%`;
+          this.percentOption.title.subtext = `${task_status[scaning]}`;
+          this.percentOption.series[0].data[0].value = scaning * 10;
+          this.percentOption.series[0].data[1].value = 100 - scaning * 10;
+          // let time = setInterval(() => {
+          //   ++this.percent;
+          //   if (this.percent === 9) {
+          //     this.percent = 9;
+          //   }
+          //   this.percentOption.series[0].data[0].value =
+          //     scaning * 10 + this.percent;
+          //   this.percentOption.series[0].data[1].value =
+          //     100 - (scaning * 10 + this.percent);
+          //   clearInterval(time);
+          // }, 1000);
+          // this.scaning = scaning;
           if (scaning == "10") {
             clearInterval(this.timer);
           }
           this.option.series[0].data[0].value = scaning;
           let temp = [];
           for (let i = 1; i <= scaning; i++) {
-            temp.push(task_status["11"]);
+            temp.push({
+              value: task_status["11"],
+              symbolOffset: [0, "-70%"],
+              symbolSize: 30,
+              symbol: "image://" + require(`./svg/${i}.svg`),
+              tooltip: {
+                formatter: function(params) {
+                  return "111";
+                }
+              }
+            });
           }
-          console.log(temp);
           //进度纵坐标
           this.linechart.series[0].data = temp;
           let ret = [];
-          res.target.target_rftime.split(",").forEach(item => {
+          res.target.target_rftime.split(",").forEach((item, index) => {
             ret.push(item.split(" ")[1]);
           });
           this.linechart.xAxis.data = ret;
@@ -484,10 +588,10 @@ export default {
       timeLine(params).then(res => {
         if (res.result === 0) {
           this.optipnTwo.series[0].data[0].value = res.vulnNum;
-          this.$refs.taskholeNum.refresh();
+          // this.$refs.taskholeNum.refresh();
         } else {
           this.optipnTwo.series[0].data[0].value = 0;
-          this.$refs.taskholeNum.refresh();
+          // this.$refs.taskholeNum.refresh();
         }
       });
     },
@@ -506,6 +610,7 @@ export default {
         }
       });
     },
+
     /**
      * 漏洞利用率
      * params:
@@ -515,10 +620,10 @@ export default {
       urlUseRate(params).then(res => {
         if (res.result === 0) {
           this.optionthree.series[0].data[0].value = res.rate;
-          this.$refs.holeUtilization.refresh();
+          // this.$refs.holeUtilization.refresh();
         } else {
           this.optionthree.series[0].data[0].value = 0;
-          this.$refs.holeUtilization.refresh();
+          // this.$refs.holeUtilization.refresh();
         }
       });
     },
@@ -575,15 +680,34 @@ export default {
   color: #fbfbfb;
   justify-content: space-around;
 }
+.circle {
+  border: 1px solid #e4e5e5;
+  border-radius: 3px;
+}
 .taskSchedule section {
   flex: 1;
+
+  margin: 20px 160px;
+  height: 100px;
+  line-height: 98px;
+
+  font-size: 16px;
+  text-align: center;
+}
+
+.taskSchedule span {
+  display: block;
+  width: 36%;
+  text-align: center;
+  height: 100%;
+  float: left;
 }
 .timeProcess {
   display: flex;
   padding: 0 50px;
 }
 .timeProcess section {
- width: 100%;
+  width: 100%;
 }
 .secTwo {
   width: 100%;
@@ -618,5 +742,29 @@ export default {
 .scrollUl {
   max-height: 169px;
   overflow: auto;
+}
+.high {
+  background: red;
+}
+.Num {
+  width: 64%;
+  float: right;
+  font-size: 26px;
+  font-weight: 700;
+}
+.middle {
+  background: #ffd572;
+}
+.low {
+  background: #95dcf2;
+}
+.red {
+  color: red;
+}
+.yell {
+  color: #ffd572;
+}
+.blu {
+  color: #95dcf2;
 }
 </style>
