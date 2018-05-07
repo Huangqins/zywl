@@ -3,8 +3,14 @@
           <div class="leaks">
             
             <section>
-              <span class="high">高风险</span>
-              <div class="Num red">{{high}}</div>
+              <span class="high"></span>
+              <div class="Num red">
+                <div class="vuln_num"> 
+                </div>
+               <div class="vuln_text">                  
+                  <p>高风险</p>
+                </div>
+                </div>
             </section>
               <!-- <chart width="235" height="235" :option="options" ref="chartOne"></chart> -->
 
@@ -12,12 +18,24 @@
             
               <!-- <chart width="235" height="235" :option="optionTwo" id="optionTwo" ref="chartTwo"></chart> -->
             <section>
-              <span class="middle">中风险</span>
-              <div class="Num yell">121</div>
+              <span class="middle"></span>
+              <div class="Num yell">
+               <div  class="vuln_num">
+                </div>
+                <div class="vuln_text">                  
+                  <p>中风险</p>
+                </div>
+                </div>
             </section>
             <section>
-              <span class="low">低风险</span>
-              <div class="Num blu">121</div>
+              <span class="low"></span>
+              <div class="Num blu">
+                <div  class="vuln_num">
+                </div>
+                <div class="vuln_text">                  
+                  <p>低风险</p>
+                </div>
+              </div>
             </section>
               <!-- <chart width="235" height="235" :option="optionThree" id="optionThree" ref="chartThree"></chart> -->
                  
@@ -295,6 +313,18 @@ export default {
 </script>
 
 <style>
+.vuln_num{
+  width:100%;
+  height:50px;
+  line-height:68px;
+  text-align:center
+}
+.vuln_text{
+   width:100%;
+   height:50px;
+   text-align:center;
+   font-size:13px;
+}
 .list {
   width: 100%;
   color: #e4e5e5;
@@ -318,7 +348,6 @@ export default {
   border: 1px solid #e4e5e5;
   border-radius: 4px;
   height: 100px;
-  line-height: 98px;
   font-size: 16px;
   text-align: center;
   

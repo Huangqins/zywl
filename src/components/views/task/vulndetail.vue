@@ -43,7 +43,7 @@ const vulnlevel = {
 export default {
   data(){
       return{
-           value1:"",
+           value1:[1,2,3,4,5],
            vuln_name:'',
            vuln_level:'',
            kb_vuln_des:'',
@@ -73,9 +73,6 @@ export default {
 .ivu-collapse{
   background: transparent;
  
-}
-.ivu-collapse-content{
-    
 }
 .whole{
     width: 100%;

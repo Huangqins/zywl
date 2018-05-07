@@ -7,12 +7,26 @@
       </section>
       <section class="circle">
         <!-- <chart width="235px" height="235px" :option="optipnTwo" id="taskholeNum" ref="taskholeNum"></chart> -->
-        <span class="middle">任务漏洞量</span>
-        <div class="Num yell">121</div>
+        <span class="middle"></span>
+        <div class="Num yell">
+          <div  class="vuln_num">
+            {{vuln_Num}}
+          </div>
+          <div class="vuln_text">
+            <p>任务漏洞量</p>
+          </div>
+          
+          </div>
       </section>
       <section class="circle">
-        <span class="low">漏洞利用率</span>
-        <div class="Num blu">121</div>
+        <span class="low"></span>
+        <div class="Num blu" >
+          <div class="vuln_num">
+             {{vuln_rate}}
+          </div>
+         
+          <div class="vuln_text">漏洞利用率</div>
+        </div>
         <!-- <chart width="235px" height="235px" :option="optionthree" id="holeUtilization" ref='holeUtilization'></chart> -->
       </section>
     </div>
@@ -186,6 +200,8 @@ export default {
           }
         ]
       },
+      vuln_Num:"",
+      vuln_rate:"",
       taskListItem: [
         {
           target_info_key: "target_name",
@@ -587,11 +603,11 @@ export default {
       const params = { target_id: this.$route.params.target_id };
       timeLine(params).then(res => {
         if (res.result === 0) {
-          this.optipnTwo.series[0].data[0].value = res.vulnNum;
-          // this.$refs.taskholeNum.refresh();
+          this.vuln_Num= res.vulnNum;
+          this.$refs.taskholeNum.refresh();
         } else {
-          this.optipnTwo.series[0].data[0].value = 0;
-          // this.$refs.taskholeNum.refresh();
+          this.vuln_Num = 0;
+          this.$refs.taskholeNum.refresh();
         }
       });
     },
@@ -619,11 +635,11 @@ export default {
       const params = { target_id: this.$route.params.target_id };
       urlUseRate(params).then(res => {
         if (res.result === 0) {
-          this.optionthree.series[0].data[0].value = res.rate;
-          // this.$refs.holeUtilization.refresh();
+          this.vuln_rate = res.rate+'%';
+          this.$refs.holeUtilization.refresh();
         } else {
-          this.optionthree.series[0].data[0].value = 0;
-          // this.$refs.holeUtilization.refresh();
+            this.vuln_rate = 0+'%'
+          this.$refs.holeUtilization.refresh();
         }
       });
     },
@@ -652,6 +668,18 @@ export default {
 };
 </script>
 <style scoped>
+.vuln_num{
+  width:100%;
+  height:50px;
+  line-height:68px;
+  text-align:center
+}
+.vuln_text{
+   width:100%;
+   height:50px;
+   text-align:center;
+   font-size:13px;
+}
 .ivu-card-head {
   padding: 6px 16px;
 }
@@ -685,16 +713,15 @@ export default {
   border-radius: 3px;
 }
 .taskSchedule section {
-  flex: 1;
-
-  margin: 20px 160px;
-  height: 100px;
-  line-height: 98px;
-
+  flex: 1;  
+  margin:20px 160px;
+  height: 100px;  
   font-size: 16px;
-  text-align: center;
+  text-align: center;  
 }
-
+.taskSchedule section p{
+  font-size: 13px;
+}
 .taskSchedule span {
   display: block;
   width: 36%;
@@ -750,7 +777,8 @@ export default {
   width: 64%;
   float: right;
   font-size: 26px;
-  font-weight: 700;
+  font-weight: 700; 
+  /* padding-top:18px;  */
 }
 .middle {
   background: #ffd572;
