@@ -33,6 +33,14 @@ export default {
       }
     }
   },
+  watch: {
+    option: {
+      deep: true,
+      handler(val) {
+        this.chart.setOption(val);
+      }
+    }
+  },
   mounted() {
     this.init();
     this.resize();

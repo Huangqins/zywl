@@ -2,7 +2,8 @@
   <div class="table">
     <div class="taskSchedule">
       <section>
-        <chart width="235px" height="235px" :option="option" id="completionRate" ref="completionRate"></chart>
+        <!-- <chart width="235px" height="235px" :option="option" id="completionRate" ref="completionRate"></chart> -->
+        <percent-chart></percent-chart>
       </section>
       <section>
         <chart width="235px" height="235px" :option="optipnTwo" id="taskholeNum" ref="taskholeNum"></chart>
@@ -92,6 +93,7 @@ import targetProgress from "api/targetProgress";
 import urlUseRate from "api/urlUseRate";
 import fomatterTime from "@/utils/tool";
 import getAssetsHost from "api/getAssetsHost";
+import percentChart from "./percentChart";
 
 let now = new Date();
 let year = now.getFullYear();
@@ -129,7 +131,8 @@ const task_status = {
 export default {
   components: {
     chart,
-    page
+    page,
+    percentChart
     // zhexiantu
   },
   data() {
@@ -462,13 +465,13 @@ export default {
           });
           this.linechart.xAxis.data = ret;
           this.$refs.linechart.refresh();
-          this.$refs.completionRate.refresh();
+          // this.$refs.completionRate.refresh();
           this.domain_info.forEach(item => {
             item.target_info_des = res.target[item.target_info_key];
           });
         } else {
           this.option.series[0].data[0].value = 0;
-          this.$refs.completionRate.refresh();
+          // this.$refs.completionRate.refresh();
         }
       });
     },
@@ -578,11 +581,9 @@ export default {
 .timeProcess {
   display: flex;
   padding: 0 50px;
-  width: 100%;
 }
 .timeProcess section {
-  width: 100%;
-  /*flex: 0 0 20px;*/
+ width: 100%;
 }
 .secTwo {
   width: 100%;
