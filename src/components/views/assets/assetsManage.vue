@@ -20,17 +20,17 @@
                   <div class="holeList">
                     <ul>
                         <li class="listOne">
-                        <span class="holeHeader">漏洞排行</span>
-                        <span class="holeHeader">漏洞名称</span>
-                        <span class="holeHeader">漏洞数量</span>
+                          <span class="holeHeader">漏洞排行</span>
+                          <span class="holeHeader">漏洞名称</span>
+                          <span class="holeHeader">漏洞数量</span>
                         </li>
                         <li v-for="(item,index) in holes" :key="index">
                         <span v-if="index===0"><img src="../../../../static/top1.png" ></span>
                         <span v-else-if="index===1"><img src="../../../../static/top2.png" ></span>
                         <span v-else-if="index===2"><img src="../../../../static/top3.png"/></span>
                         <span v-else-if="index>=3">{{index}}</span>
-                        <span>{{item.holeName}}</span>
-                        <span>{{item.holeNum}}</span>
+                        <span>{{item.name}}</span>
+                        <span>{{item.vuln_total}}</span>
                         </li>
                     </ul>
                   </div>
@@ -54,6 +54,7 @@ import assetsInfo from "api/assetsInfo";
 import topology from "components/chart/topology";
 import page from "components/page/page";
 import { getUserName } from "@/utils/auth";
+import vulnTop from "api/vulnTop"
 export default {
   name: "assetsManage",
   components: {
@@ -98,50 +99,50 @@ export default {
       },
       //top10排行榜
       holes: [
-        {
-          holeName: "XSS",
-          holeNum: "12"
-        },
-        {
-          holeName: "WEB",
-          holeNum: "10"
-        },
-        {
-          holeName: "CSRF",
-          holeNum: "9"
-        },
-        {
-          holeName: "CSRF",
-          holeNum: "8"
-        },
-        {
-          holeName: "CSRF",
-          holeNum: "7"
-        },
-        {
-          holeName: "CSRF",
-          holeNum: "6"
-        },
-        {
-          holeName: "CSRF",
-          holeNum: "5"
-        },
-        {
-          holeName: "CSRF",
-          holeNum: "4"
-        },
-        {
-          holeName: "CSRF",
-          holeNum: "3"
-        },
-        {
-          holeName: "CSRF",
-          holeNum: "2"
-        },
-        {
-          holeName: "CSRF",
-          holeNum: "1"
-        }
+        // {
+        //   holeName: "XSS",
+        //   holeNum: "12"
+        // },
+        // {
+        //   holeName: "WEB",
+        //   holeNum: "10"
+        // },
+        // {
+        //   holeName: "CSRF",
+        //   holeNum: "9"
+        // },
+        // {
+        //   holeName: "CSRF",
+        //   holeNum: "8"
+        // },
+        // {
+        //   holeName: "CSRF",
+        //   holeNum: "7"
+        // },
+        // {
+        //   holeName: "CSRF",
+        //   holeNum: "6"
+        // },
+        // {
+        //   holeName: "CSRF",
+        //   holeNum: "5"
+        // },
+        // {
+        //   holeName: "CSRF",
+        //   holeNum: "4"
+        // },
+        // {
+        //   holeName: "CSRF",
+        //   holeNum: "3"
+        // },
+        // {
+        //   holeName: "CSRF",
+        //   holeNum: "2"
+        // },
+        // {
+        //   holeName: "CSRF",
+        //   holeNum: "1"
+        // }
       ],
       assetsList: [],
       width: "800px",
@@ -206,15 +207,22 @@ export default {
   created() {
     const params = Object.assign({}, this.defaultPage);
     this._assetsInfo(this.defaultPage);
+    this.vulntop()
   },
   methods: {
+    vulntop(){
+      const params={ }
+     vulnTop(params).then(res => {
+        let data=res.lists
+       this.holes=data
+     }) 
+    },
     rowClassName(row, index) {
       return "demo-table-info-row";
     },
     async _assetsInfo(params) {
       this.loading = true;
       const res = await assetsInfo(params);
-      console.log(res.result);
       if (res.rows[0] === null) {
         this.loading = false;
         this.assetsList = [];
