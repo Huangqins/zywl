@@ -74,7 +74,7 @@
                  风险信息
               </p>
               <ul>
-                  <page class="table" :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width" height=120></page>
+                  <page class="table"   :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width" height=120></page>
               </ul>
             </Card>
       </section>  
@@ -279,7 +279,33 @@ export default {
           key: "vuln_Payload",
           align: "center",
           width: 200
-        }
+        },
+        {
+          title: "操作",
+          align: "center",
+          width: 60,
+          render:(h,params) => {
+            return h("div",[
+              h("Button", {
+                props: {
+                  type: "primary",
+                  size: "small",
+                  icon: "search"
+                },
+                on: {
+                  click: () => {
+                    // console.log(params.row)
+                      this.$router.push({
+                          name: "vulndetail",
+                          params: {  targetId: this.$route.params.target_id,vulnId:params.row.vuln_id}
+                      });
+                  }
+                }
+              })
+            ])
+          }
+
+        },
       ],
       taskInfo: [],
       timer: "",
@@ -429,6 +455,7 @@ export default {
       this._targetLesk();
       this._urlUseRate();
       this._getAssetsHost();
+     
     }, 5000);
   },
   methods: {
@@ -453,7 +480,6 @@ export default {
           for (let i = 1; i <= scaning; i++) {
             temp.push(task_status["11"]);
           }
-          console.log(temp);
           //进度纵坐标
           this.linechart.series[0].data = temp;
           let ret = [];
@@ -503,6 +529,7 @@ export default {
         }
       });
     },
+    
     /**
      * 漏洞利用率
      * params:

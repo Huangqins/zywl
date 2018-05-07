@@ -143,3 +143,16 @@ a {
 .ivu-menu-dark.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu), .ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu-title-active:not(.ivu-menu-submenu) {
     padding-right: 2px;
 }
+.vulndetail .ivu-collapse-content{
+    background: transparent;
+    color: #fbfbfb;
+}
+.vulndetail  .ivu-collapse{
+    border: none;
+}
+.vulndetail  .ivu-collapse>.ivu-collapse-item>.ivu-collapse-header{
+    color: #fbfbfb;
+}
+.vulndetail .ivu-collapse>.ivu-collapse-item{
+    border: none;
+}

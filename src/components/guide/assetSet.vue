@@ -28,7 +28,6 @@ import taskList from "api/taskList";
 import exportPDF from "api/exportPDF";
 import getAssetURL from "api/getAssetURL";
 import deleteTask from "api/deleteTask";
-
 const strategy = { flag: 1 };
 const cycle = { flag: 2 };
 //添加任务验证
@@ -253,6 +252,7 @@ export default {
                       name: "process",
                       params: { targetInfo: params.row, target_id: params.row.target_id}
                     });
+                      
                   }
                 }
               }),
@@ -300,6 +300,7 @@ export default {
     this._taskList(this.params);
   },
   methods: {
+
     _taskList(params) {
       this.pageLoading = true;
       taskList(params).then(res => {
@@ -313,6 +314,7 @@ export default {
     taskAdd() {
       this.$refs.formValidate.open();
     },
+    
     taskDelete(params) {
       deleteTask(params).then(res => {
         if (res.result === 0) {
