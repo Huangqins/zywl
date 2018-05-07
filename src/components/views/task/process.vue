@@ -604,10 +604,10 @@ export default {
       timeLine(params).then(res => {
         if (res.result === 0) {
           this.vuln_Num= res.vulnNum;
-          this.$refs.taskholeNum.refresh();
+          // this.$refs.taskholeNum.refresh();
         } else {
           this.vuln_Num = 0;
-          this.$refs.taskholeNum.refresh();
+          // this.$refs.taskholeNum.refresh();
         }
       });
     },
@@ -636,10 +636,10 @@ export default {
       urlUseRate(params).then(res => {
         if (res.result === 0) {
           this.vuln_rate = res.rate+'%';
-          this.$refs.holeUtilization.refresh();
+          // this.$refs.holeUtilization.refresh();
         } else {
             this.vuln_rate = 0+'%'
-          this.$refs.holeUtilization.refresh();
+          // this.$refs.holeUtilization.refresh();
         }
       });
     },
