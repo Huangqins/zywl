@@ -2,18 +2,18 @@
   <div class="table">
     <div class="taskSchedule">
       <section>
-        <chart width="235" height="235" :option="option" id="completionRate" ref="completionRate"></chart>
+        <chart width="235px" height="235px" :option="option" id="completionRate" ref="completionRate"></chart>
       </section>
       <section>
-        <chart width="235" height="235" :option="optipnTwo" id="taskholeNum" ref="taskholeNum"></chart>
-      </section> 
-      <section> 
-        <chart width="235" height="235" :option="optionthree" id="holeUtilization" ref='holeUtilization'></chart>
+        <chart width="235px" height="235px" :option="optipnTwo" id="taskholeNum" ref="taskholeNum"></chart>
+      </section>
+      <section>
+        <chart width="235px" height="235px" :option="optionthree" id="holeUtilization" ref='holeUtilization'></chart>
       </section>
     </div>
     <div class="timeProcess">
       <section>
-        <chart  height="160" width="1000" :option="linechart"  ref="linechart"></chart>
+        <chart  height="160px" width="100%" :option="linechart"  ref="linechart"></chart>
       </section>
     </div>
     <div class="secTwo">
@@ -32,7 +32,7 @@
                   </li>
               </ul>
           </Card>
-      </section>    
+      </section>
       <section>
           <Card >
               <p slot="title">
@@ -66,7 +66,7 @@
                   </li>
               </ul>
         </Card>
-      </section>       
+      </section>
       <section>
           <Card >
               <p slot="title">
@@ -77,7 +77,7 @@
                   <page class="table"   :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width" height=120></page>
               </ul>
             </Card>
-      </section>  
+      </section>
     </div>
   </div>
 </template>
@@ -605,9 +605,11 @@ export default {
 .timeProcess {
   display: flex;
   padding: 0 50px;
+  width: 100%;
 }
 .timeProcess section {
-  flex: 0 0 20px;
+  width: 100%;
+  /*flex: 0 0 20px;*/
 }
 .secTwo {
   width: 100%;
