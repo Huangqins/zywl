@@ -1,9 +1,11 @@
 <template>
 <div>
-    <div :id="id" :style="{width: width + 'px', height: height + 'px',margin: '0 auto'}"></div>
+    <div :id="id" :style="{width: width, height: height,margin: '0 auto'}"></div>
 </div>
 </template>
 <script>
+  import { debounce } from "@/utils";
+
 export default {
   name: "chart",
   data() {
@@ -17,12 +19,12 @@ export default {
       default: "canvas"
     },
     height: {
-      type: [Number,String],
-      default: 300
+      type: String,
+      default: '300px'
     },
     width: {
-      type: [Number,String],
-      default: 400
+      type: String,
+      default: '400px'
     },
     option: {
       type: Object,
@@ -33,6 +35,11 @@ export default {
   },
   mounted() {
     this.init();
+    this.resize();
+    let sideBar = document.getElementsByClassName('ivu-layout-sider')[0];
+    sideBar.addEventListener('transitionend', () => {
+      this.chart.resize();
+    })
   },
   methods: {
     init() {
@@ -41,6 +48,11 @@ export default {
     },
     refresh() {
        this.chart.setOption(this.option);
+    },
+    resize() {
+      window.addEventListener('resize', () => {
+        this.chart.resize();
+      })
     }
   }
 };
