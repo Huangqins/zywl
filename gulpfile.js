@@ -16,7 +16,7 @@
 //     'css/**',
 //     'js/**',
 //     'fonts/**',
-//     'index.html'
+//     'index.html'P
 //   ];
 //   return gulp.src(globs, {
 //       base: './dist',

@@ -160,6 +160,10 @@ export default {
         title: {
           text: "0%",
           subtext: "",
+          subtextStyle:{
+            color:"#fbfbfb",
+            fontSize:"12",
+          },
           x: "center",
           y: "center",
           textStyle: {
@@ -192,7 +196,8 @@ export default {
                 value: 0,
                 name: "2",
                 itemStyle: {
-                  color: "#ccc"
+                  color: "#ccc",
+                  
                 }
               }
             ]
@@ -443,7 +448,8 @@ export default {
               formatter: function(value) {
                 return task_status[value];
               },
-              fontSize: 20
+              fontSize: 20,
+              
             },
             data: [{ value: 0, name: "执行阶段" }],
             title: { color: "#E4E5E5", fontSize: 12 },

@@ -6,16 +6,16 @@
               <h2>{{vuln_name}}</h2>
                <span class="level">{{vuln_level}}</span><span></span>
             </div>
-            <Panel name="1">
-               风险描述
+            <Panel name="1" >
+              风险描述
                 <p slot="content"> {{kb_vuln_des}}</p>
             </Panel>
             <Panel name="2">
-               http响应
+                <span style="color:red"> http响应</span>
                 <p slot="content"></p>
             </Panel>
-            <Panel name="3">
-                该风险的影响
+            <Panel name="3" >
+                <span style="color:red">该风险的影响</span>
                 <p slot="content">{{kb_vuln_anly}}</p>
             </Panel>
             <Panel name="4">
@@ -41,53 +41,55 @@ const vulnlevel = {
   "0": "无"
 };
 export default {
-  data(){
-      return{
-           value1:[1,2,3,4,5],
-           vuln_name:'',
-           vuln_level:'',
-           kb_vuln_des:'',
-           kb_vuln_anly:'',
-           kb_vuln_ref:''
-      }
+  data() {
+    return {
+      value1: [1, 2, 3, 4, 5],
+      vuln_name: "",
+      vuln_level: "",
+      kb_vuln_des: "",
+      kb_vuln_anly: "",
+      kb_vuln_ref: ""
+    };
   },
-  created(){
-      this.vulnDetail()
+  created() {
+    this.vulnDetail();
   },
-  methods:{
-     vulnDetail(){        
-       const params =this.$route.params;       
-       vulnDetail(params).then(res => {
-         let data= res.rows;
-         this.vuln_name=data[0].vuln_name
-         this.vuln_level= vulnlevel[data[0].vuln_level]
-         this.kb_vuln_des=data[0].kb_vuln_des
-         this.kb_vuln_anly=data[0].kb_vuln_anly
-         this.kb_vuln_ref=data[0].kb_vuln_ref
-       })
-    }, 
+  methods: {
+    vulnDetail() {
+      const params = this.$route.params;
+      vulnDetail(params).then(res => {
+        let data = res.rows;
+        this.vuln_name = data[0].vuln_name;
+        this.vuln_level = vulnlevel[data[0].vuln_level];
+        if(this.vuln_level==="中"){
+          console.log(12)
+        }
+        
+        this.kb_vuln_des = data[0].kb_vuln_des;
+        this.kb_vuln_anly = data[0].kb_vuln_anly;
+        this.kb_vuln_ref = data[0].kb_vuln_ref;
+      });
+    }
   }
-}
+};
 </script>
 <style scoped>
-.ivu-collapse{
+.ivu-collapse {
   background: transparent;
- 
 }
-.whole{
-    width: 100%;
-    padding: 10px 20px;
-     color: #fbfbfb;
+.whole {
+  width: 100%;
+  padding: 10px 20px;
+  color: #fbfbfb;
 }
-.whole h2{
-   margin-bottom: 10px;
+.whole h2 {
+  margin-bottom: 10px;
 }
-.level{
-    display: inline-block;
-    padding:5px 8px;
-    background: #23B7E5;
-    text-align: center;
-    border-radius: 3px;
+.level {
+  display: inline-block;
+  padding: 5px 8px;
+  background: #FAA732;
+  text-align: center;
+  border-radius: 3px;
 }
-
 </style>

@@ -170,9 +170,45 @@ export default {
         {
           title: "操作",
           align: "center",
-          width: 150,
+          width: 200,
           render: (h, params) => {
             return h("div", [
+               h("Button", {
+                props: {
+                  type: "primary",
+                  size: "small",
+                  icon: "pause"
+                },
+              
+                on: {
+                  click: () => {
+                    this.$router.push({
+                      name: "process",
+                      params: { targetInfo: params.row, target_id: params.row.target_id}
+                    });
+                      
+                  }
+                }
+              }),
+              h("Button", {
+                props: {
+                  type: "primary",
+                  size: "small",
+                  icon: "play"
+                }, 
+                 style: {
+                  marginLeft: "5px"
+                },              
+                on: {
+                  click: () => {
+                    this.$router.push({
+                      name: "process",
+                      params: { targetInfo: params.row, target_id: params.row.target_id}
+                    });
+                      
+                  }
+                }
+              }),
               h(
                 "a",
                 {
@@ -196,7 +232,8 @@ export default {
                     lineHeight: "1.5",
                     color: "#fff",
                     padding: "2px 7px",
-                    borderRadius: "3px"
+                    borderRadius: "3px",
+                    marginLeft: "5px"
                   },
                   on: {
                     click: ev => {

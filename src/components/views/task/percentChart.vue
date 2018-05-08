@@ -1,5 +1,5 @@
 <template>
-  <chart id="percent" width="200px" height="200px" :option="option"></chart>
+  <chart id="percent" width="100px" height="100px" :option="option"></chart>
 </template>
 <script>
 import chart from "components/chart/chart";
