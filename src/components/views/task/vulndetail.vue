@@ -41,11 +41,11 @@ const vulnlevel = {
   "0": "无"
 };
 const vulncolor = {
-  "4": "red",
-  "3": "pink",
+  "4": "#993333",
+  "3": "#DE5145",
   "2": "#FAA732",
-  "1": "#ccc",
-  "0": "green"
+  "1": "#23B7E5",
+  "0": "#27C24C"
 };
 export default {
   data() {

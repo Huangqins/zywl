@@ -5,7 +5,7 @@
         <section >
                   <div class="vulnLevel">
                     <div class="levelRight">
-                      <chart :option="options" width="190" height="190"></chart>
+                      <chart :option="options" width="190px" height="190px"></chart>
                     </div>
                     <div class="levelLeft">
                       <h4 class="levelTitle">风险级别</h4>
