@@ -164,27 +164,27 @@ export default {
         },
         {
           title: "风险总数",
-          key: "assets_count",
+          key: "vuln_total",
           align: "center"
         },
         {
           title: "高风险",
-          key: "assets_count",
+          key: "vuln_high",
           align: "center"
         },
         {
           title: "中风险",
-          key: "assets_count",
+          key: "vuln_medium",
           align: "center"
         },
         {
           title: "低风险",
-          key: "assets_count",
+          key: "vuln_low",
           align: "center"
         },
         {
           title: "风险利用情况",
-          key: "assets_count",
+          key: "vuln_use",
           align: "center"
         }
 
