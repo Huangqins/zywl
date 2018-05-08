@@ -14,7 +14,7 @@
                    <chart width="370px" height="260px" :option="options"></chart>
                 </section>
                 <section>
-                  <chart width="290px" height="260px" :option="optionOne" id="optionOne"></chart>
+                  <chart width="370px" height="260px" :option="optionOne" id="optionOne"></chart>
                 </section>
                 <section>
                   <chart width="290px" height="260px" :option="optionTwo" id="optionTwo"></chart>
@@ -441,7 +441,7 @@ export default {
           list.forEach(item => {
             this.optionOne.series[0].data.push({
               value: item.kb_vuln_vnum,
-              name: item.kb_vuln_level,
+              name: levelSchema[item.kb_vuln_level],
               itemStyle: {
                 color: vuln_level_color[item.kb_vuln_level]
               }
