@@ -173,20 +173,22 @@ export default {
           width: 200,
           render: (h, params) => {
             return h("div", [
-               h("Button", {
+              h("Button", {
                 props: {
                   type: "primary",
                   size: "small",
                   icon: "pause"
                 },
-              
+
                 on: {
                   click: () => {
                     this.$router.push({
                       name: "process",
-                      params: { targetInfo: params.row, target_id: params.row.target_id}
+                      params: {
+                        targetInfo: params.row,
+                        target_id: params.row.target_id
+                      }
                     });
-                      
                   }
                 }
               }),
@@ -195,17 +197,19 @@ export default {
                   type: "primary",
                   size: "small",
                   icon: "play"
-                }, 
-                 style: {
+                },
+                style: {
                   marginLeft: "5px"
-                },              
+                },
                 on: {
                   click: () => {
                     this.$router.push({
                       name: "process",
-                      params: { targetInfo: params.row, target_id: params.row.target_id}
+                      params: {
+                        targetInfo: params.row,
+                        target_id: params.row.target_id
+                      }
                     });
-                      
                   }
                 }
               }),
@@ -214,7 +218,9 @@ export default {
                 {
                   attrs: {
                     type: "application/pdf",
-                    href:  params.row.export_url? location.origin + "/ZY" + params.row.export_url : null,
+                    href: params.row.export_url
+                      ? location.origin + "/ZY" + params.row.export_url
+                      : null,
                     download: params.row.pdf_name ? params.row.pdf_name : false
                   },
                   style: {
@@ -287,9 +293,11 @@ export default {
                   click: () => {
                     this.$router.push({
                       name: "process",
-                      params: { targetInfo: params.row, target_id: params.row.target_id}
+                      params: {
+                        targetInfo: params.row,
+                        target_id: params.row.target_id
+                      }
                     });
-                      
                   }
                 }
               }),
@@ -304,7 +312,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.taskDelete(params.row)
+                    this.taskDelete(params.row);
                   }
                 }
               })
@@ -337,11 +345,19 @@ export default {
     this._taskList(this.params);
   },
   methods: {
-
-    _taskList(params) {
+    _taskList(params, next) {
       this.pageLoading = true;
       taskList(params).then(res => {
         if (res.result === 0) {
+          if (next) {
+            this.$router.push({
+              name: "process",
+              params: {
+                targetInfo: res.targets[0],
+                target_id: res.targets[0].target_id
+              }
+            });
+          }
           this.pageLoading = false;
           this.tasksList = res.targets;
           this.dataTotal = res.total;
@@ -351,16 +367,16 @@ export default {
     taskAdd() {
       this.$refs.formValidate.open();
     },
-    
+
     taskDelete(params) {
       deleteTask(params).then(res => {
         if (res.result === 0) {
-          this.$Message.success(`删除成功`)
+          this.$Message.success(`删除成功`);
           this._taskList(this.params);
         } else {
-          this.$Message.error(`删除失败`)
+          this.$Message.error(`删除失败`);
         }
-      })
+      });
     },
     //提交
     asyncOK(data) {
@@ -372,7 +388,7 @@ export default {
           this.loading = false;
           this.$refs.formValidate.close();
           // this.$router.push({ path: "/taskexecution" });
-          this._taskList(this.params);
+          this._taskList(this.params,true);
         } else if (res.result === 2) {
           this.$Message.error({
             content: "资产填写有误或资产不存在"
