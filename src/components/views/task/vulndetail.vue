@@ -4,7 +4,7 @@
          <Collapse v-model="value1">
             <div style="width:100%;height:100px;padding:10px 40px;">
               <h2>{{vuln_name}}</h2>
-               <span class="level">{{vuln_level}}</span><span></span>
+               <span class="level" :style="{background: vulncolor[this.vuln_level]}" v-text="vulnlevel[this.vuln_level]"></span><span></span>
             </div>
             <Panel name="1" >
               风险描述
@@ -40,9 +40,18 @@ const vulnlevel = {
   "1": "低",
   "0": "无"
 };
+const vulncolor = {
+  "4": "#993333",
+  "3": "#DE5145",
+  "2": "#FAA732",
+  "1": "#23B7E5",
+  "0": "#27C24C"
+};
 export default {
   data() {
     return {
+      vulnlevel: vulnlevel,
+      vulncolor: vulncolor,
       value1: [1, 2, 3, 4, 5],
       vuln_name: "",
       vuln_level: "",
@@ -60,11 +69,7 @@ export default {
       vulnDetail(params).then(res => {
         let data = res.rows;
         this.vuln_name = data[0].vuln_name;
-        this.vuln_level = vulnlevel[data[0].vuln_level];
-        if(this.vuln_level==="中"){
-          console.log(12)
-        }
-        
+        this.vuln_level = data[0].vuln_level;
         this.kb_vuln_des = data[0].kb_vuln_des;
         this.kb_vuln_anly = data[0].kb_vuln_anly;
         this.kb_vuln_ref = data[0].kb_vuln_ref;
@@ -88,7 +93,6 @@ export default {
 .level {
   display: inline-block;
   padding: 5px 8px;
-  background: #FAA732;
   text-align: center;
   border-radius: 3px;
 }
