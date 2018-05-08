@@ -71,7 +71,7 @@ import { mapGetters } from "vuex";
 import router from "@/router";
 import chart from "components/chart/chart";
 import zhexiantu from "components/chart/zhexiantu";
-import { getUserName } from "@/utils/auth";
+import { removeToken, removeUserName, getUserName } from "@/utils/auth";
 import taskTargetInfo from "api/taskTargetInfo";
 import taskList from "api/taskList";
 import { Modal } from "iview";

@@ -160,9 +160,9 @@ export default {
         title: {
           text: "0%",
           subtext: "",
-          subtextStyle:{
-            color:"#fbfbfb",
-            fontSize:"12",
+          subtextStyle: {
+            color: "#fbfbfb",
+            fontSize: "12"
           },
           x: "center",
           y: "center",
@@ -196,8 +196,7 @@ export default {
                 value: 0,
                 name: "2",
                 itemStyle: {
-                  color: "#ccc",
-                  
+                  color: "#ccc"
                 }
               }
             ]
@@ -399,9 +398,8 @@ export default {
           axisPointer: {
             animation: false
           },
-          // formatter: "{c}</br>{b}"
-          formatter: (params) => {
-            console.log(params)
+          formatter: params => {
+            return task_status[params[0].data.valueIndex];
           }
         },
         xAxis: {
@@ -448,8 +446,7 @@ export default {
               formatter: function(value) {
                 return task_status[value];
               },
-              fontSize: 20,
-              
+              fontSize: 20
             },
             data: [{ value: 0, name: "执行阶段" }],
             title: { color: "#E4E5E5", fontSize: 12 },
@@ -521,8 +518,11 @@ export default {
   created() {
     const storage = window.localStorage;
     let taskInfo = {};
-    if(this.$route.params.targetInfo) {
-       storage.setItem("taskInfo", JSON.stringify(this.$route.params.targetInfo));
+    if (this.$route.params.targetInfo) {
+      storage.setItem(
+        "taskInfo",
+        JSON.stringify(this.$route.params.targetInfo)
+      );
     }
     taskInfo = JSON.parse(storage.getItem("taskInfo"));
     taskInfo.target_startTime = fomatterTime(
@@ -587,14 +587,10 @@ export default {
           for (let i = 1; i <= scaning; i++) {
             temp.push({
               value: task_status["11"],
+              valueIndex: i,
               symbolOffset: [0, "-70%"],
               symbolSize: 30,
-              symbol: "image://" + require(`./svg/${i}.svg`),
-              tooltip: {
-                formatter: function(params) {
-                  return "111";
-                }
-              }
+              symbol: "image://" + require(`./svg/${i}.svg`)
             });
           }
           //进度纵坐标
