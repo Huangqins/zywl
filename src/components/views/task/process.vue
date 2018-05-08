@@ -173,7 +173,7 @@ export default {
           {
             name: "访问来源",
             type: "pie",
-            radius: ["50%", "60%"],
+            radius: ["80%", "100%"],
             avoidLabelOverlap: false,
             hoverAnimation: false,
             label: {
@@ -200,8 +200,8 @@ export default {
           }
         ]
       },
-      vuln_Num:"",
-      vuln_rate:"",
+      vuln_Num: "",
+      vuln_rate: "",
       taskListItem: [
         {
           target_info_key: "target_name",
@@ -383,6 +383,13 @@ export default {
       mock: "",
       linechartdata: [],
       linechart: {
+        grid: {
+          left: 10,
+          right: 10,
+          bottom: 20,
+          top: 30,
+          containLabel: true
+        },
         tooltip: {
           trigger: "axis",
           axisPointer: {
@@ -603,7 +610,7 @@ export default {
       const params = { target_id: this.$route.params.target_id };
       timeLine(params).then(res => {
         if (res.result === 0) {
-          this.vuln_Num= res.vulnNum;
+          this.vuln_Num = res.vulnNum;
           // this.$refs.taskholeNum.refresh();
         } else {
           this.vuln_Num = 0;
@@ -635,10 +642,10 @@ export default {
       const params = { target_id: this.$route.params.target_id };
       urlUseRate(params).then(res => {
         if (res.result === 0) {
-          this.vuln_rate = res.rate+'%';
+          this.vuln_rate = res.rate + "%";
           // this.$refs.holeUtilization.refresh();
         } else {
-            this.vuln_rate = 0+'%'
+          this.vuln_rate = 0 + "%";
           // this.$refs.holeUtilization.refresh();
         }
       });
@@ -668,17 +675,17 @@ export default {
 };
 </script>
 <style scoped>
-.vuln_num{
-  width:100%;
-  height:50px;
-  line-height:68px;
-  text-align:center
+.vuln_num {
+  width: 100%;
+  height: 50px;
+  line-height: 68px;
+  text-align: center;
 }
-.vuln_text{
-   width:100%;
-   height:50px;
-   text-align:center;
-   font-size:13px;
+.vuln_text {
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  font-size: 13px;
 }
 .ivu-card-head {
   padding: 6px 16px;
@@ -713,13 +720,13 @@ export default {
   border-radius: 3px;
 }
 .taskSchedule section {
-  flex: 1;  
-  margin:20px 160px;
-  height: 100px;  
+  flex: 1;
+  margin: 20px 160px;
+  height: 100px;
   font-size: 16px;
-  text-align: center;  
+  text-align: center;
 }
-.taskSchedule section p{
+.taskSchedule section p {
   font-size: 13px;
 }
 .taskSchedule span {
@@ -777,7 +784,7 @@ export default {
   width: 64%;
   float: right;
   font-size: 26px;
-  font-weight: 700; 
+  font-weight: 700;
   /* padding-top:18px;  */
 }
 .middle {
