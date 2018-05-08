@@ -11,7 +11,7 @@
               </div>
               <div class="assetRight_pro">
                 <section>
-                   <chart width="305px" height="260px" :option="options"></chart>
+                   <chart width="370px" height="260px" :option="options"></chart>
                 </section>
                 <section>
                   <chart width="290px" height="260px" :option="optionOne" id="optionOne"></chart>
@@ -39,8 +39,11 @@ import kbinfo from "api/kbinfo";
 import kbAdd from "api/kbAdd";
 import kbUpdate from "api/kbUpdate";
 import kbDelete from "api/kbDelete";
+import vulntype from "api/vulntype";
+import vulnlevelcount from "api/vulnlevelcount";
 import Modal from "../../Modal/modal";
-import chart from "components/chart/chart"
+import chart from "components/chart/chart";
+
 const levelSchema = {
   "4": "紧急风险",
   "3": "高风险",
@@ -48,6 +51,14 @@ const levelSchema = {
   "1": "低风险",
   "0": "无风险"
 };
+// 风险级别颜色
+const vuln_level_color = {
+ "4": "#993333",
+  "3": "#DE5145",
+  "2": "#FAA732",
+  "1": "#23B7E5",
+  "0": "#27C24C"
+}
 export default {
   components: {
     Modal,
@@ -57,263 +68,148 @@ export default {
   },
   data() {
     return {
-      options : {
+      options: {
         title: {
-            text: '风险类型',
-            left: 'center',
-            textStyle: {
+          text: "风险类型",
+          left: "center",
+          textStyle: {
             color: "#E4E5E5"
           }
         },
-        tooltip : {
-            trigger: 'item',
-            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        tooltip: {
+          trigger: "item",
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
-        series : [
+        series: [
           {
-              type: 'pie',
-              radius : '65%',
-              center: ['50%', '50%'],
-              selectedMode: 'single',
-              data:[
-                  {
-                      value:1548,
-                      name: '幽州',
-                      label: {
-                          normal: {
-                              rich: {
-                                  title: {
-                                      color: '#eee',
-                                      align: 'center'
-                                  },
-                                  abg: {
-                                      backgroundColor: '#333',
-                                      width: '100%',
-                                      align: 'right',
-                                      height: 25,
-                                      borderRadius: [4, 4, 0, 0]
-                                  },
-                                  weatherHead: {
-                                      color: '#333',
-                                      height: 24,
-                                      align: 'left'
-                                  },
-                                  hr: {
-                                      borderColor: '#777',
-                                      width: '100%',
-                                      borderWidth: 0.5,
-                                      height: 0
-                                  },
-                                  value: {
-                                      width: 20,
-                                      padding: [0, 20, 0, 30],
-                                      align: 'left'
-                                  },
-                                  valueHead: {
-                                      color: '#333',
-                                      width: 20,
-                                      padding: [0, 20, 0, 30],
-                                      align: 'center'
-                                  },
-                                  rate: {
-                                      width: 40,
-                                      align: 'right',
-                                      padding: [0, 10, 0, 0]
-                                  },
-                                  rateHead: {
-                                      color: '#333',
-                                      width: 40,
-                                      align: 'center',
-                                      padding: [0, 10, 0, 0]
-                                  }
-                              }
-                          }
-                      }
-                  },
-                {value:535, name: '跨站脚本'},
-                {value:510, name: '跨站请求伪造'},
-                {value:634, name: '益州'},
-                {value:735, name: '西凉'}
-            ],
+            type: "pie",
+            radius: "65%",
+            center: ["50%", "50%"],
+            selectedMode: "single",
+            data: [],
             itemStyle: {
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: "rgba(0, 0, 0, 0.5)"
+              }
             }
           }
         ]
       },
-      optionOne : {
+      optionOne: {
         title: {
-            text: '风险级别',
-            left: 'center',
-            textStyle: {
+          text: "风险级别",
+          left: "center",
+          textStyle: {
             color: "#E4E5E5"
           }
         },
-        tooltip : {
-            trigger: 'item',
-            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        tooltip: {
+          trigger: "item",
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
-        series : [
+        series: [
           {
-              type: 'pie',
-              radius : '65%',
-              center: ['50%', '50%'],
-              selectedMode: 'single',
-              data:[
-                  {
-                      label: {
-                          normal: {
-                              rich: {
-                                  title: {
-                                      color: '#eee',
-                                      align: 'center'
-                                  },
-                                  abg: {
-                                      backgroundColor: '#333',
-                                      width: '100%',
-                                      align: 'right',
-                                      height: 25,
-                                      borderRadius: [4, 4, 0, 0]
-                                  },
-                                  weatherHead: {
-                                      color: '#333',
-                                      height: 24,
-                                      align: 'left'
-                                  },
-                                  hr: {
-                                      borderColor: '#777',
-                                      width: '100%',
-                                      borderWidth: 0.5,
-                                      height: 0
-                                  },
-                                  value: {
-                                      width: 20,
-                                      padding: [0, 20, 0, 30],
-                                      align: 'left'
-                                  },
-                                  valueHead: {
-                                      color: '#333',
-                                      width: 20,
-                                      padding: [0, 20, 0, 30],
-                                      align: 'center'
-                                  },
-                                  rate: {
-                                      width: 40,
-                                      align: 'right',
-                                      padding: [0, 10, 0, 0]
-                                  },
-                                  rateHead: {
-                                      color: '#333',
-                                      width: 40,
-                                      align: 'center',
-                                      padding: [0, 10, 0, 0]
-                                  }
-                              }
-                          }
-                      }
-                  },
-                {value:535, name: '低风险'},
-                {value:550, name: '中风险'},
-                {value:634, name: '高风险'},
-            ],
+            type: "pie",
+            radius: "65%",
+            center: ["50%", "50%"],
+            selectedMode: "single",
+            data: [],
             itemStyle: {
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: "rgba(0, 0, 0, 0.5)"
+              }
             }
           }
         ]
       },
-      optionTwo : {
+      optionTwo: {
         title: {
-            text: '利用端口',
-            left: 'center',
-            textStyle: {
+          text: "利用端口",
+          left: "center",
+          textStyle: {
             color: "#E4E5E5"
           }
         },
-        tooltip : {
-            trigger: 'item',
-            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        tooltip: {
+          trigger: "item",
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
-        series : [
+        series: [
           {
-              type: 'pie',
-              radius : '65%',
-              center: ['50%', '50%'],
-              selectedMode: 'single',
-              data:[
-                  {
-                      value:1548,
-                      name: '幽州',
-                      label: {
-                          normal: {
-                              rich: {
-                                  title: {
-                                      color: '#eee',
-                                      align: 'center'
-                                  },
-                                  abg: {
-                                      backgroundColor: '#333',
-                                      width: '100%',
-                                      align: 'right',
-                                      height: 25,
-                                      borderRadius: [4, 4, 0, 0]
-                                  },
-                                  weatherHead: {
-                                      color: '#333',
-                                      height: 24,
-                                      align: 'left'
-                                  },
-                                  hr: {
-                                      borderColor: '#777',
-                                      width: '100%',
-                                      borderWidth: 0.5,
-                                      height: 0
-                                  },
-                                  value: {
-                                      width: 20,
-                                      padding: [0, 20, 0, 30],
-                                      align: 'left'
-                                  },
-                                  valueHead: {
-                                      color: '#333',
-                                      width: 20,
-                                      padding: [0, 20, 0, 30],
-                                      align: 'center'
-                                  },
-                                  rate: {
-                                      width: 40,
-                                      align: 'right',
-                                      padding: [0, 10, 0, 0]
-                                  },
-                                  rateHead: {
-                                      color: '#333',
-                                      width: 40,
-                                      align: 'center',
-                                      padding: [0, 10, 0, 0]
-                                  }
-                              }
-                          }
+            type: "pie",
+            radius: "65%",
+            center: ["50%", "50%"],
+            selectedMode: "single",
+            data: [
+              {
+                value: 1548,
+                name: "幽州",
+                label: {
+                  normal: {
+                    rich: {
+                      title: {
+                        color: "#eee",
+                        align: "center"
+                      },
+                      abg: {
+                        backgroundColor: "#333",
+                        width: "100%",
+                        align: "right",
+                        height: 25,
+                        borderRadius: [4, 4, 0, 0]
+                      },
+                      weatherHead: {
+                        color: "#333",
+                        height: 24,
+                        align: "left"
+                      },
+                      hr: {
+                        borderColor: "#777",
+                        width: "100%",
+                        borderWidth: 0.5,
+                        height: 0
+                      },
+                      value: {
+                        width: 20,
+                        padding: [0, 20, 0, 30],
+                        align: "left"
+                      },
+                      valueHead: {
+                        color: "#333",
+                        width: 20,
+                        padding: [0, 20, 0, 30],
+                        align: "center"
+                      },
+                      rate: {
+                        width: 40,
+                        align: "right",
+                        padding: [0, 10, 0, 0]
+                      },
+                      rateHead: {
+                        color: "#333",
+                        width: 40,
+                        align: "center",
+                        padding: [0, 10, 0, 0]
                       }
-                  },
-                {value:535, name: '跨站脚本'},
-                {value:510, name: '兖州'},
-                {value:634, name: '益州'},
-                {value:735, name: '西凉'}
+                    }
+                  }
+                }
+              },
+              { value: 535, name: "跨站脚本" },
+              { value: 510, name: "兖州" },
+              { value: 634, name: "益州" },
+              { value: 735, name: "西凉" }
             ],
             itemStyle: {
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: "rgba(0, 0, 0, 0.5)"
+              }
             }
           }
         ]
@@ -323,7 +219,7 @@ export default {
       loading: false,
       title: "新建",
       formValidate: false,
-      width:110,
+      width: 110,
       format: [
         { label: "漏洞名称", type: "input", prop: "kb_vuln_name" },
         { label: "CVE/CNVD编码", type: "input", prop: "kb_vuln_cve" },
@@ -337,21 +233,21 @@ export default {
         { label: "漏洞类型", type: "input", prop: "vuln_type_name" },
         { label: "漏洞分类", type: "input", prop: "kb_vuln_class" },
         { label: "风险描述", type: "textarea", prop: "kb_vuln_des" },
-        { label: "修复方案", type: "textarea", prop: "kb_vuln_anly"}
+        { label: "修复方案", type: "textarea", prop: "kb_vuln_anly" }
       ],
-      formatCopy:[],
+      formatCopy: [],
       data: {
         kb_vuln_name: "",
         kb_vuln_cve: "",
         kb_vuln_vnum: "",
         kb_vuln_level: "",
-        kb_vuln_port:"",
-        kb_vuln_tool:"",
-        kb_vuln_atme:"",
-        kb_vuln_veme:"",
-        kb_vuln_payload:"",
+        kb_vuln_port: "",
+        kb_vuln_tool: "",
+        kb_vuln_atme: "",
+        kb_vuln_veme: "",
+        kb_vuln_payload: "",
         vuln_type_name: "",
-        kb_vuln_class:"",
+        kb_vuln_class: "",
         kb_vuln_des: "",
         kb_vuln_anly: ""
       },
@@ -367,7 +263,6 @@ export default {
       },
       value: "",
       assets: [
-
         {
           title: "风险编号",
           key: "kb_vuln_vnum",
@@ -406,71 +301,65 @@ export default {
           align: "center",
           render: (h, params) => {
             return h("div", [
-              h(
-                "Button",
-                {
-                  props: {
-                    type: "primary",
-                    size: "small",
-                    icon:"edit"
-                  },
-                  style: {
-                    marginRight: "5px"
-                  },
-                  on: {
-                    click: () => {
-                      
-                      this.data = Object.assign({}, this.data, params.row);
-                      this.data.kb_vuln_level=`${levelSchema[params.row.kb_vuln_level]}`;
-                      this.modalStatus = 0;
-                      this.footer = true;
-                      this.title = '修改';
-                      // 打开
-                      this.$refs.formValidate.open();
-                    }
-                  }
-                }
-              ),
-              h(
-                "Button",
-                {
-                  props: {
-                    type: "error",
-                    size: "small",
-                    icon:"trash-a"
-                  },
-                  style: {
-                    marginRight:'5px'
-                  },
-                  on: {
-                    click: () => {
-                      this._kbDelete(params.row)
-                      // this.remove(params.index);
-                      // console.log(params)
-                    }
-                  }
+              h("Button", {
+                props: {
+                  type: "primary",
+                  size: "small",
+                  icon: "edit"
                 },
-              ),
-              h(
-                'Button',
-                {
-                  props: {
-                    size: "small",
-                    icon: "social-buffer"
-                  },
-                  on: {
-                    click: () => {
-                      this.dataCopy = Object.assign({}, this.data, params.row);
-                      this.dataCopy.kb_vuln_level=`${levelSchema[params.row.kb_vuln_level]}`;
-                      this.modalStatus = 1;
-                      this.footer = false;
-                      this.title = '详情';
-                      this.$refs.formValidate.open();
-                      //this._detail(params.row)
-                    }
+                style: {
+                  marginRight: "5px"
+                },
+                on: {
+                  click: () => {
+                    this.data = Object.assign({}, this.data, params.row);
+                    this.data.kb_vuln_level = `${
+                      levelSchema[params.row.kb_vuln_level]
+                    }`;
+                    this.modalStatus = 0;
+                    this.footer = true;
+                    this.title = "修改";
+                    // 打开
+                    this.$refs.formValidate.open();
                   }
                 }
-              )
+              }),
+              h("Button", {
+                props: {
+                  type: "error",
+                  size: "small",
+                  icon: "trash-a"
+                },
+                style: {
+                  marginRight: "5px"
+                },
+                on: {
+                  click: () => {
+                    this._kbDelete(params.row);
+                    // this.remove(params.index);
+                    // console.log(params)
+                  }
+                }
+              }),
+              h("Button", {
+                props: {
+                  size: "small",
+                  icon: "social-buffer"
+                },
+                on: {
+                  click: () => {
+                    this.dataCopy = Object.assign({}, this.data, params.row);
+                    this.dataCopy.kb_vuln_level = `${
+                      levelSchema[params.row.kb_vuln_level]
+                    }`;
+                    this.modalStatus = 1;
+                    this.footer = false;
+                    this.title = "详情";
+                    this.$refs.formValidate.open();
+                    //this._detail(params.row)
+                  }
+                }
+              })
             ]);
           }
         }
@@ -484,7 +373,7 @@ export default {
       },
       total: 0,
       params: {},
-      modalStatus:0
+      modalStatus: 0
     };
   },
   computed: {
@@ -492,29 +381,32 @@ export default {
       return this.modalStatus === 0 ? this.format : this.formatCopy;
     },
     dataType() {
-      console.log(this.modalStatus)
-      return this.modalStatus === 0 ? this.data : this.dataCopy
+      return this.modalStatus === 0 ? this.data : this.dataCopy;
     },
     ...mapGetters(["userName"])
   },
   created() {
+    this.vulntype();
+    this.vulnlevelcount();
     this.params = Object.assign({}, this.defaultPage, { area: 0 });
     this._kbinfo(this.params);
-    const temp = JSON.parse(JSON.stringify(this.format))
-    const dataCopy = JSON.parse(JSON.stringify(this.data))
-    this.dataCopy = Object.assign({},dataCopy,{kb_vuln_des:'',kb_vuln_anly:''})
+    const temp = JSON.parse(JSON.stringify(this.format));
+    const dataCopy = JSON.parse(JSON.stringify(this.data));
+    this.dataCopy = Object.assign({}, dataCopy, {
+      kb_vuln_des: "",
+      kb_vuln_anly: ""
+    });
     temp.forEach(item => {
-         item.type = 'div'
-    })
+      item.type = "div";
+    });
     this.formatCopy = temp;
   },
   methods: {
     assetsAdd() {
       this.footer = true;
-      this.title = '新建';
+      this.title = "新建";
       this.modalStatus = 0;
       this.$refs.formValidate.open();
-      // this.data = {};
     },
     //提交
     asyncOK(data) {
@@ -523,6 +415,41 @@ export default {
       } else {
         this._kbAdd(data);
       }
+    },
+    //风险类型饼状图
+    vulntype() {
+      let params = { flag: 1 };
+      vulntype(params).then(res => {
+        if (res.result === 0) {
+          let list = res.list;
+          list.forEach(item => {
+            this.options.series[0].data.push({
+              value: item.kb_vuln_vnum,
+              name: item.vuln_type_name
+            });
+          });
+        } else {
+        }
+      });
+    },
+    //风险级别饼状图
+    vulnlevelcount() {
+      let params = { flag: 2 };
+      vulnlevelcount(params).then(res => {
+        if (res.result === 0) {
+          let list = res.list;
+          list.forEach(item => {
+            this.optionOne.series[0].data.push({
+              value: item.kb_vuln_vnum,
+              name: item.kb_vuln_level,
+              itemStyle: {
+                color: vuln_level_color[item.kb_vuln_level]
+              }
+            });
+          });
+        } else {
+        }
+      });
     },
     _kbAdd(data) {
       this.loading = true;
@@ -537,19 +464,16 @@ export default {
       });
     },
     _kbUpdate(data) {
-      // this.loading = false;
       kbUpdate(data).then(res => {
         if (res.result === 0) {
           this.$refs.formValidate.close();
           this._kbinfo(this.params);
-          // this.loading = false;
         } else if (res.result === -1) {
           this.$Notice.error({
             title: "返回信息",
             desc: "修改失败",
             duration: 2
           });
-          // this.loading = false;
           this.$refs.formValidate.open();
         }
       });
@@ -574,8 +498,8 @@ export default {
     dataLoad(paramsObj) {
       this.params = Object.assign({}, this.defaultPage, paramsObj);
       this._kbinfo(this.params);
-    },
-  //  详情显示
+    }
+    //  详情显示
     // _detail(data) {
 
     // }
@@ -583,7 +507,6 @@ export default {
 };
 </script>
 <style scoped>
-
 .whole {
   width: 100%;
   color: #e4e5e5;
@@ -599,9 +522,9 @@ export default {
   display: flex;
   margin-bottom: 20px;
 }
-.assetRight_pro section{
- flex: 1;
- margin: 20px 60px;
+.assetRight_pro section {
+  flex: 1;
+  margin: 20px 60px;
 }
 .assetRight_header {
   width: 100%;
@@ -612,8 +535,8 @@ export default {
 .assetRight_pro div {
   float: left;
 }
-.assetRight_pro div:nth-child(2){
-  margin:0 20px;
+.assetRight_pro div:nth-child(2) {
+  margin: 0 20px;
 }
 .ivu-btn .ivu-btn-primary {
   margin-left: 5px;
