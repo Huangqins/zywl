@@ -14,8 +14,7 @@
           </div>
           <div class="vuln_text">
             <p>任务漏洞量</p>
-          </div>
-          
+          </div> 
           </div>
       </section>
       <section class="circle">
@@ -385,7 +384,7 @@ export default {
       linechart: {
         grid: {
           left: 10,
-          right: 10,
+          right: 60,
           bottom: 20,
           top: 30,
           containLabel: true
@@ -395,7 +394,10 @@ export default {
           axisPointer: {
             animation: false
           },
-          formatter: "{c}</br>{b}"
+          // formatter: "{c}</br>{b}"
+          formatter: (params) => {
+            console.log(params)
+          }
         },
         xAxis: {
           type: "category",
@@ -511,7 +513,12 @@ export default {
     ...mapGetters(["userName"])
   },
   created() {
-    let taskInfo = this.$route.params.targetInfo;
+    const storage = window.localStorage;
+    let taskInfo = {};
+    if(this.$route.params.targetInfo) {
+       storage.setItem("taskInfo", JSON.stringify(this.$route.params.targetInfo));
+    }
+    taskInfo = JSON.parse(storage.getItem("taskInfo"));
     taskInfo.target_startTime = fomatterTime(
       new Date(taskInfo.target_starttime.time)
     );
@@ -588,7 +595,7 @@ export default {
           this.linechart.series[0].data = temp;
           let ret = [];
           res.target.target_rftime.split(",").forEach((item, index) => {
-            ret.push(item.split(" ")[1]);
+            ret.push(item);
           });
           this.linechart.xAxis.data = ret;
           this.$refs.linechart.refresh();
