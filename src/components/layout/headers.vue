@@ -3,7 +3,7 @@
         <span style="color:#fff;font-size:14px;">您好:<span style="color:white">{{userName}}</span>
         <span ></span>
         </span>
-        <Button type="ghost" shape="circle" icon="power" style="border: none" @click="loginOut"></Button>
+        <Button type="ghost" shape="circle" icon="power" style="border: none" @click.native="loginOut"></Button>
     </div>
 </template>
 <script>
@@ -16,10 +16,11 @@ export default {
   },
   methods: {
     loginOut() {
-      this.$store.commit("REMOVE_TOKEN");
-      removeToken();
-      removeUserName();
-      this.$router.push({ path: "/login" });
+      // console.log(removeToken)
+      // this.$store.commit("REMOVE_TOKEN");
+      // removeToken();
+      // removeUserName();
+      // this.$router.push({ path: "/login" });
     }
   }
 };
