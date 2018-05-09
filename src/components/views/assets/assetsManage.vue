@@ -4,7 +4,7 @@
         <section >
                   <div class="vulnLevel">
                     <div class="levelRight">
-                      <chart :option="options" width="190px" height="190px"></chart>
+                      <chart :option="options" width="190px" height="190px" ref="chart"></chart>
                     </div>
                     <div class="levelLeft">
                       <h4 class="levelTitle">风险级别</h4>
@@ -152,11 +152,12 @@ export default {
       loading: false
     };
   },
-  created() {
+  mounted() {
     const params = Object.assign({}, this.defaultPage);
     this._assetsInfo(this.defaultPage);
     this.vulntop()
   },
+
   methods: {
     vulntop(){
       const params={ }

@@ -4,7 +4,7 @@
 </div>
 </template>
 <script>
-  import { debounce } from "@/utils";
+import { debounce } from "@/utils";
 
 export default {
   name: "chart",
@@ -20,16 +20,16 @@ export default {
     },
     height: {
       type: String,
-      default: '300px'
+      default: "300px"
     },
     width: {
       type: String,
-      default: '400px'
+      default: "400px"
     },
     option: {
       type: Object,
       default() {
-        return {}
+        return {};
       }
     }
   },
@@ -44,10 +44,10 @@ export default {
   mounted() {
     this.init();
     this.resize();
-    let sideBar = document.getElementsByClassName('ivu-layout-sider')[0];
-    sideBar.addEventListener('transitionend', () => {
+    let sideBar = document.getElementsByClassName("ivu-layout-sider")[0];
+    sideBar.addEventListener("transitionend", () => {
       this.chart.resize();
-    })
+    });
   },
   methods: {
     init() {
@@ -55,12 +55,24 @@ export default {
       this.chart.setOption(this.option);
     },
     refresh() {
-       this.chart.setOption(this.option);
+      this.chart.setOption(this.option);
+    },
+    showLoading() {
+      this.chart.showLoading("default", {
+        text: "数据加载中",
+        color: "#c23531",
+        textColor: "#fff",
+        maskColor: "rgba(0, 0, 0, 0.1)",
+        zlevel: 0
+      });
+    },
+    hideLoading() {
+      this.chart.hideLoading();
     },
     resize() {
-      window.addEventListener('resize', () => {
+      window.addEventListener("resize", () => {
         this.chart.resize();
-      })
+      });
     }
   }
 };

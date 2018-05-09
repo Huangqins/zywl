@@ -158,7 +158,7 @@ export default {
       holes: [ ],
     };
   },
-  created(){
+  mounted(){
     this.assetsInfo(this.defaultPage)
     this.leaksInfo()
     this.vulntop()

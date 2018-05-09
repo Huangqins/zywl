@@ -6,10 +6,16 @@
                 <Input v-model="value" placeholder="区域" clearable style="width: 200px"></Input>
                 <Button type="primary" icon="ios-search">搜索</Button>
                 <Button type="primary" icon="compose" @click="assetsAdd">添加</Button>
-                <Button type="primary" icon="log-in" @click="importAsset">导入</Button>
+                <Upload multiple  ref="upload" :show-upload-list="false"   :action="uploadUrl" :with-credentials="true" 
+                accept="" name="excelFile" :headers="headers" style="display:inline-block"
+                 :before-upload="handleUpload" >
+                <Button type="primary" icon="ios-cloud-upload-outline">导入</Button>
+            </Upload>
                 <Button type="primary" icon="log-out">导出</Button>
               </div>
-              <div class="uploadFileList"></div>
+              <!-- <div class="uploadFileList" style="color:#fff;padding-left:24px;"> -->
+                  <!-- <div v-if="file !== null" >上传的文件: {{ file.name }} <Button type="primary" @click="upload" :loading="loadingStatus" >{{ loadingStatus ? 'Uploading' : '上传' }}</Button></div> -->
+              <!-- </div> -->
               <div class="assetRight_nav">
                 <section></section>
                 <section></section>
@@ -34,6 +40,15 @@
               </Button>
           </TabPane>
         </Tabs>
+      </Modal> -->
+      <!-- <Modal v-model="assetAddModal" title="资产导入">
+          <div v-if="file !== null" >
+            上传的文件: {{ file.name }}
+          </div>
+          <div slot="footer">
+            <Button type="text" size="large">取消导入</Button>
+            <Button type="primary" size="large"  :loading="assetAddLoading" @click="assetImport">确定导入</Button>
+        </div>
       </Modal> -->
   </div>
 </template>
@@ -75,6 +90,9 @@ export default {
       }
     };
     return {
+      uploadStatus: false,
+      file: null,
+      loadingStatus: false,
       headers: { token: getToken(), userName: getUserName() },
       href: href,
       uploadUrl: location.origin + "/ZY/asset/assetsImport",
@@ -247,10 +265,28 @@ export default {
     this.formatCopy = temp;
   },
   methods: {
-    importAsset() {
-      this.assetAddModal = true;
+    handleUpload(file) {
+      this.file = file;
+      this.$Modal.confirm({
+        content: `您将上传的文件:${file.name},是否确定上传?`,
+        loading: true,
+        onOk: () => {
+          this.$refs.upload.post(file);
+          setTimeout(() => {
+            this.$Modal.remove();
+             this._assetsInfo(this.params);
+          },200)
+        },
+        onCancel: () => {
+          
+        }
+      });
+      return false;
     },
-    assetImport() {},
+    upload() {
+      
+    },
+
     dataLoad(paramsObj) {
       this.params = Object.assign({}, this.defaultPage, paramsObj);
       this._assetsInfo(this.params);

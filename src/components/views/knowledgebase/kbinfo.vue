@@ -13,13 +13,13 @@
               </div>
               <div class="assetRight_pro">
                 <section>
-                   <chart width="500px" height="260px" :option="options"></chart>
+                   <chart width="500px" height="260px" :option="options" ref="firstChart"></chart>
                 </section>
                 <section>
-                  <chart width="440px" height="260px" :option="optionOne" id="optionOne"></chart>
+                  <chart width="440px" height="260px" :option="optionOne" id="optionOne" ref="secondChart"></chart>
                 </section>
                 <section>
-                  <chart width="290px" height="260px" :option="optionTwo" id="optionTwo"></chart>
+                  <chart width="290px" height="260px" :option="optionTwo" id="optionTwo" ref="threeChart"></chart>
                 </section>
                 
               </div>
@@ -437,9 +437,11 @@ export default {
     },
     ...mapGetters(["userName"])
   },
+  mounted() {
+       this.vulntype();
+       this.vulnlevelcount();
+  },
   created() {
-    this.vulntype();
-    this.vulnlevelcount();
     this.params = Object.assign({}, this.defaultPage, { area: 0 });
     this._kbinfo(this.params);
     const temp = JSON.parse(JSON.stringify(this.format));
@@ -471,8 +473,11 @@ export default {
     //风险类型饼状图
     vulntype() {
       let params = { flag: 1 };
+      // console.log(this.$refs.firstChart)
+      this.$refs.firstChart.showLoading()
       vulntype(params).then(res => {
         if (res.result === 0) {
+          this.$refs.firstChart.hideLoading()
           let list = res.list;
           list.forEach(item => {
             this.options.legend.data.push(
@@ -491,6 +496,7 @@ export default {
     //风险级别饼状图
     vulnlevelcount() {
       let params = { flag: 2 };
+      this.$refs.secondChart.showLoading();
       vulnlevelcount(params).then(res => {
         if (res.result === 0) {
           let list = res.list;
@@ -504,6 +510,7 @@ export default {
               }
             });
           });
+          this.$refs.secondChart.hideLoading();
         } else {
         }
       });

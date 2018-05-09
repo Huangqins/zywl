@@ -59,7 +59,9 @@
                  
           </div>
        <div class="leaksTwo">
-          <section></section>
+          <section>
+            <cloud :height=200></cloud>
+          </section>
           <section>
              <chart width="505px" height="300px" :option="vulntypes" id="vulntype" ref="vulntype"></chart>
           </section>
@@ -85,6 +87,7 @@ import leaksInfo from "api/leaksInfo";
 import vulnTotal from "api/vulnTotal";
 import { getUserName } from "@/utils/auth";
 import vulnLevel from "api/vulnLevel";
+import cloud from "../../taskpage/cloud";
 import vulntype from "api/vulntype";
 
 // const levelSchema = {
@@ -106,7 +109,8 @@ export default {
   components: {
     chart,
     zhexiantu,
-    page
+    page,
+    cloud
   },
 
   computed: {
@@ -270,15 +274,20 @@ export default {
     });
     this._leaksInfo(params);
     this._vulnTotal();
-    this.vulntype();
+    
     // this._vulnLevel({taskID:})
+  },
+  mounted() {
+    this.vulntype();  
   },
   methods: {
     //风险类型饼状图
     vulntype() {
       let params = { flag: 1 };
+      this.$refs.vulntype.showLoading();
       vulntype(params).then(res => {
         if (res.result === 0) {
+          this.$refs.vulntype.hideLoading();
           let list = res.list;
           list.forEach(item => {
             // this.vulntypes.legend.data = item.vuln_type_name;

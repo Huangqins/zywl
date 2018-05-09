@@ -69,7 +69,7 @@ service.interceptors.response.use(response => {
     store.commit('REMOVE_TOKEN');
     store.commit('REMOVE_USER_NAME');
     router.push({ path: '/login' })
-  }
+  } 
   return response.data
 }, error => {
   console.log('err' + error) // for debug
