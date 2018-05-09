@@ -6,9 +6,10 @@
                 <Input v-model="value" placeholder="区域" clearable style="width: 200px"></Input>
                 <Button type="primary" icon="ios-search">搜索</Button>
                 <Button type="primary" icon="compose" @click="assetsAdd">添加</Button>
-                <Button type="primary" icon="log-in">导入</Button>
+                <Button type="primary" icon="log-in" @click="importAsset">导入</Button>
                 <Button type="primary" icon="log-out">导出</Button>
               </div>
+              <div class="uploadFileList"></div>
               <div class="assetRight_nav">
                 <section></section>
                 <section></section>
@@ -20,6 +21,20 @@
           </section>
       </div>
       <Modals :width="width" :footer="footer"  :format="formatType" :data="dataType" :title="title" ref="formValidate" :ruleValidate="rules" @asyncOK="asyncOK" :display="display"  :loading="loading"></Modals>
+      <!-- 资产导入 -->
+      <!-- <Modal v-model="assetAddModal"  title="资产导入"  :loading="assetAddLoading" @on-ok="assetImport">
+         <Tabs value="name2">
+          <TabPane label="手动导入" name="name1"></TabPane>
+          <TabPane label="批量导入" name="name2">
+            <Upload multiple  :action="uploadUrl" :with-credentials="true" accept="" name="excelFile" :headers="headers">
+                <Button type="primary" icon="ios-cloud-upload-outline">上传资产</Button>
+            </Upload>
+            <Button type="primary" icon="iso-cloud-download-outline" >
+                <a :href="href" download="资产导入模板">资产模板下载</a>
+              </Button>
+          </TabPane>
+        </Tabs>
+      </Modal> -->
   </div>
 </template>
 <script>
@@ -31,6 +46,12 @@ import message from "utils/message";
 import assetsInfo from "api/assetsInfo";
 import assetsDelete from "api/assetsDelete";
 import assetsUpdate from "api/assetsUpdate";
+import { getToken, getUserName } from "@/utils/auth";
+
+const host =
+  process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
+// const host = process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
+const href = host + "/excel/asset.xlsx";
 
 export default {
   components: {
@@ -39,21 +60,26 @@ export default {
   },
   data() {
     const addUrlValidate = (rule, value, callback) => {
-      if(!value && !this.data.assets_ip) {
-        callback(new Error('url或者ip请至少填写一项'));
+      if (!value && !this.data.assets_ip) {
+        callback(new Error("url或者ip请至少填写一项"));
       } else {
-        callback()
+        callback();
       }
     };
 
     const addIpValidate = (rule, value, callback) => {
-      if(!value && !this.data.assets_url) {
-        callback(new Error('url或者ip请至少填写一项'));
+      if (!value && !this.data.assets_url) {
+        callback(new Error("url或者ip请至少填写一项"));
       } else {
-        callback()
+        callback();
       }
     };
     return {
+      headers: { token: getToken(), userName: getUserName() },
+      href: href,
+      uploadUrl: location.origin + "/ZY/asset/assetsImport",
+      assetAddModal: false,
+      assetAddLoading: false,
       pageLoading: false,
       loading: false,
       title: "新建",
@@ -97,12 +123,8 @@ export default {
             trigger: "blur"
           }
         ],
-        assets_url: [
-          { validator: addUrlValidate, trigger: 'blur' }
-        ],
-        assets_ip: [
-          { validator: addIpValidate, trigger: 'blur' }
-        ]
+        assets_url: [{ validator: addUrlValidate, trigger: "blur" }],
+        assets_ip: [{ validator: addIpValidate, trigger: "blur" }]
       },
       value: "",
       assets: [
@@ -154,7 +176,7 @@ export default {
                   }
                 }
               }),
-              
+
               h("Button", {
                 props: {
                   size: "small",
@@ -225,6 +247,10 @@ export default {
     this.formatCopy = temp;
   },
   methods: {
+    importAsset() {
+      this.assetAddModal = true;
+    },
+    assetImport() {},
     dataLoad(paramsObj) {
       this.params = Object.assign({}, this.defaultPage, paramsObj);
       this._assetsInfo(this.params);
@@ -307,10 +333,10 @@ export default {
   flex-flow: row;
   margin-bottom: 20px;
 }
-.assetRight_nav section{
- flex:1;
- margin: 20px 60px;
- background: #cccccc;
+.assetRight_nav section {
+  flex: 1;
+  margin: 20px 60px;
+  background: #cccccc;
 }
 .assetRight_header {
   width: 100%;

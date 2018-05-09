@@ -1,7 +1,16 @@
 <template>
   <div>
           <div class="leaks">
-            
+            <section>
+              <span class="better"></span>
+              <div class="Num brown">
+                <div class="vuln_num"> 
+                </div>
+               <div class="vuln_text">                  
+                  <p>紧急风险</p>
+                </div>
+                </div>
+            </section>
             <section>
               <span class="high"></span>
               <div class="Num red">
@@ -12,11 +21,6 @@
                 </div>
                 </div>
             </section>
-              <!-- <chart width="235" height="235" :option="options" ref="chartOne"></chart> -->
-
-            
-            
-              <!-- <chart width="235" height="235" :option="optionTwo" id="optionTwo" ref="chartTwo"></chart> -->
             <section>
               <span class="middle"></span>
               <div class="Num yell">
@@ -37,6 +41,20 @@
                 </div>
               </div>
             </section>
+            <section>
+              <span class="prompt"></span>
+              <div class="Num green">
+                <div class="vuln_num"> 
+                </div>
+               <div class="vuln_text">                  
+                  <p>提示风险</p>
+                </div>
+                </div>
+            </section>
+              <!-- <chart width="235" height="235" :option="options" ref="chartOne"></chart> -->
+               <!-- <chart width="235" height="235" :option="optionTwo" id="optionTwo" ref="chartTwo"></chart> -->
+            
+            
               <!-- <chart width="235" height="235" :option="optionThree" id="optionThree" ref="chartThree"></chart> -->
                  
           </div>
@@ -45,9 +63,16 @@
           <section></section>
           <section></section>
        </div>
-        <div class="list">
+       <div class="leaksThree">
+          <section class="list">
+              <page :columns="leaksColums" :data="leaksList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" ></page>
+          </section>
+          <section>
             <page :columns="leaksColums" :data="leaksList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" ></page>
-        </div>
+          </section>
+
+       </div>
+        
   </div>
 </template>
 <script>
@@ -344,7 +369,7 @@ export default {
 }
 .leaks section{
   flex: 1;
-  margin:20px 160px;
+  margin:20px 50px;
   border: 1px solid #e4e5e5;
   border-radius: 4px;
   height: 100px;
@@ -365,12 +390,18 @@ export default {
 }
 .leaksTwo section{
   flex: 1;
-  margin:40px 160px;
+  margin:40px 50px;
   height: 200px;
   background: #ccc;
 }
-.high{
-   background: red;
+.leaksThree{
+ width: 100%;
+
+}
+.leaksThree section{
+  width: 45%;
+  margin:40px 20px;
+  float: left;
 }
 .Num{
   width: 64%;  
@@ -378,23 +409,36 @@ export default {
   font-size: 26px;
   font-weight: 700; 
 }
-.middle{
-  background: #FFD572;
+.better{
+  background: brown;
 }
-.low{
-  background: #95DCF2;
+.brown{
+  color: brown;
+}
+.high {
+  background-color: #e60012;
 }
 .red{
   color:red;
 }
+.middle{
+  background: #FAA732;
+}
+.low{
+  background: #95DCF2;
+}
+
 .yell{
-  color:  #FFD572;
+  color:  #FAA732;
 }
 .blu{
   color: #95DCF2;
 }
-.clear {
-  clear: both;
+.prompt{
+  background: #27C24C;
+}
+.green{
+  color: #27C24C;
 }
 .list .vuln {
   width: 14px;
@@ -402,7 +446,5 @@ export default {
   display: inline-block;
   margin: 0 2px;
 }
-.high {
-  background-color: #e60012;
-}
+
 </style>
