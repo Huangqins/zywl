@@ -136,8 +136,7 @@ export default {
 
     };
   },
-  created(){
-
+  mounted(){
     this.assetsInfo(this.defaultPage)
     this.leaksInfo()
   },

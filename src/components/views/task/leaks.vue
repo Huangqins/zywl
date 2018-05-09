@@ -274,15 +274,20 @@ export default {
     });
     this._leaksInfo(params);
     this._vulnTotal();
-    this.vulntype();
+    
     // this._vulnLevel({taskID:})
+  },
+  mounted() {
+    this.vulntype();  
   },
   methods: {
     //风险类型饼状图
     vulntype() {
       let params = { flag: 1 };
+      this.$refs.vulntype.showLoading();
       vulntype(params).then(res => {
         if (res.result === 0) {
+          this.$refs.vulntype.hideLoading();
           let list = res.list;
           list.forEach(item => {
             // this.vulntypes.legend.data = item.vuln_type_name;

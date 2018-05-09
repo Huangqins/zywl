@@ -16,10 +16,10 @@
                    <chart width="500px" height="260px" :option="options" ref="firstChart"></chart>
                 </section>
                 <section>
-                  <chart width="440px" height="260px" :option="optionOne" id="optionOne"></chart>
+                  <chart width="440px" height="260px" :option="optionOne" id="optionOne" ref="secondChart"></chart>
                 </section>
                 <section>
-                  <chart width="290px" height="260px" :option="optionTwo" id="optionTwo"></chart>
+                  <chart width="290px" height="260px" :option="optionTwo" id="optionTwo" ref="threeChart"></chart>
                 </section>
                 
               </div>
@@ -439,10 +439,9 @@ export default {
   },
   mounted() {
        this.vulntype();
+       this.vulnlevelcount();
   },
   created() {
- 
-    this.vulnlevelcount();
     this.params = Object.assign({}, this.defaultPage, { area: 0 });
     this._kbinfo(this.params);
     const temp = JSON.parse(JSON.stringify(this.format));
@@ -497,6 +496,7 @@ export default {
     //风险级别饼状图
     vulnlevelcount() {
       let params = { flag: 2 };
+      this.$refs.secondChart.showLoading();
       vulnlevelcount(params).then(res => {
         if (res.result === 0) {
           let list = res.list;
@@ -510,6 +510,7 @@ export default {
               }
             });
           });
+          this.$refs.secondChart.hideLoading();
         } else {
         }
       });
