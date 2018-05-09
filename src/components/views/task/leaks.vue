@@ -59,7 +59,9 @@
                  
           </div>
        <div class="leaksTwo">
-          <section></section>
+          <section>
+            <cloud :height=200></cloud>
+          </section>
           <section></section>
           <section></section>
        </div>
@@ -83,6 +85,7 @@ import leaksInfo from "api/leaksInfo";
 import vulnTotal from "api/vulnTotal";
 import { getUserName } from "@/utils/auth";
 import vulnLevel from "api/vulnLevel";
+import cloud from "../../taskpage/cloud";
 
 // const levelSchema = {
 //   "4": { style: "#FF33CC", class: "vuln", ex: "#FF3399" },
@@ -103,7 +106,8 @@ export default {
   components: {
     chart,
     zhexiantu,
-    page
+    page,
+    cloud
   },
 
   computed: {
