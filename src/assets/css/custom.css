@@ -72,8 +72,9 @@
 }
 
 .ivu-table-wrapper {
-    border: 1px solid rgb(33,38,47);
+    border:none;
     border-bottom: 0;
+    margin-bottom: 15px;
 }
 .ivu-table-tip {
     overflow-x: hidden;
@@ -81,7 +82,7 @@
 
 .ivu-table td,
 .ivu-table th {
-    border-bottom: 1px solid rgb(33,38,47);
+    border-bottom: none;
 }
 
 .ivu-table::before {
@@ -126,7 +127,7 @@ a {
     background-color: transparent;
 }
 .ivu-table-wrapper{
-    margin-bottom: 15px;
+   
 }
 .ivu-page-item{
     background-color: transparent;

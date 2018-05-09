@@ -12,11 +12,11 @@
                       <div class="levelDescript">扫描器已经发现一个或多个高危类型的漏洞。恶意用户可以利用这些漏洞，并损害后台数据库和您的网站</div>
                     </div>
                   </div>
-
         </section >
-        <section class="holeclassify">
-          <h2>漏洞Top10榜单</h2>
-                  <span><Icon type="chevron-right"></Icon>目前已有XXX个漏洞进行排行</span>
+        <section>
+            <div class="hotPic">xxdfd</div>
+        </section>
+        <section class="holeclassify">                 
                   <div class="holeList">
                     <ul>
                         <li class="listOne">
@@ -36,13 +36,13 @@
                   </div>
                 
         </section>
-        <!-- <div style="clear:both"></div> -->
+        
      </div>
-     <div class="secTwo"> 
+     <!-- <div class="secTwo"> 
        <section></section>
        <section></section>
        <section></section>
-     </div>
+     </div> -->
     <div class="List">
       <page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page>
     </div>
@@ -249,7 +249,7 @@ export default {
 }
 .secOne section {
   flex: 1;
-  margin: 20px 60px;
+  margin: 20px 30px;
   background: rgba(255, 255, 255, 0.1);
 }
 .vulnLevel {
