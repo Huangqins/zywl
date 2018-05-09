@@ -1,7 +1,6 @@
 <template>
 <div>
-    <div class="secOne">      
-   
+    <div class="secOne">   
         <section >
                   <div class="vulnLevel">
                     <div class="levelRight">
@@ -142,12 +141,6 @@ export default {
           key: "vuln_use",
           align: "center"
         }
-
-        // {
-        //   title: "创建人",
-        //   key: "assets_creatuser",
-        //   align: "center"
-        // }
       ],
       total: 0,
       defaultPage: {
@@ -194,7 +187,6 @@ export default {
   }
 };
 </script>
-
 <style scoped>
 .secOne {
   width: 100%;
@@ -226,10 +218,7 @@ export default {
   flex: 1 1 100%;
   margin: 0 0 10px;
 }
-.holeclassify span {
-  display: inline-block;
-  height: 19px;
-}
+
 .secTwo{
   width: 100%;
   display: flex;
@@ -246,39 +235,10 @@ export default {
   width: 100%;
   margin-top: 20px;
 }
-.holeList {
-  width: 100%;
-  height: 100%;
-  margin-top: 5px;
-}
-.holeList ul {
-  width: 100%;
-  height: auto;
-  border: 1px solid #21262f;
-}
-.holeList ul li {
-  list-style-type: none;
-  height: 23px;
-  font-size: 12px;
-  line-height: 23px;
-  border-bottom: 1px solid #21262f;
-}
-.holeList ul li:nth-child(12) {
-  border: none;
-}
-.holeList ul li span {
-  width: 30%;
-  text-align: center;
-}
-.holeList ul li span img {
-  width: 20px;
-  height: 20px;
+.holeclassify span {
   display: inline-block;
-  vertical-align: middle;
+  height: 19px;
 }
-.listOne {
-  display: inline-block;
-  width: 100%;
-}
+
 </style>
 
