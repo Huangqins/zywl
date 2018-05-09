@@ -166,3 +166,40 @@ a {
 .ivu-upload-list-file>span>i {
     color: #fff
 }
+/* top10排行榜样式 header*/
+
+ .holeList {
+    width: 100%;
+    height: 100%;
+    margin-top: 5px;
+  }
+  .holeList ul {
+    width: 100%;
+    height: auto;
+    border: 1px solid #21262f;
+  }
+  .holeList ul li {
+    list-style-type: none;
+    height: 23px;
+    font-size: 12px;
+    line-height: 23px;
+    border-bottom: 1px solid #21262f;
+  }
+  .holeList ul li:nth-child(12) {
+    border: none;
+  }
+  .holeList ul li span {
+    width: 30%;
+    text-align: center;
+  }
+  .holeList ul li span img {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .listOne {
+    display: inline-block;
+    width: 100%;
+  }
+  /* top10排行榜样式 end*/
