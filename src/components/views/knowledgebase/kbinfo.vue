@@ -6,7 +6,9 @@
                 <Input v-model="value" placeholder="区域" clearable style="width: 200px"></Input>
                 <Button type="primary" icon="ios-search">搜索</Button>
                 <Button type="primary" icon="compose" @click="assetsAdd">添加</Button>
-                <Button type="primary" icon="log-in">导入</Button>
+                 <Upload  multiple  :action="uploadUrl" :with-credentials="true"  name="excelFile" :headers="headers" :show-upload-list="false" style="display:inline-block">
+                    <Button type="primary" icon="ios-cloud-upload-outline">导入</Button>
+                 </Upload>
                 <Button type="primary" icon="log-out">导出</Button>
               </div>
               <div class="assetRight_pro">
@@ -43,6 +45,7 @@ import vulntype from "api/vulntype";
 import vulnlevelcount from "api/vulnlevelcount";
 import Modal from "../../Modal/modal";
 import chart from "components/chart/chart";
+import { getToken, getUserName } from "@/utils/auth";
 
 const levelSchema = {
   "4": "紧急风险",
@@ -68,6 +71,11 @@ export default {
   },
   data() {
     return {
+      uploadUrl:  location.origin + "/ZY/kb/importExcel",
+      headers: {
+        token: getToken(), 
+        userName: getUserName()
+      },
       options: {
         title: {
           text: "风险类型",

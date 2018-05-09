@@ -157,3 +157,12 @@ a {
 .vulndetail .ivu-collapse>.ivu-collapse-item{
     border: none;
 }
+.ivu-upload-list {
+    margin-bottom: 8px;
+}
+.ivu-upload-list-file {
+    color: #fff
+}
+.ivu-upload-list-file>span>i {
+    color: #fff
+}

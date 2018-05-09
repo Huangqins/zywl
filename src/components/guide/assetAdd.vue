@@ -46,10 +46,13 @@
                             </Form>
                         </Tab-pane>
                         <Tab-pane label="批量导入">
-                            <Upload  multiple  :action="uploadUrl" style="display: inline-block" :with-credentials="true" accept="">
+                            <Upload  multiple  :action="uploadUrl" :with-credentials="true" accept="" name="excelFile" :headers="headers">
                             <i-button type="ghost" icon="ios-cloud-upload-outline">导入文件</i-button>
                             </Upload>
                             <Button type="ghost" icon="iso-cloud-download-outline" >
+
+
+
                               <a :href="href" download="资产导入模板">资产模板下载</a>
                             </Button>
                         </Tab-pane>
@@ -68,6 +71,7 @@
 import assetAdd from "api/assetAdd";
 import { mapGetters } from "vuex";
 import message from "utils/message";
+import { getToken, getUserName } from "@/utils/auth";
 
 const host =
   process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
@@ -92,6 +96,7 @@ export default {
       }
     };
     return {
+      headers: { token: getToken(), userName: getUserName() },
       href: href,
       uploadUrl: location.origin + "/ZY/asset/assetsImport",
       password: "",
