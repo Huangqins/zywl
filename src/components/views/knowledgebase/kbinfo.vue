@@ -13,10 +13,10 @@
               </div>
               <div class="assetRight_pro">
                 <section>
-                   <chart width="370px" height="260px" :option="options" ref="firstChart"></chart>
+                   <chart width="500px" height="260px" :option="options" ref="firstChart"></chart>
                 </section>
                 <section>
-                  <chart width="370px" height="260px" :option="optionOne" id="optionOne"></chart>
+                  <chart width="440px" height="260px" :option="optionOne" id="optionOne"></chart>
                 </section>
                 <section>
                   <chart width="290px" height="260px" :option="optionTwo" id="optionTwo"></chart>
@@ -88,13 +88,29 @@ export default {
           trigger: "item",
           formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
+        legend: {
+          type: "scroll",
+          orient: "vertical",
+          right: 5,
+          top: 20,
+          bottom: 20,
+          data: [],
+          textStyle:{
+            color:"#fbfbfb"
+          }
+        },
         series: [
           {
             type: "pie",
             radius: "65%",
-            center: ["50%", "50%"],
+            center: ["32%", "50%"],
             selectedMode: "single",
             data: [],
+            label:{
+              formatter: function(params) {
+                return params.value;
+              }
+            },
             itemStyle: {
               emphasis: {
                 shadowBlur: 10,
@@ -117,6 +133,22 @@ export default {
           trigger: "item",
           formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
+        legend: {
+          type: "scroll",
+          orient: "vertical",
+          right: 5,
+          top: 20,
+          bottom: 20,
+          data: [],
+          textStyle:{
+            color:"#fbfbfb"
+          }
+        },
+        label:{
+              formatter: function(params) {
+                return params.value;
+              }
+            },
         series: [
           {
             type: "pie",
@@ -146,12 +178,24 @@ export default {
           trigger: "item",
           formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
+        legend: {
+          type: "scroll",
+          orient: "vertical",
+          right: 5,
+          top: 20,
+          bottom: 20,
+          data: [],
+          textStyle:{
+            color:"#fbfbfb"
+          }
+        },
         series: [
           {
             type: "pie",
             radius: "65%",
             center: ["50%", "50%"],
             selectedMode: "single",
+
             data: [
               {
                 value: 1548,
@@ -437,9 +481,13 @@ export default {
           this.$refs.firstChart.hideLoading()
           let list = res.list;
           list.forEach(item => {
+            this.options.legend.data.push(
+              item.vuln_type_name
+            )
             this.options.series[0].data.push({
               value: item.kb_vuln_vnum,
               name: item.vuln_type_name
+            
             });
           });
         } else {
@@ -453,6 +501,7 @@ export default {
         if (res.result === 0) {
           let list = res.list;
           list.forEach(item => {
+            this.optionOne.legend.data.push(levelSchema[item.kb_vuln_level]);
             this.optionOne.series[0].data.push({
               value: item.kb_vuln_vnum,
               name: levelSchema[item.kb_vuln_level],
