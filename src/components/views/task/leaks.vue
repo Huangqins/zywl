@@ -182,7 +182,10 @@ export default {
           right: 5,
           top: 20,
           bottom: 20,
-          data: []
+          data: [],
+          textStyle:{
+            color:"#fbfbfb"
+          }
         },
         series: [
           {
@@ -410,7 +413,6 @@ export default {
 .leaksTwo section {
   flex: 1;
   margin: 40px 50px;
-  background: #e4e5e5;
 }
 .leaksThree {
   width: 100%;
