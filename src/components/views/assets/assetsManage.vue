@@ -98,52 +98,7 @@ export default {
         ]
       },
       //top10排行榜
-      holes: [
-        // {
-        //   holeName: "XSS",
-        //   holeNum: "12"
-        // },
-        // {
-        //   holeName: "WEB",
-        //   holeNum: "10"
-        // },
-        // {
-        //   holeName: "CSRF",
-        //   holeNum: "9"
-        // },
-        // {
-        //   holeName: "CSRF",
-        //   holeNum: "8"
-        // },
-        // {
-        //   holeName: "CSRF",
-        //   holeNum: "7"
-        // },
-        // {
-        //   holeName: "CSRF",
-        //   holeNum: "6"
-        // },
-        // {
-        //   holeName: "CSRF",
-        //   holeNum: "5"
-        // },
-        // {
-        //   holeName: "CSRF",
-        //   holeNum: "4"
-        // },
-        // {
-        //   holeName: "CSRF",
-        //   holeNum: "3"
-        // },
-        // {
-        //   holeName: "CSRF",
-        //   holeNum: "2"
-        // },
-        // {
-        //   holeName: "CSRF",
-        //   holeNum: "1"
-        // }
-      ],
+      holes: [ ],
       assetsList: [],
       width: "800px",
       assetsColums: [

@@ -45,11 +45,7 @@
                 </li>
                 <li>
                     <span class="Aipicture_text">主机风险情况</span>
-                    <Table :columns="assets" :data="assetsData" :height="200" ></Table>  
-                </li>
-                <li>
-                    <span class="Aipicture_text">主机风险情况</span>
-                    <Table :columns="assets" :data="assetsData" :height="200" ></Table>
+                    <Table :columns="vulns" :data="vulnsData" :height="400" ></Table>  
                 </li>
               </ul>
       </section>
@@ -59,6 +55,9 @@
 <script>
 import force from "components/chart/force";
 import chart from "components/chart/chart";
+import assetsInfo from "api/assetsInfo";
+import { getUserName } from "@/utils/auth";
+import leaksInfo from "api/leaksInfo";
 export default {
   components: {
     force,
@@ -69,32 +68,38 @@ export default {
       assets: [
         //
         {
-          title: "Name",
-          key: "name"
+          title: "资产名称",
+          key: "assets_name"
         },
         {
-          title: "Age",
-          key: "age"
+          title: "资产URL",
+          key: "assets_url"
         },
         {
-          title: "Address",
-          key: "address"
+          title: "风险总数",
+          key: "vuln_total"
+        },
+        {
+          title: "风险利用情况",
+          key: "vuln_use"
         }
       ],
-      assetsData: [
+      assetsData: [ ],
+      vulns:[
         {
-          name: "John Brown",
-          age: 18,
-          address: "New York No. 1 Lake Park",
-          date: "2016-10-03"
+          title: "风险名称",
+          key: "vuln_name"
         },
         {
-          name: "Jim Green",
-          age: 24,
-          address: "London No. 1 Lake Park",
-          date: "2016-10-01"
+          title: "风险等级",
+          key: "vuln_level"
+        },
+        {
+          title: "风险利用情况",
+          key: "vuln_use"
         }
       ],
+      vulnsData:[],
       width: "576px",
       widths: 300,
       options: {
@@ -121,9 +126,43 @@ export default {
             type: "bar"
           }
         ]
-      }
+      },
+       defaultPage: {
+        area: 1,
+        rows: 10,
+        page: 1,
+        userName: getUserName()
+      },
+
     };
+  },
+  created(){
+
+    this.assetsInfo(this.defaultPage)
+    this.leaksInfo()
+  },
+  methods:{
+    //资产列表
+    assetsInfo(params){
+     assetsInfo(params).then(res=>{
+       let data=res.rows
+       this.assetsData=data
+      console.log(res)
+     }    
+    )},
+    //风险列表
+    leaksInfo(){
+      let params={userName:getUserName()}
+     leaksInfo(params).then(res=>{
+       let data=res.rows
+       this.vulnsData=data
+      console.log(res)
+     }    
+    )},
+
+
   }
+
 };
 </script>
 <style scoped>
