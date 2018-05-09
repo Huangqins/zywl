@@ -60,7 +60,9 @@
           </div>
        <div class="leaksTwo">
           <section></section>
-          <section></section>
+          <section>
+             <chart width="505px" height="300px" :option="vulntypes" id="vulntype" ref="vulntype"></chart>
+          </section>
           <section></section>
        </div>
        <div class="leaksThree">
@@ -83,6 +85,7 @@ import leaksInfo from "api/leaksInfo";
 import vulnTotal from "api/vulnTotal";
 import { getUserName } from "@/utils/auth";
 import vulnLevel from "api/vulnLevel";
+import vulntype from "api/vulntype";
 
 // const levelSchema = {
 //   "4": { style: "#FF33CC", class: "vuln", ex: "#FF3399" },
@@ -107,32 +110,32 @@ export default {
   },
 
   computed: {
-    options() {
-      setInterval(() => {
-        this.option.series[0].data[0].value =
-          (Math.random() * 100).toFixed(2) - 0;
-      }, 2000);
-      return this.option;
-    },
-    optionTwo() {
-      setInterval(() => {
-        this.optiontwo.series[0].data[0].value =
-          (Math.random() * 100).toFixed(2) - 0;
-      }, 2000);
-      return this.optiontwo;
-    },
-    optionThree() {
-      setInterval(() => {
-        this.optionthree.series[0].data[0].value =
-          (Math.random() * 100).toFixed(2) - 0;
-      }, 2000);
-      return this.optionthree;
-    }
+    // options() {
+    //   setInterval(() => {
+    //     this.option.series[0].data[0].value =
+    //       (Math.random() * 100).toFixed(2) - 0;
+    //   }, 2000);
+    //   return this.option;
+    // },
+    // optionTwo() {
+    //   setInterval(() => {
+    //     this.optiontwo.series[0].data[0].value =
+    //       (Math.random() * 100).toFixed(2) - 0;
+    //   }, 2000);
+    //   return this.optiontwo;
+    // },
+    // optionThree() {
+    //   setInterval(() => {
+    //     this.optionthree.series[0].data[0].value =
+    //       (Math.random() * 100).toFixed(2) - 0;
+    //   }, 2000);
+    //   return this.optionthree;
+    // }
   },
   data() {
     return {
       taskID: "",
-      high:"",
+      high: "",
       option: {
         tooltip: {
           formatter: "{a} <br/>{b} : {c}%"
@@ -157,25 +160,44 @@ export default {
           }
         ]
       },
-      optiontwo: {
+      vulntypes: {
+        title: {
+          text: "风险类型",
+          left: "center",
+          textStyle: {
+            color: "#E4E5E5"
+          }
+        },
         tooltip: {
-          formatter: "{a} <br/>{b} : {c}%"
+          trigger: "item",
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+          type: "scroll",
+          orient: "vertical",
+          right: 5,
+          top: 20,
+          bottom: 20,
+          data: []
         },
         series: [
           {
-            name: "业务指标",
-            type: "gauge",
-            radius: "85%",
-            detail: { formatter: "{value}", fontSize: 18 },
-            data: [{ value: 0, name: "中风险" }],
-            title: { color: "#E4E5E5", fontSize: 12 },
-            splitLine: { show: false },
-            axisTick: { show: false },
-            axisLabel: { show: false, distance: 0 },
-            pointer: { length: "30%", show: true, width: 4 },
-            axisLine: {
-              lineStyle: {
-                color: [[0.2, "#66AB31"], [0.8, "#1A9348"], [1, "#21B4D2"]]
+            type: "pie",
+            radius: "65%",
+            center: ["32%", "50%"],
+            selectedMode: "single",
+            data: [],
+            label: {
+              formatter: function(params) {
+                // console.log(params);
+                return params.value;
+              }
+            },
+            itemStyle: {
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: "rgba(0, 0, 0, 0.5)"
               }
             }
           }
@@ -229,7 +251,7 @@ export default {
           title: "payload",
           key: "vuln_Payload",
           align: "center"
-        },
+        }
       ],
       leaksList: [],
       total: 0,
@@ -248,31 +270,50 @@ export default {
     });
     this._leaksInfo(params);
     this._vulnTotal();
+    this.vulntype();
     // this._vulnLevel({taskID:})
   },
   methods: {
+    //风险类型饼状图
+    vulntype() {
+      let params = { flag: 1 };
+      vulntype(params).then(res => {
+        if (res.result === 0) {
+          let list = res.list;
+          list.forEach(item => {
+            // this.vulntypes.legend.data = item.vuln_type_name;
+            this.vulntypes.series[0].data.push({
+              value: item.kb_vuln_vnum,
+              name: item.vuln_type_name
+            });
+            this.vulntypes.legend.data.push(item.vuln_type_name);
+          });
+        } else {
+        }
+      });
+    },
     _vulnTotal() {
-      vulnTotal({target_id : ''}).then(res => {
+      vulnTotal({ target_id: "" }).then(res => {
         //
         // this.option.series[0].data[0].value
         if (res.result === 0) {
           res.vulns.forEach(item => {
-            if (item.vuln_level === '1') {
+            if (item.vuln_level === "1") {
               this.high = item.vuln_total;
               // this.$refs.chartOne.refresh();
-            } else if (item.vuln_level === '2') {
-              this.optionTwo.series[0].data[0].value = item.vuln_total;
+            } else if (item.vuln_level === "2") {
+              // this.optionTwo.series[0].data[0].value = item.vuln_total;
               // this.$refs.chartTwo.refresh();
-            } else if (item.vuln_level === '3') {
-              this.optionThree.series[0].data[0].value = item.vuln_total;
+            } else if (item.vuln_level === "3") {
+              // this.optionThree.series[0].data[0].value = item.vuln_total;
               // this.$refs.chartThree.refresh();
             } else {
-            //  提示风险
+              //  提示风险
             }
-          })
+          });
         }
-        console.log(res)
-      })
+        console.log(res);
+      });
     },
     godetail() {},
     rowClassName(row, index) {
@@ -308,17 +349,17 @@ export default {
 </script>
 
 <style>
-.vuln_num{
-  width:100%;
-  height:50px;
-  line-height:68px;
-  text-align:center
+.vuln_num {
+  width: 100%;
+  height: 50px;
+  line-height: 68px;
+  text-align: center;
 }
-.vuln_text{
-   width:100%;
-   height:50px;
-   text-align:center;
-   font-size:13px;
+.vuln_text {
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  font-size: 13px;
 }
 .list {
   width: 100%;
@@ -331,26 +372,25 @@ export default {
   height: auto;
   float: right;
 }
-.leaks{
+.leaks {
   display: flex;
   flex-direction: row;
   color: seashell;
   justify-content: space-around;
 }
-.leaks section{
+.leaks section {
   flex: 1;
-  margin:20px 50px;
+  margin: 20px 50px;
   border: 1px solid #e4e5e5;
   border-radius: 4px;
   height: 100px;
   font-size: 16px;
   text-align: center;
-  
 }
-.leaks span{
-  display:block;
+.leaks span {
+  display: block;
   width: 36%;
-  text-align: center;  
+  text-align: center;
   height: 100%;
   float: left;
 }
@@ -358,57 +398,55 @@ export default {
   display: flex;
   flex-direction: row;
 }
-.leaksTwo section{
+.leaksTwo section {
   flex: 1;
-  margin:40px 50px;
-  height: 200px;
-  background: #ccc;
+  margin: 40px 50px;
+  background: #e4e5e5;
 }
-.leaksThree{
- width: 100%;
-
+.leaksThree {
+  width: 100%;
 }
-.leaksThree section{
+.leaksThree section {
   width: 45%;
-  margin:40px 20px;
+  margin: 40px 20px;
   float: left;
 }
-.Num{
-  width: 64%;  
-  float: right; 
+.Num {
+  width: 64%;
+  float: right;
   font-size: 26px;
-  font-weight: 700; 
+  font-weight: 700;
 }
-.better{
+.better {
   background: brown;
 }
-.brown{
+.brown {
   color: brown;
 }
 .high {
   background-color: #e60012;
 }
-.red{
-  color:red;
+.red {
+  color: red;
 }
-.middle{
-  background: #FAA732;
+.middle {
+  background: #faa732;
 }
-.low{
-  background: #95DCF2;
+.low {
+  background: #95dcf2;
 }
 
-.yell{
-  color:  #FAA732;
+.yell {
+  color: #faa732;
 }
-.blu{
-  color: #95DCF2;
+.blu {
+  color: #95dcf2;
 }
-.prompt{
-  background: #27C24C;
+.prompt {
+  background: #27c24c;
 }
-.green{
-  color: #27C24C;
+.green {
+  color: #27c24c;
 }
 .list .vuln {
   width: 14px;
@@ -416,5 +454,4 @@ export default {
   display: inline-block;
   margin: 0 2px;
 }
-
 </style>
