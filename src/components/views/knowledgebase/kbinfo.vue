@@ -13,7 +13,7 @@
               </div>
               <div class="assetRight_pro">
                 <section>
-                   <chart width="370px" height="260px" :option="options"></chart>
+                   <chart width="370px" height="260px" :option="options" ref="firstChart"></chart>
                 </section>
                 <section>
                   <chart width="370px" height="260px" :option="optionOne" id="optionOne"></chart>
@@ -393,8 +393,11 @@ export default {
     },
     ...mapGetters(["userName"])
   },
+  mounted() {
+       this.vulntype();
+  },
   created() {
-    this.vulntype();
+ 
     this.vulnlevelcount();
     this.params = Object.assign({}, this.defaultPage, { area: 0 });
     this._kbinfo(this.params);
@@ -427,8 +430,11 @@ export default {
     //风险类型饼状图
     vulntype() {
       let params = { flag: 1 };
+      // console.log(this.$refs.firstChart)
+      this.$refs.firstChart.showLoading()
       vulntype(params).then(res => {
         if (res.result === 0) {
+          this.$refs.firstChart.hideLoading()
           let list = res.list;
           list.forEach(item => {
             this.options.series[0].data.push({

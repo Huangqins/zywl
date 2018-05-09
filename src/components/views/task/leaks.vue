@@ -228,42 +228,12 @@ export default {
           render: (h, params) => {
             return h("span", `${levelSchema[params.row.vuln_level]}`);
           }
-          // render: (h, params) => {
-          //   const list = [0,0,0];
-          //   return h(
-          //     "div",
-          //     list.map((item, index) => {
-          //       console.log(params.row.vuln_level);
-          //       if (params.row.vuln_level == 3) {
-          //         // return h("span", {
-          //         //   style: {
-          //         //     width: "14px",
-          //         //     height: "5px",
-          //         //     display: "inline-block",
-          //         //     margin: "0 2px",
-          //         //     backgroundColor: 'red'
-          //         //   }
-          //         // });
-          //         return h("span", {'class': 'vuln'})
-          //       } else {
-          //         // return
-          //       }
-
-          //       // return h('span', item)
-          //     })
-          //   );
-          // }
         },
         {
           title: "payload",
           key: "vuln_Payload",
           align: "center"
         },
-        // {
-        //   title: "操作人",
-        //   key: "vuln_oper",
-        //   align: "center"
-        // }
       ],
       leaksList: [],
       total: 0,
