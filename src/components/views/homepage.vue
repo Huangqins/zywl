@@ -103,6 +103,9 @@ export default {
       width: "576px",
       widths: 300,
       options: {
+        tooltip: {
+          trigger: 'axis'
+        },
         xAxis: {
           type: "category",
           data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
@@ -154,8 +157,9 @@ export default {
       let params={userName:getUserName()}
      leaksInfo(params).then(res=>{
        let data=res.rows
-       this.vulnsData=data
-      console.log(res)
+       if (data.length > 10) {
+          this.vulnsData = data.slice(0, 10)
+       }
      }    
     )},
 
