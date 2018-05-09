@@ -144,6 +144,11 @@ export default {
             color:"#fbfbfb"
           }
         },
+        label:{
+              formatter: function(params) {
+                return params.value;
+              }
+            },
         series: [
           {
             type: "pie",
@@ -190,6 +195,7 @@ export default {
             radius: "65%",
             center: ["50%", "50%"],
             selectedMode: "single",
+
             data: [
               {
                 value: 1548,
