@@ -126,9 +126,6 @@ a {
 .ivu-page-next, .ivu-page-prev{
     background-color: transparent;
 }
-.ivu-table-wrapper{
-   
-}
 .ivu-page-item{
     background-color: transparent;
 }
@@ -153,6 +150,8 @@ a {
 }
 .vulndetail  .ivu-collapse>.ivu-collapse-item>.ivu-collapse-header{
     color: #fbfbfb;
+    font-size: 16px;
+    font-weight: bold;
 }
 .vulndetail .ivu-collapse>.ivu-collapse-item{
     border: none;
@@ -203,3 +202,12 @@ a {
     width: 100%;
   }
   /* top10排行榜样式 end*/
+  .logs .ivu-card{
+      background: transparent;
+  }
+  .logs .ivu-card-head{
+    border-bottom:none;
+  }
+  .logs .ivu-card-head p, .ivu-card-head-inner{
+      color: #fbfbfb;
+  }
