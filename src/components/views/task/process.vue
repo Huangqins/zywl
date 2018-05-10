@@ -132,6 +132,7 @@ const host =
 // const host = process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
 
 const task_status = {
+  "0": "任务发起",
   "1": "目标确立",
   "2": "信息收集",
   "3": "威胁建模",
@@ -583,7 +584,7 @@ export default {
           }
           this.option.series[0].data[0].value = scaning;
           let temp = [];
-          for (let i = 1; i <= scaning; i++) {
+          for (let i = 0; i <= scaning; i++) {
             temp.push({
               value: task_status["11"],
               valueIndex: i,
@@ -596,7 +597,7 @@ export default {
           this.linechart.series[0].data = temp;
           let ret = [];
           res.target.target_rftime.split(",").forEach((item, index) => {
-            ret.push(item);
+            ret.push(fomatterTime(new Date(Number(item))));
           });
           this.linechart.xAxis.data = ret;
           this.$refs.linechart.refresh();
