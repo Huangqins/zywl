@@ -10,22 +10,23 @@
               风险描述
                 <p slot="content"> {{kb_vuln_des}}</p>
             </Panel>
-            <Panel name="2">
-                <span style="color:red"> http响应</span>
-                <p slot="content"></p>
-            </Panel>
-            <Panel name="3" >
-                <span style="color:red">该风险的影响</span>
-                <p slot="content">{{kb_vuln_anly}}</p>
-            </Panel>
-            <Panel name="4">
-                如何修复该风险
-                <p slot="content">{{kb_vuln_ref}}</p>
-            </Panel>
             <Panel name="5">
                 分类
                 <p slot="content"></p>
             </Panel>
+            <Panel name="2">
+                <span style="color:red">风险详情</span>
+                <p slot="content"></p>
+            </Panel>
+            <Panel name="3" >
+                <span style="color:red">风险分析</span>
+                <p slot="content">{{kb_vuln_anly}}</p>
+            </Panel>
+            <Panel name="4">
+              加固建议
+                <p slot="content">{{kb_vuln_ref}}</p>
+            </Panel>
+            
        </Collapse>
          
       </div>

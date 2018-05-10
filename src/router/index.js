@@ -139,6 +139,11 @@ const Vulndetail = (resolve) => {
         resolve(module)
     })
 }
+const Logs = (resolve) => {
+    import('components/views/systemManage/Logs').then(module => {
+        resolve(module)
+    })
+}
 const router = new VueRouter({
     // mode: 'history',
     routes: [
@@ -234,6 +239,11 @@ const router = new VueRouter({
             name:"mainpage",
             path: '/mainpage',
             component: Mainpage
+        },
+        {
+            name:"logs",
+            path: '/logs',
+            component: Logs
         },
         {
             name: 'mainpage',
