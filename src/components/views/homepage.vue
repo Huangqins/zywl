@@ -29,7 +29,7 @@
             </div>            
             <div class="preload" >
                <span class="Aipicture_text">预载信息工具集</span>
-               <Table :columns="assets" :data="assetsData" :height="600" ></Table>      
+               <Table :columns="assets" :data="assetsData" :height="426" ></Table>      
              </div> 
       </section>
       <section class="secThree">
@@ -54,11 +54,11 @@
                
                 <section>
                     <!-- <span class="Aipicture_text">外部安全资源</span> -->
-                    <chart :option="vulntypePic" width="550px" height="350px" id="vulnPic"></chart>
+                    <chart :option="vulntypePic" width="600px" height="350px" id="vulnPic"></chart>
                </section>
                 <section>
                     <!-- <span class="Aipicture_text">主机风险情况</span> -->
-                    <Table :columns="vulns" :data="vulnsData" :height="400" ></Table>  
+                    <Table :columns="vulns" :data="vulnsData" :height="503" ></Table>  
                 </section>
       </section>
   </div>
@@ -317,8 +317,8 @@ export default {
   box-sizing: border-box;
 }
 .secThree section {
-  margin-top: 10px;
   border: 1px solid #2b4e6f;
+  margin-bottom: 10px;
 }
 .secOne_left span {
   display: block;
@@ -353,7 +353,7 @@ export default {
 }
 .attack {
   /* width: 480px; */
-  height: 300px;
+  height: 292px;
   border: 1px solid #2b4e6f;
   padding: 8px;
   margin: 0 0px 10px 0px;
@@ -362,7 +362,7 @@ export default {
   display: block;
 }
 .asset {
-  height: 300px;
+  height: 220px;
   border: 1px solid #2b4e6f;
   padding: 8px;
   margin: 0 0px 10px 0px;
