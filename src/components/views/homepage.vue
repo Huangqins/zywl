@@ -72,6 +72,14 @@ import { getUserName } from "@/utils/auth";
 import leaksInfo from "api/leaksInfo";
 import vulnTop from "api/vulnTop";
 import vulntype from "api/vulntype";
+import fomatterTime from "@/utils/tool";
+const levelSchema = {
+  "4": "紧急风险",
+  "3": "高风险",
+  "2": "中风险",
+  "1": "低风险",
+  "0": "无风险"
+};
 export default {
   components: {
     force,
@@ -120,37 +128,49 @@ export default {
       assets: [
         {
           title: "资产名称",
-          key: "assets_name"
+          key: "assets_name",
+          align: "center"
+        },
+        {
+          title: "资产名称",
+          key: "assets_name",
+          align: "center"
         },
         {
           title: "资产URL",
-          key: "assets_url"
+          key: "assets_url",
+          align: "center"
         },
         {
           title: "风险总数",
-          key: "vuln_total"
+          key: "vuln_total",
+          align: "center"
         },
-        {
-          title: "风险利用情况",
-          key: "vuln_use"
-        }
       ],
       assetsData: [],
       vulns: [
         {
-          title: "风险名称",
-          key: "vuln_name",
-          align: "center"
+          title: "风险发现时间",
+          key: "vuln_ftime",
+          align: "center",
+          width: 200,
+          render: (h, params) => {
+            return h(
+              "span",
+              fomatterTime(new Date(params.row.vuln_ftime.time))
+            );
+          }
         },
         {
           title: "风险等级",
           key: "vuln_level",
-          align: "center"
-        },
-        {
-          title: "风险利用情况",
-          key: "vuln_useInfo",
-          align: "center"
+          align: "center",
+          render:(h,params) => {
+            return h(
+                 "span",
+                  `${levelSchema[params.row.vuln_level]}`
+            )
+          }
         }
       ],
       vulnsData: [],
@@ -162,7 +182,6 @@ export default {
           data: [],
           axisLabel: {
             formatter: function(item) {
-              //  return item
             },
             textStyle: {
               color: "#CCCCCC"

@@ -51,11 +51,6 @@
                 </div>
                 </div>
             </section>
-              <!-- <chart width="235" height="235" :option="options" ref="chartOne"></chart> -->
-               <!-- <chart width="235" height="235" :option="optionTwo" id="optionTwo" ref="chartTwo"></chart> -->
-            
-            
-              <!-- <chart width="235" height="235" :option="optionThree" id="optionThree" ref="chartThree"></chart> -->
                  
           </div>
        <div class="leaksTwo">
@@ -182,7 +177,10 @@ export default {
           right: 5,
           top: 20,
           bottom: 20,
-          data: []
+          data: [],
+          textStyle:{
+            color:"#fbfbfb"
+          }
         },
         series: [
           {
@@ -410,7 +408,6 @@ export default {
 .leaksTwo section {
   flex: 1;
   margin: 40px 50px;
-  background: #e4e5e5;
 }
 .leaksThree {
   width: 100%;

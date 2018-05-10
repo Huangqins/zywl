@@ -13,7 +13,9 @@
                   </div>
         </section >
         <section>
-            <div class="hotPic">xxdfd</div>
+            <div class="hotPic">
+              <chart :option="hotPic" width="400px" height="400px"></chart>
+            </div>
         </section>
         <section class="holeclassify">                 
                   <div class="holeList">
@@ -63,6 +65,7 @@ export default {
   },
   data() {
     return {
+      hotPic:{},
       options: {
         tooltip: {
           trigger: "item",
