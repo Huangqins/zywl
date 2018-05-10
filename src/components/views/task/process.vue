@@ -159,11 +159,6 @@ export default {
       percentOption: {
         title: {
           text: "0%",
-          subtext: "",
-          subtextStyle: {
-            color: "#fbfbfb",
-            fontSize: "12"
-          },
           x: "center",
           y: "center",
           textStyle: {
@@ -576,7 +571,6 @@ export default {
               this.percentOption.title.text = `${scaning.length * 5}%`;
               this.percentOption.series[0].data[1].value = 100 - (scaning.length * 5);
           }
-          this.percentOption.title.subtext = `${task_status[scaning[scaning.length-1]]}`;
           this.option.series[0].data[0].value = scaning;
           let temp = [];
           let scaningCopy = scaning;
@@ -584,7 +578,7 @@ export default {
           scaning.forEach((item, index) => {
              temp.push({
               value: task_status["11"],
-              valueIndex: index,
+              valueIndex: item,
               symbolOffset: [0, "-70%"],
               symbolSize: 30,
               symbol: "image://" + require(`./svg/${item}.svg`)

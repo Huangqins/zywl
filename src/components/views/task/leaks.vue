@@ -169,13 +169,13 @@ export default {
         ]
       },
       vulntypes: {
-        title: {
-          text: "风险类型",
-          left: "center",
-          textStyle: {
-            color: "#E4E5E5"
-          }
-        },
+        // title: {
+        //   text: "风险类型",
+        //   left: "center",
+        //   textStyle: {
+        //     color: "#E4E5E5"
+        //   }
+        // },
         tooltip: {
           trigger: "item",
           formatter: "{a} <br/>{b} : {c} ({d}%)"

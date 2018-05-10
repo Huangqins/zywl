@@ -150,6 +150,11 @@ export default {
       assetsData: [],
       vulns: [
         {
+           title: "风险名称",
+          key: "vuln_name",
+          align: "center",
+        },
+        {
           title: "风险发现时间",
           key: "vuln_ftime",
           align: "center",
