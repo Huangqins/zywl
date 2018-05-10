@@ -4,7 +4,7 @@
         <section >
                   <div class="vulnLevel">
                     <div class="levelRight">
-                      <chart :option="options" width="190px" height="190px" ref="chart"></chart>
+                      <chart :option="options" width="190px" height="190px" ref="chart" id="circle"></chart>
                     </div>
                     <div class="levelLeft">
                       <h4 class="levelTitle">风险级别</h4>
@@ -14,7 +14,7 @@
         </section >
         <section>
             <div class="hotPic">
-              <chart :option="hotPic" width="400px" height="400px"></chart>
+              <chart :option="option"  width="450px" height="410px"></chart>
             </div>
         </section>
         <section class="holeclassify">                 
@@ -39,23 +39,20 @@
         </section>
         
      </div>
-     <!-- <div class="secTwo"> 
-       <section></section>
-       <section></section>
-       <section></section>
-     </div> -->
     <div class="List">
       <page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page>
     </div>
   </div>
 </template>
 <script>
+import echarts from "echarts";
 import chart from "components/chart/chart";
 import assetsInfo from "api/assetsInfo";
 import topology from "components/chart/topology";
 import page from "components/page/page";
 import { getUserName } from "@/utils/auth";
-import vulnTop from "api/vulnTop"
+import vulnTop from "api/vulnTop";
+var data = [];
 export default {
   name: "assetsManage",
   components: {
@@ -65,7 +62,72 @@ export default {
   },
   data() {
     return {
-      hotPic:{},
+      option: {
+        xAxis: {
+          axisLabel: {
+            textStyle: {
+              color: "#CCCCCC"
+            }
+          },
+          splitLine: {
+            lineStyle: {
+              type: "dashed"
+            }
+          }
+        },
+        yAxis: {
+          axisLabel: {
+            textStyle: {
+              color: "#CCCCCC"
+            }
+          },
+          splitLine: {
+            lineStyle: {
+              type: "dashed"
+            }
+          },
+          scale: true
+        },
+        grid:{
+          top:'12',
+          bottom:'20'
+        },
+        series: [
+          {
+            data: data,
+            type: "scatter",
+            symbolSize: function(data) {
+              return data[1]
+            },
+            label: {
+              emphasis: {
+                show: true,
+                formatter: function(param) {
+                  return param.data[2];
+                },
+                position: "top"
+              }
+            },
+            itemStyle: {
+              normal: {
+                shadowBlur: 10,
+                shadowColor: "rgba(120, 36, 50, 0.5)",
+                shadowOffsetY: 5,
+                color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [
+                  {
+                    offset: 0,
+                    color: "rgb(251, 118, 123)"
+                  },
+                  {
+                    offset: 1,
+                    color: "rgb(204, 46, 72)"
+                  }
+                ])
+              }
+            }
+          }
+        ]
+      },
       options: {
         tooltip: {
           trigger: "item",
@@ -100,7 +162,7 @@ export default {
         ]
       },
       //top10排行榜
-      holes: [ ],
+      holes: [],
       assetsList: [],
       width: "800px",
       assetsColums: [
@@ -158,16 +220,16 @@ export default {
   mounted() {
     const params = Object.assign({}, this.defaultPage);
     this._assetsInfo(this.defaultPage);
-    this.vulntop()
+    this.vulntop();
   },
 
   methods: {
-    vulntop(){
-      const params={ }
-     vulnTop(params).then(res => {
-        let data=res.lists
-       this.holes=data
-     }) 
+    vulntop() {
+      const params = {};
+      vulnTop(params).then(res => {
+        let data = res.lists;
+        this.holes = data;
+      });
     },
     rowClassName(row, index) {
       return "demo-table-info-row";
@@ -178,8 +240,13 @@ export default {
       if (res.rows[0] === null) {
         this.loading = false;
         this.assetsList = [];
+       
       } else {
+
         this.assetsList = res.rows;
+        res.rows.forEach(item => {
+          data.push([item.vuln_total,item.vuln_use,item.assets_name])
+        });
         this.total = res.total;
         this.loading = false;
       }
@@ -201,10 +268,9 @@ export default {
 .secOne section {
   flex: 1;
   margin: 20px 30px;
-  background: rgba(255, 255, 255, 0.1);
 }
 .vulnLevel {
-  padding: 15px;
+  /* padding: 15px; */
   display: flex;
   align-items: center;
 }
@@ -218,19 +284,19 @@ export default {
 .levelDescript {
   flex: 1 1 100%;
 }
-.levelTitle{
+.levelTitle {
   flex: 1 1 100%;
   margin: 0 0 10px;
 }
 
-.secTwo{
+.secTwo {
   width: 100%;
   display: flex;
   color: #e4e5e5;
   height: 200px;
   flex-direction: row;
-} 
-.secTwo section{
+}
+.secTwo section {
   flex: 1;
   margin: 20px 60px;
   background: rgba(255, 255, 255, 0.1);
@@ -243,6 +309,5 @@ export default {
   display: inline-block;
   height: 19px;
 }
-
 </style>
 
