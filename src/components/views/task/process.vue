@@ -23,7 +23,6 @@
           <div class="vuln_num">
              {{vuln_rate}}
           </div>
-         
           <div class="vuln_text">漏洞利用率</div>
         </div>
         <!-- <chart width="235px" height="235px" :option="optionthree" id="holeUtilization" ref='holeUtilization'></chart> -->

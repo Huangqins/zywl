@@ -239,7 +239,11 @@ export default {
       let params = { userName: getUserName() };
       leaksInfo(params).then(res => {
         let data = res.rows;
-        this.vulnsData = data;
+        if (data.length > 10) {
+           this.vulnsData = data.slice(0, 10);
+        } else {
+           this.vulnsData = data
+        }
       });
     },
     //top10排行榜
