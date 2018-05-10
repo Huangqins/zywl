@@ -144,6 +144,11 @@ const Logs = (resolve) => {
         resolve(module)
     })
 }
+const User = (resolve) => {
+    import('components/views/userpage/user').then(module => {
+        resolve(module)
+    })
+}
 const router = new VueRouter({
     // mode: 'history',
     routes: [
@@ -244,6 +249,11 @@ const router = new VueRouter({
             name:"logs",
             path: '/logs',
             component: Logs
+        },
+        {
+            name:"user",
+            path: '/user',
+            component: User
         },
         {
             name: 'mainpage',

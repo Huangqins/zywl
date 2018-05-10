@@ -1,27 +1,29 @@
 <template>
   <div class="logs">
-    <div style="padding:20px;">
+      <div style="padding:20px;">
         <Card :bordered="false" >
-              <p slot="title">查询条件</p>
-              
-                  <Form :model="formItem" :label-width="80">
-                <FormItem label="账号">
-                 <Input v-model="formItem.input" placeholder="" style="width:300px;"></Input>
-                  <Button type="primary" icon="ios-search">搜索</Button>
-                </FormItem> 
-                </Form>
-       
+            <p slot="title" style="font-size:16px;"><Icon type="grid" style="margin-right:5px;font-size:18px;"></Icon>登陆日志</p>           
+                <div style="padding:20px;">
+                    <Card :bordered="false" >
+                        <p slot="title">查询条件</p>              
+                        <Form :model="formItem" :label-width="80">
+                            <FormItem label="账号">
+                            <Input v-model="formItem.input" placeholder="" style="width:300px;"></Input>
+                            <Button type="primary" icon="ios-search">搜索</Button>
+                            </FormItem> 
+                        </Form>
+                
+                    </Card>
+                </div>
+                <div style="padding:20px;">
+                    <Card :bordered="false" >
+                        <p slot="title">日志列表</p>              
+                        <Table height="400" :columns="columns1" :data="data2"></Table>
+                
+                    </Card>
+                </div>
         </Card>
     </div>
-    <div style="padding:20px;">
-        <Card :bordered="false" >
-              <p slot="title">登陆日志列表</p>              
-              <Table height="400" :columns="columns1" :data="data2"></Table>
-       
-        </Card>
-    </div>
-        
-    
   </div>
 </template>
 <script>

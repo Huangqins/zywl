@@ -211,3 +211,6 @@ a {
   .logs .ivu-card-head p, .ivu-card-head-inner{
       color: #fbfbfb;
   }
+  .logs .ivu-card-bordered{
+      border:none;
+  }
