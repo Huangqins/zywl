@@ -5,7 +5,7 @@
                   <h2 slot="title" style="color:white;">任务添加</h2>
                   <Row>
                             <Form ref="handAdd" :model="formItem" :rules="rules" :label-width="10">
-                               <FormItem prop="tassets_name">
+                               <FormItem prop="target_name">
                                     <Input type="text" v-model="formItem.target_name" placeholder="任务名称"></Input>
                                 </FormItem>
                                 <FormItem >
@@ -45,6 +45,8 @@ import getRule from "api/getRule";
 import assetsSet from "api/assetsSet";
 import fomatterTime from "@/utils/tool";
 import { getUserName } from "@/utils/auth";
+import taskList from "api/taskList";
+
 const strategy = { flag: 1 };
 const cycle = { flag: 2 };
 export default {
@@ -63,10 +65,10 @@ export default {
       strategyRule: [],
       cycleRule: [],
       rules: {
-        tassets_name: [
+        target_name: [
           {
             required: true,
-            message: "请选择资产",
+            message: "请填写任务名称",
             trigger: "blur"
           }
         ]
@@ -81,6 +83,21 @@ export default {
     this.formItem.target_ip = params.target_ip;
   },
   methods: {
+    _taskList(params) {
+      taskList(params).then(res => {
+        if (res.result === 0) {
+          this.$router.push({
+                  name: "process",
+                  params: {
+                    targetInfo: res.targets[0],
+                    target_id: res.targets[0].target_id
+                }
+            });
+        } else {
+          this.$Message.error(`添加错误`)
+        }      
+      })
+    },
     cancel(){
       this.$router.push({path:"/homepage"})//点击取消跳到大首页
     },
@@ -91,7 +108,12 @@ export default {
       assetsSet(this.formItem).then(res => {
         if (res.result === 0) {
           this.loading = false;
-          this.$router.push({path:"/mainpage/assetSet"})
+          this._taskList({
+             area: 0,
+             rows: 10,
+             page: 1,
+             userName: getUserName()
+          });
         } else if (res.result === 0) {
           this.$Message.error({
             content: '资产添加有误或资产不存在'
