@@ -402,43 +402,10 @@ export default {
         }
       }
     },
-    //请勿删掉
-    // goToIndex(assets) {
-    //   this.$refs[assets].validate(valid => {
-    //     if (valid) {
-    //       this.formItem.target_starttime = fomatterTime(
-    //         this.formItem.target_starttime
-    //       );
-    //       this.formItem.userName = getUserName();
-    //       assetsSet(this.formItem).then(res => {
-    //         if (res.result === 0) {
-    //           this.$router.push({ path: "/taskexecution" });
-    //         } else if (res.result === -1) {
-    //           this.$Message.error({
-    //             content: "添加任务失败"
-    //           });
-    //         }
-    //       });
-    //     } else {
-    //       this.$Message.error("Fail!");
-    //     }
-    //   });
-    // }
     dataLoad(paramsObj) {
       this.params = Object.assign({}, this.defaultPage, paramsObj);
       this._taskList(this.params);
     },
-    /*
-    * 任务列表根据任务Id点击跳转到任务执行
-    * */
-    // rowClick(data) {
-    //   console.log(data)
-    //   this.$router.push({ path: '/taskexecution/process', query: { target_id:data.row.target_id}})
-    // },
-    /**
-     * 资产添加列表url/ip下拉数据
-     *
-     */
     _getAssetURL() {
       const params = { username: getUserName() };
       getAssetURL(params).then(res => {
