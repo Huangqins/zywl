@@ -51,11 +51,6 @@
                 </div>
                 </div>
             </section>
-              <!-- <chart width="235" height="235" :option="options" ref="chartOne"></chart> -->
-               <!-- <chart width="235" height="235" :option="optionTwo" id="optionTwo" ref="chartTwo"></chart> -->
-            
-            
-              <!-- <chart width="235" height="235" :option="optionThree" id="optionThree" ref="chartThree"></chart> -->
                  
           </div>
        <div class="leaksTwo">
