@@ -89,7 +89,7 @@ export default {
       ],
       data: {
         target_name: "",
-        target_teststra: "common",
+        target_teststra: "medium",
         target_starttime: new Date(),
         target_cycle: "now",
         target_url: "",

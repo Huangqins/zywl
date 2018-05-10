@@ -53,7 +53,7 @@ export default {
     return {
       formItem: {
         target_name: "",
-        target_teststra: "common",
+        target_teststra: "medium",
         target_starttime: new Date(),
         target_cycle: "now",
         target_url: "",
@@ -63,7 +63,7 @@ export default {
       strategyRule: [],
       cycleRule: [],
       rules: {
-        target_name: [
+        tassets_name: [
           {
             required: true,
             message: "请选择资产",
@@ -91,7 +91,7 @@ export default {
       assetsSet(this.formItem).then(res => {
         if (res.result === 0) {
           this.loading = false;
-          this.$router.push({path:"/taskexecution"})
+          this.$router.push({path:"/mainpage/assetSet"})
         } else if (res.result === 0) {
           this.$Message.error({
             content: '资产添加有误或资产不存在'

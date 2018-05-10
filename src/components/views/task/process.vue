@@ -399,7 +399,11 @@ export default {
             animation: false
           },
           formatter: params => {
-            return task_status[params[0].data.valueIndex];
+            console.log(params)
+            return `${task_status[params[0].data.valueIndex]}
+                          </br>
+                           ${params[0].name}
+                          `;
           }
         },
         xAxis: {
@@ -559,44 +563,37 @@ export default {
       const params = { target_id: this.$route.params.target_id };
       targetProgress(params).then(res => {
         if (res.result === 0) {
-          let scaning = res.target.target_scaning;
-          // if (scaning > this.scaning) {
-          //   this.percent = 0;
-          // }
-          this.percentOption.title.text = `${scaning * 10}%`;
-          this.percentOption.title.subtext = `${task_status[scaning]}`;
-          this.percentOption.series[0].data[0].value = scaning * 10;
-          this.percentOption.series[0].data[1].value = 100 - scaning * 10;
-          // let time = setInterval(() => {
-          //   ++this.percent;
-          //   if (this.percent === 9) {
-          //     this.percent = 9;
-          //   }
-          //   this.percentOption.series[0].data[0].value =
-          //     scaning * 10 + this.percent;
-          //   this.percentOption.series[0].data[1].value =
-          //     100 - (scaning * 10 + this.percent);
-          //   clearInterval(time);
-          // }, 1000);
-          // this.scaning = scaning;
-          if (scaning == "10") {
+          let scaning = res.target.target_scaning.split(",");
+          let target_struts = res.target.target_struts;
+          let target_rftime = res.target.target_rftime;
+           if (target_struts === "1") {
+             this.percentOption.title.text = `100%`;
+             this.percentOption.series[0].data[0].value =  100;
+             this.percentOption.series[0].data[1].value =  0;
             clearInterval(this.timer);
+          } else {
+              this.percentOption.series[0].data[0].value =  scaning.length * 5;
+              this.percentOption.title.text = `${scaning.length * 5}%`;
+              this.percentOption.series[0].data[1].value = 100 - (scaning.length * 5);
           }
+          this.percentOption.title.subtext = `${task_status[scaning[scaning.length-1]]}`;
           this.option.series[0].data[0].value = scaning;
           let temp = [];
-          for (let i = 0; i <= scaning; i++) {
-            temp.push({
+          let scaningCopy = scaning;
+          scaningCopy.unshift('0')
+          scaning.forEach((item, index) => {
+             temp.push({
               value: task_status["11"],
-              valueIndex: i,
+              valueIndex: index,
               symbolOffset: [0, "-70%"],
               symbolSize: 30,
-              symbol: "image://" + require(`./svg/${i}.svg`)
+              symbol: "image://" + require(`./svg/${item}.svg`)
             });
-          }
+          })
           //进度纵坐标
           this.linechart.series[0].data = temp;
           let ret = [];
-          res.target.target_rftime.split(",").forEach((item, index) => {
+           target_rftime.split(",").forEach((item, index) => {
             ret.push(fomatterTime(new Date(Number(item))));
           });
           this.linechart.xAxis.data = ret;
