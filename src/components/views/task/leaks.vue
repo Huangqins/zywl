@@ -5,8 +5,9 @@
               <span class="better"></span>
               <div class="Num brown">
                 <div class="vuln_num"> 
+                   {{urgent}}       
                 </div>
-               <div class="vuln_text">                  
+               <div class="vuln_text">                          
                   <p>紧急风险</p>
                 </div>
                 </div>
@@ -15,8 +16,9 @@
               <span class="high"></span>
               <div class="Num red">
                 <div class="vuln_num"> 
+                  {{high}}      
                 </div>
-               <div class="vuln_text">                  
+               <div class="vuln_text">                             
                   <p>高风险</p>
                 </div>
                 </div>
@@ -25,8 +27,9 @@
               <span class="middle"></span>
               <div class="Num yell">
                <div  class="vuln_num">
+                  {{middle}}     
                 </div>
-                <div class="vuln_text">                  
+                <div class="vuln_text">                             
                   <p>中风险</p>
                 </div>
                 </div>
@@ -35,8 +38,9 @@
               <span class="low"></span>
               <div class="Num blu">
                 <div  class="vuln_num">
+                  {{low}}   
                 </div>
-                <div class="vuln_text">                  
+                <div class="vuln_text">                                 
                   <p>低风险</p>
                 </div>
               </div>
@@ -45,8 +49,9 @@
               <span class="prompt"></span>
               <div class="Num green">
                 <div class="vuln_num"> 
+                   {{prompt}}      
                 </div>
-               <div class="vuln_text">                  
+               <div class="vuln_text">                            
                   <p>提示风险</p>
                 </div>
                 </div>
@@ -134,7 +139,11 @@ export default {
   data() {
     return {
       taskID: "",
+      urgent:'',
       high: "",
+      middle:'',
+      low:"",
+      prompt:"",
       option: {
         tooltip: {
           formatter: "{a} <br/>{b} : {c}%"
@@ -300,22 +309,26 @@ export default {
       });
     },
     _vulnTotal() {
-      vulnTotal({ target_id: "" }).then(res => {
+      vulnTotal({}).then(res => {
         //
         // this.option.series[0].data[0].value
         if (res.result === 0) {
           res.vulns.forEach(item => {
-            if (item.vuln_level === "1") {
-              this.high = item.vuln_total;
+            if (item.vuln_level === "4") {
+              this.urgent = item.vuln_total;
               // this.$refs.chartOne.refresh();
-            } else if (item.vuln_level === "2") {
+            } else if (item.vuln_level === "3") {
+              this.high = item.vuln_total;
               // this.optionTwo.series[0].data[0].value = item.vuln_total;
               // this.$refs.chartTwo.refresh();
-            } else if (item.vuln_level === "3") {
+            } else if (item.vuln_level === "2") {
+              this.middle = item.vuln_total;
               // this.optionThree.series[0].data[0].value = item.vuln_total;
               // this.$refs.chartThree.refresh();
-            } else {
-              //  提示风险
+            } else if(item.vuln_level === "1") {
+              this.low = item.vuln_total;
+            } else if(item.vuln_level === "0"){
+               this.prompt = item.vuln_total;
             }
           });
         }
