@@ -6,7 +6,8 @@ import store from '../store'
 import router from '../router'
 import {
   getUserName,
-  getToken
+  getToken,
+  getUserModel
 } from '@/utils/auth'
 
 
@@ -45,6 +46,7 @@ service.interceptors.request.use(config => {
   if (store.getters.token && store.getters.userName) {
     config.headers['token'] = getToken()
     config.headers['userName'] = getUserName()
+    // config.headers['menuCode'] = getUserModel()
   }
   return config
 }, error => {
@@ -68,16 +70,54 @@ service.interceptors.response.use(response => {
     // 清除store信息
     store.commit('REMOVE_TOKEN');
     store.commit('REMOVE_USER_NAME');
-    router.push({ path: '/login' })
-  } 
+    router.push({
+      path: '/login'
+    })
+  } else if (response.data.result === -2) {
+    Message.error({
+      top: 50,
+      duration: 3,
+      content: '用户尚未被授权,请导入授权文件'
+    })
+    // 清除store信息
+    store.commit('REMOVE_TOKEN');
+    store.commit('REMOVE_USER_NAME');
+    router.push({
+      path: '/login'
+    })
+  } else if (response.data.result === 5) {
+    Message.error({
+      top: 50,
+      duration: 3,
+      content: '授权文件丢失,请导入授权文件'
+    })
+    // 清除store信息
+    store.commit('REMOVE_TOKEN');
+    store.commit('REMOVE_USER_NAME');
+    router.push({
+      path: '/login'
+    })
+  } else if (response.data.result === 6) {
+    Message.error({
+      top: 50,
+      duration: 3,
+      content: '授权文件已过期,请导入授权文件'
+    })
+    // 清除store信息
+    store.commit('REMOVE_TOKEN');
+    store.commit('REMOVE_USER_NAME');
+    router.push({
+      path: '/login'
+    })
+  }
   return response.data
 }, error => {
   console.log('err' + error) // for debug
-//   Message.error({
-//     top: 50,
-//     duration: 3,
-//     content: '操作失败'
-//   })
+  //   Message.error({
+  //     top: 50,
+  //     duration: 3,
+  //     content: '操作失败'
+  //   })
   return Promise.reject(error)
 })
 

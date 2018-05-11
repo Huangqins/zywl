@@ -37,7 +37,7 @@
         v-model="modal1"
         title="修改密码"
         :mask-closable="false"
-        closable=false
+        :closable="false"
         
         @on-ok="ok"
         @on-cancel="cancel">

@@ -58,7 +58,7 @@
                </section>
                 <section>
                     <!-- <span class="Aipicture_text">主机风险情况</span> -->
-                    <Table :columns="vulns" :data="vulnsData" style="min-height:480px"></Table>  
+                    <Table :columns="vulns" :data="vulnsData" style="height:480px"></Table>  
                 </section>
       </section>
   </div>

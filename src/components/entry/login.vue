@@ -25,6 +25,16 @@
             <!-- <Button type="primary" @click="cancle" style="text-align:center;float:left">注销</Button> -->
             <Button type="ghost" @click="handleSubmit" style="text-align:center;float:right">登陆</Button>
           </FormItem>
+          <FormItem>
+             <!-- <Upload  multiple  :action="uploadUrl" :with-credentials="true"  name="license" :headers="headers" :show-upload-list="false" style="display:inline-block">
+                    <Button type="primary" icon="ios-cloud-upload-outline">导入授权文件</Button>
+            </Upload> -->
+          </FormItem>
+          <!-- <FromItem>
+            <Upload action="//jsonplaceholder.typicode.com/posts/">
+              <Button type="ghost" icon="ios-cloud-upload-outline">Upload files</Button>
+            </Upload>
+          </FromItem> -->
      </Form>
    </div>
     <div  class="entry circle-wrapper">
@@ -46,11 +56,14 @@ import message from "utils/message";
 import animationCircle from "./animationCircle";
 import registers from "./register";
 import userTips from "api/userTips";
-import { getUserName } from "@/utils/auth";
+import { getToken, getUserName } from "@/utils/auth";
+import { mapGetters } from "vuex";
 
 const host =
   process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
 // const host = process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
+
+const href = host + 'system/loadFile';
 
 export default {
   name: "login",
@@ -58,8 +71,17 @@ export default {
     animationCircle,
     registers
   },
+  computed: {
+     ...mapGetters(["userName", "token"]),
+  },
   data() {
     return {
+      loadFileModal: false,
+      uploadUrl:  location.origin + "/ZY/system/loadFile",
+      headers: {
+        token: getToken(), 
+        userName: getUserName()
+      },
       registerModal: false,
       formItem: {
         userName: "",
@@ -117,23 +139,23 @@ export default {
             } else if (res.isAsset === 1) {
               //有资产的情况
               const login_res = res;
-              userTips({ userName: getUserName()}).then(res => {
+              userTips({ userName: getUserName() }).then(res => {
                 if (res.result === 0) {
                   //登陆成功有资产且有任务,默认显示任务调度页面
                   this.$router.push({
                     name: "assetSet",
                     params: {
-                      firstLogin: login_res.firstLogin,//是否当然首次登陆
-                      userTips: res,//下一页面判断任务是否结束
+                      firstLogin: login_res.firstLogin, //是否当然首次登陆
+                      userTips: res //下一页面判断任务是否结束
                     }
                   });
-                } else if(res.result === -1) {
+                } else if (res.result === -1) {
                   this.$Message.error({
-                    content: '获取用户资产信息失败'
-                  })
+                    content: "获取用户资产信息失败"
+                  });
                 } else if (res.result === 2) {
                   // 登陆成功有资产无任务,直接走到大首页
-                  this.$router.push({ path: "/taskhomepage"});
+                  this.$router.push({ path: "/taskhomepage" });
                 }
               });
             }
@@ -141,6 +163,14 @@ export default {
             message("error", "密码错误");
           } else if (res.result === 3) {
             message("error", "验证码错误");
+          } else if (res.result === 5 || res.result === -2 || res.result === 6) {
+          //  setTimeout(() => {
+          //       this.loadFileModal = true
+          //  },200)
+            // this.$Modal.info({
+            //   title: '导入文件',
+            //   content:  ``
+            // })
           } else {
             message("error", "用户名不存在");
           }

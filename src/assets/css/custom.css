@@ -213,3 +213,9 @@ a {
   .logs .ivu-card-bordered{
       border:none;
   }
+  .ivu-menu-vertical .ivu-menu-item, .ivu-menu-vertical .ivu-menu-submenu-title {
+      padding: 14px 11px;
+  }
+ .collapsed-menu  .ivu-menu-submenu-title-icon {
+     display: none;
+ } 

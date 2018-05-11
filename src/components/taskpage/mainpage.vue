@@ -1,10 +1,47 @@
 <template>
    <div class="layout">
         <Layout >
-            <Sider ref="side1" hide-trigger collapsible :collapsed-width="48" v-model="isCollapsed" style="background:transparent; min-width:48px;  max-width: 103px;">
+            <Sider ref="side1" hide-trigger collapsible :collapsed-width="48" v-model="isCollapsed" style="background:transparent; min-width:48px;  max-width: 120px;">
                 <span class="log"><img src="../../assets/60.png" alt=""></span>                      
-                <Menu active-name="1-2" theme="dark" width="auto" :class="menuitemClasses">            
-                    <router-link to="/mainpage/homepage">
+                <Menu active-name="1-2" theme="dark" width="auto" :class="menuitemClasses">      
+                   <div v-for="item in menuList" :key="item.name">
+                     <template v-if="!item.children">
+                     <router-link :to="item.path" >
+                       <MenuItem :name="item.name">
+                       <Icon :type="item.icon"></Icon>
+                       <span>{{item.text}}</span>
+                        </MenuItem>
+                     </router-link>
+                     </template>
+                     <template v-else >
+                       <Submenu :name="item.name">
+                         <template slot="title">
+                                    <Icon :type="item.icon"></Icon>
+                                    <span>{{item.text}}</span>
+                            </template>
+                           <template v-for="child in item.children" v-if="!isCollapsed">
+                             <router-link :key="child.path" :to=" '/mainpage'+child.path">
+                              <MenuItem :name="item.name+child.name">
+                                  <span>{{child.text}}</span>
+                              </MenuItem>
+                              </router-link>
+                           </template>
+                       </Submenu>
+                     </template>
+                      <!-- <template v-else v-for="(child, index) in item">
+                            <Submenu :name="item.name" :key="index">
+                                <template slot="title">
+                                    <Icon :type="item.icon"></Icon>
+                                    {{item.text}}
+                                </template>
+                              <router-link :key="child.path" :to="item.path+'/'+child.path">
+                              <MenuItem name="1-1"></MenuItem>
+                              </router-link>
+                        </Submenu>
+                        
+                      </template> -->
+                     </div>      
+                    <!-- <router-link to="/mainpage/homepage">
                         <MenuItem name="1-1">
                             <Icon type="ios-home"></Icon>
                             <span>首页</span>
@@ -46,7 +83,7 @@
                             <Icon type="settings"></Icon>
                             <span>系统管理</span>        
                         </MenuItem>
-                    </router-link>
+                    </router-link> -->
                 </Menu>
             </Sider>
             <Layout>
@@ -104,11 +141,70 @@ export default {
     // this._taskTargetInfo(params);
   },
   watch: {
-    $route: (to, from) => {
-    }
+    $route: (to, from) => {}
   },
   data() {
     return {
+      menuList: [
+        {
+          name: "1-1",
+          text: "首页",
+          path: "/mainpage/homepage",
+          icon: "ios-home"
+        },
+        {
+          name: "1-2",
+          text: "任务调度",
+          path: "/mainpage/assetSet",
+          icon: "android-radio-button-on"
+        },
+        {
+          name: "1-3",
+          path: "/mainpage/assetManagement",
+          text: "资产码头",
+          icon: "ios-list-outline"
+        },
+        {
+          name: "1-4",
+          path: "/mainpage/assetsManage",
+          text: "风险态势",
+          icon: "podium"
+        },
+        {
+          name: "1-5",
+          path: "/mainpage/leaks",
+          text: "风险详情",
+          icon: "bug"
+        },
+        {
+          name: "1-6",
+          path: "/mainpage/kbinfo",
+          text: "知识管理",
+          icon: "social-dropbox"
+        },
+        {
+          name: '1-7',
+          text: '系统设置',
+          path: '/systemManage',
+          icon: 'settings',
+          children: [{
+            name: '-1',
+            path: '/logs',
+            text: '系统日志'
+          }]
+        },
+        {
+          name: '1-8',
+          text: '个人设置',
+          path: '/userPage',
+          icon: 'ios-personadd',
+          children: [{
+            name: '-1',
+            path: '/user',
+            text: '个人信息'
+          }]
+        }
+      ],
       key: Date.now(),
       //查询的任务id.
       target_id: 0,
@@ -120,7 +216,7 @@ export default {
     };
   },
   beforeRouteEnter: (to, from, next) => {
-    if (from.fullPath === "/login") {    
+    if (from.fullPath === "/login") {
       const userInfo = to.params;
       console.log(userInfo);
       //是否第一次登陆,否
@@ -142,9 +238,9 @@ export default {
                     router.push({
                       // path: "/mainpage/process",
                       // query: { target_id: taskId }
-                      name: 'process',
-                      params: { target_id:  taskId,  targetInfo:  res.targets[0]}
-                    });      
+                      name: "process",
+                      params: { target_id: taskId, targetInfo: res.targets[0] }
+                    });
                   }, 2000);
                 }
               });
@@ -175,8 +271,8 @@ export default {
             if (res.result === 0) {
               let taskId = res.targets[0].target_id;
               router.push({
-               name: 'process',
-               params: { target_id:  taskId,  targetInfo:  res.targets[0]}
+                name: "process",
+                params: { target_id: taskId, targetInfo: res.targets[0] }
               });
             }
           });
@@ -223,7 +319,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["userName"]),
+    ...mapGetters(["userName", "isTry", "model"]),
     rotateIcon() {
       return ["menu-icon", this.isCollapsed ? "rotate-icon" : ""];
     },
@@ -234,105 +330,109 @@ export default {
 };
 </script>
 <style scoped>
-.log{
-    display: block;
-    width: 60px;
-    height: 60px;
-    margin-left: -8px;
+.log {
+  display: block;
+  width: 60px;
+  height: 60px;
+  margin-left: -8px;
 }
-.ivu-layout{
-    background:transparent;
+.ivu-layout {
+  background: transparent;
 }
-.ivu-menu-item>i{
-    margin-right:0px;
+.ivu-menu-item > i {
+  margin-right: 0px;
 }
-    .ivu-layout-header{
-        height: 30px;
-        line-height: 30px;
-       background: transparent;
-    }
-    .ivu-menu-vertical .ivu-menu-item, .ivu-menu-vertical .ivu-menu-submenu-title{
-        padding:14px 14px 14px 10px;
-    }
+.ivu-layout-header {
+  height: 30px;
+  line-height: 30px;
+  background: transparent;
+}
+.ivu-menu-vertical .ivu-menu-item,
+.ivu-menu-vertical .ivu-menu-submenu-title {
+  padding: 14px 14px 14px 10px;
+}
 
-    .layout{
-        /* border: 1px solid #d7dde4; */
-        /* background: #f5f7f9; */
-        position: relative;
-        border-radius: 4px;
-        overflow: hidden;
-    }
-    /* .layout span{
+.layout {
+  /* border: 1px solid #d7dde4; */
+  /* background: #f5f7f9; */
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+}
+/* .layout span{
       color: #FBFBFB;
     } */
-    .ivu-layout-sider{
-        max-width: 99px;
-    }
-    .layout-header-bar{
-        /* background: #fff; */
-        box-shadow: 0 1px 1px rgba(0,0,0,.1);
-    }
-    .layout-logo-left{
-        width: 90%;
-        height: 30px;
-        /* background: #5b6270; */
-        border-radius: 3px;
-        margin: 15px auto;
-    }
-    .menu-icon{
-        transition: all .3s;
-    }
-    .rotate-icon{
-        transform: rotate(-90deg);
-    }
-    .ivu-menu-dark{
-        background:transparent;
-    }
-    .menu-item span{
-        display: inline-block;
-        overflow: hidden;
-        /* width: 69px; */
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        vertical-align: bottom;
-        transition: width .2s ease .2s;
-    }
-    .menu-item i{
-        transform: translateX(0px);
-        transition: font-size .2s ease, transform .2s ease;
-        vertical-align: middle;
-        font-size: 16px;
-    }
-    .collapsed-menu span{
-        width: 0px;
-        transition: width .2s ease;
-    }
-    .collapsed-menu i{
-        transform: translateX(5px);
-        transition: font-size .2s ease .2s, transform .2s ease .2s;
-        vertical-align: middle;
-        font-size: 22px;
-    }
-    .headers {
-        width: 100%;
-        /* background-color: rgba(65, 67, 79); */
-        height: 36px;
-        line-height: 36px;
-        text-align: right;
-        padding-right: 20px;
-        letter-spacing: 2px;
-        margin-bottom: 10px;
-        }
-        .headers h2{
-        float: left;
-        color:#FBFBFB;
-        margin-left: 15px;
-        font-size: 16px;
-        font-family: "微软雅黑"
-        }
-        .router-link-active{
-        display: inline ;
-        border-left: none;
-        color: #FBFBFB;
-    }
+.ivu-layout-sider {
+  max-width: 99px;
+}
+.layout-header-bar {
+  /* background: #fff; */
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.layout-logo-left {
+  width: 90%;
+  height: 30px;
+  /* background: #5b6270; */
+  border-radius: 3px;
+  margin: 15px auto;
+}
+.menu-icon {
+  transition: all 0.3s;
+}
+.rotate-icon {
+  transform: rotate(-90deg);
+}
+.ivu-menu-dark {
+  background: transparent;
+}
+.menu-item span {
+  display: inline-block;
+  overflow: hidden;
+  /* width: 69px; */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
+  transition: width 0.2s ease 0.2s;
+}
+.menu-item i {
+  transform: translateX(0px);
+  transition: font-size 0.2s ease, transform 0.2s ease;
+  vertical-align: middle;
+  font-size: 16px;
+}
+.collapsed-menu span {
+  width: 0px;
+  transition: width 0.2s ease;
+}
+.collapsed-menu i {
+  transform: translateX(5px);
+  transition: font-size 0.2s ease 0.2s, transform 0.2s ease 0.2s;
+  vertical-align: middle;
+  font-size: 22px;
+}
+.headers {
+  width: 100%;
+  /* background-color: rgba(65, 67, 79); */
+  height: 36px;
+  line-height: 36px;
+  text-align: right;
+  padding-right: 20px;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+.headers h2 {
+  float: left;
+  color: #fbfbfb;
+  margin-left: 15px;
+  font-size: 16px;
+  font-family: "微软雅黑";
+}
+.router-link-active {
+  display: inline;
+  border-left: none;
+  color: #fbfbfb;
+}
+.ivu-menu-submenu-title span>i, .ivu-menu-submenu-title>i {
+  margin-right: 0;
+}
 </style>
