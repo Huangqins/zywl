@@ -2,7 +2,7 @@
   <div class="logs">
       <div style="padding:20px;">
         <Card :bordered="false" >
-            <p slot="title" style="font-size:16px;"><Icon type="grid" style="margin-right:5px;font-size:18px;"></Icon>登陆日志</p>           
+            <p slot="title" style="font-size:16px;"><Icon type="grid" style="margin-right:5px;font-size:18px;"></Icon>API管理</p>           
                 <div style="padding:20px;">
                     <Card :bordered="false" >
                         <p slot="title">查询条件</p>              
@@ -10,6 +10,7 @@
                             <FormItem label="账号">
                             <Input v-model="formItem.input" placeholder="" style="width:300px;"></Input>
                             <Button type="primary" icon="ios-search">搜索</Button>
+                            <Button type="primary" >待定</Button>
                             </FormItem> 
                         </Form>
                 

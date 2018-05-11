@@ -254,6 +254,7 @@ export default {
           title: "风险等级",
           key: "vuln_level",
           align: "center",
+          width:85,
           render: (h, params) => {
             return h("span", `${levelSchema[params.row.vuln_level]}`);
           }
@@ -427,7 +428,7 @@ export default {
 }
 .leaksThree section {
   width: 45%;
-  margin: 40px 20px;
+  margin: 0px 20px;
   float: left;
 }
 .Num {

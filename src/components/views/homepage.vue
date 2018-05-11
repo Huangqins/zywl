@@ -1,24 +1,25 @@
 <template>
-  <div>
+  <div class="homepage">
       <section class="secOne">
             <div class="Aipicture">
-                 <span class="Aipicture_text">资源监控</span>
+                 <!-- <span class="Aipicture_text">资源监控</span> -->
                  <span class="pictrue"><img src="../../assets/ai.jpg"/></span>
+                 <span style="display:block;width:100%;height:91px;margin-top:5px"><img src="../../assets/num.jpg"/></span>
             </div>
-            <div class="stylebook">
-                 <span class="Aipicture_text">样本量</span>
-                 <span style="display:block;width:100%;height:100px;"><img src="../../assets/num.jpg"/></span>
-            </div>
+            <!-- <div class="stylebook">
+                <span class="Aipicture_text">样本量</span> 
+                 
+            </div> -->
             <div class="attack">
-                 <span class="Aipicture_text">攻击Pyload</span>
+                 <!-- <span class="Aipicture_text">攻击Pyload</span> -->
                  <span class="pictrue" >
-                    <chart :option="options"></chart>
+                    <chart :option="options" height="218px"></chart>
                  </span>
             </div>
             <div class="asset">
                 <!-- <span class="Aipicture_text">资产情况</span> -->
                 <span class="pictrue" >
-                 <Table :columns="assets" :data="assetsData" :height="200" ></Table>
+                 <Table :columns="assets" :data="assetsData" :height="300" ></Table>
                 </span>
             </div>              
       </section>
@@ -28,12 +29,12 @@
               <force :width="width"></force>
             </div>            
             <div class="preload" >
-               <span class="Aipicture_text">预载信息工具集</span>
-               <Table :columns="assets" :data="assetsData" :height="426" ></Table>      
+               <!-- <span class="Aipicture_text">预载信息工具集</span> -->
+               <Table :columns="assets" :data="assetsData" :height="310" ></Table>      
              </div> 
       </section>
       <section class="secThree">
-                    <section class="holeList">
+                    <section class="holeList" style="height:255px">
                     <ul>
                         <li class="listOne">
                           <span class="holeHeader">漏洞排行</span>
@@ -54,11 +55,11 @@
                
                 <section>
                     <!-- <span class="Aipicture_text">外部安全资源</span> -->
-                    <chart :option="vulntypePic" width="600px" height="350px" id="vulnPic"></chart>
+                    <chart :option="vulntypePic" width="600px" height="338px" id="vulnPic"></chart>
                </section>
-                <section>
+                <section id="noheader">
                     <!-- <span class="Aipicture_text">主机风险情况</span> -->
-                    <Table :columns="vulns" :data="vulnsData" :height="503" ></Table>  
+                    <Table :columns="vulns" :data="vulnsData" :height="310" ></Table>  
                 </section>
       </section>
   </div>
@@ -89,14 +90,14 @@ export default {
     return {
       vulntypePic: {
         tooltip: {},
-        legend: {
-          type: "scroll",
-          orient: "vertical",
-          right: 5,
-          top: 20,
-          bottom: 20,
-          data: []
-        },
+        // legend: {
+        //   type: "scroll",
+        //   orient: "vertical",
+        //   right: 5,
+        //   top: 20,
+        //   bottom: 20,
+        //   data: []
+        // },
         radar: {
           // shape: 'circle',
           name: {
@@ -109,7 +110,8 @@ export default {
           },
           indicator: [
           {}
-          ]
+          ],
+          center: ['50%','50%']
         },
         series: [
           {
@@ -129,11 +131,7 @@ export default {
         {
           title: "资产名称",
           key: "assets_name",
-          align: "center"
-        },
-        {
-          title: "资产名称",
-          key: "assets_name",
+          width: 140,
           align: "center"
         },
         {
@@ -144,21 +142,17 @@ export default {
         {
           title: "风险总数",
           key: "vuln_total",
+          width: 100,
           align: "center"
         },
       ],
       assetsData: [],
       vulns: [
         {
-           title: "风险名称",
-          key: "vuln_name",
-          align: "center",
-        },
-        {
           title: "风险发现时间",
           key: "vuln_ftime",
+          width: 160,
           align: "center",
-          width: 200,
           render: (h, params) => {
             return h(
               "span",
@@ -167,8 +161,14 @@ export default {
           }
         },
         {
+           title: "风险名称",
+          key: "vuln_name",
+          align: "center"
+        },        
+        {
           title: "风险等级",
           key: "vuln_level",
+          width: 100,
           align: "center",
           render:(h,params) => {
             return h(
@@ -182,6 +182,7 @@ export default {
       width: "576px",
       widths: 300,
       options: {
+      
         xAxis: {
           type: "category",
           data: [],
@@ -218,7 +219,49 @@ export default {
         userName: getUserName()
       },
       //top10排行榜
-      holes: []
+      holes: [
+      //   {
+      //     name:'qwqw和特',
+      //     vuln_total:'3'
+      //   },
+      //   {
+      //     name:'wrewrr几乎可与',
+      //     vuln_total:'4'
+      //     },
+      //  {
+      //     name:'还有股红太阳',
+      //     vuln_total:'7'
+      //   },
+      //   {
+      //     name:'官方回复他',
+      //     vuln_total:'8'
+      //     },
+      //  {
+      //     name:'过图图图',
+      //     vuln_total:'9'
+      //   },
+      //   {
+      //     name:'出个梵蒂冈',
+      //     vuln_total:'12'
+      //     },
+      //  {
+      //     name:'hjg',
+      //     vuln_total:'34'
+      //   },
+      //   {
+      //     name:'asa',
+      //     vuln_total:'78'
+      //     },
+      //  {
+      //     name:'xvd',
+      //     vuln_total:'97'
+      //   },
+      //   {
+      //     name:'wrewrr',
+      //     vuln_total:'4'
+      //     },
+         
+      ]
     };
   },
   mounted() {
@@ -273,7 +316,7 @@ export default {
             return Number(item.kb_vuln_vnum);
           });
           list.forEach(item => {
-            this.vulntypePic.legend.data.push(item.vuln_type_name);
+            // this.vulntypePic.legend.data.push(item.vuln_type_name);
             this.vulntypePic.series[0].data[0].value.push(
               Number(item.kb_vuln_vnum)
             );
@@ -290,7 +333,7 @@ export default {
 </script>
 <style scoped>
 .secOne {
-  width: 32%;
+  width: 30%;
   height: 100%;
   color: white;
   float: left;
@@ -298,7 +341,7 @@ export default {
   box-sizing: border-box;
 }
 .secTwo {
-  width: 30%;
+  width: 34%;
   height: 100%;
   color: white;
   float: left;
@@ -307,6 +350,7 @@ export default {
 }
 .attackPic {
   border: 1px solid #2b4e6f;
+  height: 605px;
 }
 .preload {
   width: 100%;
@@ -314,7 +358,7 @@ export default {
   border: 1px solid #2b4e6f;
 }
 .secThree {
-  width: 35%;
+  width: 33%;
   height: 100%;
   color: white;
   float: left;
@@ -330,7 +374,7 @@ export default {
 }
 .Aipicture {
   /* width: 480px; */
-  height: 300px;
+  height: 360px;
   border: 1px solid #2b4e6f;
   padding: 8px;
   margin: 0 0px 10px 0px;
@@ -341,7 +385,6 @@ export default {
 .pictrue {
   display: block;
   width: 100%;
-  height: 100%;
   margin-bottom: 10px;
 }
 .pictrue img {
@@ -351,14 +394,14 @@ export default {
 }
 .stylebook {
   /* width: 480px; */
-  height: 100px;
+  height: 91px;
   border: 1px solid #2b4e6f;
   padding: 8px;
   margin: 0 0px 10px 0px;
 }
 .attack {
   /* width: 480px; */
-  height: 292px;
+  height: 235px;
   border: 1px solid #2b4e6f;
   padding: 8px;
   margin: 0 0px 10px 0px;
@@ -367,7 +410,7 @@ export default {
   display: block;
 }
 .asset {
-  height: 220px;
+  height: 327px;
   border: 1px solid #2b4e6f;
   padding: 8px;
   margin: 0 0px 10px 0px;

@@ -213,3 +213,10 @@ a {
   .logs .ivu-card-bordered{
       border:none;
   }
+  .homepage .ivu-table-cell{
+   padding-right:10px;
+   padding-left:10px;
+  }
+  .homepage #noheader .ivu-table-header{
+    display: none;
+}

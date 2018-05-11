@@ -17,8 +17,8 @@ export default {};
 </script>
 <style scoped>
 .hero-logo-circles {
-  width: 400px;
-  height: 400px;
+  width: 490px;
+  height: 490px;
   margin: auto;
   position: relative;
   /* margin-top: -55px;
@@ -32,7 +32,7 @@ export default {};
   -ms-animation:  hero-logo-circle 1s linear infinite;
   animation: hero-logo-circle 1s linear infinite;
   will-change: transform;
-  width: 400px;
+  width: 490px;
 }
 .hero-logo-circle:nth-child(1) {
   animation-duration: 30s;

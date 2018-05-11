@@ -78,7 +78,6 @@ export default {
       },
       options: {
         title: {
-          text: "风险类型",
           left: "center",
           textStyle: {
             color: "#E4E5E5"
@@ -123,7 +122,6 @@ export default {
       },
       optionOne: {
         title: {
-          text: "风险级别",
           left: "center",
           textStyle: {
             color: "#E4E5E5"
@@ -168,7 +166,6 @@ export default {
       },
       optionTwo: {
         title: {
-          text: "利用端口",
           left: "center",
           textStyle: {
             color: "#E4E5E5"

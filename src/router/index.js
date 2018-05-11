@@ -149,6 +149,11 @@ const User = (resolve) => {
         resolve(module)
     })
 }
+const Apimanage = (resolve) => {
+    import('components/views/systemManage/apiManage').then(module => {
+        resolve(module)
+    })
+}
 const router = new VueRouter({
     // mode: 'history',
     routes: [
@@ -251,9 +256,14 @@ const router = new VueRouter({
             component: Logs
         },
         {
-            name:"user",
+            name:"",
             path: '/user',
             component: User
+        },
+        {
+            name:"apiManage",
+            path: '/apiManage',
+            component: Apimanage
         },
         {
             name: 'mainpage',
