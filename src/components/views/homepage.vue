@@ -4,7 +4,8 @@
             <div class="Aipicture">
                  <!-- <span class="Aipicture_text">资源监控</span> -->
                  <span class="pictrue"><img src="../../assets/ai.jpg"/></span>
-                 <span style="display:block;width:100%;height:91px;margin-top:5px"><img src="../../assets/num.jpg"/></span>
+                 <!-- <span style="display:block;width:100%;height:91px;margin-top:5px"><img src="../../assets/num.jpg"/></span> -->
+                 <div id="dataNums" > </div>
             </div>
             <!-- <div class="stylebook">
                 <span class="Aipicture_text">样本量</span> 
@@ -219,49 +220,7 @@ export default {
         userName: getUserName()
       },
       //top10排行榜
-      holes: [
-      //   {
-      //     name:'qwqw和特',
-      //     vuln_total:'3'
-      //   },
-      //   {
-      //     name:'wrewrr几乎可与',
-      //     vuln_total:'4'
-      //     },
-      //  {
-      //     name:'还有股红太阳',
-      //     vuln_total:'7'
-      //   },
-      //   {
-      //     name:'官方回复他',
-      //     vuln_total:'8'
-      //     },
-      //  {
-      //     name:'过图图图',
-      //     vuln_total:'9'
-      //   },
-      //   {
-      //     name:'出个梵蒂冈',
-      //     vuln_total:'12'
-      //     },
-      //  {
-      //     name:'hjg',
-      //     vuln_total:'34'
-      //   },
-      //   {
-      //     name:'asa',
-      //     vuln_total:'78'
-      //     },
-      //  {
-      //     name:'xvd',
-      //     vuln_total:'97'
-      //   },
-      //   {
-      //     name:'wrewrr',
-      //     vuln_total:'4'
-      //     },
-         
-      ]
+      holes: [   ] 
     };
   },
   mounted() {

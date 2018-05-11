@@ -9,12 +9,10 @@ import '@/assets/css/custom.css'
 import '@/permission' // 路由权限 control,预留
 import echarts from 'echarts'
 import store from '@/store'
-
+import $ from 'jquery'
 Vue.prototype.$echarts = echarts;
-
 Vue.use(iview);
 Vue.config.productionTip = false
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

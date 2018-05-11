@@ -18,8 +18,8 @@
                 <div style="padding:20px;">
                     <Card :bordered="false" >
                         <!-- <p slot="title">日志列表</p>               -->
-                        <Table height="400" :columns="columns1" :data="data2"></Table>
-                
+                        <!-- <Table height="400" :columns="columns1" :data="data2"></Table> -->
+                        <page :columns="columns1" :data="data2" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" ></page>
                     </Card>
                 </div>
         </Card>
@@ -27,9 +27,21 @@
   </div>
 </template>
 <script>
+import page from "components/page/page";
+import logs from "api/logs"
 export default {
+    components:{
+        page
+    },
   data(){
     return{
+        defaultPage: {
+        area: 1,
+        rows: 10,
+        page: 1
+      },
+      total:0,
+      loading:false,
       formItem:{
          input:''
       },
@@ -102,6 +114,21 @@ export default {
                 ]
      
     }
+  },
+//   created(){
+//       this.logs()
+//   },
+  methods:{
+    dataLoad(paramsObj) {
+      const params = Object.assign({}, this.defaultPage);
+      this.logs(params)
+    },
+   logs(){
+       const params = Object.assign({}, this.defaultPage);
+       logs(params).then(res => {
+         console.log(res)
+       })
+   }
   }
 }
 </script>
