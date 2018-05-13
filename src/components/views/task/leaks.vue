@@ -200,7 +200,6 @@ export default {
             data: [],
             label: {
               formatter: function(params) {
-                // console.log(params);
                 return params.value;
               }
             },

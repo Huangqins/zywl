@@ -10,6 +10,9 @@
               <div class="assetRight_content">
                   <page :columns="tasks" :data="tasksList" :dataTotal="dataTotal" @dataLoad="dataLoad" :loading="pageLoading" ></page>
               </div>
+               <div class="assetRight_content">
+                  <page :columns="loadingtasks" :data="loadingtasksList" :dataTotal="dataTotals" @dataLoad="dataLoads" :loading="pageLoading" ></page>
+              </div>
           </section>
           <!-- <a :href="href" download ref="download"></a> -->
       </div>
@@ -36,7 +39,12 @@ const taskStatus = {
   "1": "已完成",
   "-2": "失败"
 };
-
+const taskcycle = {
+  "now": "立即",
+  "day": "每天",
+  "month": "每月",
+  "year":"每年"
+};
 export default {
   components: {
     page,
@@ -72,23 +80,24 @@ export default {
       format: [
         { label: "任务名称", type: "input", prop: "target_name" },
         {
-          label: "扫描策略",
+          label: "策略",
           type: "select",
           prop: "target_teststra",
           option: []
         },
-        { label: "开始时间", type: "datetime", prop: "target_starttime" },
         {
           label: "周期",
           type: "select",
           prop: "target_cycle",
           option: []
         },
+        { label: "开始时间", type: "datetime", prop: "target_starttime" },
+        
         { label: "资产url", type: "select", prop: "target_url", option: [] },
         { label: "资产ip", type: "select", prop: "target_ip", option: [] }
       ],
       data: {
-        target_name: "",
+        target_name: "渗透测试+"+fomatterTime(new Date()),
         target_teststra: "medium",
         target_starttime: new Date(),
         target_cycle: "now",
@@ -108,6 +117,228 @@ export default {
         target_ip: [{ validator: addIpValidate, trigger: "change" }]
       },
       value: "",
+      loadingtasksList:[],
+      loadingtasks: [
+        {
+          title: "任务名称",
+          key: "target_name",
+          align: "center",
+          width: 250
+        },
+        {
+          title: "任务状态",
+          key: "target_struts",
+          align: "center",
+          render: (h, params) => {
+            return h("span", taskStatus[params.row.target_struts]);
+          }
+        },
+        {
+          title: "任务目标",
+          key: "target_url",
+          align: "center"
+        },
+        {
+          title: "周期",
+          key: "target_cycle",
+          align: "center",
+          width: 250,
+          render: (h, params) => {
+            return h("span", taskcycle[params.row.target_cycle]);
+          }
+        },
+        {
+          title: "策略",
+          key: "target_teststra",
+          align: "center",
+          width: 250
+        },
+        {
+          title: "开始时间",
+          key: "target_starttime",
+          align: "center",
+          width: 200,
+          render: (h, params) => {
+            return h(
+              "span",
+              fomatterTime(new Date(params.row.target_starttime.time))
+            );
+          }
+        },
+        {
+          title: "结束时间",
+          key: "target_endtime",
+          align: "center",
+          width: 200,
+          render: (h, params) => {
+            if (params.row.target_endtime) {
+              return h(
+                "span",
+                fomatterTime(new Date(params.row.target_endtime.time))
+              );
+            } else {
+              return h("span", "");
+            }
+          }
+        },
+        {
+          title: "报告名称",
+          key: "pdf_name",
+          align: "center"
+        },
+        {
+          title: "操作",
+          align: "center",
+          width: 200,
+          render: (h, params) => {
+            return h("div", [
+              h("Button", {
+                props: {
+                  type: "primary",
+                  size: "small",
+                  icon: "pause"
+                },
+
+                on: {
+                  click: () => {
+                    this.$router.push({
+                      name: "process",
+                      params: {
+                        targetInfo: params.row,
+                        target_id: params.row.target_id
+                      }
+                    });
+                  }
+                }
+              }),
+              h("Button", {
+                props: {
+                  type: "primary",
+                  size: "small",
+                  icon: "play"
+                },
+                style: {
+                  marginLeft: "5px"
+                },
+                on: {
+                  click: () => {
+                    this.$router.push({
+                      name: "process",
+                      params: {
+                        targetInfo: params.row,
+                        target_id: params.row.target_id
+                      }
+                    });
+                  }
+                }
+              }),
+              h(
+                "a",
+                {
+                  attrs: {
+                    type: "application/pdf",
+                    href: params.row.export_url
+                      ? location.origin + "/ZY" + params.row.export_url
+                      : null,
+                    download: params.row.pdf_name ? params.row.pdf_name : false
+                  },
+                  style: {
+                    backgroundColor: "#19be6b",
+                    display: "inline-block",
+                    marginBottom: "0",
+                    fontWeight: "400",
+                    textAlign: "center",
+                    verticalAlign: "middle",
+                    touchAction: "manipulation",
+                    cursor: "pointer",
+                    backgroundImage: "none",
+                    border: "1px solid transparent",
+                    whiteSpace: "nowrap",
+                    lineHeight: "1.5",
+                    color: "#fff",
+                    padding: "2px 7px",
+                    borderRadius: "3px",
+                    marginLeft: "5px"
+                  },
+                  on: {
+                    click: ev => {
+                      if (params.row.export_url === "") {
+                        this.$Modal.confirm({
+                          title: "请输入报告名称",
+                          render: h => {
+                            return h("Input", {
+                              props: {
+                                value: this.fileName,
+                                autofocus: true,
+                                placeholder: "请输入文件名"
+                              },
+                              on: {
+                                input: val => {
+                                  this.fileName = val;
+                                }
+                              }
+                            });
+                          },
+                          onOk: () => {
+                            exportPDF({
+                              target_id: params.row.target_id,
+                              target_name: this.fileName
+                            }).then(res => {
+                              if (res.result === 0) {
+                                this._taskList(this.params);
+                                ev.target.innerText = "下载";
+                              } else {
+                                ev.target.innerText = "生成";
+                              }
+                            });
+                          }
+                        });
+                      }
+                    }
+                  }
+                },
+                params.row.export_url === "" ? "生成" : "下载"
+              ),
+              h("Button", {
+                props: {
+                  type: "primary",
+                  size: "small",
+                  icon: "search"
+                },
+                style: {
+                  marginLeft: "5px"
+                },
+                on: {
+                  click: () => {
+                    this.$router.push({
+                      name: "process",
+                      params: {
+                        targetInfo: params.row,
+                        target_id: params.row.target_id
+                      }
+                    });
+                  }
+                }
+              }),
+              h("Button", {
+                props: {
+                  type: "error",
+                  size: "small",
+                  icon: "trash-a"
+                },
+                style: {
+                  marginLeft: "5px"
+                },
+                on: {
+                  click: () => {
+                    this.taskDelete(params.row);
+                  }
+                }
+              })
+            ]);
+          }
+        }
+      ],
       tasks: [
         {
           title: "任务名称",
@@ -122,6 +353,26 @@ export default {
           render: (h, params) => {
             return h("span", taskStatus[params.row.target_struts]);
           }
+        },
+        {
+          title: "任务目标",
+          key: "target_url",
+          align: "center"
+        },
+        {
+          title: "周期",
+          key: "target_cycle",
+          align: "center",
+          width: 250,
+          render: (h, params) => {
+            return h("span", taskcycle[params.row.target_cycle]);
+          }
+        },
+        {
+          title: "策略",
+          key: "target_teststra",
+          align: "center",
+          width: 250
         },
         {
           title: "开始时间",
@@ -317,6 +568,7 @@ export default {
         userName: getUserName()
       },
       dataTotal: 0,
+      dataTotals: 0,
       params: {},
       urlIpMap: {}
     };
@@ -336,7 +588,7 @@ export default {
   methods: {
     _taskList(params, next) {
       this.pageLoading = true;
-      taskList(params).then(res => {
+      taskList({flag:1}).then(res => {
         if (res.result === 0) {
           if (next) {
             this.$router.push({
@@ -349,6 +601,25 @@ export default {
           }
           this.pageLoading = false;
           this.tasksList = res.targets;
+          this.dataTotal = res.total;
+        }
+      });
+    },
+    _taskList(params, next) {
+      this.pageLoading = true;
+      taskList({flag:2}).then(res => {
+        if (res.result === 0) {
+          if (next) {
+            this.$router.push({
+              name: "process",
+              params: {
+                targetInfo: res.targets[0],
+                target_id: res.targets[0].target_id
+              }
+            });
+          }
+          this.pageLoading = false;
+          this.loadingtasksList = res.targets;
           this.dataTotal = res.total;
         }
       });
@@ -396,15 +667,21 @@ export default {
             return { value: item.rule_key, name: item.rule_name };
           });
         } else {
-          this.format[3].option = res.rules.map(item => {
+          console.log(res)
+          this.format[2].option = res.rules.map(item => {
             return { value: item.rule_key, name: item.rule_name };
           });
+
         }
       }
     },
     dataLoad(paramsObj) {
       this.params = Object.assign({}, this.defaultPage, paramsObj);
       this._taskList(this.params);
+    },
+    dataLoads(paramsObj) {
+      this.params = Object.assign({}, this.defaultPage, paramsObj);
+    this._taskList(this.params);
     },
     _getAssetURL() {
       const params = { username: getUserName() };

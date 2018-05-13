@@ -1,5 +1,9 @@
 <template>
   <div class="homepage">
+    <section class="header">
+       <span></span>
+       <span></span>
+    </section>
       <section class="secOne">
             <div class="Aipicture">
                  <!-- <span class="Aipicture_text">资源监控</span> -->
@@ -56,7 +60,7 @@
                
                 <section>
                     <!-- <span class="Aipicture_text">外部安全资源</span> -->
-                    <chart :option="vulntypePic" width="600px" height="338px" id="vulnPic"></chart>
+                    <chart :option="vulntypePic" width="600px" height="302px" id="vulnPic"></chart>
                </section>
                 <section id="noheader">
                     <!-- <span class="Aipicture_text">主机风险情况</span> -->
@@ -75,12 +79,19 @@ import leaksInfo from "api/leaksInfo";
 import vulnTop from "api/vulnTop";
 import vulntype from "api/vulntype";
 import fomatterTime from "@/utils/tool";
+// const levelSchema = {
+//   "4": "紧急风险",
+//   "3": "高风险",
+//   "2": "中风险",
+//   "1": "低风险",
+//   "0": "无风险"
+// };
 const levelSchema = {
-  "4": "紧急风险",
-  "3": "高风险",
-  "2": "中风险",
-  "1": "低风险",
-  "0": "无风险"
+  "4": "assets/1.jpg",
+  "3": "assets/2.jpg",
+  "2": "assets/3.jpg",
+  "1": "assets/3.jpg",
+  "0": "assets/3.jpg"
 };
 export default {
   components: {
@@ -109,10 +120,8 @@ export default {
               padding: [3, 5]
             }
           },
-          indicator: [
-          {}
-          ],
-          center: ['50%','50%']
+          indicator: [{}],
+          center: ["50%", "50%"]
         },
         series: [
           {
@@ -145,7 +154,7 @@ export default {
           key: "vuln_total",
           width: 100,
           align: "center"
-        },
+        }
       ],
       assetsData: [],
       vulns: [
@@ -162,20 +171,22 @@ export default {
           }
         },
         {
-           title: "风险名称",
+          title: "风险名称",
           key: "vuln_name",
           align: "center"
-        },        
+        },
         {
           title: "风险等级",
           key: "vuln_level",
           width: 100,
           align: "center",
-          render:(h,params) => {
-            return h(
-                 "span",
-                  `${levelSchema[params.row.vuln_level]}`
-            )
+          render: (h, params) => {
+            console.log(params)
+            return h("img", {
+              attrs: {
+                'src': require(`assets/${params.row.vuln_level}.jpg`)
+              }
+            });
           }
         }
       ],
@@ -183,33 +194,46 @@ export default {
       width: "576px",
       widths: 300,
       options: {
-      
-        xAxis: {
-          type: "category",
-          data: [],
-          axisLabel: {
-            formatter: function(item) {
-            },
-            textStyle: {
-              color: "#CCCCCC"
-            }
-          }
-        },
-        yAxis: {
-          type: "value",
-          axisLabel: {
-            textStyle: {
-              color: "#CCCCCC"
-            }
-          }
-        },
         tooltip: {
-          trigger: "axis"
+          trigger: "item",
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+          type: "scroll",
+          orient: "vertical",
+          right: 5,
+          top: 20,
+          bottom: 20,
+          data: [],
+          textStyle: {
+            color: "#fbfbfb"
+          }
         },
         series: [
           {
-            data: [],
-            type: "bar"
+            type: "pie",
+            radius: "65%",
+            center: ["32%", "50%"],
+            selectedMode: "single",
+            data: [
+              { value: 335, name: "直接访问" },
+              { value: 310, name: "邮件营销" },
+              { value: 234, name: "联盟广告" },
+              { value: 135, name: "视频广告" },
+              { value: 1548, name: "搜索引擎" }
+            ],
+            label: {
+              formatter: function(params) {
+                return params.value;
+              }
+            },
+            itemStyle: {
+              emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: "rgba(0, 0, 0, 0.5)"
+              }
+            }
           }
         ]
       },
@@ -220,7 +244,7 @@ export default {
         userName: getUserName()
       },
       //top10排行榜
-      holes: [   ] 
+      holes: []
     };
   },
   mounted() {
@@ -236,8 +260,8 @@ export default {
         let data = res.rows;
         this.assetsData = data;
         this.assetsData.forEach(item => {
-          this.options.xAxis.data.push(item.assets_name);
-          this.options.series[0].data.push(item.vuln_use);
+          // this.options.xAxis.data.push(item.assets_name);
+          // this.options.series[0].data.push(item.vuln_use);
         });
       });
     },
@@ -247,9 +271,9 @@ export default {
       leaksInfo(params).then(res => {
         let data = res.rows;
         if (data.length > 10) {
-           this.vulnsData = data.slice(0, 10);
+          this.vulnsData = data.slice(0, 10);
         } else {
-           this.vulnsData = data
+          this.vulnsData = data;
         }
       });
     },
@@ -270,7 +294,7 @@ export default {
           // this.$refs.vulntype.hideLoading();
           let list = res.list;
           let numList = [];
-           this.vulntypePic.radar.indicator = []
+          this.vulntypePic.radar.indicator = [];
           numList = list.map(item => {
             return Number(item.kb_vuln_vnum);
           });
@@ -291,29 +315,34 @@ export default {
 };
 </script>
 <style scoped>
+.header {
+  height: 45px;
+  background: #ccc;
+  width: 100%;
+}
 .secOne {
-  width: 30%;
+  width: 27%;
   height: 100%;
   color: white;
   float: left;
-  margin: 0px 0px 10px 0px;
+  margin: 0px 0px 3px 0px;
   box-sizing: border-box;
 }
 .secTwo {
-  width: 34%;
+  width: 37%;
   height: 100%;
   color: white;
   float: left;
-  margin: 0px 15px 10px 15px;
+  margin: 0px 10px 3px 10px;
   box-sizing: border-box;
 }
 .attackPic {
   border: 1px solid #2b4e6f;
-  height: 605px;
+  height: 565px;
 }
 .preload {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 6px;
   border: 1px solid #2b4e6f;
 }
 .secThree {
@@ -321,22 +350,22 @@ export default {
   height: 100%;
   color: white;
   float: left;
-  margin: 0px 0px 10px 0px;
+  margin: 0px 0px 3px 0px;
   box-sizing: border-box;
 }
 .secThree section {
   border: 1px solid #2b4e6f;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 .secOne_left span {
   display: block;
 }
 .Aipicture {
   /* width: 480px; */
-  height: 360px;
+  height: 351px;
   border: 1px solid #2b4e6f;
   padding: 8px;
-  margin: 0 0px 10px 0px;
+  margin: 0 0px 6px 0px;
 }
 .Aipicture_text {
   font-size: 18px;
@@ -344,7 +373,7 @@ export default {
 .pictrue {
   display: block;
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 .pictrue img {
   width: 100%;
@@ -360,10 +389,10 @@ export default {
 }
 .attack {
   /* width: 480px; */
-  height: 235px;
+  height: 208px;
   border: 1px solid #2b4e6f;
   padding: 8px;
-  margin: 0 0px 10px 0px;
+  margin: 0 0px 6px 0px;
 }
 .attack span {
   display: block;
@@ -372,7 +401,7 @@ export default {
   height: 327px;
   border: 1px solid #2b4e6f;
   padding: 8px;
-  margin: 0 0px 10px 0px;
+  margin: 0 0px 6px 0px;
 }
 /* top10排行榜样式 header*/
 .secThree span {
