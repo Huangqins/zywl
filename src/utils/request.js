@@ -10,7 +10,6 @@ import {
   getUserModel
 } from '@/utils/auth'
 
-
 // 拦截器
 // 请求拦截器
 // 创建axios实例
@@ -43,10 +42,12 @@ service.interceptors.request.use(config => {
       f: c
     });
   });
-  if (store.getters.token && store.getters.userName) {
+  
+  if (getToken()) {
+    console.log(router)
     config.headers['token'] = getToken()
     config.headers['userName'] = getUserName()
-    config.headers['menuCode'] = getUserModel()
+    config.headers['menuCode'] = vm._route.meta.menuCode
   }
   return config
 }, error => {

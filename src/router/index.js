@@ -151,9 +151,9 @@ const User = (resolve) => {
   })
 }
 const Apimanage = (resolve) => {
-    import('components/views/systemManage/apiManage').then(module => {
-        resolve(module)
-    })
+  import ('components/views/systemManage/apiManage').then(module => {
+    resolve(module)
+  })
 }
 const router = new VueRouter({
   // mode: 'history',
@@ -265,6 +265,9 @@ const router = new VueRouter({
       component: Mainpage,
       children: [{
           //任务进度需要任务Id进入
+          meta: {
+            menuCode: "10"
+          },
           name: 'process',
           path: 'process/:target_id',
           components: {
@@ -278,6 +281,9 @@ const router = new VueRouter({
           }
         },
         {
+          meta: {
+            menuCode: "05"
+          },
           name: 'leaks',
           path: 'leaks',
           components: {
@@ -286,24 +292,36 @@ const router = new VueRouter({
           }
         },
         {
+          meta: {
+            menuCode: "04"
+          },
           path: 'assetsManage',
           components: {
             default: AssetsManage
           }
         },
         {
+          meta: {
+            menuCode: "06"
+          },
           path: 'kbinfo',
           components: {
             default: Kbinfo
           }
         },
         {
+          meta: {
+            menuCode: "03"
+          },
           path: 'assetManagement',
           components: {
             default: AssetManagement
           }
         },
         {
+          meta: {
+            menuCode: "02"
+          },
           name: 'assetSet',
           path: 'assetSet',
           components: {
@@ -311,6 +329,9 @@ const router = new VueRouter({
           }
         },
         {
+          meta: {
+            menuCode: "01"
+          },
           name: 'homepage',
           path: 'homepage',
           components: {
@@ -323,19 +344,28 @@ const router = new VueRouter({
           component: Vulndetail
         },
         {
+          meta: {
+            menuCode: "07"
+          },
           name: "logs",
           path: "logs",
           component: Logs
         },
         {
-            name:"apiManage",
-            path: 'apiManage',
-            component: Apimanage
+          meta: {
+            menuCode: "08"
+          },
+          name: "apiManage",
+          path: 'apiManage',
+          component: Apimanage
         },
         {
-            name: "user",
-            path: 'user',
-            component: User
+          meta: {
+            menuCode: "09"
+          },
+          name: "user",
+          path: 'user',
+          component: User
         }
       ]
     }

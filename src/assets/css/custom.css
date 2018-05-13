@@ -220,3 +220,6 @@ a {
   .homepage #noheader .ivu-table-header{
     display: none;
 }
+.ivu-menu-vertical .ivu-menu-item, .ivu-menu-vertical .ivu-menu-submenu-title {
+    padding: 14px 10px; 
+}

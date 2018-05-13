@@ -16,7 +16,7 @@ const user = {
     trueName: '',
     token: getToken(),
     isTry: '',
-    model: 'all'
+    model: ''
   },
   mutations: {
     SET_USER_NAME: (state, userName) => {
@@ -66,8 +66,8 @@ const user = {
           commit('SET_TRUE_NAME', data.trueName)
           setUsability(data.isTry)
           commit('SET_USER_TRY', data.isTry)
-          setUserModel('all')
-          commit('SET_MODEL', 'all')
+          setUserModel(data.model)
+          commit('SET_MODEL', data.model)
           resolve(response)
         })
       }).catch(error => {
