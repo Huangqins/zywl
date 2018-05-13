@@ -1,5 +1,5 @@
 import request from '@/utils/request';
-export default function taskList({ area, rows, page,userName }) {
+export default function taskList({ area, rows, page,userName,flag }) {
     return request({
         method: 'post',
         url: '/ZY/task/targetInfo',
@@ -7,7 +7,8 @@ export default function taskList({ area, rows, page,userName }) {
             area,
             rows,
             page,
-            userName
+            userName,
+            flag
         }
     })
 }

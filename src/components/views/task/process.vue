@@ -558,7 +558,13 @@ export default {
       const params = { target_id: this.$route.params.target_id };
       targetProgress(params).then(res => {
         if (res.result === 0) {
-          let scaning = res.target.target_scaning.split(",");
+          let scaning;
+          if(res.target.target_scaning.length > 1) {
+           scaning = res.target.target_scaning.split(",");
+          } else {
+            scaning = []
+          }
+          
           let target_struts = res.target.target_struts;
           let target_rftime = res.target.target_rftime;
            if (target_struts === "1") {

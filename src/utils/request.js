@@ -47,7 +47,7 @@ service.interceptors.request.use(config => {
     console.log(router)
     config.headers['token'] = getToken()
     config.headers['userName'] = getUserName()
-    config.headers['menuCode'] = vm._route.meta.menuCode
+    config.headers['menuCode'] = vm._route.meta.menuCode    
   }
   return config
 }, error => {
