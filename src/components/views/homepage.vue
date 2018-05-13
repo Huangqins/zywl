@@ -1,13 +1,13 @@
 <template>
   <div class="homepage">
     <section class="header">
-       <span></span>
+       <span class="smp"></span>
        <span></span>
     </section>
       <section class="secOne">
             <div class="Aipicture">
                  <!-- <span class="Aipicture_text">资源监控</span> -->
-                 <span class="pictrue"><img src="../../assets/ai.jpg"/></span>
+                
                  <!-- <span style="display:block;width:100%;height:91px;margin-top:5px"><img src="../../assets/num.jpg"/></span> -->
                  <div id="dataNums" > </div>
             </div>
@@ -60,7 +60,7 @@
                
                 <section>
                     <!-- <span class="Aipicture_text">外部安全资源</span> -->
-                    <chart :option="vulntypePic" width="600px" height="302px" id="vulnPic"></chart>
+                    <chart :option="vulntypePic" width="600px" height="222px" id="vulnPic"></chart>
                </section>
                 <section id="noheader">
                     <!-- <span class="Aipicture_text">主机风险情况</span> -->
@@ -117,7 +117,7 @@ export default {
               color: "#fff",
               backgroundColor: "#999",
               borderRadius: 3,
-              padding: [3, 5]
+              padding: [1, 5]
             }
           },
           indicator: [{}],
@@ -125,13 +125,11 @@ export default {
         },
         series: [
           {
-            name: "预算 vs 开销（Budget vs spending）",
             type: "radar",
             // areaStyle: {normal: {}},
             data: [
               {
                 value: [],
-                name: "风险总数分布雷达图"
               }
             ]
           }
@@ -316,9 +314,13 @@ export default {
 </script>
 <style scoped>
 .header {
-  height: 45px;
-  background: #ccc;
+  height: 125px;
   width: 100%;
+}
+.smp{
+  width: 90px;
+  height:90px;
+  display: inline-block;
 }
 .secOne {
   width: 27%;
@@ -338,7 +340,7 @@ export default {
 }
 .attackPic {
   border: 1px solid #2b4e6f;
-  height: 565px;
+  height: 485px;
 }
 .preload {
   width: 100%;
@@ -362,7 +364,7 @@ export default {
 }
 .Aipicture {
   /* width: 480px; */
-  height: 351px;
+  height: 150px;
   border: 1px solid #2b4e6f;
   padding: 8px;
   margin: 0 0px 6px 0px;
@@ -389,7 +391,7 @@ export default {
 }
 .attack {
   /* width: 480px; */
-  height: 208px;
+  height: 329px;
   border: 1px solid #2b4e6f;
   padding: 8px;
   margin: 0 0px 6px 0px;

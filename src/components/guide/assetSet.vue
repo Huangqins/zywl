@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="whole">
+  <div class="whole logs">
           <section class="assetRight">
               <div class="assetRight_header">
                 <Input v-model="value" placeholder="区域" clearable style="width: 200px;"/>
@@ -8,10 +8,16 @@
                 <Button type="primary" icon="compose" @click="taskAdd">添加</Button>
               </div>
               <div class="assetRight_content">
+                <Card>
+                  <p slot="title" style="font-size:16px;">任务状态</p>
                   <page :columns="tasks" :data="tasksList" :dataTotal="dataTotal" @dataLoad="dataLoad" :loading="pageLoading" ></page>
+                </Card>
               </div>
                <div class="assetRight_content">
+                <Card>
+                  <p slot="title" style="font-size:16px;">周期任务</p>
                   <page :columns="loadingtasks" :data="loadingtasksList" :dataTotal="dataTotals" @dataLoad="dataLoads" :loading="pageLoading" ></page>
+                </Card>
               </div>
           </section>
           <!-- <a :href="href" download ref="download"></a> -->
