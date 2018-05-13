@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import $ from "jquery";
 import force from "components/chart/force";
 import chart from "components/chart/chart";
 import assetsInfo from "api/assetsInfo";
@@ -79,6 +80,7 @@ import leaksInfo from "api/leaksInfo";
 import vulnTop from "api/vulnTop";
 import vulntype from "api/vulntype";
 import fomatterTime from "@/utils/tool";
+import "./homepage.js";
 // const levelSchema = {
 //   "4": "紧急风险",
 //   "3": "高风险",
@@ -129,7 +131,7 @@ export default {
             // areaStyle: {normal: {}},
             data: [
               {
-                value: [],
+                value: []
               }
             ]
           }
@@ -179,10 +181,10 @@ export default {
           width: 100,
           align: "center",
           render: (h, params) => {
-            console.log(params)
+            console.log(params);
             return h("img", {
               attrs: {
-                'src': require(`assets/${params.row.vuln_level}.jpg`)
+                src: require(`assets/${params.row.vuln_level}.jpg`)
               }
             });
           }
@@ -250,6 +252,9 @@ export default {
     this.leaksInfo();
     this.vulntop();
     this.vulntype();
+    $("#dataNums").rollNum({
+      deVal: 68882
+    });
   },
   methods: {
     //资产列表
@@ -317,9 +322,9 @@ export default {
   height: 125px;
   width: 100%;
 }
-.smp{
+.smp {
   width: 90px;
-  height:90px;
+  height: 90px;
   display: inline-block;
 }
 .secOne {

@@ -63,9 +63,9 @@ import userTips from "api/userTips";
 import { getToken, getUserName } from "@/utils/auth";
 import { mapGetters } from "vuex";
 
-// const host =
-//   process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
-const host = process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
+const host =
+  process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
+// const host = process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
 
 const href = host + 'system/loadFile';
 
@@ -177,7 +177,7 @@ export default {
               token: getToken(),
               userName: getUserName()
              }
-             console.log(this.headers)
+            //  console.log(this.headers)
           //  setTimeout(() => {
           //       this.loadFileModal = true
           //  },200)
