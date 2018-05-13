@@ -184,13 +184,17 @@ export default {
         },
         {
           name: '1-7',
-          text: '系统设置',
+          text: '系统管理',
           path: '/systemManage',
           icon: 'settings',
           children: [{
             name: '-1',
             path: '/logs',
-            text: '系统日志'
+            text: '日志管理'
+          },{
+            name: '-2',
+            path: '/apiManage',
+            text: 'Api管理'
           }]
         },
         {

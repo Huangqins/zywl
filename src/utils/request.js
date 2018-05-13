@@ -46,7 +46,7 @@ service.interceptors.request.use(config => {
   if (store.getters.token && store.getters.userName) {
     config.headers['token'] = getToken()
     config.headers['userName'] = getUserName()
-    // config.headers['menuCode'] = getUserModel()
+    config.headers['menuCode'] = getUserModel()
   }
   return config
 }, error => {

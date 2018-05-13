@@ -11,7 +11,7 @@ const Historydata = (resolve) => {
   })
 }
 const Homepage = (resolve) => {
-  import ('components/views/homepage').then(module => {
+  import ('components/views/homepage.vue').then(module => {
     resolve(module)
   })
 }
@@ -149,6 +149,11 @@ const User = (resolve) => {
   import ('components/views/userpage/user').then(module => {
     resolve(module)
   })
+}
+const Apimanage = (resolve) => {
+    import('components/views/systemManage/apiManage').then(module => {
+        resolve(module)
+    })
 }
 const router = new VueRouter({
   // mode: 'history',
@@ -321,6 +326,11 @@ const router = new VueRouter({
           name: "logs",
           path: "logs",
           component: Logs
+        },
+        {
+            name:"apiManage",
+            path: 'apiManage',
+            component: Apimanage
         },
         {
             name: "user",

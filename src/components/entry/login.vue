@@ -1,6 +1,10 @@
 <template>
   <div>
-      <div class="entry" style="border:none;width:180px;margin-top:10px;">
+      <div class="entry" style="border:none;width:236px;margin-top:10px;">
+        <div style="margin-top:-20px">
+          <span style="display:inline-block;width:56px;height:60px;float:left;"><img src="../../assets/60.png" style="width:100%;height:100%;"></span>
+          <span style="line-height:56px;dispaly:line-block;width:260px;height:35px;color:white;font-size:18px;">智刃智能安全攻防平台</span>
+        </div>
       <Form :model="formItem"  ref="formItem">
         <FormItem  prop="userName">
             <Input v-model="formItem.userName" placeholder="请输入用户名"/>
