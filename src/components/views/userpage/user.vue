@@ -32,6 +32,10 @@
                   </FormItem>
                  </Form>
         </Card>
+        <!-- 证书导入 -->
+        <Upload  multiple  :action="uploadUrl" :with-credentials="true"  name="license" :headers="headers" :show-upload-list="false" style="display:inline-block">
+                    <Button type="primary" icon="ios-cloud-upload-outline">导入授权文件</Button>
+            </Upload>
     </div>
         <Modal
         v-model="modal1"
@@ -56,10 +60,21 @@
   </div>
 </template>
 <script>
-import { getUserName } from "@/utils/auth";
+import { getToken, getUserName } from "@/utils/auth";
+const host =
+  process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
+// const host = process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
+
+const href = host + 'system/loadFile';
 export default {
   data(){
     return{
+       uploadUrl:  location.origin + "/ZY/system/loadFile",
+      headers: {
+        token: getToken(), 
+        userName: getUserName(),
+        menuCode: vm._route.meta.menuCode
+      },
        modal1: false,
       formItem:{
          userName:'',

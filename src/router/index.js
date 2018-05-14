@@ -345,6 +345,9 @@ const router = new VueRouter({
           }
         },
         {
+          meta: {
+            menuCode: "14"
+          },
           name: "vulndetail",
           path: 'vulndetail',
           component: Vulndetail

@@ -572,6 +572,12 @@ export default {
              this.percentOption.series[0].data[0].value =  100;
              this.percentOption.series[0].data[1].value =  0;
             clearInterval(this.timer);
+          } else if (target_struts === "-2") {
+            this.$Message.error(`目标进度确立失败`)
+             this.percentOption.title.text = `0%`;
+             this.percentOption.series[0].data[0].value =  0;
+             this.percentOption.series[0].data[1].value =  0;
+             clearInterval(this.timer);
           } else {
               this.percentOption.series[0].data[0].value =  scaning.length * 5;
               this.percentOption.title.text = `${scaning.length * 5}%`;
