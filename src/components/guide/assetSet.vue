@@ -590,6 +590,7 @@ export default {
       userName: getUserName()
     });
     this._taskList(this.params);
+    this._taskListLong(this.params);
   },
   methods: {
     _taskList(params, next) {
@@ -611,7 +612,7 @@ export default {
         }
       });
     },
-    _taskList(params, next) {
+    _taskListLong(params, next) {
       this.pageLoading = true;
       taskList({flag:2}).then(res => {
         if (res.result === 0) {
