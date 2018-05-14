@@ -233,7 +233,7 @@ export default {
           right: 5,
           top: 20,
           bottom: 20,
-          data: [],
+          data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎'],
           textStyle: {
             color: "#fbfbfb"
           }
@@ -447,7 +447,7 @@ export default {
   /* width: 480px; */
   height: 329px;
   border: 1px solid #2b4e6f;
-  padding: 8px;
+  padding: 45px 0;
   margin: 0 0px 6px 0px;
 }
 .attack span {
