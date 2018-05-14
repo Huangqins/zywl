@@ -13,12 +13,12 @@
                   <page :columns="tasks" :data="tasksList" :dataTotal="dataTotal" @dataLoad="dataLoad" :loading="pageLoading" ></page>
                 </Card>
               </div>
-               <div class="assetRight_content">
+               <!-- <div class="assetRight_content">
                 <Card>
-                  <p slot="title" style="font-size:16px;">周期任务</p>
+                  <p slot="title" style="font-size:16px;">周期任务</p> -->
                   <!-- <page :columns="loadingtasks" :data="loadingtasksList" :dataTotal="dataTotals" @dataLoad="dataLoads" :loading="pagesLoading" ></page> -->
-                </Card>
-              </div>
+                <!-- </Card>
+              </div> -->
           </section>
           <!-- <a :href="href" download ref="download"></a> -->
       </div>
