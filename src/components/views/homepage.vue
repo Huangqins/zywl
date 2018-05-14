@@ -1,7 +1,7 @@
 <template>
   <div class="homepage">
     <section class="header">
-       <span class="smp"></span>
+       <span class="smp" ></span>
        <span></span>
     </section>
       <section class="secOne">
@@ -9,7 +9,7 @@
                  <!-- <span class="Aipicture_text">资源监控</span> -->
                 
                  <!-- <span style="display:block;width:100%;height:91px;margin-top:5px"><img src="../../assets/num.jpg"/></span> -->
-                 <div id="dataNums" > </div>
+                 <div id="dataNums"> </div>
             </div>
             <!-- <div class="stylebook">
                 <span class="Aipicture_text">样本量</span> 
@@ -35,7 +35,7 @@
             </div>            
             <div class="preload" >
                <!-- <span class="Aipicture_text">预载信息工具集</span> -->
-               <Table :columns="assets" :data="assetsData" :height="310" ></Table>      
+               <Table :columns="taskData" :data="taskList" :height="310" ></Table>      
              </div> 
       </section>
       <section class="secThree">
@@ -79,6 +79,9 @@ import leaksInfo from "api/leaksInfo";
 import vulnTop from "api/vulnTop";
 import vulntype from "api/vulntype";
 import fomatterTime from "@/utils/tool";
+import taskList from "api/taskList";
+import $ from "jquery";
+import "./homepage.js";
 // const levelSchema = {
 //   "4": "紧急风险",
 //   "3": "高风险",
@@ -129,7 +132,7 @@ export default {
             // areaStyle: {normal: {}},
             data: [
               {
-                value: [],
+                value: []
               }
             ]
           }
@@ -155,6 +158,26 @@ export default {
         }
       ],
       assetsData: [],
+      taskData: [
+        {
+          title: "任务名称",
+          key: "target_name",
+          width: 140,
+          align: "center"
+        },
+        {
+          title: "任务状态",
+          key: "target_struts",
+          align: "center"
+        },
+        {
+          title: "结束时间",
+          key: "target_endtime",
+          width: 100,
+          align: "center"
+        }
+      ],
+      taskList: [],
       vulns: [
         {
           title: "风险发现时间",
@@ -179,10 +202,10 @@ export default {
           width: 100,
           align: "center",
           render: (h, params) => {
-            console.log(params)
+            console.log(params);
             return h("img", {
               attrs: {
-                'src': require(`assets/${params.row.vuln_level}.jpg`)
+                src: require(`assets/${params.row.vuln_level}.jpg`)
               }
             });
           }
@@ -246,22 +269,37 @@ export default {
     };
   },
   mounted() {
-    this.assetsInfo(this.defaultPage);
+    // this.assetsInfo(this.defaultPage);
     this.leaksInfo();
     this.vulntop();
     this.vulntype();
+    $("#dataNums").rollNum({
+      deVal: 68880
+    });
   },
   methods: {
     //资产列表
-    assetsInfo(params) {
-      assetsInfo(params).then(res => {
-        let data = res.rows;
-        this.assetsData = data;
-        this.assetsData.forEach(item => {
-          // this.options.xAxis.data.push(item.assets_name);
-          // this.options.series[0].data.push(item.vuln_use);
-        });
-      });
+    // assetsInfo(params) {
+    //   assetsInfo(params).then(res => {
+    //     let data = res.rows;
+    //     this.assetsData = data;
+    //     this.assetsData.forEach(item => {
+    //       this.options.xAxis.data.push(item.assets_name);
+    //       this.options.series[0].data.push(item.vuln_use);
+    //     });
+    //   });
+    // },
+    //任务列表
+    _taskList(params, next) {
+      this.pageLoading = true;
+      taskList({ flag: 3}).then(res => {
+        let data=res.targets;
+         if (data.length > 10) {
+           this.tasksList = data.slice(0, 10);
+        } else {
+          this.tasksList = data;
+        }
+        })
     },
     //风险列表
     leaksInfo() {
@@ -317,10 +355,11 @@ export default {
   height: 125px;
   width: 100%;
 }
-.smp{
-  width: 90px;
-  height:90px;
+.smp {
+  width: 120px;
+  height: 120px;
   display: inline-block;
+  background: url("http://img.zcool.cn/community/0175fc571585e96ac72513431a304b.gif") no-repeat 0 0;
 }
 .secOne {
   width: 27%;
@@ -402,7 +441,6 @@ export default {
 .asset {
   height: 327px;
   border: 1px solid #2b4e6f;
-  padding: 8px;
   margin: 0 0px 6px 0px;
 }
 /* top10排行榜样式 header*/
@@ -411,4 +449,14 @@ export default {
   height: 19px;
 }
 /* top10排行榜样式 end*/
+.fl {	float:left;}
+.fr {	float:right;}
+.none{	display:none;}
+.inrow{font-size:0;font-size:12px;font-family:arial;letter-spacing:-3px;}
+.inrow>li,.inrow span{display:inline-block;display:inline;zoom:1;font-size:14px;letter-spacing:normal;word-spacing:normal; }
+.dataNums{position: absolute; top:50%; display: block; width:100%; height:75px; margin-top: -37px; text-align:center;}
+.dataNums .dataOne{ width:61px; height:75px; margin: 0px 3px; text-align: center;}
+.dataNums .dataBoc {position: relative; width: 100%; height: 100%; overflow: hidden;}
+.dataNums .dataBoc .tt {position: absolute; top: 0;  left: 0; width: 100%;  height: 100%;}
+.dataNums .tt span{width:100%;height:100%; font:bold 54px/75px "Arial";color:#ddf0ff;}
 </style>
