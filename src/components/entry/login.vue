@@ -30,9 +30,9 @@
             <Button type="ghost" @click="handleSubmit" style="text-align:center;float:right">登陆</Button>
           </FormItem>
           <FormItem>
-             <Upload  multiple  :action="uploadUrl" :with-credentials="true"  name="license" :headers="headers" :show-upload-list="false" style="display:inline-block">
+             <!-- <Upload  multiple  :action="uploadUrl" :with-credentials="true"  name="license" :headers="headers" :show-upload-list="false" style="display:inline-block">
                     <Button type="primary" icon="ios-cloud-upload-outline">导入授权文件</Button>
-            </Upload>
+            </Upload> -->
           </FormItem>
           <!-- <FromItem>
             <Upload action="//jsonplaceholder.typicode.com/posts/">
@@ -52,7 +52,14 @@
        <registers ref="register"></registers>
        <div slot="footer"></div>
     </Modal> -->
+      <Modal v-model="loadFileModal" title="授权文件导入">
+           <Upload  multiple  :action="uploadUrl" :with-credentials="true"  name="license" :headers="headers" :show-upload-list="false" style="display:inline-block" :on-success="loadFileSuccess">
+                    <Button type="primary" icon="ios-cloud-upload-outline">导入授权文件</Button>
+            </Upload>
+        <div slot="footer"></div>
+      </Modal>
   </div>
+
 </template>
 <script>
 import getIdentifyCode from "api/getIdentifyCode";
@@ -67,7 +74,7 @@ const host =
   process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
 // const host = process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
 
-const href = host + 'system/loadFile';
+const href = host + "system/loadFile";
 
 export default {
   name: "login",
@@ -76,7 +83,7 @@ export default {
     registers
   },
   computed: {
-     ...mapGetters(["userName", "token"])
+    ...mapGetters(["userName", "token"])
   },
   watch: {
     // headers(val) {
@@ -86,10 +93,10 @@ export default {
   data() {
     return {
       loadFileModal: false,
-      uploadUrl:  location.origin + "/ZY/system/loadFile",
+      uploadUrl: location.origin + "/ZY/system/loadFile",
       headers: {
-        token: '', 
-        userName: ''
+        token: "",
+        userName: ""
       },
       registerModal: false,
       formItem: {
@@ -118,6 +125,18 @@ export default {
     this.changeImg();
   },
   methods: {
+    loadFileSuccess(res) {
+      console.log(res);
+      if (res.result === 0) {
+        this.$Message.success("导入授权文件成功");
+        this.loadFileModal = false;
+        setTimeout(() => {
+          this.handleSubmit();
+        },500)
+      } else {
+        this.$Message.error("导入授权文件失败");
+      }
+    },
     register() {
       this.refs.register.handleSubmit();
       // this.$Message.info("Clicked ok");
@@ -164,7 +183,7 @@ export default {
                   });
                 } else if (res.result === 2) {
                   // 登陆成功有资产无任务,直接走到大首页
-                 this.$router.push({ path: "/firstassetAdd" });
+                  this.$router.push({ path: "/firstassetAdd" });
                 }
               });
             }
@@ -172,15 +191,20 @@ export default {
             message("error", "密码错误");
           } else if (res.result === 3) {
             message("error", "验证码错误");
-          } else if (res.result === 5 || res.result === -2 || res.result === 6) {
+          } else if (
+            res.result === 5 ||
+            res.result === -2 ||
+            res.result === 6
+          ) {
             this.headers = {
               token: getToken(),
               userName: getUserName()
-             }
+            };
+            this.loadFileModal = true;
             //  console.log(this.headers)
-          //  setTimeout(() => {
-          //       this.loadFileModal = true
-          //  },200)
+            //  setTimeout(() => {
+            //       this.loadFileModal = true
+            //  },200)
             // this.$Modal.info({
             //   title: '导入文件',
             //   content:  ``
