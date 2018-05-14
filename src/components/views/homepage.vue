@@ -82,13 +82,10 @@ import vulntype from "api/vulntype";
 import fomatterTime from "@/utils/tool";
 import taskList from "api/taskList";
 import "./homepage.js";
-// const levelSchema = {
-//   "4": "紧急风险",
-//   "3": "高风险",
-//   "2": "中风险",
-//   "1": "低风险",
-//   "0": "无风险"
-// };
+const taskstatus = {
+  "-2": "失败",
+  "1": "完成"
+};
 const levelSchema = {
   "4": "assets/4.png",
   "3": "assets/3.png",
@@ -168,7 +165,14 @@ export default {
         {
           title: "任务状态",
           key: "target_struts",
-          align: "center"
+          align: "center",
+          render: (h, params) => {
+            console.log(params)
+            return h(
+              "span",
+              taskstatus[params.row.target_struts]
+            );
+          }
         },
         {
           title: "结束时间",
@@ -285,7 +289,12 @@ export default {
     assetsInfo(params) {
       assetsInfo(params).then(res => {
         let data = res.rows;
-        this.assetsData = data;
+        
+        if(data.length>10){
+          this.assetsData = data.slice(0, 10);
+        }else{
+           this.assetsData=data
+        }
         // this.assetsData.forEach(item => {
         //   this.options.xAxis.data.push(item.assets_name);
         //   this.options.series[0].data.push(item.vuln_use);
@@ -298,9 +307,9 @@ export default {
       taskList({ flag: 3}).then(res => {
         let data=res.targets;
          if (data.length > 10) {
-           this.tasksList = data.slice(0, 10);
+           this.taskLists = data.slice(0, 10);
         } else {
-          this.tasksList = data;
+          this.taskLists = data;
         }
         })
     },

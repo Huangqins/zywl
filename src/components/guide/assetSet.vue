@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="whole logs">
+  <div class="whole logs asset">
           <section class="assetRight">
               <div class="assetRight_header">
                 <Input v-model="value" placeholder="区域" clearable style="width: 200px;"/>

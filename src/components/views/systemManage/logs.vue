@@ -28,108 +28,73 @@
 </template>
 <script>
 import page from "components/page/page";
-import logs from "api/logs"
+import logs from "api/logs";
+import fomatterTime from "@/utils/tool";
+
 export default {
-    components:{
-        page
-    },
-  data(){
-    return{
-        defaultPage: {
+  components: {
+    page
+  },
+  data() {
+    return {
+      defaultPage: {
         area: 1,
         rows: 10,
         page: 1
       },
-      total:0,
-      loading:false,
-      formItem:{
-         input:''
+      total: 0,
+      loading: false,
+      formItem: {
+        input: ""
       },
-       columns1: [
-                    {
-                        title: '账号',
-                        key: 'name',
-                        align:'center'
-                    },
-                    {
-                        title: '登陆状态',
-                        key: 'age',
-                        align:'center'
-                    },
-                    {
-                        title: '时间',
-                        key: 'address',
-                        align:'center'
-                    }
-                ],
-                data2: [
-                    {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park',
-                        date: '2016-10-03'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 24,
-                        address: 'London No. 1 Lake Park',
-                        date: '2016-10-01'
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park',
-                        date: '2016-10-02'
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park',
-                        date: '2016-10-04'
-                    },
-                    {
-                        name: 'John Brown',
-                        age: 18,
-                        address: 'New York No. 1 Lake Park',
-                        date: '2016-10-03'
-                    },
-                    {
-                        name: 'Jim Green',
-                        age: 24,
-                        address: 'London No. 1 Lake Park',
-                        date: '2016-10-01'
-                    },
-                    {
-                        name: 'Joe Black',
-                        age: 30,
-                        address: 'Sydney No. 1 Lake Park',
-                        date: '2016-10-02'
-                    },
-                    {
-                        name: 'Jon Snow',
-                        age: 26,
-                        address: 'Ottawa No. 2 Lake Park',
-                        date: '2016-10-04'
-                    }
-                ]
-     
-    }
+      columns1: [
+        {
+          title: "账号",
+          key: "login_log_name",
+          align: "center"
+        },
+        {
+          title: "登陆状态",
+          key: "login_log_status",
+          align: "center"
+        },
+        {
+          title: "时间",
+          key: "login_log_time",
+          align: "center",
+          render: (h, params) => {
+            return h(
+              "span",
+              fomatterTime(new Date(params.row.login_log_time.time))
+            );
+          }
+        }
+      ],
+      data2: []
+    };
   },
-//   created(){
-//       this.logs()
-//   },
-  methods:{
+  created() {
+    this.logs();
+  },
+  methods: {
     dataLoad(paramsObj) {
       const params = Object.assign({}, this.defaultPage);
-      this.logs(params)
     },
-   logs(){
-       const params = Object.assign({}, this.defaultPage);
-       logs(params).then(res => {
-         console.log(res)
-       })
-   }
+    logs() {
+      const params = Object.assign({}, this.defaultPage);
+      logs(params).then(res => {
+        let data = res.rows;
+        data.forEach(item => {
+            if(item.login_log_status==="0"){
+               item.login_log_status="成功"
+            }else{
+                 item.login_log_status="失败"
+            }
+        });
+        this.data2 = data;
+      });
+    }
   }
-}
+};
 </script>
 
