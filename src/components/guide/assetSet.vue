@@ -10,7 +10,7 @@
               <div class="assetRight_content">
                 <Card>
                   <p slot="title" style="font-size:16px;">任务状态</p>
-                  <page :columns="tasks" :data="tasksList" :dataTotal="dataTotal" @dataLoad="dataLoad" :loading="pageLoading" ></page>
+                  <page :columns="tasks" :data="tasksList" :dataTotal="dataTotal" @dataLoad="dataLoad" :loading="pageLoading" :height="height"></page>
                 </Card>
               </div>
                <div class="assetRight_content">
@@ -84,6 +84,7 @@ export default {
       pagesLoading: false,
       loading: false,
       display: false,
+      height:'355px',
       format: [
         { label: "任务名称", type: "input", prop: "target_name" },
         {

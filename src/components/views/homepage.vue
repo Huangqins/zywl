@@ -277,7 +277,7 @@ export default {
     this.vulntype();
     this.taskList();
     $("#dataNums").rollNum({
-      deVal: 68882
+      deVal: 682323
     });
   },
   methods: {
@@ -408,7 +408,7 @@ export default {
   /* width: 480px; */
   height: 150px;
   border: 1px solid #2b4e6f;
-  padding: 8px;
+  padding: 40px;
   margin: 0 0px 6px 0px;
 }
 .Aipicture_text {
