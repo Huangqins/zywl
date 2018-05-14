@@ -286,10 +286,10 @@ export default {
       assetsInfo(params).then(res => {
         let data = res.rows;
         this.assetsData = data;
-        this.assetsData.forEach(item => {
-          this.options.xAxis.data.push(item.assets_name);
-          this.options.series[0].data.push(item.vuln_use);
-        });
+        // this.assetsData.forEach(item => {
+        //   this.options.xAxis.data.push(item.assets_name);
+        //   this.options.series[0].data.push(item.vuln_use);
+        // });
       });
     },
     //任务列表
