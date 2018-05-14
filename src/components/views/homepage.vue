@@ -32,7 +32,8 @@
       <section class="secTwo">
             <div class="attackPic">
               <!-- <span style="background-color:#212636;font-size:20px;text-align:center;height:56px;line-height:56px;display:block;">攻击流向图</span> -->
-              <force :width="width"></force>
+              <!-- <force :width="width"></force> -->
+               <chart :option="forceOptions" height="485px" id="force" width="100%"></chart>
             </div>            
             <div class="preload" >
                <!-- <span class="Aipicture_text">预载信息工具集</span> -->
@@ -101,6 +102,67 @@ export default {
   },
   data() {
     return {
+      forceOptions: {
+        series: {
+          type: "sankey",
+          layout: "none",
+          label: {
+            color: "#fff"
+          },
+          data: [
+            {
+              name: "a"
+            },
+            {
+              name: "b"
+            },
+            {
+              name: "a1"
+            },
+            {
+              name: "a2"
+            },
+            {
+              name: "b1"
+            },
+            {
+              name: "c"
+            }
+          ],
+          links: [
+            {
+              source: "a",
+              target: "a1",
+              value: 5
+            },
+            {
+              source: "a",
+              target: "a2",
+              value: 3
+            },
+            {
+              source: "b",
+              target: "b1",
+              value: 8
+            },
+            {
+              source: "a",
+              target: "b1",
+              value: 3
+            },
+            {
+              source: "b1",
+              target: "a1",
+              value: 1
+            },
+            {
+              source: "b1",
+              target: "c",
+              value: 2
+            }
+          ]
+        }
+      },
       vulntypePic: {
         tooltip: {},
         // legend: {
@@ -160,7 +222,7 @@ export default {
         {
           title: "任务名称",
           key: "target_name",
-          
+
           align: "center"
         },
         {
@@ -169,11 +231,8 @@ export default {
           align: "center",
           width: 140,
           render: (h, params) => {
-            console.log(params)
-            return h(
-              "span",
-              taskstatus[params.row.target_struts]
-            );
+            console.log(params);
+            return h("span", taskstatus[params.row.target_struts]);
           }
         },
         {
@@ -211,9 +270,8 @@ export default {
             return h("img", {
               attrs: {
                 src: require(`assets/${params.row.vuln_level}.png`),
-                width:"48px",
-                height:"6px",
-
+                width: "48px",
+                height: "6px"
               }
             });
           }
@@ -291,11 +349,11 @@ export default {
     assetsInfo(params) {
       assetsInfo(params).then(res => {
         let data = res.rows;
-        
-        if(data.length>10){
+
+        if (data.length > 10) {
           this.assetsData = data.slice(0, 10);
-        }else{
-           this.assetsData=data
+        } else {
+          this.assetsData = data;
         }
         // this.assetsData.forEach(item => {
         //   this.options.xAxis.data.push(item.assets_name);
@@ -306,14 +364,14 @@ export default {
     //任务列表
     taskList(params) {
       this.pageLoading = true;
-      taskList({ flag: 3}).then(res => {
-        let data=res.targets;
-         if (data.length > 10) {
-           this.taskLists = data.slice(0, 10);
+      taskList({ flag: 3 }).then(res => {
+        let data = res.targets;
+        if (data.length > 10) {
+          this.taskLists = data.slice(0, 10);
         } else {
           this.taskLists = data;
         }
-        })
+      });
     },
     //风险列表
     leaksInfo() {
@@ -365,14 +423,14 @@ export default {
 };
 </script>
 <style scoped>
-.head{
+.head {
   height: 125px;
   width: 100%;
 }
 .smp {
   width: 340px;
   height: 90px;
-  padding:50px 0;
+  padding: 50px 0;
   display: inline-block;
   /* background: url("http://img.zcool.cn/community/0175fc571585e96ac72513431a304b.gif") no-repeat 0 0; */
 }
@@ -464,14 +522,57 @@ export default {
   height: 19px;
 }
 /* top10排行榜样式 end*/
-.fl {	float:left;}
-.fr {	float:right;}
-.none{	display:none;}
-.inrow{font-size:0;font-size:12px;font-family:arial;letter-spacing:-3px;}
-.inrow>li,.inrow span{display:inline-block;display:inline;zoom:1;font-size:14px;letter-spacing:normal;word-spacing:normal; }
-.dataNums{ display: block; width:100%; height:75px; margin-top: -37px; text-align:center;}
-.dataNums .dataOne{ width:61px; height:75px; margin: 0px 3px; text-align: center;}
-.dataNums .dataBoc {position: relative; width: 100%; height: 100%; overflow: hidden;}
-.dataNums .dataBoc .tt { width: 100%;  height: 100%;}
-.dataNums .tt span{width:100%;height:100%; font:bold 54px/75px "Arial";color:#ddf0ff;}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.none {
+  display: none;
+}
+.inrow {
+  font-size: 0;
+  font-size: 12px;
+  font-family: arial;
+  letter-spacing: -3px;
+}
+.inrow > li,
+.inrow span {
+  display: inline-block;
+  display: inline;
+  zoom: 1;
+  font-size: 14px;
+  letter-spacing: normal;
+  word-spacing: normal;
+}
+.dataNums {
+  display: block;
+  width: 100%;
+  height: 75px;
+  margin-top: -37px;
+  text-align: center;
+}
+.dataNums .dataOne {
+  width: 61px;
+  height: 75px;
+  margin: 0px 3px;
+  text-align: center;
+}
+.dataNums .dataBoc {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.dataNums .dataBoc .tt {
+  width: 100%;
+  height: 100%;
+}
+.dataNums .tt span {
+  width: 100%;
+  height: 100%;
+  font: bold 54px/75px "Arial";
+  color: #ddf0ff;
+}
 </style>
