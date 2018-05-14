@@ -16,7 +16,7 @@
             </Panel>
             <Panel name="2">
                 <span style="color:red">风险详情</span>
-                <p slot="content">{{vuln_detail}}</p>
+                <p slot="content" v-html="vuln_detail" ></p>
             </Panel>
             <Panel name="3" >
                 <span style="color:red">风险分析</span>
@@ -89,6 +89,9 @@ export default {
   width: 100%;
   padding: 10px 20px;
   color: #fbfbfb;
+}
+.whole p{
+  font-size: 15px;
 }
 .whole h2 {
   margin-bottom: 10px;
