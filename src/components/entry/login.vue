@@ -63,9 +63,9 @@ import userTips from "api/userTips";
 import { getToken, getUserName } from "@/utils/auth";
 import { mapGetters } from "vuex";
 
-const host =
-  process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
-// const host = process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
+// const host =
+//   process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
+const host = process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
 
 const href = host + 'system/loadFile';
 
@@ -164,7 +164,7 @@ export default {
                   });
                 } else if (res.result === 2) {
                   // 登陆成功有资产无任务,直接走到大首页
-                  this.$router.push({ path: "/taskhomepage" });
+                 this.$router.push({ path: "/firstassetAdd" });
                 }
               });
             }

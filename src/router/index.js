@@ -187,6 +187,9 @@ const router = new VueRouter({
       component: Welcome
     },
     {
+      meta: {
+        menuCode: '12'
+      },
       path: '/assetAdd',
       component: Assetadd
     },
@@ -248,6 +251,9 @@ const router = new VueRouter({
     },
 
     {
+      meta: {
+        menuCode: '13'
+      },
       name: "firstassetAdd",
       path: '/firstassetAdd',
       component: FirstassetAdd

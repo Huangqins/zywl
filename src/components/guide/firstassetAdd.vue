@@ -22,10 +22,16 @@
                                     </Select>
                                 </FormItem>
                                 <FormItem prop="target_url">
-                                    <Input type="text" v-model="formItem.target_url" placeholder="资产URL"></Input>
+                                    <!-- <Input type="text" v-model="formItem.target_url" placeholder="资产URL"></Input> -->
+                                     <Select v-model="formItem.target_url" placeholder="资产URL">
+                                       <Option v-for="(item, index) in urlOption" :value="item.value" :key="index">{{ item.name }}</Option>
+                                    </Select>
                                 </FormItem>
                                  <FormItem prop="assets_ip">
-                                    <Input type="text" v-model="formItem.target_ip" placeholder="资产IP"></Input>
+                                    <!-- <Input type="text" v-model="formItem.target_ip" placeholder="资产IP"></Input> -->
+                                    <Select v-model="formItem.target_ip" placeholder="资产IP">
+                                      <Option v-for="(item, index) in iPOption" :value="item.value" :key="index+ 'c'">{{ item.name }}</Option>
+                                    </Select>
                                 </FormItem>
                             </Form>
 
@@ -46,6 +52,7 @@ import assetsSet from "api/assetsSet";
 import fomatterTime from "@/utils/tool";
 import { getUserName } from "@/utils/auth";
 import taskList from "api/taskList";
+import getAssetURL from "api/getAssetURL";
 
 const strategy = { flag: 1 };
 const cycle = { flag: 2 };
@@ -53,6 +60,9 @@ export default {
   name: "firstassetAdd",
   data() {
     return {
+      urlIpMap: {},
+      iPOption: [],
+      urlOption: [],
       formItem: {
         target_name: "",
         target_teststra: "medium",
@@ -82,42 +92,68 @@ export default {
     this.formItem.target_url = params.target_url;
     this.formItem.target_ip = params.target_ip;
   },
+  watch: {
+    "formItem.target_url"(val) {
+      this.formItem.target_ip = this.urlIpMap[val];
+    }
+  },
+  mounted() {
+    this._getAssetURL();
+  },
   methods: {
     _taskList(params) {
       taskList(params).then(res => {
         if (res.result === 0) {
           this.$router.push({
-                  name: "process",
-                  params: {
-                    targetInfo: res.targets[0],
-                    target_id: res.targets[0].target_id
-                }
-            });
+            name: "process",
+            params: {
+              targetInfo: res.targets[0],
+              target_id: res.targets[0].target_id
+            }
+          });
         } else {
-          this.$Message.error(`添加错误`)
-        }      
-      })
+          this.$Message.error(`添加错误`);
+        }
+      });
     },
-    cancel(){
-      this.$router.push({path:"/homepage"})//点击取消跳到大首页
+    _getAssetURL() {
+      const params = { username: getUserName() };
+      getAssetURL(params).then(res => {
+        this.urlIpMap = {};
+        this.urlOption = res.lists.map(item => {
+          console.log(item)
+          this.urlIpMap[item.assets_url] = item.assets_ip;
+          return { value: item.assets_url, name: item.assets_url };
+        });
+        this.iPOption = res.lists.map(item => {
+          return { value: item.assets_ip, name: item.assets_ip };
+        });
+         console.log(this.urlOption, this.iPOption)
+      });
+     
+    },
+    cancel() {
+      this.$router.push({ path: "/homepage" }); //点击取消跳到大首页
     },
     asyncOK(formItem) {
       this.formItem.userName = getUserName();
-      this.formItem.target_starttime = fomatterTime(this.formItem.target_starttime);
+      this.formItem.target_starttime = fomatterTime(
+        this.formItem.target_starttime
+      );
       this.loading = true;
       assetsSet(this.formItem).then(res => {
         if (res.result === 0) {
           this.loading = false;
           this._taskList({
-             area: 0,
-             rows: 10,
-             page: 1,
-             userName: getUserName()
+            area: 0,
+            rows: 10,
+            page: 1,
+            userName: getUserName()
           });
         } else if (res.result === 0) {
           this.$Message.error({
-            content: '资产添加有误或资产不存在'
-          })
+            content: "资产添加有误或资产不存在"
+          });
         }
       });
     },
@@ -135,8 +171,8 @@ export default {
 };
 </script>
 <style scoped>
-.button{
-margin-right: 50px;
+.button {
+  margin-right: 50px;
 }
 .whole {
   width: 410px;

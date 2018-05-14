@@ -4,8 +4,8 @@
               <Card class="card" tyle="">
                   <h2 slot="title" style="color:white;">请选择您的导入方式</h2>
                   <Row>
-                    <Tabs  :animated="false">
-                        <Tab-pane label="手动导入">
+                    <Tabs  :animated="false" v-model="tab">
+                        <Tab-pane label="手动导入" name="handler">
                             <!-- <span>
                                 <Input v-model="password" placeholder="请输入初始资产信息（IP段/域名）"/>
                             </span>  -->
@@ -45,14 +45,11 @@
                                 </FormItem>
                             </Form>
                         </Tab-pane>
-                        <Tab-pane label="批量导入">
-                            <Upload  multiple  :action="uploadUrl" :with-credentials="true" accept="" name="excelFile" :headers="headers">
+                        <Tab-pane label="批量导入" name="template">
+                            <Upload  multiple  :action="uploadUrl" :with-credentials="true" accept="" name="excelFile" :headers="headers" >
                             <i-button type="ghost" icon="ios-cloud-upload-outline">导入文件</i-button>
                             </Upload>
                             <Button type="ghost" icon="iso-cloud-download-outline" >
-
-
-
                               <a :href="href" download="资产导入模板">资产模板下载</a>
                             </Button>
                         </Tab-pane>
@@ -96,7 +93,12 @@ export default {
       }
     };
     return {
-      headers: { token: getToken(), userName: getUserName() },
+      tab: "template",
+      headers: {
+        token: getToken(),
+        userName: getUserName(),
+        menuCode: vm._route.meta.menuCode
+      },
       href: href,
       uploadUrl: location.origin + "/ZY/asset/assetsImport",
       password: "",
@@ -119,6 +121,9 @@ export default {
       }
     };
   },
+  created() {
+    console.log(vm);
+  },
   computed: {
     ...mapGetters(["userName"])
   },
@@ -126,26 +131,30 @@ export default {
     assetSubmit() {
       // this.$router.push({ path: "/sysInfo" });
       this.handAddForm.assets_creatuser = this.userName;
-      this.$refs.handAdd.validate(valid => {
-        if (valid) {
-          assetAdd(this.handAddForm).then(res => {
-            if (res.result === 0) {
-              message("success", "导入资产成功");
-              this.$router.push({
-                name: "firstassetAdd",
-                params: {
-                  target_url: this.handAddForm.assets_url,
-                  target_ip: this.handAddForm.assets_ip
-                }
-              });
-            } else if (res.result === -1) {
-              message("error", "导入资产失败");
-            } else if (res.result === 2) {
-              message("error", "导入资产重复");
-            }
-          });
-        }
-      });
+      if (this.tab === "handler") {
+        this.$refs.handAdd.validate(valid => {
+          if (valid) {
+            assetAdd(this.handAddForm).then(res => {
+              if (res.result === 0) {
+                message("success", "导入资产成功");
+                this.$router.push({
+                  name: "firstassetAdd",
+                  params: {
+                    target_url: this.handAddForm.assets_url,
+                    target_ip: this.handAddForm.assets_ip
+                  }
+                });
+              } else if (res.result === -1) {
+                message("error", "导入资产失败");
+              } else if (res.result === 2) {
+                message("error", "导入资产重复");
+              }
+            });
+          }
+        });
+      } else {
+         this.$router.push({  name: "firstassetAdd" })
+      }
     },
     download() {}
   }

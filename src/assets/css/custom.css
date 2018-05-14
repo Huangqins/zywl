@@ -223,3 +223,9 @@ a {
 .ivu-menu-vertical .ivu-menu-item, .ivu-menu-vertical .ivu-menu-submenu-title {
     padding: 14px 10px; 
 }
+.collapsed-menu .ivu-menu-opened>*>.ivu-menu-submenu-title-icon {
+    display: none;
+}
+.collapsed-menu .ivu-menu-submenu-title-icon {
+    display: none;
+}
