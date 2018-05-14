@@ -1,6 +1,6 @@
 <template>
   <div class="homepage">
-    <section class="header">
+    <section class="head">
        <span class="smp" > <div id="dataNums"> </div></span>
        <span></span>
     </section>
@@ -423,7 +423,7 @@ export default {
 };
 </script>
 <style scoped>
-.header {
+.head {
   height: 125px;
   width: 100%;
 }
