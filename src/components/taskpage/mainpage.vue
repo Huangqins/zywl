@@ -147,37 +147,37 @@ export default {
     return {
       menuList: [
         {
-          name: "1-1",
+          name: "01",
           text: "首页",
           path: "/mainpage/homepage",
           icon: "ios-home"
         },
         {
-          name: "1-2",
+          name: "02",
           text: "任务调度",
           path: "/mainpage/assetSet",
           icon: "android-radio-button-on"
         },
         {
-          name: "1-3",
+          name: "03",
           path: "/mainpage/assetManagement",
           text: "资产码头",
           icon: "ios-list-outline"
         },
         {
-          name: "1-4",
+          name: "04",
           path: "/mainpage/assetsManage",
           text: "风险态势",
           icon: "podium"
         },
         {
-          name: "1-5",
+          name: "05",
           path: "/mainpage/leaks",
           text: "风险详情",
           icon: "bug"
         },
         {
-          name: "1-6",
+          name: "06",
           path: "/mainpage/kbinfo",
           text: "知识管理",
           icon: "social-dropbox"
@@ -188,11 +188,11 @@ export default {
           path: '/systemManage',
           icon: 'settings',
           children: [{
-            name: '-1',
+            name: '07',
             path: '/logs',
             text: '日志管理'
           },{
-            name: '-2',
+            name: '08',
             path: '/apiManage',
             text: 'Api管理'
           }]
@@ -203,7 +203,7 @@ export default {
           path: '/userPage',
           icon: 'ios-personadd',
           children: [{
-            name: '-1',
+            name: '09',
             path: '/user',
             text: '个人信息'
           }]

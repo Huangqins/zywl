@@ -30,9 +30,9 @@
             <Button type="ghost" @click="handleSubmit" style="text-align:center;float:right">登陆</Button>
           </FormItem>
           <FormItem>
-             <!-- <Upload  multiple  :action="uploadUrl" :with-credentials="true"  name="license" :headers="headers" :show-upload-list="false" style="display:inline-block">
+             <Upload  multiple  :action="uploadUrl" :with-credentials="true"  name="license" :headers="headers" :show-upload-list="false" style="display:inline-block">
                     <Button type="primary" icon="ios-cloud-upload-outline">导入授权文件</Button>
-            </Upload> -->
+            </Upload>
           </FormItem>
           <!-- <FromItem>
             <Upload action="//jsonplaceholder.typicode.com/posts/">
@@ -76,15 +76,20 @@ export default {
     registers
   },
   computed: {
-     ...mapGetters(["userName", "token"]),
+     ...mapGetters(["userName", "token"])
+  },
+  watch: {
+    // headers(val) {
+    //   console.log(val)
+    // }
   },
   data() {
     return {
       loadFileModal: false,
       uploadUrl:  location.origin + "/ZY/system/loadFile",
       headers: {
-        token: getToken(), 
-        userName: getUserName()
+        token: '', 
+        userName: ''
       },
       registerModal: false,
       formItem: {
@@ -168,6 +173,11 @@ export default {
           } else if (res.result === 3) {
             message("error", "验证码错误");
           } else if (res.result === 5 || res.result === -2 || res.result === 6) {
+            this.headers = {
+              token: getToken(),
+              userName: getUserName()
+             }
+            //  console.log(this.headers)
           //  setTimeout(() => {
           //       this.loadFileModal = true
           //  },200)

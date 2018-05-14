@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import $ from "jquery";
 import force from "components/chart/force";
 import chart from "components/chart/chart";
 import assetsInfo from "api/assetsInfo";
@@ -79,8 +80,11 @@ import leaksInfo from "api/leaksInfo";
 import vulnTop from "api/vulnTop";
 import vulntype from "api/vulntype";
 import fomatterTime from "@/utils/tool";
+<<<<<<< HEAD
 import taskList from "api/taskList";
 import $ from "jquery";
+=======
+>>>>>>> ed465735ef2d020ccf802e4a8e1bb931a0d31bcf
 import "./homepage.js";
 // const levelSchema = {
 //   "4": "紧急风险",
@@ -274,7 +278,11 @@ export default {
     this.vulntop();
     this.vulntype();
     $("#dataNums").rollNum({
+<<<<<<< HEAD
       deVal: 68880
+=======
+      deVal: 68882
+>>>>>>> ed465735ef2d020ccf802e4a8e1bb931a0d31bcf
     });
   },
   methods: {
@@ -356,8 +364,13 @@ export default {
   width: 100%;
 }
 .smp {
+<<<<<<< HEAD
   width: 120px;
   height: 120px;
+=======
+  width: 90px;
+  height: 90px;
+>>>>>>> ed465735ef2d020ccf802e4a8e1bb931a0d31bcf
   display: inline-block;
   background: url("http://img.zcool.cn/community/0175fc571585e96ac72513431a304b.gif") no-repeat 0 0;
 }
