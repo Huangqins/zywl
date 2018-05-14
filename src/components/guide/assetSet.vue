@@ -16,7 +16,7 @@
                <div class="assetRight_content">
                 <Card>
                   <p slot="title" style="font-size:16px;">周期任务</p>
-                  <page :columns="loadingtasks" :data="loadingtasksList" :dataTotal="dataTotals" @dataLoad="dataLoads" :loading="pageLoading" ></page>
+                  <page :columns="loadingtasks" :data="loadingtasksList" :dataTotal="dataTotals" @dataLoad="dataLoads" :loading="pagesLoading" ></page>
                 </Card>
               </div>
           </section>
@@ -81,6 +81,7 @@ export default {
       fileName: "",
       href: "",
       pageLoading: false,
+      pagesLoading: false,
       loading: false,
       display: false,
       format: [
