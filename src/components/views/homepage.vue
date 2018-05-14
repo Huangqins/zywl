@@ -276,9 +276,9 @@ export default {
     this.vulntop();
     this.vulntype();
     this.taskList();
-    // $("#dataNums").rollNum({
-    //   deVal: 68882
-    // });
+    $("#dataNums").rollNum({
+      deVal: 68882
+    });
   },
   methods: {
     //资产列表
@@ -457,9 +457,9 @@ export default {
 .none{	display:none;}
 .inrow{font-size:0;font-size:12px;font-family:arial;letter-spacing:-3px;}
 .inrow>li,.inrow span{display:inline-block;display:inline;zoom:1;font-size:14px;letter-spacing:normal;word-spacing:normal; }
-.dataNums{position: absolute; top:50%; display: block; width:100%; height:75px; margin-top: -37px; text-align:center;}
+.dataNums{ display: block; width:100%; height:75px; margin-top: -37px; text-align:center;}
 .dataNums .dataOne{ width:61px; height:75px; margin: 0px 3px; text-align: center;}
 .dataNums .dataBoc {position: relative; width: 100%; height: 100%; overflow: hidden;}
-.dataNums .dataBoc .tt {position: absolute; top: 0;  left: 0; width: 100%;  height: 100%;}
+.dataNums .dataBoc .tt { width: 100%;  height: 100%;}
 .dataNums .tt span{width:100%;height:100%; font:bold 54px/75px "Arial";color:#ddf0ff;}
 </style>

@@ -16,7 +16,7 @@
             </Panel>
             <Panel name="2">
                 <span style="color:red">风险详情</span>
-                <p slot="content"></p>
+                <p slot="content">{{vuln_detail}}</p>
             </Panel>
             <Panel name="3" >
                 <span style="color:red">风险分析</span>
@@ -58,7 +58,8 @@ export default {
       vuln_level: "",
       kb_vuln_des: "",
       kb_vuln_anly: "",
-      kb_vuln_ref: ""
+      kb_vuln_ref: "",
+      vuln_detail:''
     };
   },
   created() {
@@ -74,6 +75,7 @@ export default {
         this.kb_vuln_des = data[0].kb_vuln_des;
         this.kb_vuln_anly = data[0].kb_vuln_anly;
         this.kb_vuln_ref = data[0].kb_vuln_ref;
+        this.vuln_detail=data[0].vuln_detail
       });
     }
   }
