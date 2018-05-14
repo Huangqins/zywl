@@ -35,7 +35,7 @@
             </div>            
             <div class="preload" >
                <!-- <span class="Aipicture_text">预载信息工具集</span> -->
-               <Table :columns="taskData" :data="taskList" :height="310" ></Table>      
+               <Table :columns="taskData" :data="taskLists" :height="310" ></Table>      
              </div> 
       </section>
       <section class="secThree">
@@ -79,12 +79,8 @@ import { getUserName } from "@/utils/auth";
 import leaksInfo from "api/leaksInfo";
 import vulnTop from "api/vulnTop";
 import vulntype from "api/vulntype";
-import fomatterTime from "@/utils/tool";
-<<<<<<< HEAD
 import taskList from "api/taskList";
-import $ from "jquery";
-=======
->>>>>>> ed465735ef2d020ccf802e4a8e1bb931a0d31bcf
+import fomatterTime from "@/utils/tool";
 import "./homepage.js";
 // const levelSchema = {
 //   "4": "紧急风险",
@@ -94,11 +90,11 @@ import "./homepage.js";
 //   "0": "无风险"
 // };
 const levelSchema = {
-  "4": "assets/1.jpg",
-  "3": "assets/2.jpg",
-  "2": "assets/3.jpg",
-  "1": "assets/3.jpg",
-  "0": "assets/3.jpg"
+  "4": "assets/4.png",
+  "3": "assets/3.png",
+  "2": "assets/2.png",
+  "1": "assets/1.png",
+  "0": "assets/0.png"
 };
 export default {
   components: {
@@ -181,7 +177,7 @@ export default {
           align: "center"
         }
       ],
-      taskList: [],
+      taskLists: [],
       vulns: [
         {
           title: "风险发现时间",
@@ -206,10 +202,12 @@ export default {
           width: 100,
           align: "center",
           render: (h, params) => {
-            console.log(params);
             return h("img", {
               attrs: {
-                src: require(`assets/${params.row.vuln_level}.jpg`)
+                src: require(`assets/${params.row.vuln_level}.png`),
+                width:"48px",
+                height:"6px",
+
               }
             });
           }
@@ -273,32 +271,29 @@ export default {
     };
   },
   mounted() {
-    // this.assetsInfo(this.defaultPage);
+    this.assetsInfo(this.defaultPage);
     this.leaksInfo();
     this.vulntop();
     this.vulntype();
-    $("#dataNums").rollNum({
-<<<<<<< HEAD
-      deVal: 68880
-=======
-      deVal: 68882
->>>>>>> ed465735ef2d020ccf802e4a8e1bb931a0d31bcf
-    });
+    this.taskList();
+    // $("#dataNums").rollNum({
+    //   deVal: 68882
+    // });
   },
   methods: {
     //资产列表
-    // assetsInfo(params) {
-    //   assetsInfo(params).then(res => {
-    //     let data = res.rows;
-    //     this.assetsData = data;
-    //     this.assetsData.forEach(item => {
-    //       this.options.xAxis.data.push(item.assets_name);
-    //       this.options.series[0].data.push(item.vuln_use);
-    //     });
-    //   });
-    // },
+    assetsInfo(params) {
+      assetsInfo(params).then(res => {
+        let data = res.rows;
+        this.assetsData = data;
+        this.assetsData.forEach(item => {
+          this.options.xAxis.data.push(item.assets_name);
+          this.options.series[0].data.push(item.vuln_use);
+        });
+      });
+    },
     //任务列表
-    _taskList(params, next) {
+    taskList(params) {
       this.pageLoading = true;
       taskList({ flag: 3}).then(res => {
         let data=res.targets;
@@ -364,13 +359,8 @@ export default {
   width: 100%;
 }
 .smp {
-<<<<<<< HEAD
-  width: 120px;
-  height: 120px;
-=======
   width: 90px;
   height: 90px;
->>>>>>> ed465735ef2d020ccf802e4a8e1bb931a0d31bcf
   display: inline-block;
   background: url("http://img.zcool.cn/community/0175fc571585e96ac72513431a304b.gif") no-repeat 0 0;
 }
@@ -383,7 +373,7 @@ export default {
   box-sizing: border-box;
 }
 .secTwo {
-  width: 37%;
+  width: 36%;
   height: 100%;
   color: white;
   float: left;
@@ -400,7 +390,7 @@ export default {
   border: 1px solid #2b4e6f;
 }
 .secThree {
-  width: 33%;
+  width: 34%;
   height: 100%;
   color: white;
   float: left;
