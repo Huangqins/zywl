@@ -35,7 +35,7 @@
             </div>            
             <div class="preload" >
                <!-- <span class="Aipicture_text">预载信息工具集</span> -->
-               <Table :columns="taskData" :data="taskList" :height="310" ></Table>      
+               <Table :columns="taskData" :data="taskLists" :height="310" ></Table>      
              </div> 
       </section>
       <section class="secThree">
@@ -90,11 +90,11 @@ import "./homepage.js";
 //   "0": "无风险"
 // };
 const levelSchema = {
-  "4": "assets/1.jpg",
-  "3": "assets/2.jpg",
-  "2": "assets/3.jpg",
-  "1": "assets/3.jpg",
-  "0": "assets/3.jpg"
+  "4": "assets/4.png",
+  "3": "assets/3.png",
+  "2": "assets/2.png",
+  "1": "assets/1.png",
+  "0": "assets/0.png"
 };
 export default {
   components: {
@@ -177,7 +177,7 @@ export default {
           align: "center"
         }
       ],
-      taskList: [],
+      taskLists: [],
       vulns: [
         {
           title: "风险发现时间",
@@ -202,10 +202,12 @@ export default {
           width: 100,
           align: "center",
           render: (h, params) => {
-            console.log(params);
             return h("img", {
               attrs: {
-                src: require(`assets/${params.row.vuln_level}.jpg`)
+                src: require(`assets/${params.row.vuln_level}.png`),
+                width:"48px",
+                height:"6px",
+
               }
             });
           }
@@ -269,28 +271,29 @@ export default {
     };
   },
   mounted() {
-    // this.assetsInfo(this.defaultPage);
+    this.assetsInfo(this.defaultPage);
     this.leaksInfo();
     this.vulntop();
     this.vulntype();
-    $("#dataNums").rollNum({
-      deVal: 68882
-    });
+    this.taskList();
+    // $("#dataNums").rollNum({
+    //   deVal: 68882
+    // });
   },
   methods: {
     //资产列表
-    // assetsInfo(params) {
-    //   assetsInfo(params).then(res => {
-    //     let data = res.rows;
-    //     this.assetsData = data;
-    //     this.assetsData.forEach(item => {
-    //       this.options.xAxis.data.push(item.assets_name);
-    //       this.options.series[0].data.push(item.vuln_use);
-    //     });
-    //   });
-    // },
+    assetsInfo(params) {
+      assetsInfo(params).then(res => {
+        let data = res.rows;
+        this.assetsData = data;
+        // this.assetsData.forEach(item => {
+        //   this.options.xAxis.data.push(item.assets_name);
+        //   this.options.series[0].data.push(item.vuln_use);
+        // });
+      });
+    },
     //任务列表
-    _taskList(params, next) {
+    taskList(params) {
       this.pageLoading = true;
       taskList({ flag: 3}).then(res => {
         let data=res.targets;
@@ -370,7 +373,7 @@ export default {
   box-sizing: border-box;
 }
 .secTwo {
-  width: 37%;
+  width: 36%;
   height: 100%;
   color: white;
   float: left;
@@ -387,7 +390,7 @@ export default {
   border: 1px solid #2b4e6f;
 }
 .secThree {
-  width: 33%;
+  width: 34%;
   height: 100%;
   color: white;
   float: left;
