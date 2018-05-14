@@ -195,19 +195,20 @@ export default {
             name: '08',
             path: '/apiManage',
             text: 'Api管理'
-          }]
-        },
-        {
-          name: '1-8',
-          text: '个人设置',
-          path: '/userPage',
-          icon: 'ios-personadd',
-          children: [{
+          },
+          {
             name: '09',
             path: '/user',
             text: '个人信息'
-          }]
-        }
+          }
+          ]
+        },
+        // {
+        //   name: '1-8',
+        //   text: '个人设置',
+        //   path: '/userPage',
+        //   icon: 'ios-personadd',
+        // }
       ],
       key: Date.now(),
       //查询的任务id.
