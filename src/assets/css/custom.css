@@ -189,6 +189,8 @@ a {
   .holeList ul li span {
     width: 30%;
     text-align: center;
+    color: #fbfbfb;
+    font-weight: 600;
   }
   .holeList ul li span img {
     width: 20px;
@@ -244,4 +246,7 @@ fl {float:left;}
 .dataNums .tt span{width:100%;height:100%; font:bold 40px/70px "Arial";color:#ddf0ff;line-height: 60px;} 
 .asset .ivu-card-body{
  height: 300px;
+}
+.homepage .asset .ivu-table-body{
+  overflow-y: hidden;
 }

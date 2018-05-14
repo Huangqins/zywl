@@ -1,7 +1,7 @@
 <template>
   <div class="homepage">
     <section class="header">
-       <span class="smp" ></span>
+       <span class="smp" > <div id="dataNums"> </div></span>
        <span></span>
     </section>
       <section class="secOne">
@@ -9,12 +9,13 @@
                  <!-- <span class="Aipicture_text">资源监控</span> -->
                 
                  <!-- <span style="display:block;width:100%;height:91px;margin-top:5px"><img src="../../assets/num.jpg"/></span> -->
-                 <div id="dataNums"> </div>
+                
+                 <section style="height:80px;text-align:center;">
+                   <div style="height:50%;font-size:20px;line-height:50px">23232322</div>
+                   <div style="height:50%;font-size:15px;line-height:40px">资产数量</div>
+                 </section>
             </div>
-            <!-- <div class="stylebook">
-                <span class="Aipicture_text">样本量</span> 
-                 
-            </div> -->
+            
             <div class="attack">
                  <!-- <span class="Aipicture_text">攻击Pyload</span> -->
                  <span class="pictrue" >
@@ -24,13 +25,13 @@
             <div class="asset">
                 <!-- <span class="Aipicture_text">资产情况</span> -->
                 <span class="pictrue" >
-                 <Table :columns="assets" :data="assetsData" :height="300" ></Table>
+                 <Table :columns="assets" :data="assetsData" :height="300"></Table>
                 </span>
             </div>              
       </section>
       <section class="secTwo">
             <div class="attackPic">
-              <span style="background-color:#212636;font-size:20px;text-align:center;height:56px;line-height:56px;display:block;">攻击流向图</span>
+              <!-- <span style="background-color:#212636;font-size:20px;text-align:center;height:56px;line-height:56px;display:block;">攻击流向图</span> -->
               <force :width="width"></force>
             </div>            
             <div class="preload" >
@@ -39,10 +40,10 @@
              </div> 
       </section>
       <section class="secThree">
-                    <section class="holeList" style="height:255px">
+                    <section class="holeList" style="height:255px;">
                     <ul>
                         <li class="listOne">
-                          <span class="holeHeader">漏洞排行</span>
+                          <span class="holeHeader" style="font-family:sans-serif">漏洞排行</span>
                           <span class="holeHeader">漏洞名称</span>
                           <span class="holeHeader">漏洞数量</span>
                         </li>
@@ -159,13 +160,14 @@ export default {
         {
           title: "任务名称",
           key: "target_name",
-          width: 140,
+          
           align: "center"
         },
         {
           title: "任务状态",
           key: "target_struts",
           align: "center",
+          width: 140,
           render: (h, params) => {
             console.log(params)
             return h(
@@ -177,7 +179,7 @@ export default {
         {
           title: "结束时间",
           key: "target_endtime",
-          width: 100,
+          width: 160,
           align: "center"
         }
       ],
@@ -368,10 +370,11 @@ export default {
   width: 100%;
 }
 .smp {
-  width: 90px;
+  width: 340px;
   height: 90px;
+  padding:50px 0;
   display: inline-block;
-  background: url("http://img.zcool.cn/community/0175fc571585e96ac72513431a304b.gif") no-repeat 0 0;
+  /* background: url("http://img.zcool.cn/community/0175fc571585e96ac72513431a304b.gif") no-repeat 0 0; */
 }
 .secOne {
   width: 27%;
