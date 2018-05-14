@@ -10,13 +10,13 @@
               <div class="assetRight_content">
                 <Card>
                   <p slot="title" style="font-size:16px;">任务状态</p>
-                  <page :columns="tasks" :data="tasksList" :dataTotal="dataTotal" @dataLoad="dataLoad" :loading="pageLoading" :height="height"></page>
+                  <page :columns="tasks" :data="tasksList" :dataTotal="dataTotal" @dataLoad="dataLoad" :loading="pageLoading" ></page>
                 </Card>
               </div>
                <div class="assetRight_content">
                 <Card>
                   <p slot="title" style="font-size:16px;">周期任务</p>
-                  <page :columns="loadingtasks" :data="loadingtasksList" :dataTotal="dataTotals" @dataLoad="dataLoads" :loading="pagesLoading" ></page>
+                  <!-- <page :columns="loadingtasks" :data="loadingtasksList" :dataTotal="dataTotals" @dataLoad="dataLoads" :loading="pagesLoading" ></page> -->
                 </Card>
               </div>
           </section>
@@ -144,7 +144,8 @@ export default {
         {
           title: "任务目标",
           key: "target_url",
-          align: "center"
+          align: "center",
+          width: 290,
         },
         {
           title: "周期",
@@ -159,7 +160,7 @@ export default {
           title: "策略",
           key: "target_teststra",
           align: "center",
-          width: 250
+          width: 150
         },
         {
           title: "开始时间",
@@ -614,9 +615,14 @@ export default {
         }
       });
     },
+    dataLoad(paramsObj) {
+     let params = Object.assign({}, this.defaultPage, paramsObj);
+      this._taskList(params);
+    },
     _taskListLong(params, next) {
       this.pageLoading = true;
-      taskList({flag:2}).then(res => {
+      let paramsObj=Object.assign({},params,{flag:2})
+      taskList(paramsObj).then(res => {
         if (res.result === 0) {
           if (next) {
             this.$router.push({
@@ -632,6 +638,11 @@ export default {
           this.dataTotal = res.total;
         }
       });
+    },
+    
+    dataLoad(paramsObj) {
+      this.params = Object.assign({}, this.defaultPage, paramsObj);
+    this._taskList(this.params);
     },
     taskAdd() {
       this.$refs.formValidate.open();
@@ -684,14 +695,7 @@ export default {
         }
       }
     },
-    dataLoad(paramsObj) {
-      this.params = Object.assign({}, this.defaultPage, paramsObj);
-      this._taskList(this.params);
-    },
-    dataLoads(paramsObj) {
-      this.params = Object.assign({}, this.defaultPage, paramsObj);
-    this._taskList(this.params);
-    },
+    
     _getAssetURL() {
       const params = { username: getUserName() };
       getAssetURL(params).then(res => {
