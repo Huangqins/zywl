@@ -7,7 +7,7 @@
                 <Button type="primary" icon="ios-search">搜索</Button>
                 <Button type="primary" icon="compose" @click="taskAdd">添加</Button>
               </div>
-              <div class="assetRight_content">
+              <div class="assetRight_contentt">
                 <Card>
                   <p slot="title" style="font-size:16px;">任务状态</p>
                   <page :columns="tasks" :data="tasksList" :dataTotal="dataTotal" @dataLoad="dataLoad" :loading="pageLoading" :height="height"></page>
@@ -596,8 +596,9 @@ export default {
   },
   methods: {
     _taskList(params, next) {
+     let paramsObj = Object.assign({}, params, { flag: 1 })
       this.pageLoading = true;
-      taskList({flag:1}).then(res => {
+      taskList(paramsObj).then(res => {
         if (res.result === 0) {
           if (next) {
             this.$router.push({
@@ -616,7 +617,8 @@ export default {
     },
     _taskListLong(params, next) {
       this.pageLoading = true;
-      taskList({flag:2}).then(res => {
+      let paramsObj = Object.assign({}, params, { flag: 2 })
+      taskList(paramsObj).then(res => {
         if (res.result === 0) {
           if (next) {
             this.$router.push({
@@ -709,6 +711,9 @@ export default {
 };
 </script>
 <style scoped>
+.assetRight_content {
+  margin-top: 40px;
+}
 .whole {
   width: 100%;
   color: #e4e5e5;
