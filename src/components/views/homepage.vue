@@ -200,8 +200,15 @@ export default {
         {
           title: "任务名称",
           key: "target_name",
-
-          align: "center"
+          align: "center",
+          renderHeader: (h,params) => {
+            console.log(params)
+            return h('span',  {
+              style: {
+                color: 'red'
+              }
+            }, params.column.title)
+          }
         },
         {
           title: "任务状态",
