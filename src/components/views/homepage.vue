@@ -436,7 +436,6 @@ export default {
 </script>
 <style scoped>
 .head {
-  height: 138px;
   width: 100%;
 }
 .smp {

@@ -29,7 +29,7 @@ export default {
   display: inline-block;
   position: relative;
   width: 138px;
-  height: 138px;
+  height: 117px;
   background: url("../../assets/png/mind.png") no-repeat;
   background-size: contain;
   overflow: hidden;
