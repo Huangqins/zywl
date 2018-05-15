@@ -184,15 +184,14 @@ export default {
           key: "vuln_total",
           width: 100,
           align: "center",
-          // render: (h, params) => {
-          //   return h(
-          //     "span",
-          //     {style: {
-          //       color: 'red',
-               
-          //     }}
-          //   );
-          // }
+          render: (h, params) => {
+            return h(
+              "span",
+              {style: {
+                color: 'red',               
+              }}
+            );
+          }
         }
       ],
       assetsData: [],
@@ -200,8 +199,15 @@ export default {
         {
           title: "任务名称",
           key: "target_name",
-
-          align: "center"
+          align: "center",
+          render: (h, params) => {
+            return h(
+              "span",
+              {style: {
+                color: 'red',               
+              }}
+            );
+          }
         },
         {
           title: "任务状态",

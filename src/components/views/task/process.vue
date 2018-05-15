@@ -5,7 +5,7 @@
         <div class="radar"></div>
         <div class="radar_right">
           <ul>
-            <li>任务名称:{{name}}</li>
+            <li>任务名称:{{name}}</li>s
             <li>完成率:{{percentOption}}</li>
             <li>结束时间:{{endtime}}</li>
           </ul>
