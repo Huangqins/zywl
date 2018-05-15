@@ -620,8 +620,7 @@ export default {
      let params = Object.assign({}, this.defaultPage, paramsObj);
       this._taskList(params);
     },
-    _taskListLong(params, next) {
-      this.pageLoading = true;
+    _taskListLong(params) {
       let paramsObj = Object.assign({}, params, { flag: 2 })
       taskList(paramsObj).then(res => {
         if (res.result === 0) {
@@ -634,17 +633,15 @@ export default {
               }
             });
           }
-          this.pageLoading = false;
           this.loadingtasksList = res.targets;
           this.dataTotal = res.total;
         }
       });
-    },
-    
-    dataLoad(paramsObj) {
-      this.params = Object.assign({}, this.defaultPage, paramsObj);
-    this._taskList(this.params);
-    },
+    },    
+    // dataLoad(paramsObj) {
+    //   this.params = Object.assign({}, this.defaultPage, paramsObj);
+    // this._taskList(this.params);
+    // },
     taskAdd() {
       this.$refs.formValidate.open();
     },

@@ -83,6 +83,7 @@ import vulnTop from "api/vulnTop";
 import vulntype from "api/vulntype";
 import fomatterTime from "@/utils/tool";
 import taskList from "api/taskList";
+import assetTarget from "api/assetTarget";
 import "./homepage.js";
 const taskstatus = {
   "-2": "失败",
@@ -231,7 +232,6 @@ export default {
           align: "center",
           width: 140,
           render: (h, params) => {
-            console.log(params);
             return h("span", taskstatus[params.row.target_struts]);
           }
         },
@@ -340,11 +340,20 @@ export default {
     this.vulntop();
     this.vulntype();
     this.taskList();
+    this.assetTarget()
     $("#dataNums").rollNum({
       deVal: 682323
     });
   },
   methods: {
+    //资产任务图
+    assetTarget(params) {
+      let param=getUserName()
+      assetTarget({username:param}).then(res => {
+        let data = res.targets;
+        
+      });
+    },
     //资产列表
     assetsInfo(params) {
       assetsInfo(params).then(res => {
