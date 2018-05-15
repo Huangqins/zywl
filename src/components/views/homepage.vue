@@ -107,7 +107,7 @@ export default {
   },
   data() {
     return {
-      assetsTotal:0,
+      assetsTotal: 0,
       forceOptions: {
         tooltip: {
           trigger: "item",
@@ -183,7 +183,16 @@ export default {
           title: "风险总数",
           key: "vuln_total",
           width: 100,
-          align: "center"
+          align: "center",
+          // render: (h, params) => {
+          //   return h(
+          //     "span",
+          //     {style: {
+          //       color: 'red',
+               
+          //     }}
+          //   );
+          // }
         }
       ],
       assetsData: [],
@@ -363,9 +372,12 @@ export default {
             value: 2
           };
         });
-        name.push({ name: target_oper, itemStyle: {
-          borderWidth: 10
-        } });
+        name.push({
+          name: target_oper,
+          itemStyle: {
+            borderWidth: 10
+          }
+        });
         name = name.concat(assets_name, target_endtime, target_name);
         name = _.uniqBy(name, "name");
         this.forceOptions.series.data = name;
@@ -393,7 +405,7 @@ export default {
     assetsInfo(params) {
       assetsInfo(params).then(res => {
         let data = res.rows;
-        this.assetsTotal=res.total
+        this.assetsTotal = res.total;
         if (data.length > 10) {
           this.assetsData = data.slice(0, 10);
         } else {
@@ -429,15 +441,9 @@ export default {
     vulntop() {
       const params = {};
       vulnTop(params).then(res => {
-       
-      
-               let data = res.lists;
-           
-             this.holes=data
-   
-        
-        
-        
+        let data = res.lists;
+
+        this.holes = data;
       });
     },
     //风险类型
@@ -478,13 +484,13 @@ export default {
   width: 168px;
   height: 105px;
   display: inline-block;
-  background:url('../../assets/polygon.png') no-repeat;
+  background: url("../../assets/polygon.png") no-repeat;
   background-size: contain;
   position: absolute;
-  top:3px;
-  left:133px;
-  color: #B9BABD;
-  text-align:center;
+  top: 3px;
+  left: 133px;
+  color: #b9babd;
+  text-align: center;
   line-height: 26px;
 }
 

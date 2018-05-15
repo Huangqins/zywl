@@ -16,11 +16,11 @@
               <!-- <div class="uploadFileList" style="color:#fff;padding-left:24px;"> -->
                   <!-- <div v-if="file !== null" >上传的文件: {{ file.name }} <Button type="primary" @click="upload" :loading="loadingStatus" >{{ loadingStatus ? 'Uploading' : '上传' }}</Button></div> -->
               <!-- </div> -->
-              <div class="assetRight_nav">
+               <!--<div class="assetRight_nav">
                 <section></section>
                 <section></section>
                 <section></section>
-              </div>
+              </div> -->
               <div class="assetRight_content">
                   <page :columns="assets" :data="assetsList" :dataTotal="dataTotal" @dataLoad="dataLoad"  :loading="pageLoading"></page>
               </div>
