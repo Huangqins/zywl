@@ -7,6 +7,7 @@
           <ul>
             <li>任务名称:{{name}}</li>s
             <li>完成率:{{percentOption}}</li>
+            <li>开始时间:{{starttime}}</li>
             <li>结束时间:{{endtime}}</li>
           </ul>
         </div>
@@ -163,6 +164,7 @@ export default {
   },
   data() {
     return {
+      starttime: '',
       name:'',
       percentOption:'',
       endtime:'',
@@ -545,6 +547,7 @@ export default {
       ? fomatterTime(new Date(taskInfo.target_endtime.time))
       : "";
       this.endtime=taskInfo.target_endTime;
+      this.starttime = fomatterTime(new Date(taskInfo.target_starttime.time))
     this.taskListItem.forEach(item => {
       item.target_info_des = taskInfo[item.target_info_key];
      
@@ -597,9 +600,9 @@ export default {
             //  this.percentOption.series[0].data[1].value =  0;
              clearInterval(this.timer);
           } else {
-              this.percentOption =  scaning.length * 5;
+              // this.percentOption =  scaning.length * 5;
               this.percentOption= `${scaning.length * 5}%`;
-              this.percentOption= 100 - (scaning.length * 5);
+              // this.percentOption= 100 - (scaning.length * 5);
           }
           this.option.series[0].data[0].value = scaning;
           let temp = [];
