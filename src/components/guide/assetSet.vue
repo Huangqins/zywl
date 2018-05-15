@@ -16,7 +16,7 @@
                <div class="assetRight_content">
                 <Card>
                   <p slot="title" style="font-size:16px;">周期任务</p>
-                  <page :columns="loadingtasks" :data="loadingtasksList" :dataTotal="dataTotals" @dataLoad="dataLoad" :loading="pagesLoading" ></page>
+                  <page :columns="loadingtasks" :data="loadingtasksList" :dataTotal="dataTotals" @dataLoad="dataLoads" :loading="pagesLoading" ></page>
                   </Card>
               </div>
           </section>
@@ -627,7 +627,7 @@ export default {
       });
     },
     _taskListLong(params, next) {
-      this.pageLoading = true;
+      this.pagesLoading = true;
       let paramsObj = Object.assign({}, params, { flag: 2 });
       taskList(paramsObj).then(res => {
         if (res.result === 0) {
@@ -640,7 +640,7 @@ export default {
               }
             });
           }
-          this.pageLoading = false;
+          this.pagesLoading = false;
           this.loadingtasksList = res.targets;
           this.dataTotals = res.total;
         }
@@ -648,8 +648,11 @@ export default {
     },
     dataLoad(paramsObj) {
       this.params = Object.assign({}, this.defaultPage, paramsObj);
-      this.paramsTask = Object.assign({}, this.defaultPageTask, paramsObj);
       this._taskList(this.params);
+     
+    },
+    dataLoads(paramsObj) {
+      this.paramsTask = Object.assign({}, this.defaultPageTask, paramsObj);     
       this._taskListLong(this.paramsTask);
     },
     taskAdd() {
@@ -721,7 +724,7 @@ export default {
 </script>
 <style scoped>
 .assetRight_content {
-  margin-top: 40px;
+  margin-top: 30px;
 }
 .whole {
   width: 100%;
