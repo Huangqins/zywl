@@ -58,7 +58,6 @@ const user = {
       return new Promise((resolve, reject) => {
         login(userInfo).then(response => {
           const data = response
-          console.log(data.token)
           commit('SET_TOKEN', data.token)
           setToken(data.token)
           commit('SET_USER_NAME', data.userName)

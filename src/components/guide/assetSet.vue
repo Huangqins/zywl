@@ -698,7 +698,6 @@ export default {
             return { value: item.rule_key, name: item.rule_name };
           });
         } else {
-          console.log(res);
           this.format[2].option = res.rules.map(item => {
             return { value: item.rule_key, name: item.rule_name };
           });
