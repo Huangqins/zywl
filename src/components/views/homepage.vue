@@ -344,7 +344,7 @@ export default {
           return {
             name: item.target_name,
             label: {
-              show: dataLength > 30 ? false : true
+              show: dataLength > 10 ? false : true
             }
           };
         });
