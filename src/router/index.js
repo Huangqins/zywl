@@ -145,6 +145,11 @@ const Logs = (resolve) => {
     resolve(module)
   })
 }
+const Authorize =(resolve) => {
+  import ('components/views/systemManage/authorize').then(module => {
+    resolve(module)
+  })
+}
 const User = (resolve) => {
   import ('components/views/userpage/user').then(module => {
     resolve(module)
@@ -375,6 +380,14 @@ const router = new VueRouter({
           name: "user",
           path: 'user',
           component: User
+        },
+        {
+          meta: {
+            menuCode: "15"
+          },
+          name:"authorize",
+          path: "authorize",
+          component: Authorize
         }
       ]
     }

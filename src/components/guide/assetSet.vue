@@ -13,12 +13,12 @@
                   <page :columns="tasks" :data="tasksList" :dataTotal="dataTotal" @dataLoad="dataLoad" :loading="pageLoading" ></page>
                 </Card>
               </div>
-               <!-- <div class="assetRight_content">
+               <div class="assetRight_content">
                 <Card>
-                  <p slot="title" style="font-size:16px;">周期任务</p> -->
-                  <!-- <page :columns="loadingtasks" :data="loadingtasksList" :dataTotal="dataTotals" @dataLoad="dataLoads" :loading="pagesLoading" ></page> -->
-                <!-- </Card>
-              </div> -->
+                  <p slot="title" style="font-size:16px;">周期任务</p>
+                  <page :columns="loadingtasks" :data="loadingtasksList" :dataTotal="dataTotals" @dataLoad="dataLoad" :loading="pagesLoading" ></page>
+                  </Card>
+              </div>
           </section>
           <!-- <a :href="href" download ref="download"></a> -->
       </div>
@@ -46,10 +46,10 @@ const taskStatus = {
   "-2": "失败"
 };
 const taskcycle = {
-  "now": "立即",
-  "day": "每天",
-  "month": "每月",
-  "year":"每年"
+  now: "立即",
+  day: "每天",
+  month: "每月",
+  year: "每年"
 };
 export default {
   components: {
@@ -84,7 +84,7 @@ export default {
       pagesLoading: false,
       loading: false,
       display: false,
-      height:'355px',
+      height: "355px",
       format: [
         { label: "任务名称", type: "input", prop: "target_name" },
         {
@@ -100,12 +100,12 @@ export default {
           option: []
         },
         { label: "开始时间", type: "datetime", prop: "target_starttime" },
-        
+
         { label: "资产url", type: "select", prop: "target_url", option: [] },
         { label: "资产ip", type: "select", prop: "target_ip", option: [] }
       ],
       data: {
-        target_name: "渗透测试+"+fomatterTime(new Date()),
+        target_name: "渗透测试+" + fomatterTime(new Date()),
         target_teststra: "medium",
         target_starttime: new Date(),
         target_cycle: "now",
@@ -125,7 +125,7 @@ export default {
         target_ip: [{ validator: addIpValidate, trigger: "change" }]
       },
       value: "",
-      loadingtasksList:[],
+      loadingtasksList: [],
       loadingtasks: [
         {
           title: "任务名称",
@@ -145,7 +145,7 @@ export default {
           title: "任务目标",
           key: "target_url",
           align: "center",
-          width: 290,
+          width: 290
         },
         {
           title: "周期",
@@ -576,6 +576,13 @@ export default {
         page: 1,
         userName: getUserName()
       },
+      defaultPageTask: {
+        area: 0,
+        rows: 10,
+        page: 1,
+        userName: getUserName()
+      },
+      paramsTask: {},
       dataTotal: 0,
       dataTotals: 0,
       params: {},
@@ -592,12 +599,15 @@ export default {
     this.params = Object.assign({}, this.defaultPage, {
       userName: getUserName()
     });
+    this.paramsTask = Object.assign({}, this.defaultPageTask, {
+      userName: getUserName()
+    });
     this._taskList(this.params);
-    this._taskListLong(this.params);
+    this._taskListLong(this.paramsTask);
   },
   methods: {
     _taskList(params, next) {
-     let paramsObj = Object.assign({}, params, { flag: 1 })
+      let paramsObj = Object.assign({}, params, { flag: 1 });
       this.pageLoading = true;
       taskList(paramsObj).then(res => {
         if (res.result === 0) {
@@ -616,12 +626,9 @@ export default {
         }
       });
     },
-    dataLoad(paramsObj) {
-     let params = Object.assign({}, this.defaultPage, paramsObj);
-      this._taskList(params);
-    },
-    _taskListLong(params) {
-      let paramsObj = Object.assign({}, params, { flag: 2 })
+    _taskListLong(params, next) {
+      this.pageLoading = true;
+      let paramsObj = Object.assign({}, params, { flag: 2 });
       taskList(paramsObj).then(res => {
         if (res.result === 0) {
           if (next) {
@@ -633,15 +640,18 @@ export default {
               }
             });
           }
+          this.pageLoading = false;
           this.loadingtasksList = res.targets;
-          this.dataTotal = res.total;
+          this.dataTotals = res.total;
         }
       });
-    },    
-    // dataLoad(paramsObj) {
-    //   this.params = Object.assign({}, this.defaultPage, paramsObj);
-    // this._taskList(this.params);
-    // },
+    },
+    dataLoad(paramsObj) {
+      this.params = Object.assign({}, this.defaultPage, paramsObj);
+      this.paramsTask = Object.assign({}, this.defaultPageTask, paramsObj);
+      this._taskList(this.params);
+      this._taskListLong(this.paramsTask);
+    },
     taskAdd() {
       this.$refs.formValidate.open();
     },
@@ -666,7 +676,7 @@ export default {
           this.loading = false;
           this.$refs.formValidate.close();
           // this.$router.push({ path: "/taskexecution" });
-          this._taskList(this.params,true);
+          this._taskList(this.params, true);
         } else if (res.result === 2) {
           this.$Message.error({
             content: "资产填写有误或资产不存在"
@@ -685,15 +695,14 @@ export default {
             return { value: item.rule_key, name: item.rule_name };
           });
         } else {
-          console.log(res)
+          console.log(res);
           this.format[2].option = res.rules.map(item => {
             return { value: item.rule_key, name: item.rule_name };
           });
-
         }
       }
     },
-    
+
     _getAssetURL() {
       const params = { username: getUserName() };
       getAssetURL(params).then(res => {

@@ -200,6 +200,11 @@ export default {
             name: '09',
             path: '/user',
             text: '个人信息'
+          },
+           {
+            name: '10',
+            path: '/authorize',
+            text: '授权管理'
           }
           ]
         },
