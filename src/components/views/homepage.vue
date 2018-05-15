@@ -399,7 +399,7 @@ export default {
       const params = {};
       vulnTop(params).then(res => {
        
-     
+      
                let data = res.lists;
            
              this.holes=data

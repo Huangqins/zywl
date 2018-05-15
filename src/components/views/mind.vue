@@ -33,6 +33,7 @@ export default {
   background: url("../../assets/png/mind.png") no-repeat;
   background-size: contain;
   overflow: hidden;
+  margin-left:5px;
 }
 .mind-scroll {
   position: absolute;
