@@ -1,6 +1,7 @@
 <template>
   <div class="homepage">
     <section class="head">
+      <mind></mind>
        <span class="smp" > <div id="dataNums"> </div></span>
        <span></span>
     </section>
@@ -74,6 +75,7 @@
 
 <script>
 import $ from "jquery";
+import mind from './mind';
 import force from "components/chart/force";
 import chart from "components/chart/chart";
 import assetsInfo from "api/assetsInfo";
@@ -99,7 +101,8 @@ const levelSchema = {
 export default {
   components: {
     force,
-    chart
+    chart,
+    mind
   },
   data() {
     return {
@@ -433,7 +436,7 @@ export default {
 </script>
 <style scoped>
 .head {
-  height: 125px;
+  height: 138px;
   width: 100%;
 }
 .smp {
