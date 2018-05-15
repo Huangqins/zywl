@@ -231,12 +231,12 @@ export default {
           target_info_des: 0
         },
         {
-          target_info_key: "target_endTime",
+          target_info_key: "target_t",
           target_info_name: "识别技术",
           target_info_des: 0
         },
         {
-          target_info_key: "target_endTime",
+          target_info_key: "target_s",
           target_info_name: "可响应",
           target_info_des: 0
         }
