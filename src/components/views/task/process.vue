@@ -217,16 +217,16 @@ export default {
       taskListItem: [
         {
           target_info_key: "target_name",
-          target_info_name: "地址",
+          target_info_name: "任务名称",
           target_info_des: 0
         },
         {
-          target_info_key: "target_scaning",
-          target_info_name: "服务器",
+          target_info_key: "target_url",
+          target_info_name: "任务目标",
           target_info_des: 0
         },
         {
-          target_info_key: "target_startTime",
+          target_info_key: "target_oa",
           target_info_name: "操作系统",
           target_info_des: 0
         },
