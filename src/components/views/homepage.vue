@@ -200,15 +200,7 @@ export default {
         {
           title: "任务名称",
           key: "target_name",
-          align: "center",
-          renderHeader: (h,params) => {
-            console.log(params)
-            return h('span',  {
-              style: {
-                color: 'red'
-              }
-            }, params.column.title)
-          }
+          align: "center"
         },
         {
           title: "任务状态",
@@ -350,7 +342,11 @@ export default {
         });
         let assets_name = data.map(item => {
           //资产名称
-          return { name: item.assets_name ? item.assets_name : item.target_ip };
+          return { name: item.assets_name ? item.assets_name : item.target_url, 
+             itemStyle: {
+              color: 'pink'
+            }
+           };
         });
         let target_endtime = data.map(item => {
           //任务
@@ -360,12 +356,15 @@ export default {
               : "未完成",
             label: {
               show: dataLength > 30 ? false : true
+            },
+            itemStyle: {
+              color: item.target_endtime ? 'red' : '#ccc'
             }
           };
         });
         let assets_task = data.map(item => {
           return {
-            source: item.assets_name ? item.assets_name : item.target_ip,
+            source: item.assets_name ? item.assets_name : item.target_url,
             target: item.target_name,
             value: 2
           };
