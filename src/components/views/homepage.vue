@@ -1,7 +1,11 @@
 <template>
   <div class="homepage">
     <section class="head">
-       <span class="smp" > <div id="dataNums"> </div></span>
+        <span class="smp" >
+          <div id="dataNums"> </div>
+        
+
+        </span>
        <span></span>
     </section>
       <section class="secOne">
@@ -441,8 +445,12 @@ export default {
   height: 90px;
   padding: 50px 0;
   display: inline-block;
-  /* background: url("http://img.zcool.cn/community/0175fc571585e96ac72513431a304b.gif") no-repeat 0 0; */
+  /* animation: pic-circle 3s linear infinite;
+  will-change: transform; */
+
 }
+
+
 .secOne {
   width: 27%;
   height: 100%;
