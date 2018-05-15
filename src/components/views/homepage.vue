@@ -2,7 +2,7 @@
   <div class="homepage">
     <section class="head">
       <mind></mind>
-       <span class="smp" > <div id="dataNums"> </div></span>
+        <span class="smp" >23233434<!-- <div id="dataNums"> </div> --></span>
        <span></span>
     </section>
       <section class="secOne">
@@ -12,7 +12,7 @@
                  <!-- <span style="display:block;width:100%;height:91px;margin-top:5px"><img src="../../assets/num.jpg"/></span> -->
                 
                  <section style="height:80px;text-align:center;">
-                   <div style="height:50%;font-size:20px;line-height:50px">23232322</div>
+                   <div style="height:50%;font-size:20px;line-height:50px">{{assetsTotal}}</div>
                    <div style="height:50%;font-size:15px;line-height:40px">资产数量</div>
                  </section>
             </div>
@@ -53,7 +53,7 @@
                         <span v-if="index===0"><img src="../../../static/top1.png" ></span>
                         <span v-else-if="index===1"><img src="../../../static/top2.png" ></span>
                         <span v-else-if="index===2"><img src="../../../static/top3.png"/></span>
-                        <span v-else-if="index>=3">{{index}}</span>
+                        <span v-else-if="index=3">{{index}}</span>
                         <span>{{item.name}}</span>
                         <span>{{item.vuln_total}}</span>
                         </li>
@@ -106,6 +106,7 @@ export default {
   },
   data() {
     return {
+      assetsTotal:0,
       forceOptions: {
         series: {
           type: "sankey",
@@ -361,16 +362,12 @@ export default {
     assetsInfo(params) {
       assetsInfo(params).then(res => {
         let data = res.rows;
-
+        this.assetsTotal=res.total
         if (data.length > 10) {
           this.assetsData = data.slice(0, 10);
         } else {
           this.assetsData = data;
         }
-        // this.assetsData.forEach(item => {
-        //   this.options.xAxis.data.push(item.assets_name);
-        //   this.options.series[0].data.push(item.vuln_use);
-        // });
       });
     },
     //任务列表
@@ -401,8 +398,15 @@ export default {
     vulntop() {
       const params = {};
       vulnTop(params).then(res => {
-        let data = res.lists;
-        this.holes = data;
+       
+     
+               let data = res.lists;
+           
+             this.holes=data
+   
+        
+        
+        
       });
     },
     //风险类型
@@ -437,15 +441,20 @@ export default {
 <style scoped>
 .head {
   width: 100%;
+  position: relative;
 }
 .smp {
-  width: 340px;
-  height: 90px;
-  padding: 50px 0;
+  width: 168px;
+  height: 105px;
   display: inline-block;
-  /* animation: pic-circle 3s linear infinite;
-  will-change: transform; */
-
+  background:url('../../assets/polygon.png') no-repeat;
+  background-size: contain;
+  position: absolute;
+  top:3px;
+  left:133px;
+  color: #B9BABD;
+  text-align:center;
+  line-height: 26px;
 }
 
 

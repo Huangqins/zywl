@@ -1,9 +1,17 @@
 <template>
   <div class="table">
-    <div class="taskSchedule">
-      <section>
+    <div class="taskSchedule" >
+      <section style="margin:20px 100px 20px 80px;">
+        <div class="radar"></div>
+        <div class="radar_right">
+          <ul>
+            <li>任务名称:{{name}}</li>
+            <li>完成率:{{percentOption}}</li>
+            <li>结束时间:{{endtime}}</li>
+          </ul>
+        </div>
         <!-- <chart width="235px" height="235px" :option="option" id="completionRate" ref="completionRate"></chart> -->
-        <percent-chart :option="percentOption"></percent-chart>
+        <!-- <percent-chart :option="percentOption"></percent-chart> -->
       </section>
       <section class="circle">
         <!-- <chart width="235px" height="235px" :option="optipnTwo" id="taskholeNum" ref="taskholeNum"></chart> -->
@@ -110,6 +118,7 @@ import urlUseRate from "api/urlUseRate";
 import fomatterTime from "@/utils/tool";
 import getAssetsHost from "api/getAssetsHost";
 import percentChart from "./percentChart";
+import ld from "./ld.css"
 
 let now = new Date();
 let year = now.getFullYear();
@@ -154,6 +163,9 @@ export default {
   },
   data() {
     return {
+      name:'',
+      percentOption:'',
+      endtime:'',
       percent: 0, //伪进度最大为9
       scaning: 0, //任务阶段
       percentOption: {
@@ -527,11 +539,15 @@ export default {
     taskInfo.target_startTime = fomatterTime(
       new Date(taskInfo.target_starttime.time)
     );
+     this.name=taskInfo.target_name
+    
     taskInfo.target_endTime = taskInfo.target_endtime
       ? fomatterTime(new Date(taskInfo.target_endtime.time))
       : "";
+      this.endtime=taskInfo.target_endTime;
     this.taskListItem.forEach(item => {
       item.target_info_des = taskInfo[item.target_info_key];
+     
     });
     this._targetProgress();
     this._targetNum();
@@ -568,20 +584,22 @@ export default {
           let target_struts = res.target.target_struts;
           let target_rftime = res.target.target_rftime;
            if (target_struts === "1") {
-             this.percentOption.title.text = `100%`;
-             this.percentOption.series[0].data[0].value =  100;
-             this.percentOption.series[0].data[1].value =  0;
+             this.percentOption=`100%`
+            //  this.percentOption.title.text = `100%`;
+            //  this.percentOption.series[0].data[0].value =  100;
+            //  this.percentOption.series[0].data[1].value =  0;
             clearInterval(this.timer);
           } else if (target_struts === "-2") {
             this.$Message.error(`目标进度确立失败`)
-             this.percentOption.title.text = `0%`;
-             this.percentOption.series[0].data[0].value =  0;
-             this.percentOption.series[0].data[1].value =  0;
+            //  this.percentOption.title.text = `0%`;
+             this.percentOption=`0%`
+            //  this.percentOption.series[0].data[0].value =  0;
+            //  this.percentOption.series[0].data[1].value =  0;
              clearInterval(this.timer);
           } else {
-              this.percentOption.series[0].data[0].value =  scaning.length * 5;
-              this.percentOption.title.text = `${scaning.length * 5}%`;
-              this.percentOption.series[0].data[1].value = 100 - (scaning.length * 5);
+              this.percentOption =  scaning.length * 5;
+              this.percentOption= `${scaning.length * 5}%`;
+              this.percentOption= 100 - (scaning.length * 5);
           }
           this.option.series[0].data[0].value = scaning;
           let temp = [];
@@ -730,13 +748,12 @@ export default {
 .circle {
   border: 1px solid #e4e5e5;
   border-radius: 3px;
+  margin:20px 100px 20px;
 }
 .taskSchedule section {
   flex: 1;
-  margin: 20px 160px;
   height: 100px;
   font-size: 16px;
-  text-align: center;
 }
 .taskSchedule section p {
   font-size: 13px;
@@ -813,5 +830,15 @@ export default {
 }
 .blu {
   color: #95dcf2;
+}
+.radar_right{
+  float: left;  
+  padding:15px 0;
+  margin-left:15px;
+}
+.radar_right ul li{
+  list-style: none;
+  font-size: 14px;
+  line-height: 30px;
 }
 </style>
