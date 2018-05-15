@@ -1,7 +1,7 @@
 <template>
   <div class="table">
     <div class="taskSchedule" >
-      <section style="margin:20px 100px 20px 80px;">
+      <section style="margin:20px 10px 20px 80px;">
         <div class="radar"></div>
         <div class="radar_right">
           <ul>
