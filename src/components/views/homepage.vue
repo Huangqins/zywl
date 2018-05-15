@@ -75,7 +75,7 @@
 
 <script>
 import $ from "jquery";
-import mind from './mind';
+import mind from "./mind";
 import force from "components/chart/force";
 import chart from "components/chart/chart";
 import assetsInfo from "api/assetsInfo";
@@ -87,6 +87,7 @@ import fomatterTime from "@/utils/tool";
 import taskList from "api/taskList";
 import assetTarget from "api/assetTarget";
 import "./homepage.js";
+import _ from "lodash";
 const taskstatus = {
   "-2": "失败",
   "1": "完成"
@@ -107,64 +108,27 @@ export default {
   data() {
     return {
       forceOptions: {
+        tooltip: {
+          trigger: "item",
+          triggerOn: "mousemove"
+        },
         series: {
           type: "sankey",
           layout: "none",
+          lineStyle: {
+            color: "#fff"
+          },
+          emphasis: {
+            label: {
+              show: true
+            }
+          },
+
           label: {
             color: "#fff"
           },
-          data: [
-            {
-              name: "a"
-            },
-            {
-              name: "b"
-            },
-            {
-              name: "a1"
-            },
-            {
-              name: "a2"
-            },
-            {
-              name: "b1"
-            },
-            {
-              name: "c"
-            }
-          ],
-          links: [
-            {
-              source: "a",
-              target: "a1",
-              value: 5
-            },
-            {
-              source: "a",
-              target: "a2",
-              value: 3
-            },
-            {
-              source: "b",
-              target: "b1",
-              value: 8
-            },
-            {
-              source: "a",
-              target: "b1",
-              value: 3
-            },
-            {
-              source: "b1",
-              target: "a1",
-              value: 1
-            },
-            {
-              source: "b1",
-              target: "c",
-              value: 2
-            }
-          ]
+          data: [],
+          links: []
         }
       },
       vulntypePic: {
@@ -294,7 +258,7 @@ export default {
           right: 5,
           top: 20,
           bottom: 20,
-          data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎'],
+          data: ["直接访问", "邮件营销", "联盟广告", "视频广告", "搜索引擎"],
           textStyle: {
             color: "#fbfbfb"
           }
@@ -343,7 +307,7 @@ export default {
     this.vulntop();
     this.vulntype();
     this.taskList();
-    this.assetTarget()
+    this.assetTarget();
     $("#dataNums").rollNum({
       deVal: 682323
     });
@@ -351,11 +315,78 @@ export default {
   methods: {
     //资产任务图
     assetTarget(params) {
-      let param=getUserName()
-      assetTarget({username:param}).then(res => {
+      let param = getUserName();
+      assetTarget({ username: param }).then(res => {
         let data = res.targets;
-        
+        let name = [];
+        let links = [];
+        let target_oper = data[0].target_oper; //用户
+        let dataLength = data.length;
+        let target_name = data.map(item => {
+          //任务名称
+          return {
+            name: item.target_name,
+            label: {
+              show: dataLength > 30 ? false : true
+            }
+          };
+        });
+        let assets_name = data.map(item => {
+          //资产名称
+          return { name: item.assets_name ? item.assets_name : item.target_ip };
+        });
+        let target_endtime = data.map(item => {
+          //任务
+          return {
+            name: item.target_endtime
+              ? fomatterTime(new Date(item.target_endtime.time))
+              : "未完成",
+            label: {
+              show: dataLength > 30 ? false : true
+            }
+          };
+        });
+        let assets_task = data.map(item => {
+          return {
+            source: item.assets_name ? item.assets_name : item.target_ip,
+            target: item.target_name,
+            value: 2
+          };
+        });
+        let task_status = data.map(item => {
+          return {
+            source: item.target_name,
+            target: item.target_endtime
+              ? fomatterTime(new Date(item.target_endtime.time))
+              : "未完成",
+            value: 2
+          };
+        });
+        name.push({ name: target_oper, itemStyle: {
+          borderWidth: 10
+        } });
+        name = name.concat(assets_name, target_endtime, target_name);
+        name = _.uniqBy(name, "name");
+        this.forceOptions.series.data = name;
+        let ret1 = assets_name.map(item => {
+          return {
+            source: target_oper,
+            target: item.name,
+            value: 3
+          };
+        });
+
+        this.forceOptions.series.links = ret1.concat(assets_task, task_status);
+        console.log(name, this.forceOptions.series.links);
+        //  let ret1
       });
+    },
+    dereplication(arr, key) {
+      var hash = {};
+      return arr.reduce(function(item, next) {
+        hash[next[name]] ? "" : (hash[next[name]] = true && item.push(next));
+        return item;
+      }, []);
     },
     //资产列表
     assetsInfo(params) {
@@ -445,9 +476,7 @@ export default {
   display: inline-block;
   /* animation: pic-circle 3s linear infinite;
   will-change: transform; */
-
 }
-
 
 .secOne {
   width: 27%;
