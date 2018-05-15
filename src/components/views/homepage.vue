@@ -12,6 +12,7 @@
                  <!-- <span style="display:block;width:100%;height:91px;margin-top:5px"><img src="../../assets/num.jpg"/></span> -->
                 
                  <section style="height:80px;text-align:center;">
+                   <div style="width:80px;height:40px;float:left"><img src="../../assets/assest.png" style="width:100%"/></div>
                    <div style="height:50%;font-size:20px;line-height:50px">{{assetsTotal}}</div>
                    <div style="height:50%;font-size:15px;line-height:40px">资产数量</div>
                  </section>

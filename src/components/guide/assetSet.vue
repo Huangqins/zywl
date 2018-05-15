@@ -51,6 +51,11 @@ const taskcycle = {
   month: "每月",
   year: "每年"
 };
+const cl = {
+  medium: "常规策略",
+  high: "深度策略"
+  
+};
 export default {
   components: {
     page,
@@ -160,7 +165,10 @@ export default {
           title: "策略",
           key: "target_teststra",
           align: "center",
-          width: 150
+          width: 150,
+          render: (h, params) => {
+            return h("span", cl[params.row.target_teststra]);
+          }
         },
         {
           title: "开始时间",
@@ -381,7 +389,10 @@ export default {
           title: "策略",
           key: "target_teststra",
           align: "center",
-          width: 250
+          width: 250,
+          render: (h, params) => {
+            return h("span", cl[params.row.target_teststra]);
+          }
         },
         {
           title: "开始时间",
