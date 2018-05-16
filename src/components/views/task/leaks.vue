@@ -8,7 +8,7 @@
                    {{urgent}}       
                 </div>
                <div class="vuln_text">                          
-                  <p>紧急风险</p>
+                  <p>极高风险</p>
                 </div>
                 </div>
             </section>
@@ -52,7 +52,7 @@
                    {{prompt}}      
                 </div>
                <div class="vuln_text">                            
-                  <p>提示风险</p>
+                  <p>极低风险</p>
                 </div>
                 </div>
             </section>

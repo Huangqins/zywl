@@ -132,7 +132,7 @@
                   <Icon type="ios-film-outline"></Icon>
                  风险信息
               </p>
-                <page class="table" :height="tableHeight" :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page>
+                <page class="table" :rowClassName="rowClassName" :height="tableHeight" :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page>
             
             </Card>
         </Col>
@@ -406,14 +406,14 @@ export default {
         {
           title: "风险名称",
           key: "vuln_name",
-          align: "center",
+          align: "left",
           
         },
         {
           title: "风险类型",
           key: "vuln_type",
-          align: "center",
-          width:100
+          align: "left",
+          width:140
         },
         {
           title: "风险等级",
@@ -421,6 +421,7 @@ export default {
           align: "center",
           width: 100,
           render: (h, params) => {
+            console.log(params)
             return h("img", {
               attrs: {
                 src: require(`assets/${params.row.vuln_level}.png`),
@@ -431,10 +432,17 @@ export default {
           }
         },
         {
-          title: "payload",
-          key: "vuln_Payload",
+          title: "发现时间",
+          key: "vuln_ftime",
           align: "center",
-          width: 200
+          width: 200,
+          render: (h, params) => {
+            return h(
+              "span",
+              fomatterTime(new Date(params.row.vuln_ftime.time))
+            );
+          }
+
         },
         {
           title: "操作",
@@ -484,7 +492,6 @@ export default {
             animation: false
           },
           formatter: params => {
-            console.log(params);
             return `${task_status[params[0].data.valueIndex]}
                           </br>
                            ${params[0].name}
@@ -644,6 +651,12 @@ export default {
     }, 5000);
   },
   methods: {
+    rowClassName (row) {
+      console.log(row)
+       
+           return 'demo-table-error-row';
+        
+     },
     dataLoad(paramsObj) {
       const params = Object.assign({}, this.defaultPage, paramsObj);
     },
@@ -918,5 +931,9 @@ export default {
   list-style: none;
   font-size: 14px;
   line-height: 30px;
+}
+.ivu-table .demo-table-error-row td{
+        background-color: red;
+        color: #fff;
 }
 </style>
