@@ -91,11 +91,14 @@ import vulntype from "api/vulntype";
 import fomatterTime from "@/utils/tool";
 import taskList from "api/taskList";
 import assetTarget from "api/assetTarget";
+import getSystemType from "api/getSystemType";
 import "./homepage.js";
 import _ from "lodash";
 const taskstatus = {
   "-2": "失败",
-  "1": "完成"
+  "1": "完成",
+  "0": "进行中",
+  "2": "待执行"
 };
 const levelSchema = {
   "4": "assets/4.png",
@@ -208,15 +211,7 @@ export default {
         {
           title: "任务名称",
           key: "target_name",
-          align: "center",
-          // renderHeader: (h,params) => {
-          //   console.log(params)
-          //   return h('span',  {
-          //     style: {
-          //       color: 'red'
-          //     }
-          //   }, params.column.title)
-          // }
+          align: "center"
         },
         {
           title: "任务状态",
@@ -233,7 +228,6 @@ export default {
           width: 160,
           align: "center",
           render: (h, params) => {
-            console.log(params)
             return h("span",  params.row.target_endtime ? fomatterTime(new Date(params.row.target_endtime.time)) : '')
           }
         }
@@ -279,7 +273,7 @@ export default {
       options: {
         tooltip: {
           trigger: "item",
-          formatter: "{a} <br/>{b} : {c} ({d}%)"
+          formatter: "{b} : {c} ({d}%)"
         },
         legend: {
           type: "scroll",
@@ -287,7 +281,7 @@ export default {
           right: 5,
           top: 20,
           bottom: 20,
-          data: ["直接访问", "邮件营销", "联盟广告", "视频广告", "搜索引擎"],
+          data: [],
           textStyle: {
             color: "#fbfbfb"
           }
@@ -299,11 +293,11 @@ export default {
             center: ["32%", "50%"],
             selectedMode: "single",
             data: [
-              { value: 335, name: "直接访问" },
-              { value: 310, name: "邮件营销" },
-              { value: 234, name: "联盟广告" },
-              { value: 135, name: "视频广告" },
-              { value: 1548, name: "搜索引擎" }
+              // { value: 335, name: "直接访问" },
+              // { value: 310, name: "邮件营销" },
+              // { value: 234, name: "联盟广告" },
+              // { value: 135, name: "视频广告" },
+              // { value: 1548, name: "搜索引擎" }
             ],
             label: {
               formatter: function(params) {
@@ -337,6 +331,7 @@ export default {
     this.vulntype();
     this.taskList();
     this.assetTarget();
+    this._getSystemType();
     $("#dataNums").rollNum({
       deVal: 682323
     });
@@ -346,6 +341,17 @@ export default {
       },5000)
   },
   methods: {
+    // 系统分类
+    _getSystemType() {
+      getSystemType({}).then(res => {
+        this.options.legend.data = res.lists.map(item => {
+          return item.assets_hostname ? item.assets_hostname : 'Unix'
+        })
+        this.options.series[0].data = res.lists.map(item => {
+          return { value: item.assets_os_type, name: item.assets_hostname ? item.assets_hostname : 'Unix' }
+        })
+      })
+    },
     //资产任务图
     assetTarget(params) {
       let param = getUserName();
@@ -420,7 +426,6 @@ export default {
         });
 
         this.forceOptions.series.links = ret1.concat(assets_task, task_status);
-        console.log(name, this.forceOptions.series.links);
         //  let ret1
       });
     },
@@ -472,7 +477,6 @@ export default {
       const params = {};
       vulnTop(params).then(res => {
         let data = res.lists;
-        console.log(data.length)
         this.holes = data;
         let length = 10 - data.length;
         if (data.length < 10) {
