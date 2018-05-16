@@ -32,10 +32,6 @@
                   </FormItem>
                  </Form>
         </Card>
-        <!-- 证书导入 -->
-        <Upload  multiple  :action="uploadUrl" :with-credentials="true"  name="license" :headers="headers" :show-upload-list="false" style="display:inline-block" :on-success="success"	>
-                    <Button type="primary" icon="ios-cloud-upload-outline">导入授权文件</Button>
-            </Upload>
     </div>
         <Modal
         v-model="modal1"

@@ -170,16 +170,9 @@ export default {
         ]
       },
       vulntypes: {
-        // title: {
-        //   text: "风险类型",
-        //   left: "center",
-        //   textStyle: {
-        //     color: "#E4E5E5"
-        //   }
-        // },
         tooltip: {
           trigger: "item",
-          formatter: "{a} <br/>{b} : {c} ({d}%)"
+          formatter: "{b} : {c} ({d}%)"
         },
         legend: {
           type: "scroll",
@@ -299,12 +292,11 @@ export default {
           this.$refs.vulntype.hideLoading();
           let list = res.list;
           list.forEach(item => {
-            // this.vulntypes.legend.data = item.vuln_type_name;
             this.vulntypes.series[0].data.push({
               value: item.kb_vuln_vnum,
-              name: item.vuln_type_name
+              name: item.kb_vuln_class
             });
-            this.vulntypes.legend.data.push(item.vuln_type_name);
+            this.vulntypes.legend.data.push(item.kb_vuln_class);
           });
         } else {
         }
