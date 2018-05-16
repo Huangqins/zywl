@@ -251,3 +251,15 @@ fl {float:left;}
 .homepage .asset .ivu-table-body{
   overflow-y: hidden;
 }
+ .table .holetable .ivu-card-body{
+     padding:5px 0px 3px 3px;
+ }
+ .table .holetable .ivu-table-wrapper{
+     margin-bottom: 0px;
+ }
+ .table .holetable .ivu-card-body{
+     min-height: 253px;
+ }
+ .table .ym .ivu-card-body{
+    min-height: 180px;
+}

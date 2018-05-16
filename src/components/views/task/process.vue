@@ -43,7 +43,39 @@
       </section>
     </div>
     <div class="secTwo">
-      <section>
+       <Row>
+        <Col span="11" >
+           <Card class="ym">
+              <p slot="title">
+                  <Icon type="ios-film-outline"></Icon>
+                任务信息
+              </p>
+              <ul>
+                  <li v-for="(item,index) in taskListItem" :key="index">
+                      {{ item.target_info_name }}
+                      <span>
+                          {{ item.target_info_des }}
+                      </span>
+                  </li>
+              </ul>
+          </Card>
+        </Col>
+        <Col span="13" >
+          <Card class="ym">
+              <p slot="title">
+                  <Icon type="ios-film-outline"></Icon>
+                  域名信息
+              </p>
+              <ul class="scrollUl">
+                  <li v-for="(item,index) in domain_info" :key="index">                     
+                      <span v-html="item.target_info_des">                        
+                      </span>
+                  </li>
+              </ul>
+          </Card>
+        </Col>
+      </Row>
+      <!-- <section>
           <Card >
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
@@ -67,17 +99,45 @@
               </p>
               <ul class="scrollUl">
                   <li v-for="(item,index) in domain_info" :key="index">
-                      <!-- {{ item.target_info_name }} -->
+                     
                       <span v-html="item.target_info_des">
-                          <!-- {{  }} -->
+                        
                       </span>
                   </li>
               </ul>
           </Card>
-      </section>
+      </section> -->
     </div>
     <div class="holetable">
-      <section>
+      <Row>
+        <Col span="11" >
+             <Card style="min-height:240px">
+              <p slot="title">
+                  <Icon type="ios-film-outline"></Icon>
+                 发现主机
+              </p>
+              <ul>
+                  <li v-for="(item,index) in hostListItem" :key="index">
+                      {{ item.target_info_name }}
+                      <span style="color:red;">
+                           {{ item.target_info_des }}
+                      </span>
+                  </li>
+              </ul>
+            </Card>
+        </Col>
+        <Col span="13" >
+           <Card >
+              <p slot="title">
+                  <Icon type="ios-film-outline"></Icon>
+                 风险信息
+              </p>
+                <page class="table" :height="tableHeight" :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page>
+            
+            </Card>
+        </Col>
+    </Row>
+      <!-- <section>
         <Card>
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
@@ -93,17 +153,16 @@
               </ul>
         </Card>
       </section>
-      <section>
+      <section class="task">
           <Card >
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                  风险信息
               </p>
-              <ul>
-                  <page class="table"   :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width" height=120></page>
-              </ul>
+                <page class="table" max-height="100px" :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page>
+            
             </Card>
-      </section>
+      </section> -->
     </div>
   </div>
 </template>
@@ -130,12 +189,19 @@ let minute = now.getMinutes();
 let sec = now.getSeconds();
 let times =
   year + "-" + month + "-" + day + " " + hours + ":" + minute + ":" + sec;
+// const levelSchema = {
+//   "4": "紧急风险",
+//   "3": "高风险",
+//   "2": "中风险",
+//   "1": "低风险",
+//   "0": "无风险"
+// };
 const levelSchema = {
-  "4": "紧急风险",
-  "3": "高风险",
-  "2": "中风险",
-  "1": "低风险",
-  "0": "无风险"
+  "4": "assets/4.png",
+  "3": "assets/3.png",
+  "2": "assets/2.png",
+  "1": "assets/1.png",
+  "0": "assets/0.png"
 };
 const host =
   process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
@@ -164,6 +230,7 @@ export default {
   },
   data() {
     return {
+      tableHeight:"246",
       starttime: '',
       name:'',
       percentOption:'',
@@ -339,19 +406,27 @@ export default {
           title: "风险名称",
           key: "vuln_name",
           align: "center",
-          width: 200
+          
         },
         {
           title: "风险类型",
           key: "vuln_type",
-          align: "center"
+          align: "center",
+          width:100
         },
         {
           title: "风险等级",
           key: "vuln_level",
           align: "center",
+          width: 100,
           render: (h, params) => {
-            return h("span", `${levelSchema[params.row.vuln_level]}`);
+            return h("img", {
+              attrs: {
+                src: require(`assets/${params.row.vuln_level}.png`),
+                width: "48px",
+                height: "6px"
+              }
+            });
           }
         },
         {
@@ -363,7 +438,7 @@ export default {
         {
           title: "操作",
           align: "center",
-          width: 60,
+          width: 50,
           render: (h, params) => {
             return h("div", [
               h("Button", {
@@ -775,7 +850,7 @@ export default {
 .timeProcess section {
   width: 100%;
 }
-.secTwo {
+/* .secTwo {
   width: 100%;
   padding: 0 40px;
   display: flex;
@@ -784,20 +859,20 @@ export default {
 .secTwo section {
   flex: 1;
   margin: 0px 20px;
-}
+} */
 .clear {
   clear: both;
 }
-.holetable {
+/* .holetable {
   width: 100%;
   padding: 0 40px;
   display: flex;
   flex-direction: row;
-}
-.holetable section {
+} */
+/* .holetable section {
   margin: 0px 20px;
   flex: 1;
-}
+} */
 .ivu-card-body li {
   color: #fbfbfb;
 }
@@ -808,6 +883,9 @@ export default {
 .scrollUl {
   max-height: 169px;
   overflow: auto;
+}
+.scrollUl ul li{
+  margin: 5px 0;
 }
 .high {
   background: red;
