@@ -5,10 +5,10 @@
         <div :class="{ radar: radar, radarCopy: radarCopy }"></div>
         <div class="radar_right">
           <ul>
-            <li>任务名称:{{name}}</li>
-            <li>完成率:{{percentOption}}</li>
-            <li>开始时间:{{starttime}}</li>
-            <li>结束时间:{{endtime}}</li>
+            <li>任务名称: &nbsp; &nbsp;{{name}}</li>
+            <li>完成率: &nbsp; &nbsp;&nbsp; &nbsp;{{percentOption}}</li>
+            <li>开始时间: &nbsp; &nbsp;{{starttime}}</li>
+            <li>结束时间: &nbsp; &nbsp;{{endtime}}</li>
           </ul>
         </div>
         <!-- <chart width="235px" height="235px" :option="option" id="completionRate" ref="completionRate"></chart> -->
@@ -932,6 +932,7 @@ export default {
   font-size: 14px;
   line-height: 30px;
 }
+
 .ivu-table .demo-table-error-row td{
         background-color: red;
         color: #fff;
