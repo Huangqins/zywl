@@ -219,9 +219,12 @@ a {
    padding-right:10px;
    padding-left:10px;
   }
+  .homepage .pictrue .ivu-table-header{
+    display: none;
+  }
   .homepage #noheader .ivu-table-header{
     display: none;
-}
+  }
 .ivu-menu-vertical .ivu-menu-item, .ivu-menu-vertical .ivu-menu-submenu-title {
     padding: 14px 10px; 
 }
