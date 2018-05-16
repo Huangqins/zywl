@@ -506,7 +506,7 @@ export default {
             );
             this.vulntypePic.radar.indicator.push({
               max: Math.max.apply(null, numList),
-              name: item.vuln_type_name
+              name: item.kb_vuln_class
             });
           });
         }
