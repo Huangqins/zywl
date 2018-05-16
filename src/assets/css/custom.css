@@ -219,9 +219,12 @@ a {
    padding-right:10px;
    padding-left:10px;
   }
+  .homepage .pictrue .ivu-table-header{
+    display: none;
+  }
   .homepage #noheader .ivu-table-header{
     display: none;
-}
+  }
 .ivu-menu-vertical .ivu-menu-item, .ivu-menu-vertical .ivu-menu-submenu-title {
     padding: 14px 10px; 
 }
@@ -247,4 +250,16 @@ fl {float:left;}
 
 .homepage .asset .ivu-table-body{
   overflow-y: hidden;
+}
+ .table .holetable .ivu-card-body{
+     padding:5px 0px 3px 3px;
+ }
+ .table .holetable .ivu-table-wrapper{
+     margin-bottom: 0px;
+ }
+ .table .holetable .ivu-card-body{
+     min-height: 253px;
+ }
+ .table .ym .ivu-card-body{
+    min-height: 180px;
 }

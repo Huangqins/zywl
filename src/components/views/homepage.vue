@@ -12,9 +12,9 @@
                  <!-- <span style="display:block;width:100%;height:91px;margin-top:5px"><img src="../../assets/num.jpg"/></span> -->
                 
                  <section style="height:80px;text-align:center;">
-                   <div style="width:80px;height:40px;float:left"><img src="../../assets/assest.png" style="width:100%"/></div>
-                   <div style="height:50%;font-size:20px;line-height:50px">{{assetsTotal}}</div>
-                   <div style="height:50%;font-size:15px;line-height:40px">资产数量</div>
+                   <div style="width:20%;height:80px;float:left"><img src="../../assets/assest.png" style="width:100%"/></div>
+                   <div style="height:50%;width:80%;font-size:24px;line-height:50px;float:right;">{{assetsTotal}}</div>
+                   <div style="height:50%;width:80%;font-size:15px;line-height:40px;float:right">资产数量</div>
                  </section>
             </div>
             
@@ -26,7 +26,7 @@
             </div>
             <div class="asset">
                 <!-- <span class="Aipicture_text">资产情况</span> -->
-                <span class="pictrue" >
+                <span class="pictrue">
                  <Table :columns="assets" :data="assetsData" :height="300"></Table>
                 </span>
             </div>              
