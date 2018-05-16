@@ -2,7 +2,10 @@
   <div class="homepage">
     <section class="head">
       <mind></mind>
-        <span class="smp" >23233434<!-- <div id="dataNums"> </div> --></span>
+        <span class="smp" >
+          <!-- <div id="dataNums"> </div> -->
+          <countTo :startVal='startVal' :endVal='endVal' :duration='3000'></countTo>
+          </span>
        <span></span>
     </section>
       <section class="secOne">
@@ -77,6 +80,7 @@
 <script>
 import $ from "jquery";
 import mind from "./mind";
+import countTo from 'vue-count-to';
 import force from "components/chart/force";
 import chart from "components/chart/chart";
 import assetsInfo from "api/assetsInfo";
@@ -104,10 +108,13 @@ export default {
   components: {
     force,
     chart,
-    mind
+    mind,
+    countTo
   },
   data() {
     return {
+      startVal: 0,
+      endVal: 100,
       assetsTotal: 0,
       forceOptions: {
         tooltip: {
@@ -333,6 +340,10 @@ export default {
     $("#dataNums").rollNum({
       deVal: 682323
     });
+     setInterval(() => {
+        this.startVal = this.endVal;
+        this.endVal = this.endVal + Math.floor(Math.random() * 10)
+      },5000)
   },
   methods: {
     //资产任务图
@@ -517,6 +528,7 @@ export default {
   color: #b9babd;
   text-align: center;
   line-height: 26px;
+  font-size: 40px;
 }
 
 .secOne {
