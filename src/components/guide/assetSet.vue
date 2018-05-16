@@ -23,6 +23,20 @@
           <!-- <a :href="href" download ref="download"></a> -->
       </div>
       <Modals :format="format" :data="data" title="添加任务" ref="formValidate" :rules="rules" @asyncOK="asyncOK" :display="display"  :loading="loading" :ruleValidate="rules"></Modals>
+      <Modal v-model="modalDeleter" width="360"  :mask-closable="false" >
+        <p slot="header" style="color:#f60;text-align:center">
+            <Icon type="information-circled"></Icon>
+            <span>删除确认</span>
+        </p>
+        <div style="text-align:center">
+            <p style="font-size:17px;">是否确认删除？</p>
+          
+        </div>
+        <div slot="footer">
+            <Button    :loading="modal_loading" @click="cancel">取消</Button>
+            <Button type="error"  :loading="modal_loading" @click="taskDelete({ target_id })">删除</Button>
+        </div>
+      </Modal>
   </div>
 </template>
 <script>
@@ -83,6 +97,8 @@ export default {
       }
     };
     return {
+      modalDeleter:false,
+      modal_loading:false,
       fileName: "",
       href: "",
       pageLoading: false,
@@ -348,7 +364,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.taskDelete(params.row);
+                    this.modalDeleter=true;
                   }
                 }
               })
@@ -573,7 +589,9 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.taskDelete(params.row);
+                    // this.taskDelete(params.row);
+                    this.target_id = params.row.target_id;
+                    this.modalDeleter=true;
                   }
                 }
               })
@@ -598,7 +616,8 @@ export default {
       dataTotal: 0,
       dataTotals: 0,
       params: {},
-      urlIpMap: {}
+      urlIpMap: {},
+      target_id: ''
     };
   },
   created() {
@@ -670,14 +689,18 @@ export default {
     taskAdd() {
       this.$refs.formValidate.open();
     },
-
+    cancel(){
+      this.modalDeleter=false;
+    },
     taskDelete(params) {
       deleteTask(params).then(res => {
         if (res.result === 0) {
           this.$Message.success(`删除成功`);
+           this.modalDeleter=false;
           this._taskList(this.params);
         } else {
           this.$Message.error(`删除失败`);
+           this.modalDeleter=false;
         }
       });
     },
