@@ -411,7 +411,7 @@ export default {
         },
         {
           title: "风险类型",
-          key: "vuln_type",
+          key: "kb_vuln_class",
           align: "left",
           width:140
         },
