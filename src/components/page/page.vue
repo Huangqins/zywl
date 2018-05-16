@@ -1,6 +1,6 @@
 <template>
 <div class="pageTable">
- <Table  :columns="columns" :data="data"  :loading="loading" :height="tableHeight">
+ <Table  :columns="columns" :data="data"  :loading="loading" :height="tableHeight" :row-class-name="rowClassName">
  </Table>
   <Page  v-show="dataTotal >= threshold"  :total="dataTotal" size="small" :current="current" :placement="placement"  :page-size-opts="pageSizeOpts" show-total  show-sizer
   @on-change="onPageChange" @on-page-size-change="onChangehandle" show-elevator ></Page>
@@ -25,6 +25,10 @@ export default {
       default: () => {
         return [];
       }
+    },
+    rowClassName: {
+      type: Function,
+      default: () => {}
     },
     data: {
       type: Array,
