@@ -60,7 +60,7 @@
           </div>
        <div class="leaksTwo">
           <section>
-            <cloud :height=200></cloud>
+            <cloud :height=300 ></cloud>
           </section>
           <section>
              <chart width="505px" height="300px" :option="vulntypes" id="vulntype" ref="vulntype"></chart>
@@ -89,6 +89,7 @@ import { getUserName } from "@/utils/auth";
 import vulnLevel from "api/vulnLevel";
 import cloud from "../../taskpage/cloud";
 import vulntype from "api/vulntype";
+import vulnWordClouds from "api/vulnWordClouds";
 
 // const levelSchema = {
 //   "4": { style: "#FF33CC", class: "vuln", ex: "#FF3399" },
@@ -139,11 +140,11 @@ export default {
   data() {
     return {
       taskID: "",
-      urgent:'',
+      urgent: "",
       high: "",
-      middle:'',
-      low:"",
-      prompt:"",
+      middle: "",
+      low: "",
+      prompt: "",
       option: {
         tooltip: {
           formatter: "{a} <br/>{b} : {c}%"
@@ -187,8 +188,8 @@ export default {
           top: 20,
           bottom: 20,
           data: [],
-          textStyle:{
-            color:"#fbfbfb"
+          textStyle: {
+            color: "#fbfbfb"
           }
         },
         series: [
@@ -253,7 +254,7 @@ export default {
           title: "风险等级",
           key: "vuln_level",
           align: "center",
-          width:85,
+          width: 85,
           render: (h, params) => {
             return h("span", `${levelSchema[params.row.vuln_level]}`);
           }
@@ -271,7 +272,8 @@ export default {
         rows: 10,
         page: 1
       },
-      loading: false
+      loading: false,
+      cloudWords: []
     };
   },
   created() {
@@ -281,11 +283,11 @@ export default {
     });
     this._leaksInfo(params);
     this._vulnTotal();
-    
+    // this._vulnWordClouds();
     // this._vulnLevel({taskID:})
   },
   mounted() {
-    this.vulntype();  
+    this.vulntype();
   },
   methods: {
     //风险类型饼状图
@@ -325,10 +327,10 @@ export default {
               this.middle = item.vuln_total;
               // this.optionThree.series[0].data[0].value = item.vuln_total;
               // this.$refs.chartThree.refresh();
-            } else if(item.vuln_level === "1") {
+            } else if (item.vuln_level === "1") {
               this.low = item.vuln_total;
-            } else if(item.vuln_level === "0"){
-               this.prompt = item.vuln_total;
+            } else if (item.vuln_level === "0") {
+              this.prompt = item.vuln_total;
             }
           });
         }

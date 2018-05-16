@@ -1,13 +1,9 @@
 import request from '@/utils/request'
 
-export default function vulnWordClouds({
-  target_id
-}) {
+export default function vulnWordClouds(obj) {
   return request({
     method: 'post',
     url: '/ZY/vuln/vulnWordClouds',
-    data: {
-      target_id
-    }
+    data: obj
   })
 }

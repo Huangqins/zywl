@@ -142,6 +142,7 @@ export default {
           title: "任务状态",
           key: "target_struts",
           align: "center",
+          width: 100,
           render: (h, params) => {
             return h("span", taskStatus[params.row.target_struts]);
           }
@@ -150,13 +151,12 @@ export default {
           title: "任务目标",
           key: "target_url",
           align: "center",
-          width: 290
         },
         {
           title: "周期",
           key: "target_cycle",
           align: "center",
-          width: 250,
+          width: 60,
           render: (h, params) => {
             return h("span", taskcycle[params.row.target_cycle]);
           }
@@ -367,6 +367,7 @@ export default {
           title: "任务状态",
           key: "target_struts",
           align: "center",
+          width: 100,
           render: (h, params) => {
             return h("span", taskStatus[params.row.target_struts]);
           }
@@ -380,7 +381,7 @@ export default {
           title: "周期",
           key: "target_cycle",
           align: "center",
-          width: 250,
+          width: 60,
           render: (h, params) => {
             return h("span", taskcycle[params.row.target_cycle]);
           }
@@ -389,7 +390,7 @@ export default {
           title: "策略",
           key: "target_teststra",
           align: "center",
-          width: 250,
+          width: 150,
           render: (h, params) => {
             return h("span", cl[params.row.target_teststra]);
           }

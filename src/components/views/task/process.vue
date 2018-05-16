@@ -2,7 +2,7 @@
   <div class="table">
     <div class="taskSchedule" >
       <section style="margin:20px 10px 20px 80px;">
-        <div class="radar"></div>
+        <div :class="{ radar: radar, radarCopy: radarCopy }"></div>
         <div class="radar_right">
           <ul>
             <li>任务名称:{{name}}</li>
@@ -178,7 +178,7 @@ import urlUseRate from "api/urlUseRate";
 import fomatterTime from "@/utils/tool";
 import getAssetsHost from "api/getAssetsHost";
 import percentChart from "./percentChart";
-import ld from "./ld.css"
+import ld from "./ld.css";
 
 let now = new Date();
 let year = now.getFullYear();
@@ -230,11 +230,12 @@ export default {
   },
   data() {
     return {
+      radar: true,
+      starttime: "",
+      name: "",
+      percentOption: "",
+      endtime: "",
       tableHeight:"246",
-      starttime: '',
-      name:'',
-      percentOption:'',
-      endtime:'',
       percent: 0, //伪进度最大为9
       scaning: 0, //任务阶段
       percentOption: {
@@ -608,7 +609,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["userName"])
+    ...mapGetters(["userName"]),
+    radarCopy() {
+      return !this.radar;
+    }
   },
   created() {
     const storage = window.localStorage;
@@ -623,16 +627,15 @@ export default {
     taskInfo.target_startTime = fomatterTime(
       new Date(taskInfo.target_starttime.time)
     );
-     this.name=taskInfo.target_name
-    
+    this.name = taskInfo.target_name;
+
     taskInfo.target_endTime = taskInfo.target_endtime
       ? fomatterTime(new Date(taskInfo.target_endtime.time))
       : "";
-      this.endtime=taskInfo.target_endTime;
-      this.starttime = fomatterTime(new Date(taskInfo.target_starttime.time))
+    this.endtime = taskInfo.target_endTime;
+    this.starttime = fomatterTime(new Date(taskInfo.target_starttime.time));
     this.taskListItem.forEach(item => {
       item.target_info_des = taskInfo[item.target_info_key];
-     
     });
     this._targetProgress();
     this._targetNum();
@@ -666,49 +669,43 @@ export default {
       targetProgress(params).then(res => {
         if (res.result === 0) {
           let scaning;
-          if(res.target.target_scaning.length > 1) {
-           scaning = res.target.target_scaning.split(",");
+          if (res.target.target_scaning.length > 1) {
+            scaning = res.target.target_scaning.split(",");
           } else {
-            scaning = []
+            scaning = [];
           }
-          
           let target_struts = res.target.target_struts;
           let target_rftime = res.target.target_rftime;
-           if (target_struts === "1") {
-             this.percentOption=`100%`
-            //  this.percentOption.title.text = `100%`;
-            //  this.percentOption.series[0].data[0].value =  100;
-            //  this.percentOption.series[0].data[1].value =  0;
+          if (target_struts === "1") {
+            this.percentOption = `100%`;
+            this.radar = false;
             clearInterval(this.timer);
           } else if (target_struts === "-2") {
-            this.$Message.error(`目标进度确立失败`)
-            //  this.percentOption.title.text = `0%`;
-             this.percentOption=`0%`
-            //  this.percentOption.series[0].data[0].value =  0;
-            //  this.percentOption.series[0].data[1].value =  0;
-             clearInterval(this.timer);
+            this.$Message.error(`目标进度确立失败`);
+            this.percentOption = `0%`;
+            this.radar = false;
+            clearInterval(this.timer);
           } else {
-              // this.percentOption =  scaning.length * 5;
-              this.percentOption= `${scaning.length * 5}%`;
-              // this.percentOption= 100 - (scaning.length * 5);
+            this.radar = true;
+            this.percentOption = `${scaning.length * 5}%`;
           }
           this.option.series[0].data[0].value = scaning;
           let temp = [];
           let scaningCopy = scaning;
-          scaningCopy.unshift('0')
+          scaningCopy.unshift("0");
           scaning.forEach((item, index) => {
-             temp.push({
+            temp.push({
               value: task_status["11"],
               valueIndex: item,
               symbolOffset: [0, "-70%"],
               symbolSize: 30,
               symbol: "image://" + require(`./svg/${item}.svg`)
             });
-          })
+          });
           //进度纵坐标
           this.linechart.series[0].data = temp;
           let ret = [];
-           target_rftime.split(",").forEach((item, index) => {
+          target_rftime.split(",").forEach((item, index) => {
             ret.push(fomatterTime(new Date(Number(item))));
           });
           this.linechart.xAxis.data = ret;
@@ -839,7 +836,7 @@ export default {
 .circle {
   border: 1px solid #e4e5e5;
   border-radius: 3px;
-  margin:20px 100px 20px;
+  margin: 20px 100px 20px;
 }
 .taskSchedule section {
   flex: 1;
@@ -925,12 +922,12 @@ export default {
 .blu {
   color: #95dcf2;
 }
-.radar_right{
-  float: left;  
-  padding:15px 0;
-  margin-left:15px;
+.radar_right {
+  float: left;
+  padding: 15px 0;
+  margin-left: 15px;
 }
-.radar_right ul li{
+.radar_right ul li {
   list-style: none;
   font-size: 14px;
   line-height: 30px;

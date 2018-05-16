@@ -19,7 +19,7 @@
                   <chart width="440px" height="260px" :option="optionOne" id="optionOne" ref="secondChart"></chart>
                 </section>
                 <section>
-                  <chart width="290px" height="260px" :option="optionTwo" id="optionTwo" ref="threeChart"></chart>
+                  <!-- <chart width="290px" height="260px" :option="optionTwo" id="optionTwo" ref="threeChart"></chart> -->
                 </section>
                 
               </div>
