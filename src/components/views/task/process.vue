@@ -406,14 +406,14 @@ export default {
         {
           title: "风险名称",
           key: "vuln_name",
-          align: "center",
+          align: "left",
           
         },
         {
           title: "风险类型",
           key: "vuln_type",
-          align: "center",
-          width:100
+          align: "left",
+          width:140
         },
         {
           title: "风险等级",
