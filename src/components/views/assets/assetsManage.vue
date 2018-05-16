@@ -11,6 +11,7 @@
                       <div class="levelDescript">扫描器已经发现一个或多个高危类型的漏洞。恶意用户可以利用这些漏洞，并损害后台数据库和您的网站</div>
                     </div>
                   </div>
+                   <chart :option="optionLine" width="100%" height="250px" ref="chart" id="circleTwo"></chart>
         </section >
         <section>
             <div class="hotPic">
@@ -29,15 +30,13 @@
                         <span v-if="index===0"><img src="../../../../static/top1.png" ></span>
                         <span v-else-if="index===1"><img src="../../../../static/top2.png" ></span>
                         <span v-else-if="index===2"><img src="../../../../static/top3.png"/></span>
-                        <span v-else-if="index>=3">{{index}}</span>
+                        <span v-else>{{index + 1}}</span>
                         <span>{{item.name}}</span>
                         <span>{{item.vuln_total}}</span>
                         </li>
                     </ul>
                   </div>
-                
         </section>
-        
      </div>
     <div class="List">
       <page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page>
@@ -62,6 +61,36 @@ export default {
   },
   data() {
     return {
+      optionLine: {
+        grid: {
+          left: 60,
+          top: 10,
+          bottom: 20,
+          right: 10
+        },
+        xAxis: {
+          type: "category",
+          data: [],
+          axisLabel: {
+            color: '#fff'
+          }
+        },
+        yAxis: {
+          type: "value",
+           axisLabel: {
+            color: '#fff'
+          }
+        },
+        series: [
+          {
+            data: [],
+            type: "line",
+            label: {
+              color: '#fff'
+            }
+          }
+        ]
+      },
       option: {
         xAxis: {
           axisLabel: {
@@ -88,16 +117,16 @@ export default {
           },
           scale: true
         },
-        grid:{
-          top:'12',
-          bottom:'20'
+        grid: {
+          top: "12",
+          bottom: "20"
         },
         series: [
           {
             data: data,
             type: "scatter",
             symbolSize: function(data) {
-              return data[1]
+              return data[1];
             },
             label: {
               emphasis: {
@@ -229,6 +258,10 @@ export default {
       vulnTop(params).then(res => {
         let data = res.lists;
         this.holes = data;
+        let length = 10 - data.length
+        for (let i = 0 ; i< length; i++) {
+          this.holes.push({})
+        }
       });
     },
     rowClassName(row, index) {
@@ -240,13 +273,17 @@ export default {
       if (res.rows[0] === null) {
         this.loading = false;
         this.assetsList = [];
-       
       } else {
-
         this.assetsList = res.rows;
         res.rows.forEach(item => {
-          data.push([item.vuln_total,item.vuln_use,item.assets_name])
+          data.push([item.vuln_total, item.vuln_use, item.assets_name]);
         });
+        this.optionLine.xAxis.data = res.rows.map(item => {
+          return item.assets_name
+        })
+        this.optionLine.series[0].data = res.rows.map(item => {
+          return item.vuln_total
+        })
         this.total = res.total;
         this.loading = false;
       }

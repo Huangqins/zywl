@@ -54,7 +54,7 @@
                         <span v-if="index===0"><img src="../../../static/top1.png" ></span>
                         <span v-else-if="index===1"><img src="../../../static/top2.png" ></span>
                         <span v-else-if="index===2"><img src="../../../static/top3.png"/></span>
-                        <span v-else-if="index=3">{{index}}</span>
+                        <span v-else>{{index + 1}}</span>
                         <span>{{item.name}}</span>
                         <span>{{item.vuln_total}}</span>
                         </li>
@@ -224,7 +224,11 @@ export default {
           title: "结束时间",
           key: "target_endtime",
           width: 160,
-          align: "center"
+          align: "center",
+          render: (h, params) => {
+            console.log(params)
+            return h("span",  params.row.target_endtime ? fomatterTime(new Date(params.row.target_endtime.time)) : '')
+          }
         }
       ],
       taskLists: [],
@@ -457,8 +461,14 @@ export default {
       const params = {};
       vulnTop(params).then(res => {
         let data = res.lists;
-
+        console.log(data.length)
         this.holes = data;
+        let length = 10 - data.length;
+        if (data.length < 10) {
+          for (let i = 0; i < length ; i++) {
+            this.holes.push({})
+          }
+        }
       });
     },
     //风险类型
