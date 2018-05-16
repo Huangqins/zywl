@@ -878,7 +878,7 @@ export default {
   margin: 22px auto;
 }
 .scrollUl {
-  max-height: 169px;
+  max-height: 145px;
   overflow: auto;
 }
 .scrollUl ul li{
