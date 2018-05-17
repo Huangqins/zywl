@@ -651,11 +651,8 @@ export default {
     }, 5000);
   },
   methods: {
-    rowClassName (row) {
-      console.log(row)
-       
-           return 'demo-table-error-row';
-        
+    rowClassName (row) {       
+           return 'demo-table-error-row';        
      },
     dataLoad(paramsObj) {
       const params = Object.assign({}, this.defaultPage, paramsObj);

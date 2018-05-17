@@ -3,6 +3,9 @@
        <Upload  multiple  :action="uploadUrl" :with-credentials="true"  name="license" :headers="headers" :show-upload-list="false" style="display:inline-block" :on-success="success"	>
                 <Button type="primary" icon="ios-cloud-upload-outline">导入授权文件</Button>
         </Upload>
+        <!-- <div class="List">
+          <page :columns="Colums" :data="List" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page>
+        </div> -->
   </div>
 </template>
 <script>
