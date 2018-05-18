@@ -23,6 +23,20 @@
           <!-- <a :href="href" download ref="download"></a> -->
       </div>
       <Modals :format="format" :data="data" title="添加任务" ref="formValidate" :rules="rules" @asyncOK="asyncOK" :display="display"  :loading="loading" :ruleValidate="rules"></Modals>
+      <Modal v-model="modalDeleter" width="360"  :mask-closable="false" >
+        <p slot="header" style="color:#f60;text-align:center">
+            <Icon type="information-circled"></Icon>
+            <span>删除确认</span>
+        </p>
+        <div style="text-align:center">
+            <p style="font-size:17px;">是否确认删除？</p>
+          
+        </div>
+        <div slot="footer">
+            <Button    :loading="modal_loading" @click="cancel">取消</Button>
+            <Button type="error"  :loading="modal_loading" @click="taskDelete({ target_id })">删除</Button>
+        </div>
+      </Modal>
   </div>
 </template>
 <script>
@@ -54,7 +68,6 @@ const taskcycle = {
 const cl = {
   medium: "常规策略",
   high: "深度策略"
-  
 };
 export default {
   components: {
@@ -83,6 +96,8 @@ export default {
       }
     };
     return {
+      modalDeleter: false,
+      modal_loading: false,
       fileName: "",
       href: "",
       pageLoading: false,
@@ -150,7 +165,7 @@ export default {
         {
           title: "任务目标",
           key: "target_url",
-          align: "center",
+          align: "center"
         },
         {
           title: "周期",
@@ -348,7 +363,8 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.taskDelete(params.row);
+                    this.target_id = params.row.target_id;
+                    this.modalDeleter = true;
                   }
                 }
               })
@@ -506,21 +522,76 @@ export default {
                     click: ev => {
                       if (params.row.export_url === "") {
                         this.$Modal.confirm({
-                          title: "请输入报告名称",
                           render: h => {
-                            return h("Input", {
-                              props: {
-                                value: this.fileName,
-                                autofocus: true,
-                                placeholder: "请输入文件名"
-                              },
-                              on: {
-                                input: val => {
-                                  this.fileName = val;
-                                }
-                              }
-                            });
+                            return h("div", [
+                              h(
+                                "Input",
+                                {
+                                  props: {
+                                    value: this.fileName,
+                                    autofocus: true,
+                                    placeholder: "请输入文件名"
+                                  },
+                                  style: {
+                                    marginBottom: '15px'
+                                  },
+                                  on: {
+                                    input: val => {
+                                      this.fileName = val;
+                                    }
+                                  }
+                                },
+                                 [
+                                  h(
+                                    "span",
+                                    {
+                                      slot: "prepend"
+                                    },
+                                    "报告名称"
+                                  )
+                                ],
+                                
+                              ),
+                              h(
+                                "Input",
+                                {
+                                  props: {
+                                    value: this.companyName,
+                                    autofocus: true,
+                                    placeholder: "请输入企业名"
+                                  },
+                                  on: {
+                                    input: val => {
+                                      this.companyName = val;
+                                    }
+                                  }
+                                },
+                                [
+                                  h(
+                                    "span",
+                                    {
+                                      slot: "prepend"
+                                    },
+                                    "企业名称"
+                                  )
+                                ]
+                              )
+                            ]);
                           },
+                          // render: h => {
+                          //   return h("Input", {
+                          //     props: {
+                          //       value: this.fileName,
+                          //       autofocus: true,
+                          //       placeholder: "请输入文件名"
+                          //     },
+                          //     on: {
+                          //       input: val => {
+                          //         this.fileName = val;
+                          //       }
+                          //     }
+                          //   });
+                          // },
                           onOk: () => {
                             exportPDF({
                               target_id: params.row.target_id,
@@ -573,7 +644,8 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.taskDelete(params.row);
+                    this.target_id = params.row.target_id;
+                    this.modalDeleter = true;
                   }
                 }
               })
@@ -598,7 +670,8 @@ export default {
       dataTotal: 0,
       dataTotals: 0,
       params: {},
-      urlIpMap: {}
+      urlIpMap: {},
+      target_id: ""
     };
   },
   created() {
@@ -661,23 +734,27 @@ export default {
     dataLoad(paramsObj) {
       this.params = Object.assign({}, this.defaultPage, paramsObj);
       this._taskList(this.params);
-     
     },
     dataLoads(paramsObj) {
-      this.paramsTask = Object.assign({}, this.defaultPageTask, paramsObj);     
+      this.paramsTask = Object.assign({}, this.defaultPageTask, paramsObj);
       this._taskListLong(this.paramsTask);
     },
     taskAdd() {
       this.$refs.formValidate.open();
     },
-
+    cancel() {
+      this.modalDeleter = false;
+    },
     taskDelete(params) {
       deleteTask(params).then(res => {
         if (res.result === 0) {
           this.$Message.success(`删除成功`);
+          this.modalDeleter = false;
           this._taskList(this.params);
+          this._taskListLong(this.params);
         } else {
           this.$Message.error(`删除失败`);
+          this.modalDeleter = false;
         }
       });
     },
