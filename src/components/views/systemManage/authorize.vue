@@ -98,9 +98,9 @@ export default {
     _getSystemInfo(){
     getSystemInfo().then(res =>{
       if(res.result==="2"){
-        this.$Message.Info("文件不存在")
+        this.$Message.error("文件不存在")
       }else if(res.result==="2"){
-        this.$Message.Info("授权到期")
+        this.$Message.error("授权到期")
       }else{
         let data=res;   
         data.isTry=data.isTry==="0"?"试用":"正式";

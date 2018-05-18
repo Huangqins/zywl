@@ -98,9 +98,6 @@ export default {
     this._getUserInfo();
   },
   methods: {
-    success(response) {
-      console.log(response);
-    },
     _getUserInfo() {
       userInfo().then(res => {
         this.userInfos = res.user;
