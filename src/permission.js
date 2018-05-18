@@ -12,25 +12,26 @@ import store from './store'
 
 router.beforeEach((to, from, next) => {
   NProgress.start()
-  if (to.path === '/register' || to.path === '/login') {
-    store.commit('REMOVE_TOKEN');
-    store.commit('REMOVE_USER_NAME');
-    removeToken()
-  }
-  if (getToken()) {
-    next()
-  } else {
-    if (to.path === '/register' || to.path === '/login') {
-      next()
-    } else {
-      Message.warning({
-        content: '没有访问权限请登录',
-        top: 50,
-        duration: 3
-      })
-      next('/login')
-    }
-  }
+  next()
+  // if (to.path === '/register' || to.path === '/login') {
+  //   store.commit('REMOVE_TOKEN');
+  //   store.commit('REMOVE_USER_NAME');
+  //   removeToken()
+  // }
+  // if (getToken()) {
+  //   next()
+  // } else {
+  //   if (to.path === '/register' || to.path === '/login') {
+  //     next()
+  //   } else {
+  //     Message.warning({
+  //       content: '没有访问权限请登录',
+  //       top: 50,
+  //       duration: 3
+  //     })
+  //     next('/login')
+  //   }
+  // }
 
   // if (getToken() !== 'undefined' && getToken()) {
   //     next()

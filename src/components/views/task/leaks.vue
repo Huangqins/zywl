@@ -81,7 +81,6 @@
 </template>
 <script>
 import chart from "components/chart/chart";
-import zhexiantu from "components/chart/zhexiantu";
 import page from "components/page/page";
 import leaksInfo from "api/leaksInfo";
 import vulnTotal from "api/vulnTotal";
@@ -90,6 +89,7 @@ import vulnLevel from "api/vulnLevel";
 import cloud from "../../taskpage/cloud";
 import vulntype from "api/vulntype";
 import vulnWordClouds from "api/vulnWordClouds";
+import getVulnInfo from "api/getVulnInfo";
 
 // const levelSchema = {
 //   "4": { style: "#FF33CC", class: "vuln", ex: "#FF3399" },
@@ -109,7 +109,6 @@ export default {
   name: "leaks",
   components: {
     chart,
-    zhexiantu,
     page,
     cloud
   },
@@ -285,20 +284,18 @@ export default {
   methods: {
     //风险类型饼状图
     vulntype() {
-      let params = { flag: 1 };
       this.$refs.vulntype.showLoading();
-      vulntype(params).then(res => {
+      getVulnInfo({}).then(res => {
         if (res.result === 0) {
           this.$refs.vulntype.hideLoading();
-          let list = res.list;
+          let list = res.vulns;
           list.forEach(item => {
             this.vulntypes.series[0].data.push({
-              value: item.kb_vuln_vnum,
+              value: item.vuln_total,
               name: item.kb_vuln_class
             });
             this.vulntypes.legend.data.push(item.kb_vuln_class);
           });
-        } else {
         }
       });
     },
@@ -326,7 +323,6 @@ export default {
             }
           });
         }
-        console.log(res);
       });
     },
     godetail() {},

@@ -95,7 +95,9 @@
                         </span>
                         <Button type="ghost" shape="circle" icon="power" style="border: none" @click="loginOut"></Button>
                     </div>
+                   
                 </Header>
+                 <tags-view></tags-view>
                 <Content :style="{  minHeight: '946px'}">
                     <router-view :key="key"></router-view> 
                 </Content>
@@ -108,6 +110,7 @@ import { mapGetters } from "vuex";
 import router from "@/router";
 import chart from "components/chart/chart";
 import zhexiantu from "components/chart/zhexiantu";
+import tagsView from "components/tagsView";
 import { removeToken, removeUserName, getUserName } from "@/utils/auth";
 import taskTargetInfo from "api/taskTargetInfo";
 import taskList from "api/taskList";
@@ -134,7 +137,8 @@ export default {
   name: "taskexecution",
   components: {
     chart,
-    zhexiantu
+    zhexiantu,
+    tagsView
   },
   created() {
     const params = { userName: this.userName, targetStruts: 0 };

@@ -48,7 +48,7 @@ export default {
           list = res.vulns.map(item => {
             return [
               item.vuln_type ? item.vuln_type : "其他类型",
-             Math.floor(Math.log(item.vuln_total)) + 2
+             Math.floor(Math.log(item.vuln_total)) + 5
             ];
           });
         let my_canvas = document.getElementById(this.id);

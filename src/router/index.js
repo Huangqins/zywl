@@ -5,6 +5,7 @@ import {
 } from '@/utils/auth'
 
 Vue.use(VueRouter)
+
 const Historydata = (resolve) => {
   import ('components/historydata/datamanage').then(module => {
     resolve(module)
@@ -145,7 +146,7 @@ const Logs = (resolve) => {
     resolve(module)
   })
 }
-const Authorize =(resolve) => {
+const Authorize = (resolve) => {
   import ('components/views/systemManage/authorize').then(module => {
     resolve(module)
   })
@@ -277,81 +278,79 @@ const router = new VueRouter({
       children: [{
           //任务进度需要任务Id进入
           meta: {
-            menuCode: "10"
+            menuCode: "10",
+            title: '任务进度'
           },
           name: 'process',
           path: 'process/:target_id',
-          components: {
-            default: Process
-          }
-        },
-        {
-          path: 'holecloud',
-          components: {
-            default: Holecloud
-          }
+          component: Process
         },
         {
           meta: {
-            menuCode: "05"
+            title: '漏洞文字云'
+          },
+          name: 'holecloud',
+          path: 'holecloud',
+          component: Holecloud
+        },
+        {
+          meta: {
+            menuCode: "05",
+            title: '风险详情'
           },
           name: 'leaks',
           path: 'leaks',
-          components: {
-            left: Cloud,
-            default: Leaks
-          }
+          component: Leaks
         },
         {
           meta: {
-            menuCode: "04"
+            menuCode: "04",
+            title: '风险态势'
           },
+          name: 'assetsManage',
           path: 'assetsManage',
-          components: {
-            default: AssetsManage
-          }
+          component: AssetsManage
         },
         {
           meta: {
-            menuCode: "06"
+            menuCode: "06",
+            title: '知识管理'
           },
+          name: 'kbinfo',
           path: 'kbinfo',
-          components: {
-            default: Kbinfo
-          }
+          component: Kbinfo
         },
         {
           meta: {
-            menuCode: "03"
+            menuCode: "03",
+            title: '资产码头'
           },
+          name:'assetManagement',
           path: 'assetManagement',
-          components: {
-            default: AssetManagement
-          }
+          component: AssetManagement 
         },
         {
           meta: {
-            menuCode: "02"
+            menuCode: "02",
+            title: "任务调度"
           },
           name: 'assetSet',
           path: 'assetSet',
-          components: {
-            default: Assetset
-          }
+          component: Assetset
         },
         {
           meta: {
-            menuCode: "01"
+            menuCode: "01",
+            title: '首页'
           },
           name: 'homepage',
           path: 'homepage',
-          components: {
-            default: Homepage
-          }
+          component: Homepage
         },
         {
           meta: {
-            menuCode: "14"
+            menuCode: "14",
+            title: '风险详情'
           },
           name: "vulndetail",
           path: 'vulndetail',
@@ -359,7 +358,8 @@ const router = new VueRouter({
         },
         {
           meta: {
-            menuCode: "07"
+            menuCode: "07",
+            title: '日志管理'
           },
           name: "logs",
           path: "logs",
@@ -367,7 +367,8 @@ const router = new VueRouter({
         },
         {
           meta: {
-            menuCode: "08"
+            menuCode: "08",
+            title: 'Api管理'
           },
           name: "apiManage",
           path: 'apiManage',
@@ -375,7 +376,8 @@ const router = new VueRouter({
         },
         {
           meta: {
-            menuCode: "09"
+            menuCode: "09",
+            title: '个人信息'
           },
           name: "user",
           path: 'user',
@@ -383,9 +385,10 @@ const router = new VueRouter({
         },
         {
           meta: {
-            menuCode: "15"
+            menuCode: "15",
+            title: '权限管理'
           },
-          name:"authorize",
+          name: "authorize",
           path: "authorize",
           component: Authorize
         }

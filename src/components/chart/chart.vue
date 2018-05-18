@@ -44,10 +44,10 @@ export default {
   mounted() {
     this.init();
     this.resize();
-    let sideBar = document.getElementsByClassName("ivu-layout-sider")[0];
-    sideBar.addEventListener("transitionend", () => {
-      this.chart.resize();
-    });
+    // let sideBar = document.getElementsByClassName("ivu-layout-sider")[0];
+    // sideBar.addEventListener("transitionend", () => {
+    //   this.chart.resize();
+    // });
   },
   methods: {
     init() {

@@ -478,11 +478,11 @@ export default {
           let list = res.list;
           list.forEach(item => {
             this.options.legend.data.push(
-              item.vuln_type_name
+              item.kb_vuln_class
             )
             this.options.series[0].data.push({
               value: item.kb_vuln_vnum,
-              name: item.vuln_type_name
+              name: item.kb_vuln_class
             
             });
           });
