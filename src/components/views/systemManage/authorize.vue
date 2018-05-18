@@ -39,42 +39,42 @@ export default {
       taskListItem: [
         {
           target_info_key: "isTry",
-          target_info_name: "授权类型",
+          target_info_name: "授权类型:",
           target_info_des: 0
         },
         {
           target_info_key: "username",
-          target_info_name: "授权用户",
+          target_info_name: "授权用户:",
           target_info_des: 0
         },
         {
           target_info_key: "device",
-          target_info_name: "授权设备",
+          target_info_name: "授权设备:",
           target_info_des: 0
         },
         {
-          target_info_key: "target_t",
-          target_info_name: "硬件码",
+          target_info_key: "hardware",
+          target_info_name: "硬件码:",
           target_info_des: 0
         },
         {
-          target_info_key: "target_s",
-          target_info_name: "序列号",
+          target_info_key: "version",
+          target_info_name: "序列号:",
           target_info_des: 0
         },
-         {
-          target_info_key: "target_oa",
-          target_info_name: "可管理资源数",
-          target_info_des: 0
-        },
-        {
-          target_info_key: "target_t",
-          target_info_name: "授权截止时间",
+         {   
+          target_info_key: "userNum",
+          target_info_name: "可管理资源数:",
           target_info_des: 0
         },
         {
-          target_info_key: "target_s",
-          target_info_name: "授权签发时间",
+          target_info_key: "endTime",
+          target_info_name: "授权截止时间:",
+          target_info_des: 0
+        },
+        {
+          target_info_key: "startTime",
+          target_info_name: "授权签发时间:",
           target_info_des: 0
         }
       ]
@@ -104,6 +104,9 @@ export default {
       }else{
         let data=res;   
         data.isTry=data.isTry==="0"?"试用":"正式";
+        let remain="";
+        remain=data.userNum-data.useNum
+        data.userNum="总共"+data.userNum+",已使用"+data.useNum+',剩余'+remain+"可用"
         this.taskListItem.forEach(item => {
           item.target_info_des = data[item.target_info_key];
         });
