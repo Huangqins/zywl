@@ -43,11 +43,7 @@ export default {
   },
   mounted() {
     this.init();
-    this.resize();
-    // let sideBar = document.getElementsByClassName("ivu-layout-sider")[0];
-    // sideBar.addEventListener("transitionend", () => {
-    //   this.chart.resize();
-    // });
+    this.resize()
   },
   beforeDestroy() {
     if (this.chart) {

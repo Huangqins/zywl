@@ -230,7 +230,7 @@ export default {
                 props: {
                   type: "primary",
                   size: "small",
-                  icon: "pause"
+                  icon: "stop"
                 },
 
                 on: {
@@ -245,27 +245,27 @@ export default {
                   }
                 }
               }),
-              h("Button", {
-                props: {
-                  type: "primary",
-                  size: "small",
-                  icon: "play"
-                },
-                style: {
-                  marginLeft: "5px"
-                },
-                on: {
-                  click: () => {
-                    this.$router.push({
-                      name: "process",
-                      params: {
-                        targetInfo: params.row,
-                        target_id: params.row.target_id
-                      }
-                    });
-                  }
-                }
-              }),
+              // h("Button", {
+              //   props: {
+              //     type: "primary",
+              //     size: "small",
+              //     icon: "play"
+              //   },
+              //   style: {
+              //     marginLeft: "5px"
+              //   },
+              //   on: {
+              //     click: () => {
+              //       this.$router.push({
+              //         name: "process",
+              //         params: {
+              //           targetInfo: params.row,
+              //           target_id: params.row.target_id
+              //         }
+              //       });
+              //     }
+              //   }
+              // }),
               h(
                 "a",
                 {
@@ -452,30 +452,30 @@ export default {
           width: 200,
           render: (h, params) => {
             return h("div", [
-              h("Button", {
-                props: {
-                  type: "primary",
-                  size: "small",
-                  icon: "pause"
-                },
+              // h("Button", {
+              //   props: {
+              //     type: "primary",
+              //     size: "small",
+              //     icon: "pause"
+              //   },
 
-                on: {
-                  click: () => {
-                    this.$router.push({
-                      name: "process",
-                      params: {
-                        targetInfo: params.row,
-                        target_id: params.row.target_id
-                      }
-                    });
-                  }
-                }
-              }),
+              //   on: {
+              //     click: () => {
+              //       this.$router.push({
+              //         name: "process",
+              //         params: {
+              //           targetInfo: params.row,
+              //           target_id: params.row.target_id
+              //         }
+              //       });
+              //     }
+              //   }
+              // }),
               h("Button", {
                 props: {
                   type: "primary",
                   size: "small",
-                  icon: "play"
+                  icon: "stop"
                 },
                 style: {
                   marginLeft: "5px"

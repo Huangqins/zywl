@@ -44,7 +44,7 @@
     </div>
     <div class="secTwo">
        <Row>
-        <Col span="11" >
+        <Col span="6" >
            <Card class="ym">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
@@ -60,7 +60,39 @@
               </ul>
           </Card>
         </Col>
-        <Col span="13" >
+        <Col span="6" >
+           <Card class="ym">
+              <p slot="title">
+                  <Icon type="ios-film-outline"></Icon>
+                任务信息
+              </p>
+              <ul>
+                  <li v-for="(item,index) in taskListItem" :key="index">
+                      {{ item.target_info_name }}
+                      <span>
+                          {{ item.target_info_des }}
+                      </span>
+                  </li>
+              </ul>
+          </Card>
+        </Col>
+        <Col span="6" >
+           <Card class="ym">
+              <p slot="title">
+                  <Icon type="ios-film-outline"></Icon>
+                任务信息
+              </p>
+              <ul>
+                  <li v-for="(item,index) in taskListItem" :key="index">
+                      {{ item.target_info_name }}
+                      <span>
+                          {{ item.target_info_des }}
+                      </span>
+                  </li>
+              </ul>
+          </Card>
+        </Col>
+        <Col span="6" >
           <Card class="ym">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
@@ -110,7 +142,7 @@
     </div>
     <div class="holetable">
       <Row>
-        <Col span="11" >
+        <Col span="8" >
              <Card style="min-height:240px">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
@@ -126,7 +158,23 @@
               </ul>
             </Card>
         </Col>
-        <Col span="13" >
+        <Col span="8" >
+             <Card style="min-height:240px">
+              <p slot="title">
+                  <Icon type="ios-film-outline"></Icon>
+                 发现主机
+              </p>
+              <ul>
+                  <li v-for="(item,index) in hostListItem" :key="index">
+                      {{ item.target_info_name }}
+                      <span style="color:red;">
+                           {{ item.target_info_des }}
+                      </span>
+                  </li>
+              </ul>
+            </Card>
+        </Col>
+        <Col span="8" >
            <Card >
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
@@ -700,7 +748,7 @@ export default {
             temp.push({
               value: task_status["11"],
               valueIndex: item,
-              symbolOffset: [0, "-70%"],
+              symbolOffset: [0, "-50%"],
               symbolSize: 30,
               symbol: "image://" + require(`./svg/${item}.svg`)
             });

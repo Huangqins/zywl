@@ -10,17 +10,14 @@
     </section>
       <section class="secOne">
             <div class="Aipicture">
-                 <!-- <span class="Aipicture_text">资源监控</span> -->
-                
-                 <!-- <span style="display:block;width:100%;height:91px;margin-top:5px"><img src="../../assets/num.jpg"/></span> -->
-                
+                 <!-- <span class="Aipicture_text">资源监控</span> -->                
+                 <!-- <span style="display:block;width:100%;height:91px;margin-top:5px"><img src="../../assets/num.jpg"/></span> -->                
                  <section style="height:80px;text-align:center;">
                    <div style="width:20%;height:80px;float:left"><img src="../../assets/assest.png" style="width:100%"/></div>
                    <div style="height:50%;width:80%;font-size:24px;line-height:50px;float:right;">{{assetsTotal}}</div>
                    <div style="height:50%;width:80%;font-size:15px;line-height:40px;float:right">资产数量</div>
                  </section>
-            </div>
-            
+            </div>            
             <div class="attack">
                  <!-- <span class="Aipicture_text">攻击Pyload</span> -->
                  <span class="pictrue" >
@@ -30,23 +27,22 @@
             <div class="asset">
                 <!-- <span class="Aipicture_text">资产情况</span> -->
                 <span class="pictrue">
-                 <Table :columns="assets" :data="assetsData" :height="300"></Table>
+                 <Table :columns="assets" :data="assetsData" ></Table>
                 </span>
             </div>              
       </section>
       <section class="secTwo">
             <div class="attackPic">
               <!-- <span style="background-color:#212636;font-size:20px;text-align:center;height:56px;line-height:56px;display:block;">攻击流向图</span> -->
-              <!-- <force :width="width"></force> -->
                <chart :option="forceOptions" height="485px" id="force" width="100%"></chart>
             </div>            
             <div class="preload" >
                <!-- <span class="Aipicture_text">预载信息工具集</span> -->
-               <Table :columns="taskData" :data="taskLists" :height="310" ></Table>      
+               <Table :columns="taskData" :data="taskLists" :height="280" ></Table>      
              </div> 
       </section>
       <section class="secThree">
-                    <section class="holeList" style="height:255px;">
+                  <section class="holeList" style="height:255px;">
                     <ul>
                         <li class="listOne">
                           <span class="holeHeader" style="font-family:sans-serif">漏洞排行</span>
@@ -71,7 +67,21 @@
                </section>
                 <section id="noheader">
                     <!-- <span class="Aipicture_text">主机风险情况</span> -->
-                    <Table :columns="vulns" :data="vulnsData" :height="310" ></Table>  
+                    <!-- <Table :columns="vulns" :data="vulnsData" :height="310" ></Table>   -->
+                    <div class="vulnList" style="height:295px;" id="box">
+                      <ul id="con1" ref="con1" :class="{anim:animate==true}">                       
+                          <li v-for="(item,index) in vulnsData" :key="index">   
+                            <span>{{item.vuln_name}}</span>                     
+                          <span>{{item.vuln_ftime.time}}</span>                        
+                          <span>{{item.vuln_level}}</span>
+                          </li>
+                      </ul>
+                    </div>
+                    <!-- <div id="box">
+                      <ul id="con1" ref="con1" :class="{anim:animate==true}">
+                        <li v-for='(item,index) in items' :key="index">{{item.name}}</li>
+                      </ul>
+                    </div> -->
                 </section>
       </section>
   </div>
@@ -81,7 +91,6 @@
 import $ from "jquery";
 import mind from "./mind";
 import countTo from 'vue-count-to';
-import force from "components/chart/force";
 import chart from "components/chart/chart";
 import assetsInfo from "api/assetsInfo";
 import { getUserName } from "@/utils/auth";
@@ -94,6 +103,7 @@ import assetTarget from "api/assetTarget";
 import getSystemType from "api/getSystemType";
 import "./homepage.js";
 import _ from "lodash";
+// import  "./scroll.js";
 const taskstatus = {
   "-2": "失败",
   "1": "完成",
@@ -109,13 +119,18 @@ const levelSchema = {
 };
 export default {
   components: {
-    force,
     chart,
     mind,
     countTo
   },
   data() {
     return {
+      animate:false,
+      items:[  //消息列表对应的数组
+        {name:"马云"},
+        {name:"雷军"},
+        {name:"王勤"}
+      ],
       startVal: 0,
       endVal: 100,
       assetsTotal: 0,
@@ -325,6 +340,7 @@ export default {
     };
   },
   mounted() {
+    setInterval(this.scroll,1000);
     this.assetsInfo(this.defaultPage);
     this.leaksInfo();
     this.vulntop();
@@ -341,6 +357,18 @@ export default {
       },5000)
   },
   methods: {
+    scroll(){
+      let con1 = this.$refs.con1;
+      con1.style.marginTop='-30px';
+      this.animate=!this.animate;
+      var that = this; // 在异步函数中会出现this的偏移问题，此处一定要先保存好this的指向
+      setTimeout(function(){
+          that.items.push(that.items[0]);
+          that.items.shift();
+          con1.style.marginTop='0px';
+          that.animate=!that.animate;  // 这个地方如果不把animate 取反会出现消息回滚的现象，此时把ul 元素的过渡属性取消掉就可以完美实现无缝滚动的效果了
+      },500)
+    },
     // 系统分类
     _getSystemType() {
       getSystemType({}).then(res => {
@@ -454,7 +482,7 @@ export default {
       taskList({ flag: 3 }).then(res => {
         let data = res.targets;
         if (data.length > 10) {
-          this.taskLists = data.slice(0, 10);
+          this.taskLists = data.slice(0, 10);          
         } else {
           this.taskLists = data;
         }
@@ -467,6 +495,9 @@ export default {
         let data = res.rows;
         if (data.length > 10) {
           this.vulnsData = data.slice(0, 10);
+          this.vulnsData.forEach(item => {
+            item.vuln_ftime.time=fomatterTime(new Date(item.vuln_ftime.time))
+          })
         } else {
           this.vulnsData = data;
         }
@@ -516,6 +547,7 @@ export default {
 };
 </script>
 <style scoped>
+
 .head {
   width: 100%;
   position: relative;
@@ -613,7 +645,7 @@ export default {
   display: block;
 }
 .asset {
-  height: 327px;
+  height: 297px;
   border: 1px solid #2b4e6f;
   margin: 0 0px 6px 0px;
 }
@@ -676,4 +708,49 @@ export default {
   font: bold 54px/75px "Arial";
   color: #ddf0ff;
 }
+/* top10排行榜样式 header*/
+#box{
+  overflow: hidden;
+  padding-left: 30px;
+  border: 1px solid black;
+  transition: all 0.5s;
+}
+.anim{
+  transition: all 0.5s;
+}
+#con1 li{
+  list-style: none;
+  line-height: 30px;
+  height: 30px;
+}
+ .vulnList {
+    width: 100%;
+    height: 100%;
+  }
+  .vulnList ul {
+    width: 100%;
+    height: auto;
+  }
+  .vulnList ul li {
+    list-style: none;
+    height: 23px;
+    font-size: 12px;
+    line-height: 23px;
+  }
+  .vulnList ul li:nth-child(12) {
+    border: none;
+  }
+  .vulnList ul li span{
+    text-align: center;
+    color: #fbfbfb;
+  }
+  .vulnList ul li span:nth-child(1) {
+    width: 53%;    
+  }
+  .vulnList ul li span:nth-child(2) {
+    width: 35%; 
+  }
+  .vulnList ul li span:nth-child(3) {
+    width: 10%; 
+  }
 </style>
