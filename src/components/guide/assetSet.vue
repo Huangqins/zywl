@@ -53,6 +53,8 @@ import getAssetURL from "api/getAssetURL";
 import deleteTask from "api/deleteTask";
 const strategy = { flag: 1 };
 const cycle = { flag: 2 };
+const host =
+  process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080" : "";
 //添加任务验证
 const taskStatus = {
   "0": "进行中",
@@ -270,7 +272,7 @@ export default {
                   attrs: {
                     type: "application/pdf",
                     href: params.row.export_url
-                      ? location.origin + "/ZY" + params.row.export_url
+                      ? host + params.row.export_url
                       : null,
                     download: params.row.pdf_name ? params.row.pdf_name : false
                   },
@@ -496,7 +498,7 @@ export default {
                   attrs: {
                     type: "application/pdf",
                     href: params.row.export_url
-                      ? location.origin + "/ZY" + params.row.export_url
+                      ? host + params.row.export_url
                       : null,
                     download: params.row.pdf_name ? params.row.pdf_name : false
                   },
@@ -774,6 +776,11 @@ export default {
             content: "资产填写有误或资产不存在"
           });
           this.loading = false;
+        } else if (res.result === -1) {
+           this.$Message.error({
+            content: "添加任务失败"
+          });
+           this.loading = false;
         } else {
           this.loading = false;
         }

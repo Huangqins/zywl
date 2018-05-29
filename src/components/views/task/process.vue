@@ -228,6 +228,13 @@ export default {
     percentChart
     // zhexiantu
   },
+  watch: {
+    $route(to, from) {
+      // 对路由变化作出响应...
+      console.log(to);
+      // this.getDataAll();
+    }
+  },
   data() {
     return {
       radar: true,
@@ -235,7 +242,7 @@ export default {
       name: "",
       percentOption: "",
       endtime: "",
-      tableHeight:"246",
+      tableHeight: "246",
       percent: 0, //伪进度最大为9
       scaning: 0, //任务阶段
       percentOption: {
@@ -406,14 +413,13 @@ export default {
         {
           title: "风险名称",
           key: "vuln_name",
-          align: "left",
-          
+          align: "left"
         },
         {
           title: "风险类型",
           key: "kb_vuln_class",
           align: "left",
-          width:140
+          width: 140
         },
         {
           title: "风险等级",
@@ -421,7 +427,6 @@ export default {
           align: "center",
           width: 100,
           render: (h, params) => {
-            console.log(params)
             return h("img", {
               attrs: {
                 src: require(`assets/${params.row.vuln_level}.png`),
@@ -442,7 +447,6 @@ export default {
               fomatterTime(new Date(params.row.vuln_ftime.time))
             );
           }
-
         },
         {
           title: "操作",
@@ -458,7 +462,6 @@ export default {
                 },
                 on: {
                   click: () => {
-                    // console.log(params.row)
                     this.$router.push({
                       name: "vulndetail",
                       params: {
@@ -637,23 +640,26 @@ export default {
     this.taskListItem.forEach(item => {
       item.target_info_des = taskInfo[item.target_info_key];
     });
-    this._targetProgress();
-    this._targetNum();
-    this._targetLesk();
-    this._urlUseRate();
-    this._getAssetsHost();
-    this.timer = setInterval(() => {
+    this.getDataAll()
+  },
+  methods: {
+    getDataAll() {
       this._targetProgress();
       this._targetNum();
       this._targetLesk();
       this._urlUseRate();
       this._getAssetsHost();
-    }, 5000);
-  },
-  methods: {
-    rowClassName (row) {       
-           return 'demo-table-error-row';        
-     },
+      this.timer = setInterval(() => {
+        this._targetProgress();
+        this._targetNum();
+        this._targetLesk();
+        this._urlUseRate();
+        this._getAssetsHost();
+      }, 5000);
+    },
+    rowClassName(row) {
+      return "demo-table-error-row";
+    },
     dataLoad(paramsObj) {
       const params = Object.assign({}, this.defaultPage, paramsObj);
     },
@@ -784,7 +790,7 @@ export default {
       });
     }
   },
-  destroyed() {
+  beforeDestroy() {
     clearInterval(this.timer);
   }
 };
@@ -891,7 +897,7 @@ export default {
   max-height: 145px;
   overflow: auto;
 }
-.scrollUl ul li{
+.scrollUl ul li {
   margin: 5px 0;
 }
 .high {
@@ -930,8 +936,8 @@ export default {
   line-height: 30px;
 }
 
-.ivu-table .demo-table-error-row td{
-        background-color: red;
-        color: #fff;
+.ivu-table .demo-table-error-row td {
+  background-color: red;
+  color: #fff;
 }
 </style>

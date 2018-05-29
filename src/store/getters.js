@@ -5,6 +5,7 @@ const getters = {
     isTry: state => state.user.isTry,
     model: state => state.user.model,
     visitedViews: state => state.tagsView.visitedViews,
+    taskInfo: state => state.task.taskInfo
 }
 
 export default getters

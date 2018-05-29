@@ -97,7 +97,7 @@
 
 .ivu-table-body {
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: hidden;
     /* overflow: auto; */
 }
 

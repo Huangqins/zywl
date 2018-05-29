@@ -49,6 +49,14 @@ export default {
     //   this.chart.resize();
     // });
   },
+  beforeDestroy() {
+    if (this.chart) {
+      this.chart.clear()
+      this.chart.dispose()
+      // window.removeEventListener("resize", () => {
+      //   console.log('成功')
+    }
+  },
   methods: {
     init() {
       this.chart = this.$echarts.init(document.getElementById(this.id));
