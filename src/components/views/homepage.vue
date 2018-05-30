@@ -340,7 +340,8 @@ export default {
     };
   },
   mounted() {
-    setInterval(this.scroll,1000);
+     let con1 = this.$refs.con1;
+    setInterval(this.scroll(con1),1000);
     this.assetsInfo(this.defaultPage);
     this.leaksInfo();
     this.vulntop();
@@ -357,8 +358,8 @@ export default {
       },5000)
   },
   methods: {
-    scroll(){
-      let con1 = this.$refs.con1;
+    scroll(con1){
+      // let con1 = this.$refs.con1;
       con1.style.marginTop='-30px';
       this.animate=!this.animate;
       var that = this; // 在异步函数中会出现this的偏移问题，此处一定要先保存好this的指向
