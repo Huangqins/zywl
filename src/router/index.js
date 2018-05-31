@@ -279,7 +279,7 @@ const router = new VueRouter({
           //任务进度需要任务Id进入
           meta: {
             menuCode: "10",
-            title: '任务进度'
+            title: ''
           },
           name: 'process',
           path: 'process/:target_id',

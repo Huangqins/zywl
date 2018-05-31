@@ -37,7 +37,7 @@ export default {
     },
   methods: {
     isActive(route) {
-      return route.path === this.$route.path || route.name === this.$route.name;
+      return route.path === this.$route.path 
     },
     closeSelectedTag(view) {
       this.$store.dispatch("delVisitedViews", view).then(views => {

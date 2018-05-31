@@ -223,7 +223,9 @@ export default {
     $route(to, from) {
       // 对路由变化作出响应...
       console.log(to);
-      // this.getDataAll();
+      console.log('路由已切换');
+      this.getDataAll();
+      clearInterval(this.timer);
     }
   },
   data() {
@@ -635,29 +637,29 @@ export default {
     }
   },
   created() {
-    const storage = window.localStorage;
-    let taskInfo = {};
-    if (this.$route.params.targetInfo) {
-      storage.setItem(
-        "taskInfo",
-        JSON.stringify(this.$route.params.targetInfo)
-      );
-    }
-    taskInfo = JSON.parse(storage.getItem("taskInfo"));
-    taskInfo.target_startTime = fomatterTime(
-      new Date(taskInfo.target_starttime.time)
-    );
-    this.name = taskInfo.target_name;
+    // const storage = window.localStorage;
+    // let taskInfo = {};
+    // if (this.$route.params.targetInfo) {
+    //   storage.setItem(
+    //     "taskInfo",
+    //     JSON.stringify(this.$route.params.targetInfo)
+    //   );
+    // }
+    // taskInfo = JSON.parse(storage.getItem("taskInfo"));
+    // taskInfo.target_startTime = fomatterTime(
+    //   new Date(taskInfo.target_starttime.time)
+    // );
+    // this.name = taskInfo.target_name;
 
-    taskInfo.target_endTime = taskInfo.target_endtime
-      ? fomatterTime(new Date(taskInfo.target_endtime.time))
-      : "";
-    this.endtime = taskInfo.target_endTime;
-    this.starttime = fomatterTime(new Date(taskInfo.target_starttime.time));
-    this.taskListItem.forEach(item => {
-      item.target_info_des = `${taskInfo[item.target_info_key]}`;
-    });
-    this.getDataAll()
+    // taskInfo.target_endTime = taskInfo.target_endtime
+    //   ? fomatterTime(new Date(taskInfo.target_endtime.time))
+    //   : "";
+    // this.endtime = taskInfo.target_endTime;
+    // this.starttime = fomatterTime(new Date(taskInfo.target_starttime.time));
+    // this.taskListItem.forEach(item => {
+    //   item.target_info_des = taskInfo[item.target_info_key];
+    // });
+    this.getDataAll();
   },
   methods: {
     getDataAll() {
@@ -680,12 +682,19 @@ export default {
     dataLoad(paramsObj) {
       const params = Object.assign({}, this.defaultPage, paramsObj);
     },
+
     /**
      * 任务执行进度
      * params: target_id 来源$route.query.target_id
      */
     _targetProgress() {
-      const params = { target_id: this.$route.params.target_id };
+      
+      let params = 0;
+      if (this.$route.params.target_id) {
+        params = { target_id: this.$route.params.target_id };
+      } else {
+        console.log(this.$route);
+      }
       targetProgress(params).then(res => {
         if (res.result === 0) {
           let scaning;
@@ -699,7 +708,10 @@ export default {
           if (target_struts === "1") {
             this.percentOption = `100%`;
             this.radar = false;
+            console.log('结束啊')
+           
             clearInterval(this.timer);
+             this.timer = null;
           } else if (target_struts === "-2") {
             this.$Message.error(`目标进度确立失败`);
             this.percentOption = `0%`;
@@ -830,7 +842,23 @@ export default {
       });
     }
   },
+  beforeRouteEnter(to, from, next) {
+    console.log(to, to.params.targetInfo);
+    if(to.params.targetInfo) {
+      to.meta.title = to.params.targetInfo.target_name;
+    } else {
+      to.meta.title = to.meta.title;
+    }
+    // if (!to.params.targetInfo.target_name) {
+    //   to.meta.title = to.meta.title;
+    // } else {
+    //   to.meta.title = to.params.targetInfo.target_name;
+    // }
+
+    next();
+  },
   beforeDestroy() {
+    console.log("离开");
     clearInterval(this.timer);
   }
 };
