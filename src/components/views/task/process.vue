@@ -60,20 +60,7 @@
               </ul>
           </Card>
         </Col>
-        <Col span="6" >
-           <Card class="ym">
-              <p slot="title">
-                  <Icon type="ios-film-outline"></Icon>
-                敏感信息
-              </p>
-              <ul class="scrollUl">
-                  <li v-for="(item,index) in target_sensitive_info" :key="index">                     
-                      <span v-html="item.target_info_des">                        
-                      </span>
-                  </li>
-              </ul>
-          </Card>
-        </Col>
+        
         <Col span="6" >
              <Card class="ym">
               <p slot="title">
@@ -95,6 +82,20 @@
               </p>
               <ul class="scrollUl">
                   <li v-for="(item,index) in domain_info" :key="index">                     
+                      <span v-html="item.target_info_des">                        
+                      </span>
+                  </li>
+              </ul>
+          </Card>
+        </Col>
+        <Col span="6" >
+           <Card class="ym">
+              <p slot="title">
+                  <Icon type="ios-film-outline"></Icon>
+                敏感信息
+              </p>
+              <ul class="scrollUl">
+                  <li v-for="(item,index) in target_sensitive_info" :key="index">                     
                       <span v-html="item.target_info_des">                        
                       </span>
                   </li>
@@ -189,6 +190,10 @@ const levelSchema = {
   "1": "assets/1.png",
   "0": "assets/0.png"
 };
+// const response_info_pic = {
+//   "up": "assets/up.png",
+//   "down":"assets/down.png"
+// };
 const host =
   process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
 // const host = process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
@@ -276,11 +281,11 @@ export default {
       vuln_Num: "",
       vuln_rate: "",
       taskListItem: [
-        {
-          target_info_key: "target_name",
-          target_info_name: "任务名称",
-          target_info_des: 0
-        },
+        // {
+        //   target_info_key: "target_name",
+        //   target_info_name: "任务名称",
+        //   target_info_des: 0
+        // },
         {
           target_info_key: "target_url",
           target_info_name: "任务目标",
@@ -304,7 +309,10 @@ export default {
         {
           target_info_key: "response_info",
           target_info_name: "可响应",
-          target_info_des: 0
+          target_info_des: 0,
+          // render: (h, params) => {
+          //   return h("", `${response_info_pic[params.row.response_info]}`);
+          // }
         }
       ],
       //域名信息
@@ -636,7 +644,6 @@ export default {
       );
     }
     taskInfo = JSON.parse(storage.getItem("taskInfo"));
-    console.log(taskInfo)
     taskInfo.target_startTime = fomatterTime(
       new Date(taskInfo.target_starttime.time)
     );
@@ -648,7 +655,7 @@ export default {
     this.endtime = taskInfo.target_endTime;
     this.starttime = fomatterTime(new Date(taskInfo.target_starttime.time));
     this.taskListItem.forEach(item => {
-      item.target_info_des = taskInfo[item.target_info_key];
+      item.target_info_des = `${taskInfo[item.target_info_key]}`;
     });
     this.getDataAll()
   },
@@ -726,6 +733,13 @@ export default {
           // this.$refs.completionRate.refresh();
           this.domain_info.forEach(item => {
             item.target_info_des = res.target[item.target_info_key];
+          });
+          //主机信息
+          this.taskListItem.forEach(item => {
+            item.target_info_des = res.target[item.target_info_key];
+            // if(item.target_info_des==="up"){
+            //       item.target_info_des=response_info_pic[item.target_info_des]
+            // }
           });
           //端口信息
           this.target_port_info.forEach(item => {
