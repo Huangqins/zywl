@@ -599,9 +599,13 @@ export default {
                               target_id: params.row.target_id,
                               target_name: this.fileName
                             }).then(res => {
+                              this.fileName = ''
+                              this.companyName = ''
                               if (res.result === 0) {
                                 this._taskList(this.params);
                                 ev.target.innerText = "下载";
+                              }else if (res.result === 2) {
+                                this.$Message.info(`无数据`)
                               } else {
                                 ev.target.innerText = "生成";
                               }

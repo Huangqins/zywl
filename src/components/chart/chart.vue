@@ -49,8 +49,8 @@ export default {
     if (this.chart) {
       this.chart.clear()
       this.chart.dispose()
-      // window.removeEventListener("resize", () => {
-      //   console.log('成功')
+      window.removeEventListener("resize", () => {
+        console.log('成功')})
     }
   },
   methods: {
