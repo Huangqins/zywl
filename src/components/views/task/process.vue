@@ -48,7 +48,7 @@
            <Card class="ym">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
-                任务信息
+                主机信息
               </p>
               <ul>
                   <li v-for="(item,index) in taskListItem" :key="index">
@@ -66,32 +66,27 @@
                   <Icon type="ios-film-outline"></Icon>
                 敏感信息
               </p>
-              <ul>
-                  <!-- <li v-for="(item,index) in taskListItem" :key="index">
-                      {{ item.target_info_name }}
-                      <span>
-                          {{ item.target_info_des }}
+              <ul class="scrollUl">
+                  <li v-for="(item,index) in target_sensitive_info" :key="index">                     
+                      <span v-html="item.target_info_des">                        
                       </span>
-                  </li> -->
+                  </li>
               </ul>
           </Card>
         </Col>
         <Col span="6" >
-           <Card class="ym">
+             <Card class="ym">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
-                利用情况
+                 端口信息
               </p>
-              <ul>
-                  <!-- <li v-for="(item,index) in taskListItem" :key="index">
-                      {{ item.target_info_name }}
-                      <span>
-                          {{ item.target_info_des }}
-                      </span>
-                  </li> -->
+              <ul class="scrollUl">
+                  <li v-for="(item,index) in target_port_info" :key="index">                     
+                      <div v-html="item.target_info_des"></div>
+                  </li>
               </ul>
-          </Card>
-        </Col>
+            </Card>
+        </Col>        
         <Col span="6" >
           <Card class="ym">
               <p slot="title">
@@ -107,56 +102,25 @@
           </Card>
         </Col>
       </Row>
-      <!-- <section>
-          <Card >
-              <p slot="title">
-                  <Icon type="ios-film-outline"></Icon>
-                任务信息
-              </p>
-              <ul>
-                  <li v-for="(item,index) in taskListItem" :key="index">
-                      {{ item.target_info_name }}
-                      <span>
-                          {{ item.target_info_des }}
-                      </span>
-                  </li>
-              </ul>
-          </Card>
-      </section>
-      <section>
-          <Card >
-              <p slot="title">
-                  <Icon type="ios-film-outline"></Icon>
-                  域名信息
-              </p>
-              <ul class="scrollUl">
-                  <li v-for="(item,index) in domain_info" :key="index">
-                     
-                      <span v-html="item.target_info_des">
-                        
-                      </span>
-                  </li>
-              </ul>
-          </Card>
-      </section> -->
+     
     </div>
     <div class="holetable">
       <Row>
         <Col span="6" >
-             <Card style="min-height:240px">
+           <Card style="min-height:240px">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
-                 端口信息
+                利用情况
               </p>
               <ul>
-                  <!-- <li v-for="(item,index) in hostListItem" :key="index">
+                  <!-- <li v-for="(item,index) in taskListItem" :key="index">
                       {{ item.target_info_name }}
-                      <span style="color:red;">
-                           {{ item.target_info_des }}
+                      <span>
+                          {{ item.target_info_des }}
                       </span>
                   </li> -->
               </ul>
-            </Card>
+          </Card>
         </Col>
         <Col span="9" >
              <Card style="min-height:240px">
@@ -185,32 +149,6 @@
             </Card>
         </Col>
     </Row>
-      <!-- <section>
-        <Card>
-              <p slot="title">
-                  <Icon type="ios-film-outline"></Icon>
-                 发现主机
-              </p>
-              <ul>
-                  <li v-for="(item,index) in hostListItem" :key="index">
-                      {{ item.target_info_name }}
-                      <span style="color:red;">
-                           {{ item.target_info_des }}
-                      </span>
-                  </li>
-              </ul>
-        </Card>
-      </section>
-      <section class="task">
-          <Card >
-              <p slot="title">
-                  <Icon type="ios-film-outline"></Icon>
-                 风险信息
-              </p>
-                <page class="table" max-height="100px" :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page>
-            
-            </Card>
-      </section> -->
     </div>
   </div>
 </template>
@@ -361,15 +299,38 @@ export default {
           target_info_des: 0
         },
         {
-          target_info_key: "target_s",
+          target_info_key: "application_service",
+          target_info_name: "应用服务",
+          target_info_des: 0
+        },
+        {
+          target_info_key: "response_info",
           target_info_name: "可响应",
           target_info_des: 0
         }
       ],
+      //域名信息
       domain_info: [
         {
           target_info_key: "target_domain_info",
           target_info_name: "域名信息",
+          target_info_des: ""
+        }
+      ],
+      //端口信息
+      target_port_info: [
+        {
+          target_info_key: "port_info",
+          target_info_name: "",
+          target_info_des: ""
+        }
+      ],
+      portinfoCopy:[],
+      //敏感信息
+      target_sensitive_info: [
+        {
+          target_info_key: "sensitive_info",
+          target_info_name: "",
           target_info_des: ""
         }
       ],
@@ -776,6 +737,22 @@ export default {
           // this.$refs.completionRate.refresh();
           this.domain_info.forEach(item => {
             item.target_info_des = res.target[item.target_info_key];
+          });
+          //端口信息
+          this.target_port_info.forEach(item => {
+            let temp = ''
+            item.target_info_des = res.target[item.target_info_key];
+            temp =  item.target_info_des.split('</br>')
+            item.target_info_des = temp.map(i => {
+              // i = `<span style='color:red'>${i}</span>`
+              if (i.indexOf('open') > 0) {
+                return `<span style='background: green;display:inline-block;width:100%;margin-bottom:4px;'>${i}</span>`
+              } else if (i.indexOf('filtered') > 0) {
+                return `<span style='background:red;display:inline-block;width:100%;margin-bottom:4px;'>${i}</span>`
+              }
+            }).join('</br>')
+            // item.target_info_des = temp
+            // console.log(temp)
           });
         } else {
           this.option.series[0].data[0].value = 0;
