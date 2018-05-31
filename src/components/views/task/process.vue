@@ -53,8 +53,8 @@
               <ul>
                   <li v-for="(item,index) in taskListItem" :key="index">
                       {{ item.target_info_name }}
-                      <span>
-                          {{ item.target_info_des }}
+                      <span v-html="item.target_info_des">
+                         
                       </span>
                   </li>
               </ul>
@@ -107,22 +107,7 @@
     </div>
     <div class="holetable">
       <Row>
-        <Col span="6" >
-           <Card style="min-height:240px">
-              <p slot="title">
-                  <Icon type="ios-film-outline"></Icon>
-                利用情况
-              </p>
-              <ul>
-                  <!-- <li v-for="(item,index) in taskListItem" :key="index">
-                      {{ item.target_info_name }}
-                      <span>
-                          {{ item.target_info_des }}
-                      </span>
-                  </li> -->
-              </ul>
-          </Card>
-        </Col>
+        
         <Col span="9" >
              <Card style="min-height:240px">
               <p slot="title">
@@ -149,6 +134,22 @@
             
             </Card>
         </Col>
+        <Col span="6" >
+           <Card style="min-height:240px">
+              <p slot="title">
+                  <Icon type="ios-film-outline"></Icon>
+                利用情况
+              </p>
+              <ul>
+                  <!-- <li v-for="(item,index) in taskListItem" :key="index">
+                      {{ item.target_info_name }}
+                      <span>
+                          {{ item.target_info_des }}
+                      </span>
+                  </li> -->
+              </ul>
+          </Card>
+        </Col>
     </Row>
     </div>
   </div>
@@ -167,6 +168,7 @@ import getAssetsHost from "api/getAssetsHost";
 import percentChart from "./percentChart";
 import ld from "./ld.css";
 
+
 let now = new Date();
 let year = now.getFullYear();
 let month = now.getMonth();
@@ -183,17 +185,17 @@ let times =
 //   "1": "低风险",
 //   "0": "无风险"
 // };
-const levelSchema = {
-  "4": "assets/4.png",
-  "3": "assets/3.png",
-  "2": "assets/2.png",
-  "1": "assets/1.png",
-  "0": "assets/0.png"
-};
-// const response_info_pic = {
-//   "up": "assets/up.png",
-//   "down":"assets/down.png"
+// const levelSchema = {
+//   "4": "assets/4.png",
+//   "3": "assets/3.png",
+//   "2": "assets/2.png",
+//   "1": "assets/1.png",
+//   "0": "assets/0.png"
 // };
+const response_info_pic = {
+  "up":`<Icon type="checkmark-circled"></Icon>`,
+  "down":`<Icon type="close-circled"></Icon>`
+};
 const host =
   process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
 // const host = process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
@@ -302,19 +304,16 @@ export default {
           target_info_key: "target_t",
           target_info_name: "识别技术",
           target_info_des: 0
+        },        
+        {
+          target_info_key: "response_info",
+          target_info_name: "可响应",
+          target_info_des: 0         
         },
         {
           target_info_key: "application_service",
           target_info_name: "应用服务",
           target_info_des: 0
-        },
-        {
-          target_info_key: "response_info",
-          target_info_name: "可响应",
-          target_info_des: 0,
-          // render: (h, params) => {
-          //   return h("", `${response_info_pic[params.row.response_info]}`);
-          // }
         }
       ],
       //域名信息
@@ -749,9 +748,9 @@ export default {
           //主机信息
           this.taskListItem.forEach(item => {
             item.target_info_des = res.target[item.target_info_key];
-            // if(item.target_info_des==="up"){
-            //       item.target_info_des=response_info_pic[item.target_info_des]
-            // }
+            if(item.target_info_des==="up"){
+                  item.target_info_des=`${response_info_pic[item.target_info_des]}`
+            }
           });
           //端口信息
           this.target_port_info.forEach(item => {
@@ -843,7 +842,6 @@ export default {
     }
   },
   beforeRouteEnter(to, from, next) {
-    console.log(to, to.params.targetInfo);
     if(to.params.targetInfo) {
       to.meta.title = to.params.targetInfo.target_name;
     } else {
@@ -858,7 +856,6 @@ export default {
     next();
   },
   beforeDestroy() {
-    console.log("离开");
     clearInterval(this.timer);
   }
 };
