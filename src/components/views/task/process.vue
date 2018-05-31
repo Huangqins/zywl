@@ -64,15 +64,15 @@
            <Card class="ym">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
-                任务信息
+                敏感信息
               </p>
               <ul>
-                  <li v-for="(item,index) in taskListItem" :key="index">
+                  <!-- <li v-for="(item,index) in taskListItem" :key="index">
                       {{ item.target_info_name }}
                       <span>
                           {{ item.target_info_des }}
                       </span>
-                  </li>
+                  </li> -->
               </ul>
           </Card>
         </Col>
@@ -80,15 +80,15 @@
            <Card class="ym">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
-                任务信息
+                利用情况
               </p>
               <ul>
-                  <li v-for="(item,index) in taskListItem" :key="index">
+                  <!-- <li v-for="(item,index) in taskListItem" :key="index">
                       {{ item.target_info_name }}
                       <span>
                           {{ item.target_info_des }}
                       </span>
-                  </li>
+                  </li> -->
               </ul>
           </Card>
         </Col>
@@ -142,11 +142,27 @@
     </div>
     <div class="holetable">
       <Row>
-        <Col span="8" >
+        <Col span="6" >
              <Card style="min-height:240px">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
-                 发现主机
+                 端口信息
+              </p>
+              <ul>
+                  <!-- <li v-for="(item,index) in hostListItem" :key="index">
+                      {{ item.target_info_name }}
+                      <span style="color:red;">
+                           {{ item.target_info_des }}
+                      </span>
+                  </li> -->
+              </ul>
+            </Card>
+        </Col>
+        <Col span="9" >
+             <Card style="min-height:240px">
+              <p slot="title">
+                  <Icon type="ios-film-outline"></Icon>
+                 发现新资源
               </p>
               <ul>
                   <li v-for="(item,index) in hostListItem" :key="index">
@@ -158,23 +174,7 @@
               </ul>
             </Card>
         </Col>
-        <Col span="8" >
-             <Card style="min-height:240px">
-              <p slot="title">
-                  <Icon type="ios-film-outline"></Icon>
-                 发现主机
-              </p>
-              <ul>
-                  <li v-for="(item,index) in hostListItem" :key="index">
-                      {{ item.target_info_name }}
-                      <span style="color:red;">
-                           {{ item.target_info_des }}
-                      </span>
-                  </li>
-              </ul>
-            </Card>
-        </Col>
-        <Col span="8" >
+        <Col span="9" >
            <Card >
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
@@ -938,8 +938,8 @@ export default {
   color: #fbfbfb;
 }
 .ivu-card {
-  width: 95%;
-  margin: 22px auto;
+  /* width: 95%; */
+  margin: 22px 10px;
 }
 .scrollUl {
   max-height: 145px;

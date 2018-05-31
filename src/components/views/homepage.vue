@@ -27,7 +27,7 @@
             <div class="asset">
                 <!-- <span class="Aipicture_text">资产情况</span> -->
                 <span class="pictrue">
-                 <Table :columns="assets" :data="assetsData" ></Table>
+                 <Table :columns="assets" :data="assetsData" :height="255" ></Table>
                 </span>
             </div>              
       </section>
@@ -38,7 +38,7 @@
             </div>            
             <div class="preload" >
                <!-- <span class="Aipicture_text">预载信息工具集</span> -->
-               <Table :columns="taskData" :data="taskLists" :height="280" ></Table>      
+               <Table :columns="taskData" :data="taskLists" :height="255" ></Table>      
              </div> 
       </section>
       <section class="secThree">
@@ -68,7 +68,7 @@
                 <section id="noheader">
                     <!-- <span class="Aipicture_text">主机风险情况</span> -->
                     <!-- <Table :columns="vulns" :data="vulnsData" :height="310" ></Table>   -->
-                    <div class="vulnList" style="height:295px;" id="box">
+                    <div class="vulnList" style="height:270px;" id="box">
                       <ul id="con1" ref="con1" :class="{anim:animate==true}">                       
                           <li v-for="(item,index) in vulnsData" :key="index">   
                             <span>{{item.vuln_name}}</span>                     
@@ -645,7 +645,7 @@ export default {
   display: block;
 }
 .asset {
-  height: 297px;
+  /* height: 297px; */
   border: 1px solid #2b4e6f;
   margin: 0 0px 6px 0px;
 }
