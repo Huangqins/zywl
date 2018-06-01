@@ -115,7 +115,7 @@
     <div class="holetable">
       <Row>
         
-        <Col span="9" >
+        <Col span="6" >
              <Card style="max-height:335px">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
@@ -131,7 +131,7 @@
               </ul>
             </Card>
         </Col>
-        <Col span="9" >
+        <Col span="12" >
            <Card style="max-height:335px;">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
@@ -439,13 +439,13 @@ export default {
           title: "风险类型",
           key: "kb_vuln_class",
           align: "left",
-          width: 140
+          width: 160
         },
         {
           title: "风险等级",
           key: "vuln_level",
           align: "center",
-          width: 75,
+          width: 85,
           render: (h, params) => {
             return h("img", {
               attrs: {
@@ -460,7 +460,7 @@ export default {
           title: "发现时间",
           key: "vuln_ftime",
           align: "center",
-          width: 155,
+          width: 165,
           render: (h, params) => {
             return h(
               "span",
@@ -471,7 +471,7 @@ export default {
         {
           title: "操作",
           align: "center",
-          width: 50,
+          width: 60,
           render: (h, params) => {
             return h("div", [
               h("Button", {
