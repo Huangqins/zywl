@@ -55,10 +55,10 @@
                   <li v-for="(item,index) in taskListItem" :key="index">
                       {{ item.target_info_name }}
                       <span v-if="item.target_info_des === 'up'">
-                       <Icon type="checkmark-circled"></Icon>
+                       <Icon type="checkmark-circled" ></Icon>
                       </span>
                       <span v-else-if="item.target_info_des === 'down'">
-                        <Icon type="close-circled"></Icon>
+                        <Icon type="close-circled" ></Icon>
                       </span>
                       <span v-else>
                         {{ item.target_info_des }} 
@@ -198,10 +198,6 @@ let times =
 //   "1": "assets/1.png",
 //   "0": "assets/0.png"
 // };
-const response_info_pic = {
-  up: `<Icon type="checkmark-circled"></Icon>`,
-  down: `<Icon type="close-circled"></Icon>`
-};
 const host =
   process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
 // const host = process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
@@ -449,7 +445,7 @@ export default {
           title: "风险等级",
           key: "vuln_level",
           align: "center",
-          width: 100,
+          width: 90,
           render: (h, params) => {
             return h("img", {
               attrs: {
@@ -464,7 +460,7 @@ export default {
           title: "发现时间",
           key: "vuln_ftime",
           align: "center",
-          width: 200,
+          width: 160,
           render: (h, params) => {
             return h(
               "span",
