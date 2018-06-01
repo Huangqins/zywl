@@ -50,11 +50,18 @@
                   <Icon type="ios-film-outline"></Icon>
                 主机信息
               </p>
+
               <ul>
                   <li v-for="(item,index) in taskListItem" :key="index">
                       {{ item.target_info_name }}
-                      <span v-html="item.target_info_des">
-                         
+                      <span v-if="item.target_info_des === 'up'">
+                       <Icon type="checkmark-circled"></Icon>
+                      </span>
+                      <span v-else-if="item.target_info_des === 'down'">
+                        <Icon type="close-circled"></Icon>
+                      </span>
+                      <span v-else>
+                        {{ item.target_info_des }} 
                       </span>
                   </li>
               </ul>
@@ -168,7 +175,6 @@ import getAssetsHost from "api/getAssetsHost";
 import percentChart from "./percentChart";
 import ld from "./ld.css";
 
-
 let now = new Date();
 let year = now.getFullYear();
 let month = now.getMonth();
@@ -193,8 +199,8 @@ let times =
 //   "0": "assets/0.png"
 // };
 const response_info_pic = {
-  "up":`<Icon type="checkmark-circled"></Icon>`,
-  "down":`<Icon type="close-circled"></Icon>`
+  up: `<Icon type="checkmark-circled"></Icon>`,
+  down: `<Icon type="close-circled"></Icon>`
 };
 const host =
   process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
@@ -225,7 +231,7 @@ export default {
     $route(to, from) {
       // 对路由变化作出响应...
       console.log(to);
-      console.log('路由已切换');
+      console.log("路由已切换");
       this.getDataAll();
       clearInterval(this.timer);
     }
@@ -304,11 +310,11 @@ export default {
           target_info_key: "target_t",
           target_info_name: "识别技术",
           target_info_des: 0
-        },        
+        },
         {
           target_info_key: "response_info",
           target_info_name: "可响应",
-          target_info_des: 0         
+          target_info_des: 0
         },
         {
           target_info_key: "application_service",
@@ -332,7 +338,7 @@ export default {
           target_info_des: ""
         }
       ],
-      portinfoCopy:[],
+      portinfoCopy: [],
       //敏感信息
       target_sensitive_info: [
         {
@@ -687,7 +693,6 @@ export default {
      * params: target_id 来源$route.query.target_id
      */
     _targetProgress() {
-      
       let params = 0;
       if (this.$route.params.target_id) {
         params = { target_id: this.$route.params.target_id };
@@ -707,10 +712,10 @@ export default {
           if (target_struts === "1") {
             this.percentOption = `100%`;
             this.radar = false;
-            console.log('结束啊')
-           
+            console.log("结束啊");
+
             clearInterval(this.timer);
-             this.timer = null;
+            this.timer = null;
           } else if (target_struts === "-2") {
             this.$Message.error(`目标进度确立失败`);
             this.percentOption = `0%`;
@@ -746,25 +751,30 @@ export default {
             item.target_info_des = res.target[item.target_info_key];
           });
           //主机信息
+
           this.taskListItem.forEach(item => {
+            console.log(res.target[item.target_info_key]);
             item.target_info_des = res.target[item.target_info_key];
-            if(item.target_info_des==="up"){
-                  item.target_info_des=`${response_info_pic[item.target_info_des]}`
-            }
+            // if(item.target_info_des==="up"){
+            // item.target_info_des=`${response_info_pic[item.target_info_des]}`
+            // }
           });
+          console.log(this.taskListItem);
           //端口信息
           this.target_port_info.forEach(item => {
-            let temp = ''
+            let temp = "";
             item.target_info_des = res.target[item.target_info_key];
-            temp =  item.target_info_des.split('</br>')
-            item.target_info_des = temp.map(i => {
-              // i = `<span style='color:red'>${i}</span>`
-              if (i.indexOf('open') > 0) {
-                return `<span style='background: green;display:inline-block;width:100%;margin-bottom:4px;'>${i}</span>`
-              } else if (i.indexOf('filtered') > 0) {
-                return `<span style='background:red;display:inline-block;width:100%;margin-bottom:4px;'>${i}</span>`
-              }
-            }).join('</br>')
+            temp = item.target_info_des.split("</br>");
+            item.target_info_des = temp
+              .map(i => {
+                // i = `<span style='color:red'>${i}</span>`
+                if (i.indexOf("open") > 0) {
+                  return `<span style='background: green;display:inline-block;width:100%;margin-bottom:4px;'>${i}</span>`;
+                } else if (i.indexOf("filtered") > 0) {
+                  return `<span style='background:red;display:inline-block;width:100%;margin-bottom:4px;'>${i}</span>`;
+                }
+              })
+              .join("</br>");
             // item.target_info_des = temp
             // console.log(temp)
           });
@@ -842,7 +852,7 @@ export default {
     }
   },
   beforeRouteEnter(to, from, next) {
-    if(to.params.targetInfo) {
+    if (to.params.targetInfo) {
       to.meta.title = to.params.targetInfo.target_name;
     } else {
       to.meta.title = to.meta.title;
