@@ -43,14 +43,14 @@ export default {
   },
   mounted() {
     this.init();
-    this.resize()
+    this.resize();
   },
   beforeDestroy() {
     if (this.chart) {
       this.chart.clear()
       this.chart.dispose()
-      window.removeEventListener("resize", () => {
-        console.log('成功')})
+      // window.removeEventListener("resize", () => {
+      //   console.log('成功')})
     }
   },
   methods: {
@@ -74,9 +74,11 @@ export default {
       this.chart.hideLoading();
     },
     resize() {
-      window.addEventListener("resize", () => {
+      if (this.chart) {
+         window.addEventListener("resize", () => {
         this.chart.resize();
       });
+      }
     }
   }
 };

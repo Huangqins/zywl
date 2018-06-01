@@ -443,19 +443,20 @@ export default {
           title: "风险类型",
           key: "kb_vuln_class",
           align: "left",
-          width: 140
+          // width: 140
         },
         {
           title: "风险等级",
           key: "vuln_level",
           align: "center",
-          width: 100,
+          width: 80,
           render: (h, params) => {
             return h("img", {
               attrs: {
                 src: require(`assets/${params.row.vuln_level}.png`),
                 width: "48px",
-                height: "6px"
+                height: "6px",
+                textAlign: 'center'
               }
             });
           }
