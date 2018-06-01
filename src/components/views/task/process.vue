@@ -89,7 +89,7 @@
               </p>
               <ul class="scrollUl">
                   <li v-for="(item,index) in domain_info" :key="index">                     
-                      <span v-html="item.target_info_des">                        
+                      <span v-html="item.target_info_des" style="width:100%">                        
                       </span>
                   </li>
               </ul>
@@ -116,7 +116,7 @@
       <Row>
         
         <Col span="9" >
-             <Card style="min-height:240px">
+             <Card style="max-height:335px">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                  发现新资源
@@ -132,17 +132,17 @@
             </Card>
         </Col>
         <Col span="9" >
-           <Card >
+           <Card style="max-height:335px;">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                  风险信息
               </p>
-                <page class="table" :rowClassName="rowClassName" :height="tableHeight" :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page>
+              <page class="vuletables" :rowClassName="rowClassName" :height="tableHeight" :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page>
             
             </Card>
         </Col>
         <Col span="6" >
-           <Card style="min-height:240px">
+           <Card style="max-height:335px">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                 利用情况
@@ -239,7 +239,7 @@ export default {
       name: "",
       percentOption: "",
       endtime: "",
-      tableHeight: "246",
+      tableHeight: "219",
       percent: 0, //伪进度最大为9
       scaning: 0, //任务阶段
       percentOption: {
@@ -445,14 +445,14 @@ export default {
           title: "风险等级",
           key: "vuln_level",
           align: "center",
-          width: 90,
+          width: 75,
           render: (h, params) => {
             return h("img", {
               attrs: {
                 src: require(`assets/${params.row.vuln_level}.png`),
                 width: "48px",
                 height: "6px"
-              }
+              }     
             });
           }
         },
@@ -460,7 +460,7 @@ export default {
           title: "发现时间",
           key: "vuln_ftime",
           align: "center",
-          width: 160,
+          width: 155,
           render: (h, params) => {
             return h(
               "span",
@@ -708,8 +708,6 @@ export default {
           if (target_struts === "1") {
             this.percentOption = `100%`;
             this.radar = false;
-            console.log("结束啊");
-
             clearInterval(this.timer);
             this.timer = null;
           } else if (target_struts === "-2") {
@@ -743,19 +741,14 @@ export default {
           this.linechart.xAxis.data = ret;
           this.$refs.linechart.refresh();
           // this.$refs.completionRate.refresh();
+          //域名信息
           this.domain_info.forEach(item => {
             item.target_info_des = res.target[item.target_info_key];
           });
           //主机信息
-
           this.taskListItem.forEach(item => {
-            console.log(res.target[item.target_info_key]);
             item.target_info_des = res.target[item.target_info_key];
-            // if(item.target_info_des==="up"){
-            // item.target_info_des=`${response_info_pic[item.target_info_des]}`
-            // }
           });
-          console.log(this.taskListItem);
           //端口信息
           this.target_port_info.forEach(item => {
             let temp = "";
@@ -771,8 +764,6 @@ export default {
                 }
               })
               .join("</br>");
-            // item.target_info_des = temp
-            // console.log(temp)
           });
         } else {
           this.option.series[0].data[0].value = 0;
