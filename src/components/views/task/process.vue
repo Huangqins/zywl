@@ -55,10 +55,10 @@
                   <li v-for="(item,index) in taskListItem" :key="index">
                       {{ item.target_info_name }}
                       <span v-if="item.target_info_des === 'up'">
-                       <Icon type="checkmark-circled"></Icon>
+                       <Icon type="checkmark-circled" ></Icon>
                       </span>
                       <span v-else-if="item.target_info_des === 'down'">
-                        <Icon type="close-circled"></Icon>
+                        <Icon type="close-circled" ></Icon>
                       </span>
                       <span v-else>
                         {{ item.target_info_des }} 
@@ -89,7 +89,7 @@
               </p>
               <ul class="scrollUl">
                   <li v-for="(item,index) in domain_info" :key="index">                     
-                      <span v-html="item.target_info_des">                        
+                      <span v-html="item.target_info_des" style="width:100%">                        
                       </span>
                   </li>
               </ul>
@@ -115,8 +115,8 @@
     <div class="holetable">
       <Row>
         
-        <Col span="9" >
-             <Card style="min-height:240px">
+        <Col span="6" >
+             <Card style="max-height:335px">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                  发现新资源
@@ -131,18 +131,18 @@
               </ul>
             </Card>
         </Col>
-        <Col span="9" >
-           <Card >
+        <Col span="12" >
+           <Card style="max-height:335px;">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                  风险信息
               </p>
-                <page class="table" :rowClassName="rowClassName" :height="tableHeight" :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page>
+              <page class="vuletables" :rowClassName="rowClassName" :height="tableHeight" :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page>
             
             </Card>
         </Col>
         <Col span="6" >
-           <Card style="min-height:240px">
+           <Card style="max-height:335px">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                 利用情况
@@ -198,10 +198,6 @@ let times =
 //   "1": "assets/1.png",
 //   "0": "assets/0.png"
 // };
-const response_info_pic = {
-  up: `<Icon type="checkmark-circled"></Icon>`,
-  down: `<Icon type="close-circled"></Icon>`
-};
 const host =
   process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
 // const host = process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
@@ -243,7 +239,7 @@ export default {
       name: "",
       percentOption: "",
       endtime: "",
-      tableHeight: "246",
+      tableHeight: "219",
       percent: 0, //伪进度最大为9
       scaning: 0, //任务阶段
       percentOption: {
@@ -443,21 +439,20 @@ export default {
           title: "风险类型",
           key: "kb_vuln_class",
           align: "left",
-          // width: 140
+          width: 160
         },
         {
           title: "风险等级",
           key: "vuln_level",
           align: "center",
-          width: 80,
+          width: 85,
           render: (h, params) => {
             return h("img", {
               attrs: {
                 src: require(`assets/${params.row.vuln_level}.png`),
                 width: "48px",
-                height: "6px",
-                textAlign: 'center'
-              }
+                height: "6px"
+              }     
             });
           }
         },
@@ -465,7 +460,7 @@ export default {
           title: "发现时间",
           key: "vuln_ftime",
           align: "center",
-          width: 200,
+          width: 165,
           render: (h, params) => {
             return h(
               "span",
@@ -476,7 +471,7 @@ export default {
         {
           title: "操作",
           align: "center",
-          width: 50,
+          width: 60,
           render: (h, params) => {
             return h("div", [
               h("Button", {
@@ -713,8 +708,6 @@ export default {
           if (target_struts === "1") {
             this.percentOption = `100%`;
             this.radar = false;
-            console.log("结束啊");
-
             clearInterval(this.timer);
             this.timer = null;
           } else if (target_struts === "-2") {
@@ -748,19 +741,14 @@ export default {
           this.linechart.xAxis.data = ret;
           this.$refs.linechart.refresh();
           // this.$refs.completionRate.refresh();
+          //域名信息
           this.domain_info.forEach(item => {
             item.target_info_des = res.target[item.target_info_key];
           });
           //主机信息
-
           this.taskListItem.forEach(item => {
-            console.log(res.target[item.target_info_key]);
             item.target_info_des = res.target[item.target_info_key];
-            // if(item.target_info_des==="up"){
-            // item.target_info_des=`${response_info_pic[item.target_info_des]}`
-            // }
           });
-          console.log(this.taskListItem);
           //端口信息
           this.target_port_info.forEach(item => {
             let temp = "";
@@ -776,8 +764,6 @@ export default {
                 }
               })
               .join("</br>");
-            // item.target_info_des = temp
-            // console.log(temp)
           });
         } else {
           this.option.series[0].data[0].value = 0;
