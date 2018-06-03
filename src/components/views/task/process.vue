@@ -303,7 +303,7 @@ export default {
           target_info_des: 0
         },
         {
-          target_info_key: "target_t",
+          target_info_key: "discern_info",
           target_info_name: "识别技术",
           target_info_des: 0
         },
@@ -383,50 +383,6 @@ export default {
         {
           title: "利用时间",
           key: "date"
-        }
-      ],
-      taskInfoesList: [
-        {
-          name: "John Brown",
-          date: "2016-10-03"
-        },
-        {
-          name: "John Brown",
-          date: "2016-10-03"
-        },
-        {
-          name: "John Brown",
-          date: "2016-10-03"
-        },
-        {
-          name: "John Brown",
-          date: "2016-10-03"
-        }
-      ],
-      taskInfosList: [
-        {
-          name: "John Brown",
-          age: 18,
-          address: "New York No. 1 Lake Park",
-          date: "2016-10-03"
-        },
-        {
-          name: "Jim Green",
-          age: 24,
-          address: "London No. 1 Lake Park",
-          date: "2016-10-01"
-        },
-        {
-          name: "Joe Black",
-          age: 30,
-          address: "Sydney No. 1 Lake Park",
-          date: "2016-10-02"
-        },
-        {
-          name: "Jon Snow",
-          age: 26,
-          address: "Ottawa No. 2 Lake Park",
-          date: "2016-10-04"
         }
       ],
       assetsColums: [
@@ -649,14 +605,13 @@ export default {
     // taskInfo = JSON.parse(storage.getItem("taskInfo"));
     // taskInfo.target_startTime = fomatterTime(
     //   new Date(taskInfo.target_starttime.time)
-    // );
+    // );    
+    // this.starttime = fomatterTime(new Date(taskInfo.target_starttime.time));
     // this.name = taskInfo.target_name;
-
     // taskInfo.target_endTime = taskInfo.target_endtime
     //   ? fomatterTime(new Date(taskInfo.target_endtime.time))
     //   : "";
     // this.endtime = taskInfo.target_endTime;
-    // this.starttime = fomatterTime(new Date(taskInfo.target_starttime.time));
     // this.taskListItem.forEach(item => {
     //   item.target_info_des = taskInfo[item.target_info_key];
     // });
@@ -705,6 +660,13 @@ export default {
           }
           let target_struts = res.target.target_struts;
           let target_rftime = res.target.target_rftime;
+          this.name = res.target.target_name;
+          this.endtime=res.target.target_endtime =
+           res.target.target_endtime ? fomatterTime(new Date(res.target.target_endtime.time)): "";
+         
+          this.starttime=res.target.target_starttime = 
+          res.target.target_starttime ? fomatterTime(new Date(res.target.target_starttime.time)):"";    
+         
           if (target_struts === "1") {
             this.percentOption = `100%`;
             this.radar = false;
@@ -796,6 +758,7 @@ export default {
       leaksInfo(params).then(res => {
         if (res.result === 0) {
           this.assetsList = res.rows;
+         
           // this.domain_info.forEach(item => {
           //   item.target_info_des = taskInfo[item.target_info_key];
           // });
