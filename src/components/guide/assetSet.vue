@@ -643,7 +643,8 @@ export default {
                 props: {
                   type: "error",
                   size: "small",
-                  icon: "trash-a"
+                  icon: "trash-a",
+                  disabled: params.row.target_struts === '1' ? true : false
                 },
                 style: {
                   marginLeft: "5px"

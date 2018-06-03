@@ -43,7 +43,9 @@ export default {
   },
   mounted() {
     this.init();
-    this.resize();
+     if (this.chart) {
+          this.resize();
+        }
   },
   beforeDestroy() {
     if (this.chart) {
