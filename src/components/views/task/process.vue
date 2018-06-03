@@ -113,25 +113,24 @@
      
     </div>
     <div class="holetable">
-      <Row>
-        
+      <Row>        
         <Col span="6" >
              <Card style="max-height:335px">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                  发现新资源
               </p>
-              <ul>
+              <ul class="newList">
                   <li v-for="(item,index) in hostListItem" :key="index">
                       {{ item.target_info_name }}
-                      <span style="color:red;">
+                      <span style="color:#19A15F;">
                            {{ item.target_info_des }}
                       </span>
                   </li>
               </ul>
             </Card>
         </Col>
-        <Col span="12" >
+        <Col span="10" >
            <Card style="max-height:335px;">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
@@ -141,20 +140,21 @@
             
             </Card>
         </Col>
-        <Col span="6" >
+        <Col span="8" >
            <Card style="max-height:335px">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                 利用情况
               </p>
-              <ul>
-                  <!-- <li v-for="(item,index) in taskListItem" :key="index">
+               <page class="vuletables" :height="tableHeight" :columns="userinfo" :data="userinfoList"  :loading="loading" :width="width"></page>
+              <!-- <ul>
+                  <li v-for="(item,index) in userinfoList" :key="index">
                       {{ item.target_info_name }}
                       <span>
                           {{ item.target_info_des }}
                       </span>
-                  </li> -->
-              </ul>
+                  </li>
+              </ul> -->
           </Card>
         </Col>
     </Row>
@@ -169,6 +169,7 @@ import { mapGetters } from "vuex";
 import timeLine from "api/timeLine";
 import leaksInfo from "api/leaksInfo";
 import targetProgress from "api/targetProgress";
+import vulnUseInfo from "api/VulnUseInfo";
 import urlUseRate from "api/urlUseRate";
 import fomatterTime from "@/utils/tool";
 import getAssetsHost from "api/getAssetsHost";
@@ -452,6 +453,49 @@ export default {
           }
         }
       ],
+      userinfo:[
+        {
+          title: "漏洞链接",
+          key: "vuln_URL",
+          align: "left"
+        },
+        {
+          title: "利用类型",
+          key: "vuln_use_type",
+          align: "left"
+        },
+         
+         {
+          title: "操作",
+          align: "center",
+          width: 60,
+          render: (h, params) => {
+            return h("div", [
+              h("Button", {
+                props: {
+                  type: "primary",
+                  size: "small",
+                  icon: "search"
+                },
+                on: {
+                  click: () => {
+                    this.$router.push({
+                      name: "userinfodetail",
+                      params: {
+                        target_id: params.row.target_id,
+                        image_path: params.row.image_path,
+                        vuln_useInfo: params.row.vuln_useInfo,
+                        vuln_URL:params.row.vuln_URL
+                      }
+                    });
+                  }
+                }
+              })
+            ]);
+          }
+        }
+      ],
+      userinfoList:[],
       taskInfo: [],
       timer: "",
       //折线图
@@ -624,6 +668,7 @@ export default {
       this._targetLesk();
       this._urlUseRate();
       this._getAssetsHost();
+      this._vulnUseInfo();
       this.timer = setInterval(() => {
         this._targetProgress();
         this._targetNum();
@@ -638,7 +683,29 @@ export default {
     dataLoad(paramsObj) {
       const params = Object.assign({}, this.defaultPage, paramsObj);
     },
-
+    //风险利用情况
+    _vulnUseInfo(params, next){
+     let param = 0;
+      if (this.$route.params.target_id) {
+        param = { target_id: this.$route.params.target_id };
+      } else {
+        console.log(this.$route);
+      }
+      vulnUseInfo(param).then(res =>{
+        this.userinfoList=res.vulns;
+       
+        if (next) {
+            this.$router.push({
+              name: "userinfodetail",
+              params: {
+                image_path: res.vulns[0].image_path,
+                vuln_useInfo: res.vulns[0].vuln_useInfo,
+                vuln_id:res.vulns[0].vuln_id
+              }               
+            });
+          }
+      })
+    },
     /**
      * 任务执行进度
      * params: target_id 来源$route.query.target_id
@@ -720,7 +787,7 @@ export default {
               .map(i => {
                 // i = `<span style='color:red'>${i}</span>`
                 if (i.indexOf("open") > 0) {
-                  return `<span style='background: green;display:inline-block;width:100%;margin-bottom:4px;'>${i}</span>`;
+                  return `<span style='background: #19A15F;display:inline-block;width:100%;margin-bottom:4px;'>${i}</span>`;
                 } else if (i.indexOf("filtered") > 0) {
                   return `<span style='background:#FFCE43;display:inline-block;width:100%;margin-bottom:4px;'>${i}</span>`;
                 } else if(i.indexOf("close") > 0){
@@ -856,6 +923,11 @@ export default {
 .ivu-input {
   text-align: right;
 }
+.table .holetable .newList {
+  max-height: 214px;
+  overflow: auto;
+  padding:0px 8px 4px 8px;
+ }
 .taskSchedule {
   /* color: #e4e5e5; */
   display: flex;

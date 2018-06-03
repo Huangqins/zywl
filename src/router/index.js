@@ -161,6 +161,11 @@ const Apimanage = (resolve) => {
     resolve(module)
   })
 }
+const Userinfodetail = (resolve) => {
+  import ('components/views/task/userinfodetail').then(module => {
+    resolve(module)
+  })
+}
 const router = new VueRouter({
   // mode: 'history',
   routes: [{
@@ -355,6 +360,15 @@ const router = new VueRouter({
           name: "vulndetail",
           path: 'vulndetail',
           component: Vulndetail
+        },
+        {
+          meta: {
+            menuCode: "14",
+            title: '漏洞利用详情'
+          },
+          name: "userinfodetail",
+          path: 'userinfodetail',
+          component: Userinfodetail
         },
         {
           meta: {
