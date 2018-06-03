@@ -49,14 +49,14 @@ export default {
         },
         {
           target_info_key: "device",
-          target_info_name: "授权设备:",
+          target_info_name: "授权设备码:",
           target_info_des: 0
         },
-        {
-          target_info_key: "hardware",
-          target_info_name: "硬件码:",
-          target_info_des: 0
-        },
+        // {
+        //   target_info_key: "hardware",
+        //   target_info_name: "硬件码:",
+        //   target_info_des: 0
+        // },
         {
           target_info_key: "version",
           target_info_name: "序列号:",
