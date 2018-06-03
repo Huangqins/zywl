@@ -298,8 +298,8 @@ export default {
           target_info_des: 0
         },
         {
-          target_info_key: "target_oa",
-          target_info_name: "操作系统",
+          target_info_key: "target_ip",
+          target_info_name: "IP地址",
           target_info_des: 0
         },
         {
@@ -722,6 +722,8 @@ export default {
                 if (i.indexOf("open") > 0) {
                   return `<span style='background: green;display:inline-block;width:100%;margin-bottom:4px;'>${i}</span>`;
                 } else if (i.indexOf("filtered") > 0) {
+                  return `<span style='background:#FFCE43;display:inline-block;width:100%;margin-bottom:4px;'>${i}</span>`;
+                } else if(i.indexOf("close") > 0){
                   return `<span style='background:red;display:inline-block;width:100%;margin-bottom:4px;'>${i}</span>`;
                 }
               })
