@@ -133,7 +133,7 @@ export default {
      
     },
     cancel() {
-      this.$router.push({ path: "/homepage" }); //点击取消跳到大首页
+      this.$router.push({ path: "/mainpage/homepage" }); //点击取消跳到大首页
     },
     asyncOK(formItem) {
       this.formItem.userName = getUserName();

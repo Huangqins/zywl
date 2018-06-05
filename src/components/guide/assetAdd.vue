@@ -130,7 +130,6 @@ export default {
   methods: {
     assetSubmit() {
       // this.$router.push({ path: "/sysInfo" });
-      this.handAddForm.assets_creatuser = this.userName;
       if (this.tab === "handler") {
         this.$refs.handAdd.validate(valid => {
           if (valid) {

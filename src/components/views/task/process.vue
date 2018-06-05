@@ -1,56 +1,67 @@
 <template>
   <div class="table">
-    <div class="taskSchedule" >
-      <section style="margin:20px 10px 20px 80px;">
-        <div :class="{ radar: radar, radarCopy: radarCopy }"></div>
-        <div class="radar_right">
-          <ul>
-            <li>任务名称: &nbsp; &nbsp;{{name}}</li>
-            <li>完成率: &nbsp; &nbsp;&nbsp; &nbsp;{{percentOption}}</li>
-            <li>开始时间: &nbsp; &nbsp;{{starttime}}</li>
-            <li>结束时间: &nbsp; &nbsp;{{endtime}}</li>
-          </ul>
-        </div>
-        <!-- <chart width="235px" height="235px" :option="option" id="completionRate" ref="completionRate"></chart> -->
-        <!-- <percent-chart :option="percentOption"></percent-chart> -->
-      </section>
-      <section class="circle">
-        <!-- <chart width="235px" height="235px" :option="optipnTwo" id="taskholeNum" ref="taskholeNum"></chart> -->
-        <span class="middle"></span>
-        <div class="Num yell">
-          <div  class="vuln_num">
-            {{vuln_Num}}
-          </div>
-          <div class="vuln_text">
-            <p>任务漏洞量</p>
-          </div> 
-          </div>
-      </section>
-      <section class="circle">
-        <span class="low"></span>
-        <div class="Num blu" >
-          <div class="vuln_num">
-             {{vuln_rate}}
-          </div>
-          <div class="vuln_text">漏洞利用率</div>
-        </div>
-        <!-- <chart width="235px" height="235px" :option="optionthree" id="holeUtilization" ref='holeUtilization'></chart> -->
-      </section>
+    <div class="target_left" style="width:75%;float:left">
+        <div class="taskSchedule" >
+              <section style="margin:20px 10px 20px 80px;flex:1.5;">
+                <div :class="{ radar: radar, radarCopy: radarCopy }"></div>
+                <div class="radar_right">
+                  <ul>
+                    <li>任务名称: &nbsp; &nbsp;{{name}}</li>
+                    <li>完成率: &nbsp; &nbsp;&nbsp; &nbsp;{{percentOption}}</li>
+                    <li>开始时间: &nbsp; &nbsp;{{starttime}}</li>
+                    <li>结束时间: &nbsp; &nbsp;{{endtime}}</li>
+                    <li>历时: &nbsp; &nbsp;{{taskTime}}</li>
+                  </ul>
+                </div>
+                <!-- <chart width="235px" height="235px" :option="option" id="completionRate" ref="completionRate"></chart> -->
+                <!-- <percent-chart :option="percentOption"></percent-chart> -->
+              </section>
+              <section class="circle">
+                <!-- <chart width="235px" height="235px" :option="optipnTwo" id="taskholeNum" ref="taskholeNum"></chart> -->
+                <span class="middle"></span>
+                <div class="Num yell">
+                  <div  class="vuln_num">
+                    {{vuln_Num}}
+                  </div>
+                  <div class="vuln_text">
+                    <p>任务漏洞量</p>
+                  </div> 
+                  </div>
+              </section>
+              <section class="circle">
+                <span class="low"></span>
+                <div class="Num blu" >
+                  <div class="vuln_num">
+                    {{vuln_rate}}
+                  </div>
+                  <div class="vuln_text">漏洞利用率</div>
+                </div>
+              </section>
+            </div>
+            <div class="timeProcess">
+              <section>
+                <chart  height="160px" width="95%" :option="linechart"  ref="linechart"></chart>
+              </section>
+            </div>
     </div>
-    <div class="timeProcess">
-      <section>
-        <chart  height="160px" width="100%" :option="linechart"  ref="linechart"></chart>
-      </section>
+    <div class="target_right" style="width:25%;float:left">
+            <section class="newdata">
+                <ul id="con1">                       
+                    <li v-for="(item,index) in targetlogData" :key="index">                       
+                      <div style="color:white;background:#182434;">{{item.operation_source}}</div>
+                    </li>
+                </ul>
+            </section>
     </div>
+<div style="clear:both"></div>
     <div class="secTwo">
        <Row>
         <Col span="6" >
            <Card class="ym">
-              <p slot="title">
+              <!-- <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                 主机信息
-              </p>
-
+              </p> -->
               <ul>
                   <li v-for="(item,index) in taskListItem" :key="index">
                       {{ item.target_info_name }}
@@ -67,26 +78,12 @@
               </ul>
           </Card>
         </Col>
-        
-        <Col span="6" >
-             <Card class="ym">
-              <p slot="title">
-                  <Icon type="ios-film-outline"></Icon>
-                 端口信息
-              </p>
-              <ul class="scrollUl">
-                  <li v-for="(item,index) in target_port_info" :key="index">                     
-                      <div v-html="item.target_info_des"></div>
-                  </li>
-              </ul>
-            </Card>
-        </Col>        
         <Col span="6" >
           <Card class="ym">
-              <p slot="title">
+              <!-- <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                   域名信息
-              </p>
+              </p> -->
               <ul class="scrollUl">
                   <li v-for="(item,index) in domain_info" :key="index">                     
                       <span v-html="item.target_info_des" style="width:100%">                        
@@ -94,43 +91,56 @@
                   </li>
               </ul>
           </Card>
-        </Col>
+        </Col>        
         <Col span="6" >
-           <Card class="ym">
-              <p slot="title">
+             <Card class="ym">
+              <!-- <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
-                敏感信息
-              </p>
+                 端口信息
+              </p> -->
               <ul class="scrollUl">
-                  <li v-for="(item,index) in target_sensitive_info" :key="index">                     
-                      <span v-html="item.target_info_des">                        
-                      </span>
+                  <li v-for="(item,index) in target_port_info" :key="index">                     
+                      <div v-html="item.target_info_des"></div>
                   </li>
               </ul>
-          </Card>
-        </Col>
-      </Row>
-     
-    </div>
-    <div class="holetable">
-      <Row>        
+            </Card>
+        </Col>        
+        
         <Col span="6" >
-             <Card style="max-height:335px">
-              <p slot="title">
+             <Card style="height:182px">
+              <!-- <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                  发现新资源
-              </p>
-              <ul class="newList">
+              </p> -->
+              <ul class="newList" style="max-height: 151px; overflow: auto;">
                   <li v-for="(item,index) in hostListItem" :key="index">
                       {{ item.target_info_name }}
-                      <span style="color:#19A15F;">
+                      <span style="color:#19A15F;margin-right:2px;">
                            {{ item.target_info_des }}
                       </span>
                   </li>
               </ul>
             </Card>
         </Col>
-        <Col span="10" >
+      </Row>     
+    </div>
+    <div class="holetable">
+      <Row>  
+        <Col span="6" >
+           <Card  style="max-height:385px;">
+              <p slot="title">
+                  <Icon type="ios-film-outline"></Icon>
+                敏感信息
+              </p>
+              <ul class="scrollUl" style="max-height:220px;padding:0px 12px;">
+                  <li v-for="(item,index) in target_sensitive_info" :key="index">                     
+                      <span style="width:100%">{{item}}</span>
+                  </li>
+              </ul>
+          </Card>
+        </Col>      
+        
+        <Col span="9" >
            <Card style="max-height:335px;">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
@@ -140,21 +150,13 @@
             
             </Card>
         </Col>
-        <Col span="8" >
+        <Col span="9" >
            <Card style="max-height:335px">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                 利用情况
               </p>
                <page class="vuletables" :height="tableHeight" :columns="userinfo" :data="userinfoList"  :loading="loading" :width="width"></page>
-              <!-- <ul>
-                  <li v-for="(item,index) in userinfoList" :key="index">
-                      {{ item.target_info_name }}
-                      <span>
-                          {{ item.target_info_des }}
-                      </span>
-                  </li>
-              </ul> -->
           </Card>
         </Col>
     </Row>
@@ -169,6 +171,7 @@ import { mapGetters } from "vuex";
 import timeLine from "api/timeLine";
 import leaksInfo from "api/leaksInfo";
 import targetProgress from "api/targetProgress";
+import getTargetLog from "api/TargetLog";
 import vulnUseInfo from "api/VulnUseInfo";
 import urlUseRate from "api/urlUseRate";
 import fomatterTime from "@/utils/tool";
@@ -185,22 +188,21 @@ let minute = now.getMinutes();
 let sec = now.getSeconds();
 let times =
   year + "-" + month + "-" + day + " " + hours + ":" + minute + ":" + sec;
-// const levelSchema = {
-//   "4": "紧急风险",
-//   "3": "高风险",
-//   "2": "中风险",
-//   "1": "低风险",
-//   "0": "无风险"
-// };
-// const levelSchema = {
-//   "4": "assets/4.png",
-//   "3": "assets/3.png",
-//   "2": "assets/2.png",
-//   "1": "assets/1.png",
-//   "0": "assets/0.png"
-// };
+export function formatTime(timestamp) {
+  let sec = 1000, // 秒
+    min = sec * 60, // 分
+    hour = min * 60, // 时
+    day = hour * 24, // 天
+    days = Math.floor(timestamp / day),
+    hours = Math.floor((timestamp - days * day) / hour),
+    mins = Math.floor((timestamp - (days * day + hours * hour)) / min),
+    secs = Math.floor(
+      (timestamp - (days * day + hours * hour + mins * min)) / sec
+    );
+  return `${days}天${hours}小时${mins}分钟${secs}秒`;
+}
 const host =
-  process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
+  process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080" : "";
 // const host = process.env.NODE_ENV === "development" ? "http://192.168.10.175/ZY" : "";
 
 const task_status = {
@@ -240,9 +242,11 @@ export default {
       name: "",
       percentOption: "",
       endtime: "",
+      taskTime:'',
       tableHeight: "219",
       percent: 0, //伪进度最大为9
       scaning: 0, //任务阶段
+      targetlogData:[],
       percentOption: {
         title: {
           text: "0%",
@@ -338,11 +342,11 @@ export default {
       portinfoCopy: [],
       //敏感信息
       target_sensitive_info: [
-        {
-          target_info_key: "sensitive_info",
-          target_info_name: "",
-          target_info_des: ""
-        }
+        // {
+        //   target_info_key: "sensitive_info",
+        //   target_info_name: "",
+        //   target_info_des: ""
+        // }
       ],
       hostListItem: [],
       formCustom: {},
@@ -470,6 +474,7 @@ export default {
           align: "center",
           width: 60,
           render: (h, params) => {
+            console.log(params.row.image_path)
             return h("div", [
               h("Button", {
                 props: {
@@ -483,7 +488,7 @@ export default {
                       name: "userinfodetail",
                       params: {
                         target_id: params.row.target_id,
-                        image_path: params.row.image_path,
+                        image_path:params.row.image_path = params.row.image_path==="" ? "":host+params.row.image_path,
                         vuln_useInfo: params.row.vuln_useInfo,
                         vuln_URL:params.row.vuln_URL
                       }
@@ -662,6 +667,7 @@ export default {
     this.getDataAll();
   },
   methods: {
+   
     getDataAll() {
       this._targetProgress();
       this._targetNum();
@@ -669,19 +675,39 @@ export default {
       this._urlUseRate();
       this._getAssetsHost();
       this._vulnUseInfo();
+      this._getTargetLog()
       this.timer = setInterval(() => {
         this._targetProgress();
         this._targetNum();
         this._targetLesk();
         this._urlUseRate();
         this._getAssetsHost();
-      }, 5000);
+        this._vulnUseInfo();
+      }, 10000);
+      this.timers=setInterval(() => {        
+        this._getTargetLog()
+      },1000)
     },
     rowClassName(row) {
       return "demo-table-error-row";
     },
     dataLoad(paramsObj) {
       const params = Object.assign({}, this.defaultPage, paramsObj);
+    },
+    //任务日志列表
+    _getTargetLog(){
+     let params = 0;
+      if (this.$route.params.target_id) {
+        params = { target_id: this.$route.params.target_id };
+      } else {
+        console.log(this.$route);
+      }
+     getTargetLog(params).then(res =>{
+          let data=res.targets;
+          this.targetlogData=data
+         
+         console.log(this.targetlogData)
+     })
     },
     //风险利用情况
     _vulnUseInfo(params, next){
@@ -692,8 +718,7 @@ export default {
         console.log(this.$route);
       }
       vulnUseInfo(param).then(res =>{
-        this.userinfoList=res.vulns;
-       
+        this.userinfoList=res.vulns;       
         if (next) {
             this.$router.push({
               name: "userinfodetail",
@@ -725,15 +750,19 @@ export default {
           } else {
             scaning = [];
           }
+          let s="";
           let target_struts = res.target.target_struts;
           let target_rftime = res.target.target_rftime;
           this.name = res.target.target_name;
+          this.taskTime = formatTime((res.target.target_endtime ? res.target.target_endtime.time : new Date().getTime()) - res.target.target_starttime.time);
           this.endtime=res.target.target_endtime =
            res.target.target_endtime ? fomatterTime(new Date(res.target.target_endtime.time)): "";
          
           this.starttime=res.target.target_starttime = 
-          res.target.target_starttime ? fomatterTime(new Date(res.target.target_starttime.time)):"";    
-         
+          res.target.target_starttime ? fomatterTime(new Date(res.target.target_starttime.time)):"";
+
+          //console.log(this.starttime)
+           
           if (target_struts === "1") {
             this.percentOption = `100%`;
             this.radar = false;
@@ -778,6 +807,9 @@ export default {
           this.taskListItem.forEach(item => {
             item.target_info_des = res.target[item.target_info_key];
           });
+          //敏感信息
+          this.target_sensitive_info = res.target.sensitive_info.split('<br/>')
+          
           //端口信息
           this.target_port_info.forEach(item => {
             let temp = "";
@@ -886,10 +918,66 @@ export default {
   },
   beforeDestroy() {
     clearInterval(this.timer);
+    clearInterval(this.timers);
   }
 };
 </script>
 <style scoped>
+
+/* top10排行榜样式 header*/
+#box{
+  overflow: hidden;
+  padding-left: 30px;
+  border: 1px solid black;
+  transition: all 0.5s;
+}
+.anim{
+  transition: all 0.5s;
+}
+#con1 li{
+  list-style: none;
+  line-height: 24px;
+  height: 24px;
+  padding:5px  8px 5px 8px;
+}
+ .vulnList {
+    width: 100%;
+    height:270px;
+  }
+  .vulnList ul {
+    width: 100%;
+    height: auto;
+  }
+  .vulnList ul li {
+    list-style: none;
+    height: 23px;
+    font-size: 12px;
+    line-height: 23px;
+  }
+  .vulnList ul li:nth-child(12) {
+    border: none;
+  }
+  .vulnList ul li span{
+    text-align: center;
+    color: #fbfbfb;
+  }
+  .vulnList ul li span:nth-child(1) {
+    width: 53%;    
+  }
+  .vulnList ul li span:nth-child(2) {
+    width: 35%; 
+  }
+  .vulnList ul li span:nth-child(3) {
+    width: 10%; 
+  }
+.newdata{
+  height: 254px;
+  border: 1px solid #e4e5e5;
+  margin-top: 20px;
+  border-radius: 3px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
 .vuln_num {
   width: 100%;
   height: 50px;
@@ -938,7 +1026,7 @@ export default {
 .circle {
   border: 1px solid #e4e5e5;
   border-radius: 3px;
-  margin: 20px 100px 20px;
+  margin: 20px 10px 20px 10px;
 }
 .taskSchedule section {
   flex: 1;

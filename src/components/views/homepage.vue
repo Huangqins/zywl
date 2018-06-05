@@ -4,9 +4,16 @@
       <mind></mind>
         <span class="smp" >
           <!-- <div id="dataNums"> </div> -->
-          <countTo :startVal='startVal' :endVal='endVal' :duration='3000'></countTo>
-          </span>
-       <span></span>
+          <!-- <countTo :startVal='startVal' :endVal='endVal' :duration='3000'></countTo> -->
+        </span>
+        <div class="we">
+         <div style="color:#EA4A1F;flex:1; border-right: 1px solid #ffff;padding-right: 8px;">ZYVE</div>
+         <div style="color:white;flex:2;text-align:center;">{{zyve}}</div>
+       </div>
+       <div class="cnvd">
+         <div style="color:red;flex:1; border-right: 1px solid #ffff;padding-right: 8px;">CNVD</div>
+         <div style="color:white;flex:2;text-align:center;">{{cvnd}}</div>
+       </div>
     </section>
       <section class="secOne">
             <div class="Aipicture">
@@ -68,7 +75,7 @@
                 <section id="noheader">
                     <!-- <span class="Aipicture_text">主机风险情况</span> -->
                     <!-- <Table :columns="vulns" :data="vulnsData" :height="310" ></Table>   -->
-                    <div class="vulnList" style="height:270px;" id="box">
+                    <div class="vulnList" id="box">
                       <ul id="con1" ref="con1" :class="{anim:animate==true}">                       
                           <li v-for="(item,index) in vulnsData" :key="index">   
                             <span>{{item.vuln_name}}</span>                     
@@ -96,6 +103,7 @@ import assetsInfo from "api/assetsInfo";
 import { getUserName } from "@/utils/auth";
 import leaksInfo from "api/leaksInfo";
 import vulnTop from "api/vulnTop";
+import cvndNum from "api/cvndNum";
 import vulntype from "api/vulntype";
 import fomatterTime from "@/utils/tool";
 import taskList from "api/taskList";
@@ -125,6 +133,8 @@ export default {
   },
   data() {
     return {
+      cvnd:'',
+      zyve:'',
       animate:false,
       items:[  //消息列表对应的数组
         {name:"马云"},
@@ -340,10 +350,12 @@ export default {
     };
   },
   mounted() {
+    this._cvndNum();
      let con1 = this.$refs.con1;
     setInterval(this.scroll(con1),1000);
     this.assetsInfo(this.defaultPage);
     this.leaksInfo();
+    
     this.vulntop();
     this.vulntype();
     this.taskList();
@@ -379,6 +391,16 @@ export default {
         this.options.series[0].data = res.lists.map(item => {
           return { value: item.assets_os_type, name: item.assets_hostname ? item.assets_hostname : 'Unix' }
         })
+      })
+    },
+    //cvnd
+    _cvndNum(){
+      cvndNum({}).then(res =>{
+        
+        let data=res.total[0];
+        console.log(data)
+        this.zyve=data.kb_vuln_vnum;
+        this.cvnd=data.kb_vuln_flag;
       })
     },
     //资产任务图
@@ -553,6 +575,34 @@ export default {
   width: 100%;
   position: relative;
 }
+.cnvd{
+  width:200px;
+  font-size:24px;
+  height: 100px;
+  line-height:100px;
+  font-weight: bold;
+  position:absolute;
+  top:0;
+  border: 1px solid #fff;
+  right:34px;
+  display:flex;
+  padding: 0px 12px;
+  margin-top: 10px;
+}
+.we{
+  width:200px;
+  font-size:24px;
+  line-height:100px;
+  height: 100px;
+  margin-top: 10px;
+  font-weight: bold;
+  border: 1px solid #fff;
+  position:absolute;
+  top:0;
+  right:334px;
+  display:flex;
+  padding: 0px 12px;
+}
 .smp {
   width: 168px;
   height: 105px;
@@ -726,7 +776,7 @@ export default {
 }
  .vulnList {
     width: 100%;
-    height: 100%;
+    height:270px;
   }
   .vulnList ul {
     width: 100%;

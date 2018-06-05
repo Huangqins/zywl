@@ -580,20 +580,6 @@ export default {
                               )
                             ]);
                           },
-                          // render: h => {
-                          //   return h("Input", {
-                          //     props: {
-                          //       value: this.fileName,
-                          //       autofocus: true,
-                          //       placeholder: "请输入文件名"
-                          //     },
-                          //     on: {
-                          //       input: val => {
-                          //         this.fileName = val;
-                          //       }
-                          //     }
-                          //   });
-                          // },
                           onOk: () => {
                             exportPDF({
                               target_id: params.row.target_id,

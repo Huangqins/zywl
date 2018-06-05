@@ -3,16 +3,16 @@
       <div class="whole">
          <Collapse v-model="value1">
             <div style="width:100%;height:100px;padding:10px 40px;">
-              <h2>{{vuln_URL}}</h2>
+              <h2>{{userInfo.vuln_URL}}</h2>
                <!-- <span class="level" :style="{background: vulncolor[this.vuln_level]}" v-text="vulnlevel[this.vuln_level]"></span><span></span> -->
             </div>
             <Panel name="1" >
               风险信息
-                <p slot="content"> {{vuln_useInfo}}</p>
+                <p slot="content"> {{userInfo.vuln_useInfo}}</p>
             </Panel>
              <Panel name="2">
                 利用详情
-                <img slot="content" :src="image_path" style="height:500px;"/>
+                <img slot="content" :src="userInfo.image_path" style="height:500px;"/>
             </Panel>
           
             
@@ -25,33 +25,25 @@
 export default {
   data() {
     return {
-      vuln_URL: "",
-      vuln_useInfo:'',
       value1: [1,2],
-      image_path:''
-    
+      userInfo: null
     };
   },
   created(){
       const params = this.$route.params;
-      this.vuln_URL=params.vuln_URL
-      this.vuln_useInfo=params.vuln_useInfo
-      this.image_path=params.image_path
+      const storage = window.localStorage;
+      if (Object.keys(this.$route.params).length !== 0) {
+        storage.setItem(
+          "userInfo",
+          JSON.stringify(this.$route.params)
+        );
+      }
+      this.userInfo = JSON.parse(storage.getItem('userInfo'))
   },
-  methods: {
-    // vulnDetail() {
-    //   const params = this.$route.params;
-    //   vulnDetail(params).then(res => {
-    //     let data = res.rows;
-    //     this.vuln_name = data[0].vuln_name;
-    //     this.vuln_level = data[0].vuln_level;
-    //     this.kb_vuln_des = data[0].kb_vuln_des;
-    //     this.kb_vuln_anly = data[0].kb_vuln_anly;
-    //     this.kb_vuln_ref = data[0].kb_vuln_ref;
-    //     this.vuln_detail=data[0].vuln_detail
-    //   });
-    // }
-  }
+  beforeDestroy() {
+    window.localStorage.removeItem('userInfo')
+  },
+  methods: {  }
 };
 </script>
 <style scoped>
