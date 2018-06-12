@@ -107,7 +107,7 @@ export default {
         assets_url: "",
         assets_ip: "",
         assets_manger: "",
-        assets_creatuser: ""
+        assets_creatuser: getUserName()
       },
       ruleValidate: {
         tassets_name: [

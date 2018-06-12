@@ -2,9 +2,8 @@
   <div class="vulndetail">
       <div class="whole">
          <Collapse v-model="value1">
-            <div style="width:100%;height:100px;padding:10px 40px;">
-              <h2>{{userInfo.vuln_URL}}</h2>
-               <!-- <span class="level" :style="{background: vulncolor[this.vuln_level]}" v-text="vulnlevel[this.vuln_level]"></span><span></span> -->
+            <div style="width:100%;height:57px;padding:10px 40px;">
+              <h2>{{userInfo.vuln_URL}}</h2>              
             </div>
             <Panel name="1" >
               风险信息
@@ -12,7 +11,7 @@
             </Panel>
              <Panel name="2">
                 利用详情
-                <img slot="content" :src="userInfo.image_path" style="height:500px;"/>
+                <img slot="content" :src="userInfo.image_path" style="height:660px;"/>
             </Panel>
           
             

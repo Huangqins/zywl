@@ -1,5 +1,5 @@
 <template>
-  <div class="table">
+  <div class="table process">
     <div class="target_left" style="width:75%;float:left">
         <div class="taskSchedule" >
               <section style="margin:20px 10px 20px 80px;flex:1.5;">
@@ -48,7 +48,7 @@
             <section class="newdata">
                 <ul id="con1">                       
                     <li v-for="(item,index) in targetlogData" :key="index">                       
-                      <div style="color:white;background:#182434;">{{item.operation_source}}</div>
+                      <div style="color:white;">{{item.operation_source}}</div>
                     </li>
                 </ul>
             </section>
@@ -151,12 +151,12 @@
             </Card>
         </Col>
         <Col span="9" >
-           <Card style="max-height:335px">
+           <Card style="max-height:335px;">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                 利用情况
               </p>
-               <page class="vuletables" :height="tableHeight" :columns="userinfo" :data="userinfoList"  :loading="loading" :width="width"></page>
+               <page class="vuletables" style="background:#ce3939;" :height="tableHeight" :columns="userinfo" :data="userinfoList"  :loading="loading" :width="width"></page>
           </Card>
         </Col>
     </Row>
@@ -400,7 +400,7 @@ export default {
           title: "风险类型",
           key: "kb_vuln_class",
           align: "left",
-          width: 160
+          width: 90
         },
         {
           title: "风险等级",
@@ -462,13 +462,7 @@ export default {
           title: "漏洞链接",
           key: "vuln_URL",
           align: "left"
-        },
-        {
-          title: "利用类型",
-          key: "vuln_use_type",
-          align: "left"
-        },
-         
+        },       
          {
           title: "操作",
           align: "center",
@@ -677,7 +671,7 @@ export default {
       this._vulnUseInfo();
       this._getTargetLog()
       this.timer = setInterval(() => {
-        this._targetProgress();
+        // this._targetProgress();
         this._targetNum();
         this._targetLesk();
         this._urlUseRate();
@@ -686,6 +680,7 @@ export default {
       }, 10000);
       this.timers=setInterval(() => {        
         this._getTargetLog()
+        this._targetProgress();
       },1000)
     },
     rowClassName(row) {
@@ -766,12 +761,14 @@ export default {
           if (target_struts === "1") {
             this.percentOption = `100%`;
             this.radar = false;
+            clearInterval(this.timers);
             clearInterval(this.timer);
             this.timer = null;
           } else if (target_struts === "-2") {
             this.$Message.error(`目标进度确立失败`);
             this.percentOption = `0%`;
             this.radar = false;
+            clearInterval(this.timers);
             clearInterval(this.timer);
           } else {
             this.radar = true;
@@ -923,6 +920,9 @@ export default {
 };
 </script>
 <style scoped>
+.process .ivu-table-tbody tr{
+  background-color: #FCD576;
+}
 
 /* top10排行榜样式 header*/
 #box{

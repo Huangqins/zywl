@@ -255,10 +255,10 @@ fl {float:left;}
      padding:5px 0px 3px 3px;
  }
  
- .table .vuletables .ivu-table-body{
+ /* .table .vuletables .ivu-table-body{
      overflow: auto;
      height: 225px;
- }
+ } */
  .table .holetable .ivu-table-wrapper{
      margin-bottom: 0px;
  }
@@ -267,4 +267,7 @@ fl {float:left;}
  }
  .table .ym .ivu-card-body{
     min-height: 180px;
+}
+.ivu-table-row-hover{
+    background-color: #182434 !important;
 }

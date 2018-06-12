@@ -71,10 +71,6 @@
           <section class="list">
               <page :columns="leaksColums" :data="leaksList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" ></page>
           </section>
-          <section>
-            <page :columns="leaksColums" :data="leaksList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" ></page>
-          </section>
-
        </div>
         
   </div>
@@ -90,14 +86,7 @@ import cloud from "../../taskpage/cloud";
 import vulntype from "api/vulntype";
 import vulnWordClouds from "api/vulnWordClouds";
 import getVulnInfo from "api/getVulnInfo";
-
-// const levelSchema = {
-//   "4": { style: "#FF33CC", class: "vuln", ex: "#FF3399" },
-//   "3": { style: "#e60012", class: "vuln", ex: "#FF6666" },
-//   "2": { style: "#b2976a", class: "vuln", ex: "#666699" },
-//   "1": { style: "#aaa", class: "vuln", ex: "#6699CC" },
-//   "0": { style: "#bbb", class: "vuln", ex: "#66FFCC" }
-// };
+import fomatterTime from "@/utils/tool";
 const levelSchema = {
   "4": "紧急风险",
   "3": "高风险",
@@ -252,8 +241,29 @@ export default {
           }
         },
         {
-          title: "payload",
-          key: "vuln_Payload",
+          title: "owasp分类",
+          key: "kb_vuln_class",
+          align: "center"
+        },
+        {
+          title: "风险IP",
+          key: "vuln_IP",
+          align: "center"
+        },
+        {
+          title: "发现时间",
+          key: "vuln_ftime",
+          align: "center",
+          render: (h, params) => {
+            return h(
+              "span",
+              fomatterTime(new Date(params.row.vuln_ftime.time))
+            );
+          }
+        },
+        {
+          title: "修复时间",
+          key: "",
           align: "center"
         }
       ],
@@ -334,7 +344,11 @@ export default {
       const res = await leaksInfo(params);
       if (res.result === 0) {
         this.loading = false;
+        
         this.leaksList = res.rows;
+        this.leaksList.forEach(item => {
+          item.vuln_IP = item.vuln_IP.substr(2,(item.vuln_IP.length-4))
+        })
         this.total = res.total;
       }
     },
@@ -416,7 +430,7 @@ export default {
   width: 100%;
 }
 .leaksThree section {
-  width: 45%;
+  width: 95%;
   margin: 0px 20px;
   float: left;
 }

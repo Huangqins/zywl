@@ -183,7 +183,7 @@ export default {
                   });
                 } else if (res.result === 2) {
                   // 登陆成功有资产无任务,直接走到大首页
-                  this.$router.push({ path: "/firstassetAdd" });
+                  this.$router.push({ path: "/mainpage/homepage" });
                 }
               });
             }

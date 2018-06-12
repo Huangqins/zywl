@@ -1,7 +1,7 @@
 <template>
    <div class="layout">
         <Layout >
-            <Sider ref="side1" hide-trigger collapsible :collapsed-width="48" v-model="isCollapsed" style="background:transparent; min-width:48px;  max-width: 120px;">
+            <Sider ref="side1" hide-trigger collapsible :collapsed-width="48" v-model="isCollapsed" style="background:rgba(255,255,255,0.05); min-width:48px;  max-width: 120px;">
                 <span class="log"><img src="../../assets/60.png" alt=""></span>                      
                 <Menu active-name="1-2" theme="dark" width="auto" :class="menuitemClasses">      
                    <div v-for="item in menuList" :key="item.name">
@@ -21,8 +21,8 @@
                             </template>
                            <template v-for="child in item.children" v-if="!isCollapsed">
                              <router-link :key="child.path" :to=" '/mainpage'+child.path">
-                              <MenuItem :name="item.name+child.name">
-                                  <span>{{child.text}}</span>
+                              <MenuItem :name="item.name+child.name" style="padding-left:27px">
+                                  <span >{{child.text}}</span>
                               </MenuItem>
                               </router-link>
                            </template>
@@ -234,7 +234,8 @@ export default {
       const userInfo = to.params;
       console.log(userInfo);
       //是否第一次登陆,否
-      if (userInfo.firstLogin === 1) {
+      if (Object.keys(userInfo).length > 0) {
+        if (userInfo.firstLogin === 1) {
         //  判断任务是否结束
         if (userInfo.userTips.dateTime === 0) {
           //  任务未结束,提示未完成任务，跳转到任务执行页
@@ -305,6 +306,8 @@ export default {
           });
         }
       }
+      }
+      
     }
     next();
   },
