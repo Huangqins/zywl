@@ -1,22 +1,67 @@
 <template>
   <div class="authorize-container">
-       <Upload  multiple  :action="uploadUrl" :with-credentials="true"  name="license" :headers="headers" :show-upload-list="false" style="display:inline-block;margin-bottom:5px" :on-success="success"	>
+
+        <Card :bordered="false" class="box_auth">
+            <p slot="title">授权信息</p>
+            <div class="license_informa">
+              <ul>
+                   <li>目前状态:试用授权</li>
+                   <li>到期时间:2018年08月23日</li>
+                   <li><Icon type="ios-search"></Icon><a style="color:#4E76AB" @click="modal1 = true">查看授权详情</a></li>               
+               </ul>
+            </div>
+              
+        </Card>
+        <Card :bordered="false" class="box_auth">
+            <p slot="title">授权操作</p>
+            <Row style="margin:0px 100px;">
+                <Col span="6">
+                    <ul style="text-align: center;">
+                        <li><Icon type="record" style="font-size:38px" ></Icon></li>
+                        <li>激活授权</li>
+                        <li><Upload  multiple  :action="uploadUrl" :with-credentials="true"  name="license" :headers="headers" :show-upload-list="false" style="display:inline-block;margin-bottom:5px" :on-success="success"	>
+                <Button type="text" style="color:white;font-size:14px">适用于首次导入授权文件</Button></Upload> </li>
+                    </ul>
+                </Col>
+                <Col span="6">
+                    <ul style="text-align: center;">
+                        <li><Icon type="ios-flower" style="font-size:38px"></Icon></li>
+                        <li>更新授权</li>
+                        <li><a>适用于激活后更新授权</a></li>
+                    </ul>
+                </Col>
+                <!-- <Col span="6">col-6</Col>
+                <Col span="6">col-6</Col> -->
+            </Row>
+        </Card>
+        <Card :bordered="false" class="box_auth">
+            <p slot="title">操作流程</p>
+            <div>
+              <ul>
+                <li>1.通过“授权”向导，导入授权文件，获得激活申请文件;</li>
+                <li>2.获得申请文件，发送到xxx公司，获得激活文件;</li>
+                <li>3.将“激活文件”通过激活向导进行导入，即可完成导入。</li>
+              </ul>
+            </div>
+        </Card>
+
+       <!-- <Upload  multiple  :action="uploadUrl" :with-credentials="true"  name="license" :headers="headers" :show-upload-list="false" style="display:inline-block;margin-bottom:5px" :on-success="success"	>
                 <Button type="primary" icon="ios-cloud-upload-outline">导入授权文件</Button>
-        </Upload>
-       <Card class="ym">
+        </Upload> -->
+        <Modal class="ym" v-model="modal1" @on-ok="ok"  @on-cancel="cancel">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                 授权信息
               </p>
               <ul>
-                  <li v-for="(item,index) in taskListItem" :key="index">
+                  <li v-for="(item,index) in taskListItem" :key="index" style="list-style:none">
                       {{ item.target_info_name }}
                       <span>
                           {{ item.target_info_des }}
                       </span>
                   </li>
               </ul>
-          </Card>
+        </Modal>
   </div>
 </template>
 <script>
@@ -30,6 +75,7 @@ const href = host + "system/loadFile";
 export default {
   data() {
     return {
+      modal1:false,
       headers: {
         token: getToken(),
         userName: getUserName(),
@@ -84,6 +130,15 @@ export default {
     this._getSystemInfo()
   },
   methods: {
+
+    ok () {
+                this.$Message.info('Clicked ok');
+    },
+    cancel () {
+                this.$Message.info('Clicked cancel');
+    },
+        
+
     success(res) {
       if (res.result === 0) {
         this.$Message.info("文件上传成功");
@@ -119,11 +174,26 @@ export default {
 };
 </script>
 <style scoped>
+.box_auth{
+    background: rgba(255, 255, 255, 0.1);
+    margin: 10px 20px;
+    color: white;
+}
+.box_auth p{
+  color: white;
+}
 .authorize-container {
     margin-top: 50px;
 }
+
 .ivu-card-body ul li {
   list-style: none;
+  
+}
+.license_informa ul li{
+  display: inline;
+  margin-right:45px; 
+  
 }
 </style>
 

@@ -187,6 +187,12 @@ export default {
           icon: "social-dropbox"
         },
         {
+          name: "12",
+          path: "/mainpage/reportManage",
+          text: "报告管理",
+          icon: "social-dropbox"
+        },
+        {
           name: '1-7',
           text: '系统管理',
           path: '/systemManage',
@@ -209,6 +215,11 @@ export default {
             name: '10',
             path: '/authorize',
             text: '授权管理'
+          },
+          {
+            name: '11',
+            path: '/updateManage',
+            text: '升级管理'
           }
           ]
         },
