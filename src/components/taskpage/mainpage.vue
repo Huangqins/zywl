@@ -316,6 +316,7 @@ export default {
       this.$refs.side1.toggleCollapse();
     },
     loginOut() {
+      this.$store.dispatch("delVisitedAll", []);
       this.$store.commit("REMOVE_TOKEN");
       removeToken();
       removeUserName();

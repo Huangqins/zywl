@@ -669,9 +669,9 @@ export default {
   },
   created() {
     this._getAssetURL();
-    const params = this.$route.params;
-    this.data.target_url = params.target_url;
-    this.data.target_ip = params.target_ip;
+    // const params = this.$route.params;
+    // this.data.target_url = params.target_url;
+    // this.data.target_ip = params.target_ip;
     this._getRule(strategy);
     this._getRule(cycle);
     this.params = Object.assign({}, this.defaultPage, {

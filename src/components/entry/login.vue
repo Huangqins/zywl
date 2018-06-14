@@ -126,7 +126,6 @@ export default {
   },
   methods: {
     loadFileSuccess(res) {
-      console.log(res);
       if (res.result === 0) {
         this.$Message.success("导入授权文件成功");
         this.loadFileModal = false;
@@ -168,23 +167,7 @@ export default {
               //有资产的情况
               const login_res = res;
               userTips({ userName: getUserName() }).then(res => {
-                if (res.result === 0) {
-                  //登陆成功有资产且有任务,默认显示任务调度页面
-                  this.$router.push({
-                    name: "assetSet",
-                    params: {
-                      firstLogin: login_res.firstLogin, //是否当然首次登陆
-                      userTips: res //下一页面判断任务是否结束
-                    }
-                  });
-                } else if (res.result === -1) {
-                  this.$Message.error({
-                    content: "获取用户资产信息失败"
-                  });
-                } else if (res.result === 2) {
-                  // 登陆成功有资产无任务,直接走到大首页
-                  this.$router.push({ path: "/mainpage/homepage" });
-                }
+                this.$router.push({ path: "/mainpage/homepage" });
               });
             }
           } else if (res.result === 2) {

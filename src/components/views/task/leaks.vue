@@ -294,10 +294,10 @@ export default {
   methods: {
     //风险类型饼状图
     vulntype() {
-      this.$refs.vulntype.showLoading();
+      // this.$refs.vulntype.showLoading();
       getVulnInfo({}).then(res => {
         if (res.result === 0) {
-          this.$refs.vulntype.hideLoading();
+          // this.$refs.vulntype.hideLoading();
           let list = res.vulns;
           list.forEach(item => {
             this.vulntypes.series[0].data.push({

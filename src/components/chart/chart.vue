@@ -1,87 +1,62 @@
 <template>
-<div>
-    <div :id="id" :style="{width: width, height: height,margin: '0 auto'}"></div>
-</div>
+    <div :class="className" :style="{height:height,width:width}" :id="id"></div>
 </template>
+
 <script>
-import { debounce } from "@/utils";
+import echarts from "echarts";
+require("echarts/theme/macarons"); // echarts theme
+import resize from "./mixins/resize";
 
 export default {
-  name: "chart",
-  data() {
-    return {
-      chart: ""
-    };
-  },
+  mixins: [resize],
   props: {
     id: {
       type: String,
-      default: "canvas"
-    },
-    height: {
-      type: String,
-      default: "300px"
+      default: "chart"
     },
     width: {
       type: String,
-      default: "400px"
+      default: "100%"
+    },
+    height: {
+      type: String,
+      default: "350px"
+    },
+    className: {
+      type: String,
+      default: "chart"
     },
     option: {
       type: Object,
-      default() {
+      default: () => {
         return {};
       }
     }
+  },
+  data() {
+    return {
+      chart: null
+    };
   },
   watch: {
     option: {
       deep: true,
       handler(val) {
-        this.chart.setOption(val);
+        this.setOptions(val);
       }
-    }
-  },
-  mounted() {
-    this.init();
-     if (this.chart) {
-          this.resize();
-        }
-  },
-  beforeDestroy() {
-    if (this.chart) {
-      this.chart.clear()
-      this.chart.dispose()
-      // window.removeEventListener("resize", () => {
-      //   console.log('成功')})
     }
   },
   methods: {
-    init() {
-      this.chart = this.$echarts.init(document.getElementById(this.id));
-      this.chart.setOption(this.option);
+    initChart() {
+      this.chart = echarts.init(document.getElementById(this.id));
+      this.setOptions(this.option);
     },
-    refresh() {
-      this.chart.setOption(this.option);
-    },
-    showLoading() {
-      this.chart.showLoading("default", {
-        text: "数据加载中",
-        color: "#c23531",
-        textColor: "#fff",
-        maskColor: "rgba(0, 0, 0, 0.1)",
-        zlevel: 0
-      });
-    },
-    hideLoading() {
-      this.chart.hideLoading();
-    },
-    resize() {
-      if (this.chart) {
-         window.addEventListener("resize", () => {
-        this.chart.resize();
-      });
-      }
+    setOptions(chartData) {
+      this.chart.setOption(chartData);
     }
+  },
+  mounted() {
+    this.initChart();
   }
 };
 </script>
