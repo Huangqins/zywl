@@ -166,6 +166,16 @@ const Userinfodetail = (resolve) => {
     resolve(module)
   })
 }
+const Reportmanage = (resolve) => {
+  import ('components/views/report/reportManage').then(module => {
+    resolve(module)
+  })
+}
+const Updatemanage = (resolve) => {
+  import ('components/views/systemManage/updateManage').then(module => {
+    resolve(module)
+  })
+}
 const router = new VueRouter({
   // mode: 'history',
   routes: [{
@@ -248,13 +258,17 @@ const router = new VueRouter({
       path: '/force',
       component: Force
     },
-    // {
-    //     path: '/particles',
-    //     component: Particles
-    // },
     {
       path: '/assetManagement',
       component: AssetManagement
+    },
+    {
+      meta: {
+        menuCode: '17'
+      },
+      name:"reportManage",
+      path: '/reportManage',
+      component: Reportmanage
     },
     {
       path: '/kbinfo',
@@ -324,6 +338,15 @@ const router = new VueRouter({
           name: 'kbinfo',
           path: 'kbinfo',
           component: Kbinfo
+        },
+        {
+          meta: {
+            menuCode: "17",
+            title: '报告管理'
+          },
+          name:'reportManage',
+          path: 'reportManage',
+          component: Reportmanage 
         },
         {
           meta: {
@@ -405,6 +428,15 @@ const router = new VueRouter({
           name: "authorize",
           path: "authorize",
           component: Authorize
+        },        
+        {
+          meta: {
+            menuCode: "16",
+            title: '升级管理'
+          },
+          name: "updateManage",
+          path: 'updateManage',
+          component: Updatemanage
         }
       ]
     }
