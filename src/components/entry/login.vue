@@ -192,6 +192,8 @@ export default {
             //   title: '导入文件',
             //   content:  ``
             // })
+          }else if (res.result === 4) {
+            message("error", "验证码已过期请刷新");
           } else {
             message("error", "用户名不存在");
           }

@@ -8,7 +8,9 @@
                <ul>
                    <li>离线升级包下载地址:<a >http://ppwww.cio.com</a></li>
                    <li><Button size="small" class="but">立即升级</Button></li>
-                   <li><Button size="small" class="but">离线升级</Button></li>                 
+                   <li> <Upload  multiple  :action="uploadUrl" :with-credentials="true"  name="version" :headers="headers" :show-upload-list="false" style="display:inline-block" :on-success="loadFileSuccess">
+                            <Button type="text" icon="ios-cloud-upload-outline" style="color:white;font-size:14px">离线升级</Button>
+                          </Upload></li>                 
                </ul>
                <div style="height:20px">
                    <ul>
@@ -44,53 +46,75 @@
     </div>
 </template>
 <script>
+import { getToken, getUserName } from "@/utils/auth";
+import updateOffline from "api/updateOffline";
+
 export default {
-    
-}
+  data() {
+    return {
+      uploadUrl: location.origin + "/ZY/system/updateVersion",
+      headers: {
+        token: getToken(),
+        userName: getUserName(),
+        menuCode: vm._route.meta.menuCode
+      }
+    };
+  },
+  methods: {
+    loadFileSuccess(res) {
+      if (res.result === 0) {
+        this.$Message.success("离线升级成功");
+      } else if (res.result === 1) {
+        this.$Message.error("登录过期");
+      } else {
+        this.$Message.error("离线升级失败");
+      }
+    }
+  }
+};
 </script>
 <style scoped>
-.updateM ul li{
-   list-style: none;
-   text-align: center;
+.updateM ul li {
+  list-style: none;
+  text-align: center;
 }
-.box_tip{
-    width: 100%;
-    padding: 5px;
-    margin: 10px 20px;
-    background: rgba(255, 255, 255, 0.1);
+.box_tip {
+  width: 100%;
+  padding: 5px;
+  margin: 10px 20px;
+  background: rgba(255, 255, 255, 0.1);
 }
-.box_tip p{
-    color: indianred;    
+.box_tip p {
+  color: indianred;
 }
-.box_tip span{
-    color: white;
-    display:inline-block;
-    margin-right: 3px;
+.box_tip span {
+  color: white;
+  display: inline-block;
+  margin-right: 3px;
 }
-.but{
-    margin:0px 20px;
+.but {
+  margin: 0px 20px;
 }
 .box_update {
-    height: 30px;
+  height: 30px;
 }
-.box_update ul{
-    color: white;
+.box_update ul {
+  color: white;
 }
-.box_update ul li{
-   /* width: 300px; */
-   list-style: none;
-   display: inline;
-   text-align: right;
-   margin-right:60px;
-
+.box_update ul li {
+  /* width: 300px; */
+  list-style: none;
+  display: inline;
+  text-align: right;
+  margin-right: 60px;
 }
-.box_update ul li a{
-    margin-left:5px;
+.box_update ul li a {
+  margin-left: 5px;
 }
-.box_manage{
-    color: white;
+.box_manage {
+  color: white;
 }
-.box_manage a{
-    color:#FF9595;
+.box_manage a {
+  color: #ff9595;
 }
 </style>

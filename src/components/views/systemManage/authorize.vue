@@ -27,7 +27,11 @@
                     <ul style="text-align: center;">
                         <li><Icon type="ios-flower" style="font-size:38px"></Icon></li>
                         <li>更新授权</li>
-                        <li><a>适用于激活后更新授权</a></li>
+                        <li>
+                          <Upload  multiple  :action="uploadUrl" :with-credentials="true"  name="license" :headers="headers" :show-upload-list="false" style="display:inline-block" :on-success="loadFileSuccess">
+                            <Button type="text" icon="ios-cloud-upload-outline" style="color:white;font-size:14px">适用于激活后更新授权</Button>
+                          </Upload>
+                        </li>
                     </ul>
                 </Col>
                 <!-- <Col span="6">col-6</Col>
@@ -76,6 +80,7 @@ export default {
   data() {
     return {
       modal1:false,
+      uploadUrl: location.origin + "/ZY/system/loadFile",
       headers: {
         token: getToken(),
         userName: getUserName(),
@@ -168,6 +173,13 @@ export default {
       }
        
     })
+  },
+  loadFileSuccess(res) {
+      if (res.result === 0) {
+        this.$Message.success("导入授权文件成功");
+      } else {
+        this.$Message.error("导入授权文件失败");
+      }
   }
   },  
   
