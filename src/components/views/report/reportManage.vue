@@ -18,6 +18,8 @@ import page from "components/page/page";
 import taskList from "api/taskList";
 import exportPDF from "api/exportPDF";
 import { getUserName } from "@/utils/auth";
+import reportPdf from "api/reportPdf";
+import reportList from "api/reportList";
 
 const host =
   process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080" : "";
@@ -33,21 +35,10 @@ export default {
       depart_name: "",
       value1: "",
       pageLoading: false,
-      reportList: [
-        {
-          assets_name: "测试",
-          reportName: "开始",
-          creatuser: "王姣姣",
-          port: "技术",
-          creatTime: "12121",
-          time: "4545454"
-        }
-      ],
+      reportList: [],
       defaultPage: {
-        area: 0,
         rows: 10,
         page: 1,
-        userName: getUserName()
       },
       params: {},
       reportassets: [
@@ -233,20 +224,17 @@ export default {
     };
   },
   methods: {
-    _taskList() {
-      let paramsObj = Object.assign({}, this.params, { flag: 1 });
-      taskList(paramsObj).then(res => {
+    _reportList() {
+      let paramsObj = Object.assign({}, { userName: getUserName()},this.defaultPage);
+      reportList(paramsObj).then(res => {
         if (res.result === 0) {
-          this.reportList = res.targets;
+          this.reportList = res.reports;
         }
       });
     }
   },
   created() {
-    this.params = Object.assign({}, this.defaultPage, {
-      userName: getUserName()
-    });
-    this._taskList(this.params);
+    this._reportList();
   }
 };
 </script>
