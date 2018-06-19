@@ -1,39 +1,15 @@
 <template>
   <div>
-      <div class="whole">
-          <!-- <section class="assetRight">
-              <div class="assetRight_header">
-                <Input v-model="value" placeholder="区域" clearable style="width: 200px"></Input>
-                <Button type="primary" icon="ios-search">搜索</Button>
-                <Button type="primary" icon="compose" @click="assetsAdd">添加</Button>
-                 <Upload  multiple  :action="uploadUrl" :with-credentials="true"  name="excelFile" :headers="headers" :show-upload-list="false" style="display:inline-block">
-                    <Button type="primary" icon="ios-cloud-upload-outline">导入</Button>
-                 </Upload>
-                <Button type="primary" icon="log-out">导出</Button>
-              </div>
-              <div class="assetRight_pro">
-                <section>
-                   <chart width="500px" height="260px" :option="options" ref="firstChart"></chart>
-                </section>
-                <section>
-                  <chart width="440px" height="260px" :option="optionOne" id="optionOne" ref="secondChart"></chart>
-                </section>
-                
-              </div>
-              <div class="assetRight_content">
-                  <page :columns="assets" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="pageLoading"> </page>
-              </div>
-          </section> -->
-        <Card :bordered="false" class="box_report">
-            <Input v-model="value1" size="large" placeholder="搜索资产" style="width:200px"></Input>
+        <section class="box_report">
+            <Input v-model="value1" size="large" placeholder="" style="width:200px"></Input>
             <Button type="primary" >搜索</Button>
             <Button type="primary" @click="assetsAdd">添加</Button>
             <Upload  multiple  :action="uploadUrl" :with-credentials="true"  name="excelFile" :headers="headers" :show-upload-list="false" style="display:inline-block">
                     <Button type="primary" icon="ios-cloud-upload-outline">导入</Button>
             </Upload>
             <Button type="primary" icon="log-out">导出</Button>
-        </Card>
-        <Card :bordered="false" class="box_report pic">
+        </section>
+        <section class="box_report pic">
           <ul>
             <li>
                 <chart width="700px" height="260px" :option="options" ref="firstChart"></chart>
@@ -42,17 +18,14 @@
                 <chart width="440px" height="260px" :option="optionOne" id="optionOne" ref="secondChart"></chart>
             </li>
           </ul>  
-
-        </Card>
-        <Card :bordered="false" class="box_report" style="height:428px">
-            <p slot="title" style="color:white">知识列表</p>
+        </section>
+        <section  class="box_report" style="height:428px">
+            <h3 style="color:white">知识列表</h3>
             <div class="assetRight_content">
-                  <page :columns="assets" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="pageLoading"> </page>
+                  <page :columns="assets" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="pageLoading" width="100%"> </page>
             </div>
-        </Card>
-      </div>
+        </section>
       <Modals :width="width" :format="formatType" :data="dataType" :title="title" ref="formValidate" :rules="rules" @asyncOK="asyncOK" :display="display"  :loading="loading" :footer="footer"></Modals>
-    <!--<Modal></Modal>-->
   </div>
 </template>
 <script>
@@ -601,15 +574,13 @@ export default {
 .box_report {
     background: rgba(255, 255, 255, 0.1);
     margin: 10px 20px;
+    padding: 10px;
+    width: 100%;
    
 }
 .pic ul li{
   display: inline-block;
   width: 47%;
-}
-.whole {
-  width: 100%;
-  color: #e4e5e5;
 }
 .assetRight {
   float: left;
@@ -631,6 +602,9 @@ export default {
   height: auto;
   padding: 25px;
   background: rgba(25, 38, 48, 0.1);
+}
+.assetRight_content{
+  margin-top:5px;
 }
 .assetRight_pro div {
   float: left;

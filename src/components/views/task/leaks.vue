@@ -1,7 +1,8 @@
 <template>
   <div>
-        <Card :bordered="false" class="box_report aside">     
-          <p slot="title">漏洞Top10排行榜</p>
+    <div style="width:100%;overflow:hidden;">
+        <div class="box_report aside">     
+          <h3 style="color:white">漏洞Top10排行榜</h3>
           <section class="holeList" style="height:255px;">
                     <ul>
                         <li class="listOne">
@@ -19,41 +20,39 @@
                         </li>
                     </ul>
           </section>
-        </Card>
-        <Card :bordered="false" class="box_report rightaside">     
-          <p slot="title">漏洞</p>
+        </div>
+        <div class="box_report rightaside">    
+           <!-- <h3 style="color:white">没啥</h3>  -->
           <section style="width:40%;">
             <div class="assetPic">
               <p style="text-align:center">当前风险数</p>
-              <p style="text-align:center">343434</p>
-            </div>
-             
+              <p style="text-align:center">{{total}}</p>
+            </div>             
              <ul>
                <li>
                  <Icon type="alert-circled" style="font-size:28px;float:left;margin-right:8px;color:white"> </Icon>
                  <p>极高风险</p>
-                 <p>9999</p>
-
+                 <p>{{most}}</p>
                  </li>
                <li>
                  <Icon type="alert-circled" style="font-size:28px;float:left;margin-right:8px;color:white"> </Icon>
                  <p>高风险</p>
-                 <p>76666</p>
+                 <p>{{high}}</p>
                </li>
                <li>
                 <Icon type="alert-circled" style="font-size:28px;float:left;margin-right:8px;color:white"> </Icon>
                  <p>中风险</p>
-                 <p>5555</p>
+                 <p>{{middle}}</p>
                </li>
                <li>
                  <Icon type="alert-circled" style="font-size:28px;float:left;margin-right:8px;color:white"> </Icon>
-                 <p>中低风险</p>
-                 <p>2222</p>
+                 <p>低风险</p>
+                 <p>{{low}}</p>
                 </li>   
                 <li>
                  <Icon type="alert-circled" style="font-size:28px;float:left;margin-right:8px;color:white"> </Icon>
-                 <p>低风险</p>
-                 <p>111</p>
+                 <p>极低风险</p>
+                 <p>{{litter}}</p>
                 </li>          
 
              </ul>
@@ -79,11 +78,10 @@
 
             </ul>
           </section>
-        </Card>
-        <div style="clear:both"></div>
-       
-        <div class="leaksThree">
-          <p style="height:50px;border-bottom:1px solid #ffffff;color:white;font-size:14px;font-weight:bold">风险列表</p>
+        </div>
+    </div>     
+        <div class="leaksThree" style="height:428px">
+          <h3 style="color:white;margin-bottom:5px;">风险列表</h3>
            <page :columns="leaksColums" :data="leaksList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" ></page>           
         </div>
         
@@ -104,11 +102,11 @@ import getVulnInfo from "api/getVulnInfo";
 import fomatterTime from "@/utils/tool";
 import vulnTop from "api/vulnTop";
 const levelSchema = {
-  "4": "紧急风险",
+  "4": "极高风险",
   "3": "高风险",
   "2": "中风险",
   "1": "低风险",
-  "0": "无风险"
+  "0": "极低风险"
 };
 export default {
   name: "leaks",
@@ -143,6 +141,12 @@ export default {
   },
   data() {
     return {
+      total:'',
+      most:0,
+      high: 0,
+      middle: 0,
+      low: 0,
+      litter:0,
       image_One:require("static/top1.png"),
       image_Two:require("static/top2.png"),
       image_Three:require("static/top3.png"),
@@ -150,10 +154,7 @@ export default {
       name:'',
       vuln_total:'',
       taskID: "",
-      urgent: "",
-      high: "",
-      middle: "",
-      low: "",
+     
       prompt: "",
       option: {
         tooltip: {
@@ -287,7 +288,49 @@ export default {
           title: "修复时间",
           key: "",
           align: "center"
+        },
+        {
+          title: "操作",
+          align: "center",
+          render: (h, params) => {
+            return h("div", [
+              h("Button", {
+                props: {
+                  type: "primary",
+                  size: "small",
+                },
+                style: {
+                  marginRight: "5px"
+                },
+                on: {
+                  // click: () => {
+                  //   this.data = Object.assign({}, this.data, params.row);
+                   
+                  //   (this.footer = true), (this.modalStatus = 0);
+                  //   this.$refs.formValidate.open();
+                  // }
+                }
+              },"已修复"),
+
+              h("Button", {
+                props: {
+                  size: "small",
+                },
+                on: {
+                  click: () => {
+                    // this.dataCopy = Object.assign({}, this.data, params.row);
+                    // this.modalStatus = 1;
+                    // this.footer = false;
+                    // this.title = "详情";
+                    // this.$refs.formValidate.open();
+                   
+                  }
+                }
+              },"忽略")
+            ]);
+          }
         }
+
       ],
       leaksList: [],
       total: 0,
@@ -353,7 +396,7 @@ export default {
         if (res.result === 0) {
           res.vulns.forEach(item => {
             if (item.vuln_level === "4") {
-              this.urgent = item.vuln_total;
+              this.most = item.vuln_total;
               // this.$refs.chartOne.refresh();
             } else if (item.vuln_level === "3") {
               this.high = item.vuln_total;
@@ -366,7 +409,7 @@ export default {
             } else if (item.vuln_level === "1") {
               this.low = item.vuln_total;
             } else if (item.vuln_level === "0") {
-              this.prompt = item.vuln_total;
+              this.litter = item.vuln_total;
             }
           });
         }
@@ -411,12 +454,14 @@ export default {
 
 <style>
 .assetPic{
-  height: 108px;
+  height: 124px;
 }
 .box_report {
   background: rgba(255, 255, 255, 0.1);
   margin: 10px 20px; 
-  float: left;  
+  /* float: left;  */
+  width: 100%; 
+  padding:10px;
 }
 .aside {
   width: 30%;
@@ -458,9 +503,14 @@ export default {
 
 }
 .box_report p{
-  color: white;
-  
+  color: white;  
 }
+/* top10排行榜样式 header*/
+.holeList span {
+  display: inline-block;
+  height: 19px;
+}
+/* top10排行榜样式 end*/
 .vuln_num {
   width: 100%;
   height: 50px;
@@ -518,7 +568,7 @@ export default {
   width: 97%;
   background: rgba(255, 255, 255, 0.1);
   margin: 10px 20px; 
-  padding: 41px;
+  padding: 15px;
 }
 .Num {
   width: 64%;

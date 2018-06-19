@@ -1,6 +1,5 @@
 <template>
   <div class="authorize-container">
-
         <Card :bordered="false" class="box_auth">
             <p slot="title">授权信息</p>
             <div class="license_informa">
@@ -9,8 +8,7 @@
                    <li>到期时间:2018年08月23日</li>
                    <li><Icon type="ios-search"></Icon><a style="color:#4E76AB" @click="modal1 = true">查看授权详情</a></li>               
                </ul>
-            </div>
-              
+            </div>              
         </Card>
         <Card :bordered="false" class="box_auth">
             <p slot="title">授权操作</p>
@@ -30,8 +28,6 @@
                         <li><a>适用于激活后更新授权</a></li>
                     </ul>
                 </Col>
-                <!-- <Col span="6">col-6</Col>
-                <Col span="6">col-6</Col> -->
             </Row>
         </Card>
         <Card :bordered="false" class="box_auth">
@@ -39,15 +35,11 @@
             <div>
               <ul>
                 <li>1.通过“授权”向导，导入授权文件，获得激活申请文件;</li>
-                <li>2.获得申请文件，发送到xxx公司，获得激活文件;</li>
+                <li>2.获得申请文件，发送到北京智与未来信息技术有限公司，获得激活文件;</li>
                 <li>3.将“激活文件”通过激活向导进行导入，即可完成导入。</li>
               </ul>
             </div>
         </Card>
-
-       <!-- <Upload  multiple  :action="uploadUrl" :with-credentials="true"  name="license" :headers="headers" :show-upload-list="false" style="display:inline-block;margin-bottom:5px" :on-success="success"	>
-                <Button type="primary" icon="ios-cloud-upload-outline">导入授权文件</Button>
-        </Upload> -->
         <Modal class="ym" v-model="modal1" @on-ok="ok"  @on-cancel="cancel">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>

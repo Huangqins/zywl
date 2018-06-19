@@ -1,95 +1,46 @@
 <template>
 <div>
-
-    <!-- <div class="secOne">   
-        <section >
-                  <div class="vulnLevel">
-                    <div class="levelRight">
-                      <chart :option="options" width="190px" height="190px" ref="chart" id="circle"></chart>
-                    </div>
-                    <div class="levelLeft">
-                      <h4 class="levelTitle">风险级别</h4>
-                      <div class="levelDescript">扫描器已经发现一个或多个高危类型的漏洞。恶意用户可以利用这些漏洞，并损害后台数据库和您的网站</div>
-                    </div>
-                  </div>
-                   <chart :option="optionLine" width="100%" height="250px" ref="chart" id="circleTwo"></chart>
-        </section >
-        <section>
-            <div class="hotPic">
-              <chart :option="option"  width="450px" height="410px"></chart>
-            </div>
-        </section>
-        <section class="holeclassify">                 
-                  <div class="holeList">
-                    <ul>
-                        <li class="listOne">
-                          <span class="holeHeader">漏洞排行</span>
-                          <span class="holeHeader">漏洞名称</span>
-                          <span class="holeHeader">漏洞数量</span>
-                        </li>
-                        <li v-for="(item,index) in holes" :key="index">
-                        <span v-if="index===0"><img src="../../../../static/top1.png" ></span>
-                        <span v-else-if="index===1"><img src="../../../../static/top2.png" ></span>
-                        <span v-else-if="index===2"><img src="../../../../static/top3.png"/></span>
-                        <span v-else>{{index + 1}}</span>
-                        <span>{{item.name}}</span>
-                        <span>{{item.vuln_total}}</span>
-                        </li>
-                    </ul>
-                  </div>
-        </section>
-     </div> -->
-     <div class="all">
-       <ul>
-          <li style="width:52%;">
-              <Card :bordered="false" class="box_report" style="overflow:hidden;">
-              <p slot="title" style="color:white">熵值图</p>
-              <div>
+   <div class="secOne">
+            <section class="box_report fright" >
+              <div style="width:69%;float:left">
+                <h3 style="color:white">熵值图</h3>
                 <chart :option="optionLine"  width="400px" height="360px" margin="margin-left:60px;" style="float:left;"></chart>
               </div>
+              
               <div class="asset_vulntNum">
                 <p>以资产为维度的风险数</p>
                 <div>80%<br>风险度</div>
                 <div>90%<br>资产健康度</div>
               </div>
-
-              </Card>
-          </li>
-          <li style="width:47%">
-            <Card :bordered="false" class="box_report" style="overflow:hidden;">
-                <p slot="title" style="color:white">风险等级变化趋势</p>
+            </section>
+            <section  class="box_report" style="width:50%">
+                <h3 style="color:white">风险等级变化趋势</h3>
                 <chart :option="moreLine"  width="400px" height="360px" id="level" ></chart>
-              </Card>
-          </li>
-          <li>
-           <Card :bordered="false" class="box_report">
-               <p slot="title" style="color:white">年重大风险跟踪</p>
-               <div>
-                 <chart :option="risk"  width="400px" height="340px" id="risk"></chart>
-               </div>
-                
-           </Card>
-          </li>
-          <li>
-           <Card :bordered="false" class="box_report">
-              <p slot="title" style="color:white">漏洞历史变化对比</p>
-              <div>
-                <chart :option="history"  width="400px" height="340px" id="history"></chart>
-              </div>
-           </Card>
-          </li>
-          <li>
-           <Card :bordered="false" class="box_report">
-              <p slot="title" style="color:white">资产分类风险变化</p>
-              <div>
-                <chart :option="assetType"  width="400px" height="340px" id="assetType"></chart>
-              </div>
-           </Card>
-          </li>   
-
-       </ul>
-     </div>
-  </div>
+            </section>
+    </div>
+    <div class="secTwo">
+            <section class="box_report fright">
+               <h3 style="color:white">年重大风险跟踪</h3>
+               
+                 <chart :option="risk"  width="400px" height="400px" id="risk"></chart>
+                            
+            </section>
+           <section class="box_report fright">
+              <h3 style="color:white">漏洞历史变化对比</h3>
+              
+                <chart :option="history"  width="400px" height="400px" id="history"></chart>
+              
+           </section>
+           <section  class="box_report" style="width:32%">
+              <h3  style="color:white">资产分类风险变化</h3>
+           
+                <chart :option="assetType"  width="400px" height="400px" id="assetType"></chart>
+            
+           </section>
+    </div>          
+     
+</div>
+    
 </template>
 <script>
 import echarts from "echarts";
@@ -428,16 +379,42 @@ export default {
 };
 </script>
 <style scoped>
-.all ul li{
-  list-style: none;
-  display: inline-block;
+.box_report {
+    background: rgba(255, 255, 255, 0.1);
+    margin: 10px 0px;   
+    padding: 10px;
+    overflow: hidden;
+}
+.secOne{
+  overflow: hidden;
+  margin:0 20px;
+}
+.secOne section{
+  width: 49%;
+  float: left;  
+  box-sizing: border-box;
+}
+ .secOne .fright{
+  margin-right:10px;
+}
+.secTwo{
+  overflow: hidden;
+  margin:0 20px;
+}
+.secTwo section{
   width: 33%;
+  float: left;  
+  box-sizing: border-box;
+}
+ .secTwo .fright{
+  margin-right:10px;
 }
 .asset_vulntNum {
-  width:140px;
+  width:30%;
   color: white;
   float: left;  
-  margin-left:100px;
+  text-align: center;
+  /* margin-left:100px; */
 
 }
 .asset_vulntNum div{
@@ -450,49 +427,6 @@ export default {
    margin: 0 auto;
    margin-top:40px
 }
-.box_report {
-    background: rgba(255, 255, 255, 0.1);
-    margin: 10px 20px;   
-}
-.vulnLevel {
-  /* padding: 15px; */
-  display: flex;
-  align-items: center;
-}
-.levelRight {
-  margin-right: 10px;
-}
-.levelLeft {
-  flex: 1 1 auto;
-  align-items: center;
-}
-.levelDescript {
-  flex: 1 1 100%;
-}
-.levelTitle {
-  flex: 1 1 100%;
-  margin: 0 0 10px;
-}
 
-.secTwo {
-  width: 100%;
-  display: flex;
-  color: #e4e5e5;
-  height: 200px;
-  flex-direction: row;
-}
-.secTwo section {
-  flex: 1;
-  margin: 20px 60px;
-  background: rgba(255, 255, 255, 0.1);
-}
-.List {
-  width: 100%;
-  margin-top: 20px;
-}
-.holeclassify span {
-  display: inline-block;
-  height: 19px;
-}
 </style>
 

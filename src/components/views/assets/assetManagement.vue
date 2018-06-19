@@ -1,25 +1,6 @@
 <template>
   <div>
-      <!-- <div class="whole">
-          <section class="assetRight">
-              <div class="assetRight_header">
-                <Input v-model="value" placeholder="区域" clearable style="width: 200px"></Input>
-                <Button type="primary" icon="ios-search">搜索</Button>
-                <Button type="primary" icon="compose" @click="assetsAdd">添加</Button>
-                <Upload multiple  ref="upload" :show-upload-list="false"   :action="uploadUrl" :with-credentials="true" 
-                accept="" name="excelFile" :headers="headers" style="display:inline-block"
-                 :before-upload="handleUpload" >
-                <Button type="primary" icon="ios-cloud-upload-outline">导入</Button>
-            </Upload>
-                <Button type="primary" icon="log-out">导出</Button>
-              </div>
-             
-              <div class="assetRight_content">
-                  <page :columns="assets" :data="assetsList" :dataTotal="dataTotal" @dataLoad="dataLoad"  :loading="pageLoading"></page>
-              </div>
-          </section>
-      </div> -->
-       <Card :bordered="false" class="box_report">
+       <div  class="box_report">
             <Input v-model="value1" size="large" placeholder="搜索资产" style="width:200px"></Input>
             <Button type="primary" >搜索</Button>
             <Button type="primary" icon="compose" @click="assetsAdd">添加</Button>
@@ -29,9 +10,9 @@
                 <Button type="primary" icon="ios-cloud-upload-outline">导入</Button>
             </Upload>
             <Button type="primary" icon="log-out">导出</Button>
-        </Card>
-        <Card :bordered="false" class="box_asset" style="margin-right:10px;">
-            <p slot="title" style="color:white">资产分布区</p>
+        </div>
+        <div class="box_report box_asset" style="margin-right:10px;">
+            <h3 style="color:white">资产分布区</h3>
             <div class="assetPort">
               <ul>
                 <li ><Icon type="record" style="color:pink;margin-right:8px"></Icon>资产总数:<span style="margin-left:10px;">{{ewewe}}</span></li>
@@ -40,9 +21,9 @@
                 <li><Icon type="record" style="color:pink;margin-right:8px"></Icon>端口</li>
               </ul>
             </div>
-        </Card>
-        <Card :bordered="false" class="box_asset">
-            <p slot="title" style="color:white">区域资产分布区</p>
+        </div>
+        <div class="box_report box_asset">
+            <h3  style="color:white">区域资产分布区</h3>
             <div class="Portasset">
               <ul>
                 <li >
@@ -77,14 +58,14 @@
                 </li>
               </ul>
             </div>
-        </Card>
+        </div>
         <div style="clear:both"></div>
-        <Card :bordered="false" class="box_report" style="height:440px">
-            <p slot="title" style="color:white">资产列表</p>
+        <div  class="box_report" style="height:440px">
+            <h3 style="color:white">资产列表</h3>
              <div class="assetRight_content">
-                  <page :columns="assets" :data="assetsList" :dataTotal="dataTotal" @dataLoad="dataLoad"  :loading="pageLoading"></page>
+                  <page :columns="assets" :data="assetsList" :dataTotal="dataTotal" @dataLoad="dataLoad"  :loading="pageLoading" width="100%"></page>
               </div>
-        </Card>
+        </div>
       <Modals :width="width" :footer="footer"  :format="formatType" :data="dataType" :title="title" ref="formValidate" :ruleValidate="rules" @asyncOK="asyncOK" :display="display"  :loading="loading"></Modals>
       <!-- 资产导入 -->
       <!-- <Modal v-model="assetAddModal"  title="资产导入"  :loading="assetAddLoading" @on-ok="assetImport">
@@ -214,25 +195,35 @@ export default {
           align: "center"
         },
         {
+          title: "地址",
+          key: "assets_url",
+          align: "center"
+        },
+        {
           title: "资产名称",
           key: "assets_name",
           align: "center"
         },
         {
-          title: "资产URL",
-          key: "assets_url",
+          title: "操作系统",
+          key: "",
           align: "center"
         },
         {
-          title: "资产IP",
-          key: "assets_ip",
+          title: "虚拟机",
+          key: "",
           align: "center"
         },
-        // {
-        //   title: "创建人",
-        //   key: "assets_creatuser",
-        //   align: "center"
-        // },
+        {
+          title: "设备类型",
+          key: "",
+          align: "center"
+        },
+        {
+          title: "开放服务",
+          key: "",
+          align: "center"
+        },
         {
           title: "操作",
           align: "center",
@@ -420,6 +411,8 @@ export default {
 .box_report {
     background: rgba(255, 255, 255, 0.1);
     margin: 10px 20px;   
+    padding:10px;
+    width: 100%;
 }
 .box_asset {
     background: rgba(255, 255, 255, 0.1);
@@ -463,6 +456,9 @@ export default {
   flex: 1;
   margin: 20px 60px;
   background: #cccccc;
+}
+.assetRight_content{
+  margin-top:10px;
 }
 .assetRight_header {
   width: 100%;

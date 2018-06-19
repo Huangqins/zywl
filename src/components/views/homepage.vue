@@ -3,8 +3,6 @@
     <section class="head">
       <mind></mind>
         <span class="smp" >
-          <!-- <div id="dataNums"> </div> -->
-          <!-- <countTo :startVal='startVal' :endVal='endVal' :duration='3000'></countTo> -->
         </span>
         <div class="we">
          <div style="color:#EA4A1F;flex:1; border-right: 1px solid #ffff;padding-right: 8px;">ZYVE</div>
@@ -16,9 +14,7 @@
        </div>
     </section>
       <section class="secOne">
-            <div class="Aipicture">
-                 <!-- <span class="Aipicture_text">资源监控</span> -->                
-                 <!-- <span style="display:block;width:100%;height:91px;margin-top:5px"><img src="../../assets/num.jpg"/></span> -->                
+            <div class="Aipicture">               
                  <section style="height:80px;text-align:center;">
                    <div style="width:20%;height:80px;float:left"><img src="../../assets/assest.png" style="width:100%"/></div>
                    <div style="height:50%;width:80%;font-size:24px;line-height:50px;float:right;">{{assetsTotal}}</div>
@@ -26,13 +22,11 @@
                  </section>
             </div>            
             <div class="attack">
-                 <!-- <span class="Aipicture_text">攻击Pyload</span> -->
                  <span class="pictrue" >
                     <chart :option="options" height="218px"></chart>
                  </span>
             </div>
             <div class="asset">
-                <!-- <span class="Aipicture_text">资产情况</span> -->
                 <span class="pictrue">
                  <Table :columns="assets" :data="assetsData" :height="255" ></Table>
                 </span>
@@ -40,11 +34,9 @@
       </section>
       <section class="secTwo">
             <div class="attackPic">
-              <!-- <span style="background-color:#212636;font-size:20px;text-align:center;height:56px;line-height:56px;display:block;">攻击流向图</span> -->
                <chart :option="forceOptions" height="485px" id="force" width="100%"></chart>
             </div>            
             <div class="preload" >
-               <!-- <span class="Aipicture_text">预载信息工具集</span> -->
                <Table :columns="taskData" :data="taskLists" :height="255" ></Table>      
              </div> 
       </section>
@@ -66,15 +58,11 @@
                         </li>
                     </ul>
                   </section>
-                    <!-- <Table :columns="assets" :data="assetsData" :height="200" ></Table> -->
                
                 <section>
-                    <!-- <span class="Aipicture_text">外部安全资源</span> -->
                     <chart :option="vulntypePic" width="600px" height="222px" id="vulnPic"></chart>
                </section>
                 <section id="noheader">
-                    <!-- <span class="Aipicture_text">主机风险情况</span> -->
-                    <!-- <Table :columns="vulns" :data="vulnsData" :height="310" ></Table>   -->
                     <div class="vulnList" id="box">
                       <ul id="con1" ref="con1" :class="{anim:animate==true}">                       
                           <li v-for="(item,index) in vulnsData" :key="index">   
@@ -84,11 +72,6 @@
                           </li>
                       </ul>
                     </div>
-                    <!-- <div id="box">
-                      <ul id="con1" ref="con1" :class="{anim:animate==true}">
-                        <li v-for='(item,index) in items' :key="index">{{item.name}}</li>
-                      </ul>
-                    </div> -->
                 </section>
       </section>
   </div>

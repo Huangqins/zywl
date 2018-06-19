@@ -1,5 +1,5 @@
 <template>
-  <div class="logs">
+
       <div style="padding:20px;">
           <!-- 老版本 -->
         <!-- <Card :bordered="false" >
@@ -25,21 +25,21 @@
                 </div>
         </Card> -->
         <!-- 新版本 -->
-         <Card :bordered="false" class="box_report">
-            <Input v-model="value1" size="large" placeholder="搜索资产" style="width:200px"></Input>
+         <section class="box_report">
+            <Input v-model="value1" size="large" placeholder="" style="width:200px"></Input>
             <Button type="primary" >搜索</Button>
             <Button type="primary" >生成</Button>
             <Button type="primary" >删除</Button>
-        </Card>
-        <Card :bordered="false" class="box_report">
-            <p slot="title" style="color:white">管理列表</p>
+        </section>
+        <section class="box_report">
+            <h3 style="color:white">管理列表</h3>
              <div class="assetRight_content">
-                  <page :columns="columns1" :data="data2"  :loading="pageLoading" height="400"></page>
+                  <page :columns="columns1" :data="data2"  :loading="pageLoading" height="400" width="100%"></page>
               </div>
-        </Card>
+        </section>
 
     </div>
-  </div>
+
 </template>
 <script>
 import page from "components/page/page";
@@ -182,6 +182,7 @@ export default {
 .box_report {
     background: rgba(255, 255, 255, 0.1);
     margin: 10px 20px;
-   
+    width: 100%;
+    padding: 10px;
 }
 </style>

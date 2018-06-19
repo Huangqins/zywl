@@ -1,12 +1,12 @@
 <template>
     <div class="updateM">
         <Card :bordered="false" class="box_tip">
-           <p ><span>注意:</span>您距离上次版本升级已有90天。为了保证您在使用程序的稳定性和获得最新漏洞的扫描能力，请您及时升级！</p>
+           <p ><span>注意:</span>您距离上次版本升级已有xxx天。为了保证您在使用程序的稳定性和获得最新漏洞的扫描能力，请您及时升级！</p>
         </Card>
          <Card :bordered="false" class="box_tip box-card">
            <div class="box_update">
                <ul>
-                   <li>离线升级包下载地址:<a >http://ppwww.cio.com</a></li>
+                   <li>离线升级包下载地址:<a >#</a></li>
                    <li><Button size="small" class="but">立即升级</Button></li>
                    <li><Button size="small" class="but">离线升级</Button></li>                 
                </ul>
@@ -71,15 +71,15 @@ export default {
     margin:0px 20px;
 }
 .box_update {
-    height: 30px;
+    /* height: 30px; */
 }
 .box_update ul{
     color: white;
 }
 .box_update ul li{
-   /* width: 300px; */
    list-style: none;
    display: inline;
+   line-height: 44px;
    text-align: right;
    margin-right:60px;
 

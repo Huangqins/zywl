@@ -1,16 +1,16 @@
 <template>
-    <div class="report">
-         <Card :bordered="false" class="box_report">
+    <div>
+         <section class="box_report">
             <Input v-model="value1" size="large" placeholder="搜索资产" style="width:200px"></Input>
             <Button type="primary" >搜索</Button>
             <Button type="primary" >添加</Button>
-        </Card>
-        <Card :bordered="false" class="box_report">
-            <p slot="title" style="color:white">报告列表</p>
-             <div class="assetRight_content">
-                  <page :columns="reportassets" :data="reportList"  :loading="pageLoading"></page>
+        </section>
+        <section class="box_report">
+            <h3 style="color:white">报告列表</h3>
+              <div class="assetRight_content">
+                  <page :columns="reportassets" :data="reportList"  :loading="pageLoading" width="100%"></page>
               </div>
-        </Card>
+        </section>
     </div>
 </template>
 <script>
@@ -135,7 +135,12 @@ export default {
 .box_report {
     background: rgba(255, 255, 255, 0.1);
     margin: 10px 20px;
+    padding: 10px;
+    width: 100%;
    
+}
+.assetRight_content{
+  margin-top: 10px;
 }
 </style>
 

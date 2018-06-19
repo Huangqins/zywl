@@ -1,30 +1,10 @@
 <template>
   <div class="logs">
       <div style="padding:20px;">
-        <!-- <Card :bordered="false" >
-            <p slot="title" style="font-size:16px;"><Icon type="grid" style="margin-right:5px;font-size:18px;"></Icon>登陆日志</p>           
-                <div style="padding:20px;">
-                    <Card :bordered="false" >
-                        <p slot="title">查询条件</p>              
-                        <Form :model="formItem" :label-width="80">
-                            <FormItem label="账号">
-                            <Input v-model="formItem.input" placeholder="" style="width:300px;"></Input>
-                            <Button type="primary" icon="ios-search">搜索</Button>
-                            </FormItem> 
-                        </Form>
-                
-                    </Card>
-                </div>
-                <div style="padding:20px;">
-                    <Card :bordered="false" >
-                        <page :columns="columns1" :data="data2" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" ></page>
-                    </Card>
-                </div>
-        </Card> -->
         <Card :bordered="false" class="box_report">
             <span style="color:white;"><Icon type="flag" style="font-size:26px;margin-right:5px"></Icon>状态:管理员</span>
             <span style="text-align:center">
-            <Input v-model="value1" size="large" placeholder="搜索资产" style="width:200px;margin-left:10px;"></Input>
+            <Input v-model="value1" size="large" placeholder="" style="width:200px;margin-left:10px;"></Input>
             <Button type="primary" >搜索</Button>
             </span>
         </Card>
