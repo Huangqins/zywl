@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="whole">
-          <section class="assetRight">
+          <!-- <section class="assetRight">
               <div class="assetRight_header">
                 <Input v-model="value" placeholder="区域" clearable style="width: 200px"></Input>
                 <Button type="primary" icon="ios-search">搜索</Button>
@@ -18,15 +18,38 @@
                 <section>
                   <chart width="440px" height="260px" :option="optionOne" id="optionOne" ref="secondChart"></chart>
                 </section>
-                <section>
-                  <!-- <chart width="290px" height="260px" :option="optionTwo" id="optionTwo" ref="threeChart"></chart> -->
-                </section>
                 
               </div>
               <div class="assetRight_content">
                   <page :columns="assets" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="pageLoading"> </page>
               </div>
-          </section>
+          </section> -->
+        <Card :bordered="false" class="box_report">
+            <Input v-model="value1" size="large" placeholder="搜索资产" style="width:200px"></Input>
+            <Button type="primary" >搜索</Button>
+            <Button type="primary" @click="assetsAdd">添加</Button>
+            <Upload  multiple  :action="uploadUrl" :with-credentials="true"  name="excelFile" :headers="headers" :show-upload-list="false" style="display:inline-block">
+                    <Button type="primary" icon="ios-cloud-upload-outline">导入</Button>
+            </Upload>
+            <Button type="primary" icon="log-out">导出</Button>
+        </Card>
+        <Card :bordered="false" class="box_report pic">
+          <ul>
+            <li>
+                <chart width="700px" height="260px" :option="options" ref="firstChart"></chart>
+            </li>
+            <li>
+                <chart width="440px" height="260px" :option="optionOne" id="optionOne" ref="secondChart"></chart>
+            </li>
+          </ul>  
+
+        </Card>
+        <Card :bordered="false" class="box_report" style="height:428px">
+            <p slot="title" style="color:white">知识列表</p>
+            <div class="assetRight_content">
+                  <page :columns="assets" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="pageLoading"> </page>
+            </div>
+        </Card>
       </div>
       <Modals :width="width" :format="formatType" :data="dataType" :title="title" ref="formValidate" :rules="rules" @asyncOK="asyncOK" :display="display"  :loading="loading" :footer="footer"></Modals>
     <!--<Modal></Modal>-->
@@ -71,6 +94,7 @@ export default {
   },
   data() {
     return {
+      value1:'',
       uploadUrl:  location.origin + "/ZY/kb/importExcel",
       headers: {
         token: getToken(), 
@@ -78,7 +102,10 @@ export default {
       },
       options: {
         title: {
-          left: "center",
+          text: '漏洞类型:',        
+          left: '10',
+          top:"-5",
+          // left: "center",
           textStyle: {
             color: "#E4E5E5"
           }
@@ -89,10 +116,10 @@ export default {
         },
         legend: {
           type: "scroll",
-          orient: "vertical",
-          right: 5,
-          top: 20,
-          bottom: 20,
+          // orient: "vertical",
+          left: 100,
+          // top: 20,
+          // bottom: 20,
           data: [],
           textStyle:{
             color:"#fbfbfb"
@@ -102,7 +129,7 @@ export default {
           {
             type: "pie",
             radius: "65%",
-            center: ["32%", "50%"],
+            center: ["50%", "60%"],
             selectedMode: "single",
             data: [],
             label:{
@@ -122,7 +149,10 @@ export default {
       },
       optionOne: {
         title: {
-          left: "center",
+          text: '风险类型占比:',        
+          left: '',
+          top:"-4",
+          // left: "center",
           textStyle: {
             color: "#E4E5E5"
           }
@@ -133,10 +163,10 @@ export default {
         },
         legend: {
           type: "scroll",
-          orient: "vertical",
-          right: 5,
-          top: 20,
-          bottom: 20,
+          // orient: "vertical",
+          left: 125,
+          // top: 20,
+          // bottom: 20,
           data: [],
           textStyle:{
             color:"#fbfbfb"
@@ -192,7 +222,6 @@ export default {
             radius: "65%",
             center: ["50%", "50%"],
             selectedMode: "single",
-
             data: [
               {
                 value: 1548,
@@ -375,25 +404,11 @@ export default {
               }),
               h("Button", {
                 props: {
-                  type: "error",
-                  size: "small",
-                  icon: "trash-a"
-                },
-                style: {
-                  marginRight: "5px"
-                },
-                on: {
-                  click: () => {
-                    this._kbDelete(params.row);
-                    // this.remove(params.index);
-                    // console.log(params)
-                  }
-                }
-              }),
-              h("Button", {
-                props: {
                   size: "small",
                   icon: "social-buffer"
+                },                
+                style: {
+                  marginRight: "5px"
                 },
                 on: {
                   click: () => {
@@ -408,7 +423,22 @@ export default {
                     //this._detail(params.row)
                   }
                 }
-              })
+              }),
+              
+              h("Button", {
+                props: {
+                  type: "error",
+                  size: "small",
+                  icon: "trash-a"
+                },
+                on: {
+                  click: () => {
+                    this._kbDelete(params.row);
+                    // this.remove(params.index);
+                    // console.log(params)
+                  }
+                }
+              }),
             ]);
           }
         }
@@ -568,6 +598,15 @@ export default {
 };
 </script>
 <style scoped>
+.box_report {
+    background: rgba(255, 255, 255, 0.1);
+    margin: 10px 20px;
+   
+}
+.pic ul li{
+  display: inline-block;
+  width: 47%;
+}
 .whole {
   width: 100%;
   color: #e4e5e5;

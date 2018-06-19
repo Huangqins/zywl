@@ -1,5 +1,8 @@
 <template>
-    <div :class="className" :style="{height:height,width:width}" :id="id"></div>
+
+<div>
+    <div :id="id" :style="{width: width, height: height,margin: margin}"></div>
+</div>
 </template>
 
 <script>
@@ -25,6 +28,10 @@ export default {
     className: {
       type: String,
       default: "chart"
+    },
+    margin: {
+      type: String,
+      default: '0 auto'
     },
     option: {
       type: Object,

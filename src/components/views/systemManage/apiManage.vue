@@ -1,7 +1,8 @@
 <template>
   <div class="logs">
       <div style="padding:20px;">
-        <Card :bordered="false" >
+          <!-- 老版本 -->
+        <!-- <Card :bordered="false" >
             <p slot="title" style="font-size:16px;"><Icon type="grid" style="margin-right:5px;font-size:18px;"></Icon>API管理</p>           
                 <div style="padding:20px;">
                     <Card :bordered="false" >
@@ -17,38 +18,108 @@
                     </Card>
                 </div>
                 <div style="padding:20px;">
-                    <Card :bordered="false" >
-                        <!-- <p slot="title">日志列表</p>               -->
+                    <Card :bordered="false" >                       
                         <Table height="400" :columns="columns1" :data="data2"></Table>
                 
                     </Card>
                 </div>
+        </Card> -->
+        <!-- 新版本 -->
+         <Card :bordered="false" class="box_report">
+            <Input v-model="value1" size="large" placeholder="搜索资产" style="width:200px"></Input>
+            <Button type="primary" >搜索</Button>
+            <Button type="primary" >生成</Button>
+            <Button type="primary" >删除</Button>
         </Card>
+        <Card :bordered="false" class="box_report">
+            <p slot="title" style="color:white">管理列表</p>
+             <div class="assetRight_content">
+                  <page :columns="columns1" :data="data2"  :loading="pageLoading" height="400"></page>
+              </div>
+        </Card>
+
     </div>
   </div>
 </template>
 <script>
+import page from "components/page/page";
 export default {
+    components:{
+        page
+    },
   data(){
     return{
-      formItem:{
-         input:''
-      },
-       columns1: [
+        pageLoading:false,
+        value1:'',
+        formItem:{
+            input:''
+        },
+        columns1: [
                     {
-                        title: '账号',
+                    type: "selection",
+                    width: 60,
+                    align: "center"
+                    },
+                    {
+                        title: '接口名称',
                         key: 'name',
                         align:'center'
                     },
                     {
-                        title: '登陆状态',
+                        title: 'public key',
                         key: 'age',
                         align:'center'
                     },
                     {
-                        title: '时间',
+                        title: '生成时间',
                         key: 'address',
                         align:'center'
+                    },
+                    {
+                        title: '失效时间',
+                        key: 'address',
+                        align:'center'
+                    },
+                    {
+                        title: "操作",
+                        align: "center",
+                        render: (h, params) => {
+                            return h("div", [
+                            h("Button", {
+                                props: {
+                                type: "primary",
+                                size: "small",                              
+                                icon: "edit"
+                                },
+                                style: {
+                                marginRight: "5px"
+                                },
+                                on: {
+                                click: () => {
+                                    this.data = Object.assign({}, this.data, params.row);
+                                    // 打开
+                                    // (this.footer = true), (this.modalStatus = 0);
+                                    // this.$refs.formValidate.open();
+                                }
+                                }
+                            },),
+                            h("Button", {
+                                props: {
+                                type: "error",
+                                size: "small",
+                                icon: "trash-a"
+                                },
+                                style: {
+                                marginLeft: "5px"
+                                },
+                                on: {
+                                click: () => {
+                                    this.remove({ assets_id: params.row.assets_id });
+                                }
+                                }
+                            })
+                            ]);
+                        }
                     }
                 ],
                 data2: [
@@ -107,3 +178,10 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+.box_report {
+    background: rgba(255, 255, 255, 0.1);
+    margin: 10px 20px;
+   
+}
+</style>

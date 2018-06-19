@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div class="whole">
+      <!-- <div class="whole">
           <section class="assetRight">
               <div class="assetRight_header">
                 <Input v-model="value" placeholder="区域" clearable style="width: 200px"></Input>
@@ -13,19 +13,78 @@
             </Upload>
                 <Button type="primary" icon="log-out">导出</Button>
               </div>
-              <!-- <div class="uploadFileList" style="color:#fff;padding-left:24px;"> -->
-                  <!-- <div v-if="file !== null" >上传的文件: {{ file.name }} <Button type="primary" @click="upload" :loading="loadingStatus" >{{ loadingStatus ? 'Uploading' : '上传' }}</Button></div> -->
-              <!-- </div> -->
-               <!--<div class="assetRight_nav">
-                <section></section>
-                <section></section>
-                <section></section>
-              </div> -->
+             
               <div class="assetRight_content">
                   <page :columns="assets" :data="assetsList" :dataTotal="dataTotal" @dataLoad="dataLoad"  :loading="pageLoading"></page>
               </div>
           </section>
-      </div>
+      </div> -->
+       <Card :bordered="false" class="box_report">
+            <Input v-model="value1" size="large" placeholder="搜索资产" style="width:200px"></Input>
+            <Button type="primary" >搜索</Button>
+            <Button type="primary" icon="compose" @click="assetsAdd">添加</Button>
+            <Upload multiple  ref="upload" :show-upload-list="false"   :action="uploadUrl" :with-credentials="true" 
+                accept="" name="excelFile" :headers="headers" style="display:inline-block"
+                 :before-upload="handleUpload" >
+                <Button type="primary" icon="ios-cloud-upload-outline">导入</Button>
+            </Upload>
+            <Button type="primary" icon="log-out">导出</Button>
+        </Card>
+        <Card :bordered="false" class="box_asset" style="margin-right:10px;">
+            <p slot="title" style="color:white">资产分布区</p>
+            <div class="assetPort">
+              <ul>
+                <li ><Icon type="record" style="color:pink;margin-right:8px"></Icon>资产总数:<span style="margin-left:10px;">{{ewewe}}</span></li>
+                <li><Icon type="record" style="color:pink;margin-right:8px"></Icon>操作系统</li>
+                <li><Icon type="record" style="color:pink;margin-right:8px"></Icon>设备类型</li>
+                <li><Icon type="record" style="color:pink;margin-right:8px"></Icon>端口</li>
+              </ul>
+            </div>
+        </Card>
+        <Card :bordered="false" class="box_asset">
+            <p slot="title" style="color:white">区域资产分布区</p>
+            <div class="Portasset">
+              <ul>
+                <li >
+                   <Icon type="record" style="color:red;font-size:34px;"></Icon> 
+                   <p>A区 </p>
+                   <p>121</p>
+                </li>
+                <li >
+                   <Icon type="record" style="color:blue;font-size:34px;"></Icon> 
+                   <p>B区 </p>
+                   <p>999</p>
+                </li>
+                <li >
+                   <Icon type="record" style="color:green;font-size:34px;"></Icon> 
+                   <p>C区 </p>
+                   <p>4545</p>
+                </li>
+                <li >
+                   <Icon type="record" style="color:yellow;font-size:34px;"></Icon> 
+                   <p>D区 </p>
+                   <p>7878</p>
+                </li>
+                <li >
+                   <Icon type="record" style="color:pink;font-size:34px;"></Icon> 
+                   <p>E区 </p>
+                   <p>343</p>
+                </li>
+                <li >
+                   <Icon type="record" style="color:lightblue;font-size:34px;"></Icon> 
+                   <p>F区 </p>
+                   <p>456</p>
+                </li>
+              </ul>
+            </div>
+        </Card>
+        <div style="clear:both"></div>
+        <Card :bordered="false" class="box_report" style="height:440px">
+            <p slot="title" style="color:white">资产列表</p>
+             <div class="assetRight_content">
+                  <page :columns="assets" :data="assetsList" :dataTotal="dataTotal" @dataLoad="dataLoad"  :loading="pageLoading"></page>
+              </div>
+        </Card>
       <Modals :width="width" :footer="footer"  :format="formatType" :data="dataType" :title="title" ref="formValidate" :ruleValidate="rules" @asyncOK="asyncOK" :display="display"  :loading="loading"></Modals>
       <!-- 资产导入 -->
       <!-- <Modal v-model="assetAddModal"  title="资产导入"  :loading="assetAddLoading" @on-ok="assetImport">
@@ -74,6 +133,7 @@ export default {
     Modals
   },
   data() {
+   
     const addUrlValidate = (rule, value, callback) => {
       if (!value && !this.data.assets_ip) {
         callback(new Error("url或者ip请至少填写一项"));
@@ -90,6 +150,8 @@ export default {
       }
     };
     return {
+      ewewe:"",
+      value1:'',
       uploadStatus: false,
       file: null,
       loadingStatus: false,
@@ -295,7 +357,8 @@ export default {
       this.pageLoading = true;
       assetsInfo(params).then(res => {
         this.assetsList = res.rows;
-        this.dataTotal = res.total;
+        this.ewewe=this.dataTotal = res.total;
+        
         this.pageLoading = false;
       });
     },
@@ -354,6 +417,33 @@ export default {
 };
 </script>
 <style scoped>
+.box_report {
+    background: rgba(255, 255, 255, 0.1);
+    margin: 10px 20px;   
+}
+.box_asset {
+    background: rgba(255, 255, 255, 0.1);
+    margin: 10px 20px;
+    width: 48%;
+    float: left;   
+}
+.assetPort ul li{
+  list-style: none;
+  color: white;
+  height: 50px;
+}
+.Portasset ul li{
+  list-style: none;
+  color: white;
+  margin-left: 10px;
+  width: 116px;
+  height: 200px;
+  display: inline-block;
+  text-align: center;
+}
+.Portasset ul li p{
+  line-height:42px;
+}
 .whole {
   width: 100%;
 }

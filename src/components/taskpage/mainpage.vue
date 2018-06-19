@@ -197,16 +197,9 @@ export default {
           text: '系统管理',
           path: '/systemManage',
           icon: 'settings',
-          children: [{
-            name: '07',
-            path: '/logs',
-            text: '日志管理'
-          },{
-            name: '08',
-            path: '/apiManage',
-            text: 'Api管理'
-          },
-          {
+          children: [
+            
+            {
             name: '09',
             path: '/user',
             text: '个人信息'
@@ -220,7 +213,18 @@ export default {
             name: '11',
             path: '/updateManage',
             text: '升级管理'
+          },
+          {
+            name: '08',
+            path: '/apiManage',
+            text: 'Api管理'
+          },
+          {
+            name: '07',
+            path: '/logs',
+            text: '日志管理'
           }
+          
           ]
         },
         // {
