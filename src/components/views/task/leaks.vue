@@ -460,7 +460,6 @@ export default {
 .box_report {
   background: rgba(255, 255, 255, 0.1);
   margin: 10px 20px; 
-  /* float: left;  */
   width: 100%; 
   padding:10px;
 }

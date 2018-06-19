@@ -15,13 +15,16 @@
     </section>
       <section class="secOne">
             <div class="Aipicture">               
-                 <section style="height:80px;text-align:center;">
-                   <div style="width:20%;height:80px;float:left"><img src="../../assets/assest.png" style="width:100%"/></div>
-                   <div style="height:50%;width:80%;font-size:24px;line-height:50px;float:right;">{{assetsTotal}}</div>
-                   <div style="height:50%;width:80%;font-size:15px;line-height:40px;float:right">资产数量</div>
+                 <section style="height:80px;">
+                  <p>资产总数:<span style="margin-left:5px;">{{assetsTotal}}</span></p>
+                  <div class="targetSum">
+                    <p style="font-size:26px;">21212</p>
+                    <p>总执行任务数</p>                    
+                  </div>
                  </section>
             </div>            
             <div class="attack">
+              <p></p>
                  <span class="pictrue" >
                     <chart :option="options" height="218px"></chart>
                  </span>
@@ -572,6 +575,16 @@ export default {
   padding: 0px 12px;
   margin-top: 10px;
 }
+.targetSum{
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border:1px solid #ffffff;
+  text-align: center;
+  padding-top:25px;
+  margin-top: 20px;
+  margin-left:31px;
+}
 .we{
   width:200px;
   font-size:24px;
@@ -608,6 +621,7 @@ export default {
   float: left;
   margin: 0px 0px 3px 0px;
   box-sizing: border-box;
+  font-size: 16px;
 }
 .secTwo {
   width: 36%;
@@ -643,9 +657,9 @@ export default {
 }
 .Aipicture {
   /* width: 480px; */
-  height: 150px;
+  height: 200px;
   border: 1px solid #2b4e6f;
-  padding: 40px;
+  padding: 20px;
   margin: 0 0px 6px 0px;
 }
 .Aipicture_text {

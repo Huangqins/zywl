@@ -1,6 +1,6 @@
 <template>
   <div>
-       <div  class="box_report">
+       <div  class="box_report" style="margin:10px 20px;padding:20px;width:97%">
             <Input v-model="value1" size="large" placeholder="搜索资产" style="width:200px"></Input>
             <Button type="primary" >搜索</Button>
             <Button type="primary" icon="compose" @click="assetsAdd">添加</Button>
@@ -11,8 +11,9 @@
             </Upload>
             <Button type="primary" icon="log-out">导出</Button>
         </div>
-        <div class="box_report box_asset" style="margin-right:10px;">
-            <h3 style="color:white">资产分布区</h3>
+        <div style="width:100%;overflow:hidden;margin:10px 20px;">
+          <div class="box_report aflet" >
+            <h3 style="color:white;line-height:41px">资产分布区</h3>
             <div class="assetPort">
               <ul>
                 <li ><Icon type="record" style="color:pink;margin-right:8px"></Icon>资产总数:<span style="margin-left:10px;">{{ewewe}}</span></li>
@@ -59,11 +60,11 @@
               </ul>
             </div>
         </div>
-        <div style="clear:both"></div>
-        <div  class="box_report" style="height:440px">
+        </div>
+        <div  class="page" >
             <h3 style="color:white">资产列表</h3>
              <div class="assetRight_content">
-                  <page :columns="assets" :data="assetsList" :dataTotal="dataTotal" @dataLoad="dataLoad"  :loading="pageLoading" width="100%"></page>
+                  <page :columns="assets" :data="assetsList" :dataTotal="dataTotal" @dataLoad="dataLoad"  :loading="pageLoading" ></page>
               </div>
         </div>
       <Modals :width="width" :footer="footer"  :format="formatType" :data="dataType" :title="title" ref="formValidate" :ruleValidate="rules" @asyncOK="asyncOK" :display="display"  :loading="loading"></Modals>
@@ -206,6 +207,11 @@ export default {
         },
         {
           title: "操作系统",
+          key: "",
+          align: "center"
+        },
+        {
+          title: "所属区域",
           key: "",
           align: "center"
         },
@@ -409,16 +415,23 @@ export default {
 </script>
 <style scoped>
 .box_report {
-    background: rgba(255, 255, 255, 0.1);
-    margin: 10px 20px;   
-    padding:10px;
-    width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  /* margin: 10px 20px;  */
+  width: 100%; 
+  padding:10px;
+}
+ .aflet{
+   box-sizing:border-box;
+   width:37%;
+   float:left;
+   margin-right: 36px;
+   
 }
 .box_asset {
-    background: rgba(255, 255, 255, 0.1);
-    margin: 10px 20px;
-    width: 48%;
-    float: left;   
+    width: 58%;
+    float: left;  
+    padding:20px; 
+    box-sizing:border-box;
 }
 .assetPort ul li{
   list-style: none;
@@ -429,7 +442,7 @@ export default {
   list-style: none;
   color: white;
   margin-left: 10px;
-  width: 116px;
+  width: 14%;
   height: 200px;
   display: inline-block;
   text-align: center;
@@ -459,6 +472,7 @@ export default {
 }
 .assetRight_content{
   margin-top:10px;
+  width: 97%;
 }
 .assetRight_header {
   width: 100%;
@@ -469,5 +483,12 @@ export default {
 }
 .ivu-btn .ivu-btn-primary {
   margin-left: 5px;
+}
+.page{
+  width: 97%;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 10px 20px; 
+  padding: 15px;
+  height: 420px;
 }
 </style>
