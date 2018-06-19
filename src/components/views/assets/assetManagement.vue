@@ -28,7 +28,7 @@
             <div class="Portasset">
               <ul>
                 <li >
-                   <Icon type="record" style="color:red;font-size:34px;"></Icon> 
+                   <Icon type="record" style="color:blue;font-size:34px;"></Icon> 
                    <p>A区 </p>
                    <p>121</p>
                 </li>
