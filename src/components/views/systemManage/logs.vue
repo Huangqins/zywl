@@ -1,7 +1,7 @@
 <template>
   <div class="logs">
       <div style="padding:20px;">
-        <Card :bordered="false" >
+        <!-- <Card :bordered="false" >
             <p slot="title" style="font-size:16px;"><Icon type="grid" style="margin-right:5px;font-size:18px;"></Icon>登陆日志</p>           
                 <div style="padding:20px;">
                     <Card :bordered="false" >
@@ -17,11 +17,22 @@
                 </div>
                 <div style="padding:20px;">
                     <Card :bordered="false" >
-                        <!-- <p slot="title">日志列表</p>               -->
-                        <!-- <Table height="400" :columns="columns1" :data="data2"></Table> -->
                         <page :columns="columns1" :data="data2" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" ></page>
                     </Card>
                 </div>
+        </Card> -->
+        <Card :bordered="false" class="box_report">
+            <span style="color:white;"><Icon type="flag" style="font-size:26px;margin-right:5px"></Icon>状态:管理员</span>
+            <span style="text-align:center">
+            <Input v-model="value1" size="large" placeholder="搜索资产" style="width:200px;margin-left:10px;"></Input>
+            <Button type="primary" >搜索</Button>
+            </span>
+        </Card>
+        <Card :bordered="false" class="box_report">
+            <p slot="title" style="color:white">日志列表</p>
+             <div class="assetRight_content">
+                  <page :columns="columns1" :data="data2"  :loading="pageLoading" height="400"></page>
+              </div>
         </Card>
     </div>
   </div>
@@ -37,6 +48,8 @@ export default {
   },
   data() {
     return {
+      value1:'',
+      pageLoading:false,
       defaultPage: {
         area: 1,
         rows: 10,
@@ -98,3 +111,10 @@ export default {
 };
 </script>
 
+<style scoped>
+.box_report {
+    background: rgba(255, 255, 255, 0.1);
+    margin: 10px 20px;
+   
+}
+</style>

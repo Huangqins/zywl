@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div :id="id" :style="{width: width, height: height,margin: '0 auto'}"></div>
+    <div :id="id" :style="{width: width, height: height,margin: margin}"></div>
 </div>
 </template>
 <script>
@@ -25,6 +25,10 @@ export default {
     width: {
       type: String,
       default: "400px"
+    },
+    margin: {
+      type: String,
+      default: '0 auto'
     },
     option: {
       type: Object,

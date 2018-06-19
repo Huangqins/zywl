@@ -1,6 +1,7 @@
 <template>
 <div>
-    <div class="secOne">   
+
+    <!-- <div class="secOne">   
         <section >
                   <div class="vulnLevel">
                     <div class="levelRight">
@@ -37,10 +38,57 @@
                     </ul>
                   </div>
         </section>
+     </div> -->
+     <div class="all">
+       <ul>
+          <li style="width:52%;">
+              <Card :bordered="false" class="box_report" style="overflow:hidden;">
+              <p slot="title" style="color:white">熵值图</p>
+              <div>
+                <chart :option="optionLine"  width="400px" height="360px" margin="margin-left:60px;" style="float:left;"></chart>
+              </div>
+              <div class="asset_vulntNum">
+                <p>以资产为维度的风险数</p>
+                <div>80%<br>风险度</div>
+                <div>90%<br>资产健康度</div>
+              </div>
+
+              </Card>
+          </li>
+          <li style="width:47%">
+            <Card :bordered="false" class="box_report" style="overflow:hidden;">
+                <p slot="title" style="color:white">风险等级变化趋势</p>
+                <chart :option="moreLine"  width="400px" height="360px" id="level" ></chart>
+              </Card>
+          </li>
+          <li>
+           <Card :bordered="false" class="box_report">
+               <p slot="title" style="color:white">年重大风险跟踪</p>
+               <div>
+                 <chart :option="risk"  width="400px" height="340px" id="risk"></chart>
+               </div>
+                
+           </Card>
+          </li>
+          <li>
+           <Card :bordered="false" class="box_report">
+              <p slot="title" style="color:white">漏洞历史变化对比</p>
+              <div>
+                <chart :option="history"  width="400px" height="340px" id="history"></chart>
+              </div>
+           </Card>
+          </li>
+          <li>
+           <Card :bordered="false" class="box_report">
+              <p slot="title" style="color:white">资产分类风险变化</p>
+              <div>
+                <chart :option="assetType"  width="400px" height="340px" id="assetType"></chart>
+              </div>
+           </Card>
+          </li>   
+
+       </ul>
      </div>
-    <div class="List">
-      <page :columns="assetsColums" :data="assetsList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" :width="width"></page>
-    </div>
   </div>
 </template>
 <script>
@@ -62,187 +110,271 @@ export default {
   data() {
     return {
       optionLine: {
-        grid: {
-          left: 60,
-          top: 10,
-          bottom: 20,
-          right: 10
-        },
-        xAxis: {
-          type: "category",
-          data: [],
-          axisLabel: {
-            color: '#fff'
-          }
-        },
-        yAxis: {
-          type: "value",
-           axisLabel: {
-            color: '#fff'
-          }
-        },
-        series: [
-          {
-            data: [],
-            type: "line",
-            label: {
-              color: '#fff'
-            }
-          }
-        ]
-      },
-      option: {
-        xAxis: {
-          axisLabel: {
-            textStyle: {
-              color: "#CCCCCC"
-            }
-          },
-          splitLine: {
-            lineStyle: {
-              type: "dashed"
-            }
-          }
-        },
-        yAxis: {
-          axisLabel: {
-            textStyle: {
-              color: "#CCCCCC"
-            }
-          },
-          splitLine: {
-            lineStyle: {
-              type: "dashed"
-            }
-          },
-          scale: true
-        },
-        grid: {
-          top: "12",
-          bottom: "20"
-        },
-        series: [
-          {
-            data: data,
-            type: "scatter",
-            symbolSize: function(data) {
-              return data[1];
-            },
-            label: {
-              emphasis: {
-                show: true,
-                formatter: function(param) {
-                  return param.data[2];
-                },
-                position: "top"
-              }
-            },
-            itemStyle: {
-              normal: {
-                shadowBlur: 10,
-                shadowColor: "rgba(120, 36, 50, 0.5)",
-                shadowOffsetY: 5,
-                color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [
-                  {
-                    offset: 0,
-                    color: "rgb(251, 118, 123)"
-                  },
-                  {
-                    offset: 1,
-                    color: "rgb(204, 46, 72)"
-                  }
-                ])
-              }
-            }
-          }
-        ]
-      },
-      options: {
         tooltip: {
-          trigger: "item",
-          formatter: "{a} <br/>{b}: {c} ({d}%)"
+            trigger: 'axis'
+        },
+        legend: {
+            data:['邮件营销','联盟广告'],
+            textStyle:{
+              color:"#ffffff"
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['周一','周二','周三','周四','周五','周六','周日'],
+            axisLine:{
+              lineStyle:{
+                color:"#ffffff"
+              }
+            }
+        },
+        yAxis: {
+            type: 'value',
+            axisLine:{
+              lineStyle:{
+                color:"#ffffff"
+              }
+            }
+
         },
         series: [
-          {
-            name: "访问来源",
-            type: "pie",
-            radius: ["50%", "70%"],
-            avoidLabelOverlap: false,
-            label: {
-              normal: {
-                show: true,
-                position: "center"
-              },
-              emphasis: {
-                show: true,
-                textStyle: {
-                  fontSize: "30",
-                  fontWeight: "bold"
+        {
+            name:'邮件营销',
+            type:'line',
+            stack: '总量',
+            data:[120, 132, 101, 134, 90, 230, 210]
+        },
+        {
+            name:'联盟广告',
+            type:'line',
+            stack: '总量',
+            data:[220, 182, 191, 234, 290, 330, 310]
+        }
+        ]
+      },
+     moreLine : {
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['邮件营销','联盟广告','视频广告','直接访问'],
+                textStyle:{
+                  color:"#ffffff"
+                 }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['周一','周二','周三','周四','周五','周六','周日'],
+                axisLine:{
+                lineStyle:{
+                  color:"#ffffff"
                 }
               }
             },
-            labelLine: {
-              normal: {
-                show: false
-              }
+            yAxis: {
+                type: 'value',
+                axisLine:{
+                  lineStyle:{
+                  color:"#ffffff"
+                 }
+                }
             },
-            data: [{ value: 335, name: "高风险" }]
-          }
+            series: [
+                {
+                    name:'邮件营销',
+                    type:'line',
+                    stack: '总量',
+                    data:[120, 132, 101, 134, 90, 230, 210]
+                },
+                {
+                    name:'联盟广告',
+                    type:'line',
+                    stack: '总量',
+                    data:[220, 182, 191, 234, 290, 330, 310]
+                },
+                {
+                    name:'视频广告',
+                    type:'line',
+                    stack: '总量',
+                    data:[150, 232, 201, 154, 190, 330, 410]
+                },
+                {
+                    name:'直接访问',
+                    type:'line',
+                    stack: '总量',
+                    data:[320, 332, 301, 334, 390, 330, 320]
+                }
+            ]
+        },
+        risk: {
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['邮件营销'],
+            textStyle:{
+              color:"#ffffff"
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['周一','周二','周三','周四','周五','周六','周日'],
+            axisLine:{
+              lineStyle:{
+                color:"#ffffff"
+              }
+            }
+        },
+        yAxis: {
+            type: 'value',
+            axisLine:{
+              lineStyle:{
+                color:"#ffffff"
+              }
+            }
+
+        },
+        series: [
+        {
+            name:'邮件营销',
+            type:'line',
+            stack: '总量',
+            data:[120, 132, 101, 134, 90, 230, 210]
+        },
+        {
+            name:'联盟广告',
+            type:'line',
+            stack: '总量',
+            data:[220, 182, 191, 234, 290, 330, 310]
+        }
+        ]
+      },
+      history: {
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['邮件营销','联盟广告'],
+            textStyle:{
+              color:"#ffffff"
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['周一','周二','周三','周四','周五','周六','周日'],
+            axisLine:{
+              lineStyle:{
+                color:"#ffffff"
+              }
+            }
+        },
+        yAxis: {
+            type: 'value',
+            axisLine:{
+              lineStyle:{
+                color:"#ffffff"
+              }
+            }
+
+        },
+        series: [
+        {
+            name:'邮件营销',
+            type:'line',
+            stack: '总量',
+            data:[120, 132, 101, 134, 90, 230, 210]
+        },
+        {
+            name:'联盟广告',
+            type:'line',
+            stack: '总量',
+            data:[220, 182, 191, 234, 290, 330, 310]
+        }
+        ]
+      },
+      assetType: {
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['邮件营销','联盟广告'],
+            textStyle:{
+              color:"#ffffff"
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['周一','周二','周三','周四','周五','周六','周日'],
+            axisLine:{
+              lineStyle:{
+                color:"#ffffff"
+              }
+            }
+        },
+        yAxis: {
+            type: 'value',
+            axisLine:{
+              lineStyle:{
+                color:"#ffffff"
+              }
+            }
+
+        },
+        series: [
+        {
+            name:'邮件营销',
+            type:'line',
+            stack: '总量',
+            data:[120, 132, 101, 134, 90, 230, 210]
+        },
+        {
+            name:'联盟广告',
+            type:'line',
+            stack: '总量',
+            data:[220, 182, 191, 234, 290, 330, 310]
+        }
         ]
       },
       //top10排行榜
       holes: [],
       assetsList: [],
       width: "800px",
-      assetsColums: [
-        {
-          title: "资产名称",
-          key: "assets_name",
-          align: "center"
-        },
-        {
-          title: "资产URL",
-          key: "assets_url",
-          align: "center"
-        },
-        {
-          title: "IP",
-          key: "assets_ip",
-          align: "center"
-        },
-        {
-          title: "风险总数",
-          key: "vuln_total",
-          align: "center"
-        },
-        {
-          title: "高风险",
-          key: "vuln_high",
-          align: "center"
-        },
-        {
-          title: "中风险",
-          key: "vuln_medium",
-          align: "center"
-        },
-        {
-          title: "低风险",
-          key: "vuln_low",
-          align: "center"
-        },
-        {
-          title: "风险利用情况",
-          key: "vuln_use",
-          align: "center"
-        }
-      ],
       total: 0,
-      defaultPage: {
-        area: 1,
-        rows: 10,
-        page: 1,
-        userName: getUserName()
-      },
       loading: false
     };
   },
@@ -296,15 +428,31 @@ export default {
 };
 </script>
 <style scoped>
-.secOne {
-  width: 100%;
-  display: flex;
-  color: #e4e5e5;
-  flex-direction: row;
+.all ul li{
+  list-style: none;
+  display: inline-block;
+  width: 33%;
 }
-.secOne section {
-  flex: 1;
-  margin: 20px 30px;
+.asset_vulntNum {
+  width:140px;
+  color: white;
+  float: left;  
+  margin-left:100px;
+
+}
+.asset_vulntNum div{
+   width: 95px;
+   height: 95px;
+   padding:22px 0;
+   border-radius: 50%;
+   background: red;
+   text-align: center;
+   margin: 0 auto;
+   margin-top:40px
+}
+.box_report {
+    background: rgba(255, 255, 255, 0.1);
+    margin: 10px 20px;   
 }
 .vulnLevel {
   /* padding: 15px; */

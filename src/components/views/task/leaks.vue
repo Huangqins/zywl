@@ -1,77 +1,92 @@
 <template>
   <div>
-          <div class="leaks">
-            <section>
-              <span class="better"></span>
-              <div class="Num brown">
-                <div class="vuln_num"> 
-                   {{urgent}}       
-                </div>
-               <div class="vuln_text">                          
-                  <p>极高风险</p>
-                </div>
-                </div>
-            </section>
-            <section>
-              <span class="high"></span>
-              <div class="Num red">
-                <div class="vuln_num"> 
-                  {{high}}      
-                </div>
-               <div class="vuln_text">                             
-                  <p>高风险</p>
-                </div>
-                </div>
-            </section>
-            <section>
-              <span class="middle"></span>
-              <div class="Num yell">
-               <div  class="vuln_num">
-                  {{middle}}     
-                </div>
-                <div class="vuln_text">                             
-                  <p>中风险</p>
-                </div>
-                </div>
-            </section>
-            <section>
-              <span class="low"></span>
-              <div class="Num blu">
-                <div  class="vuln_num">
-                  {{low}}   
-                </div>
-                <div class="vuln_text">                                 
-                  <p>低风险</p>
-                </div>
-              </div>
-            </section>
-            <section>
-              <span class="prompt"></span>
-              <div class="Num green">
-                <div class="vuln_num"> 
-                   {{prompt}}      
-                </div>
-               <div class="vuln_text">                            
-                  <p>极低风险</p>
-                </div>
-                </div>
-            </section>
-                 
-          </div>
-       <div class="leaksTwo">
-          <section>
-            <cloud :height=300 ></cloud>
+        <Card :bordered="false" class="box_report aside">     
+          <p slot="title">漏洞Top10排行榜</p>
+          <section class="holeList" style="height:255px;">
+                    <ul>
+                        <li class="listOne">
+                          <span class="holeHeader" style="font-family:sans-serif">漏洞排行</span>
+                          <span class="holeHeader">漏洞名称</span>
+                          <span class="holeHeader">漏洞数量</span>
+                        </li>
+                        <li v-for="(item,index) in holes" :key="index">
+                        <span v-if="index===0"><img :src="image_One" ></span>
+                        <span v-else-if="index===1"><img :src="image_Two" ></span>
+                        <span v-else-if="index===2"><img :src="image_Three"/></span>
+                        <span v-else>{{index + 1}}</span>
+                        <span>{{item.name}}</span>
+                        <span>{{item.vuln_total}}</span>
+                        </li>
+                    </ul>
           </section>
-          <section>
-             <chart width="505px" height="300px" :option="vulntypes" id="vulntype" ref="vulntype"></chart>
+        </Card>
+        <Card :bordered="false" class="box_report rightaside">     
+          <p slot="title">漏洞</p>
+          <section style="width:40%;">
+            <div class="assetPic">
+              <p style="text-align:center">当前风险数</p>
+              <p style="text-align:center">343434</p>
+            </div>
+             
+             <ul>
+               <li>
+                 <Icon type="alert-circled" style="font-size:28px;float:left;margin-right:8px;color:white"> </Icon>
+                 <p>极高风险</p>
+                 <p>9999</p>
+
+                 </li>
+               <li>
+                 <Icon type="alert-circled" style="font-size:28px;float:left;margin-right:8px;color:white"> </Icon>
+                 <p>高风险</p>
+                 <p>76666</p>
+               </li>
+               <li>
+                <Icon type="alert-circled" style="font-size:28px;float:left;margin-right:8px;color:white"> </Icon>
+                 <p>中风险</p>
+                 <p>5555</p>
+               </li>
+               <li>
+                 <Icon type="alert-circled" style="font-size:28px;float:left;margin-right:8px;color:white"> </Icon>
+                 <p>中低风险</p>
+                 <p>2222</p>
+                </li>   
+                <li>
+                 <Icon type="alert-circled" style="font-size:28px;float:left;margin-right:8px;color:white"> </Icon>
+                 <p>低风险</p>
+                 <p>111</p>
+                </li>          
+
+             </ul>
           </section>
-          <section></section>
-       </div>
-       <div class="leaksThree">
-          <section class="list">
-              <page :columns="leaksColums" :data="leaksList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" ></page>
+          <section class="repaid">
+            <ul>              
+              <li style="width:49%">
+                <p>平均修复率</p>
+                <div class="repaid_num">20%</div>
+              </li>
+              <li style="width:49%">
+                <p>平均修复周期</p>
+                <div class="repaid_num">40%</div>
+              </li>
+              <li style="width:49%">
+                <p>已处理风险数</p>
+                <div class="repaid_num">20%</div>
+              </li>
+              <li style="width:49%">
+                <p>待修复风险数</p>
+                <div class="repaid_num">20%</div>
+              </li>             
+
+            </ul>
           </section>
-       </div>
+        </Card>
+        <div style="clear:both"></div>
+       
+        <div class="leaksThree">
+          <p style="height:50px;border-bottom:1px solid #ffffff;color:white;font-size:14px;font-weight:bold">风险列表</p>
+           <page :columns="leaksColums" :data="leaksList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" ></page>           
+        </div>
+        
         
   </div>
 </template>
@@ -87,6 +102,7 @@ import vulntype from "api/vulntype";
 import vulnWordClouds from "api/vulnWordClouds";
 import getVulnInfo from "api/getVulnInfo";
 import fomatterTime from "@/utils/tool";
+import vulnTop from "api/vulnTop";
 const levelSchema = {
   "4": "紧急风险",
   "3": "高风险",
@@ -127,6 +143,12 @@ export default {
   },
   data() {
     return {
+      image_One:require("static/top1.png"),
+      image_Two:require("static/top2.png"),
+      image_Three:require("static/top3.png"),
+      holes:'',
+      name:'',
+      vuln_total:'',
       taskID: "",
       urgent: "",
       high: "",
@@ -289,23 +311,38 @@ export default {
     // this._vulnLevel({taskID:})
   },
   mounted() {
-    this.vulntype();
+    // this.vulntype();
+    this.vulntop();
   },
   methods: {
     //风险类型饼状图
-    vulntype() {
-      this.$refs.vulntype.showLoading();
-      getVulnInfo({}).then(res => {
-        if (res.result === 0) {
-          this.$refs.vulntype.hideLoading();
-          let list = res.vulns;
-          list.forEach(item => {
-            this.vulntypes.series[0].data.push({
-              value: item.vuln_total,
-              name: item.kb_vuln_class
-            });
-            this.vulntypes.legend.data.push(item.kb_vuln_class);
-          });
+    // vulntype() {
+    //   this.$refs.vulntype.showLoading();
+    //   getVulnInfo({}).then(res => {
+    //     if (res.result === 0) {
+    //       this.$refs.vulntype.hideLoading();
+    //       let list = res.vulns;
+    //       list.forEach(item => {
+    //         this.vulntypes.series[0].data.push({
+    //           value: item.vuln_total,
+    //           name: item.kb_vuln_class
+    //         });
+    //         this.vulntypes.legend.data.push(item.kb_vuln_class);
+    //       });
+    //     }
+    //   });
+    // },
+    //top10排行榜
+    vulntop() {
+      const params = {};
+      vulnTop(params).then(res => {
+        let data = res.lists;
+        this.holes = data;
+        let length = 10 - data.length;
+        if (data.length < 10) {
+          for (let i = 0; i < length ; i++) {
+            this.holes.push({})
+          }
         }
       });
     },
@@ -373,6 +410,57 @@ export default {
 </script>
 
 <style>
+.assetPic{
+  height: 108px;
+}
+.box_report {
+  background: rgba(255, 255, 255, 0.1);
+  margin: 10px 20px; 
+  float: left;  
+}
+.aside {
+  width: 30%;
+  float: left;
+}
+.rightaside{
+  width: 65%;
+  float: left;
+}
+.rightaside section{
+  width: 58%;
+  margin-right:10px;
+  float: left;
+  padding:20px;
+}
+.rightaside section ul li{
+  list-style: none;
+  display: inline-block;
+  width:32%;
+  padding:10px;
+}
+.rightaside section ul li p{
+ text-align: center;
+}
+.repaid ul li{
+   list-style: none;
+   text-align: center;
+}
+.repaid_num{
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  color:white;
+  background: pink;
+  border-radius: 50%;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 15px;
+
+}
+.box_report p{
+  color: white;
+  
+}
 .vuln_num {
   width: 100%;
   height: 50px;
@@ -427,12 +515,10 @@ export default {
   margin: 40px 50px;
 }
 .leaksThree {
-  width: 100%;
-}
-.leaksThree section {
-  width: 95%;
-  margin: 0px 20px;
-  float: left;
+  width: 97%;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 10px 20px; 
+  padding: 41px;
 }
 .Num {
   width: 64%;

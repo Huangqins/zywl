@@ -4,8 +4,6 @@
             <Input v-model="value1" size="large" placeholder="搜索资产" style="width:200px"></Input>
             <Button type="primary" >搜索</Button>
             <Button type="primary" >添加</Button>
-            <Button type="primary" >导入</Button>
-            <Button type="primary" >导出</Button>
         </Card>
         <Card :bordered="false" class="box_report">
             <p slot="title" style="color:white">报告列表</p>
@@ -34,10 +32,6 @@ export default {
                   port:"技术",
                   creatTime:'12121',
                   time:'4545454'
-
-
-
-
               }
           ],
         reportassets: [
