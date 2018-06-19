@@ -62,263 +62,259 @@ export default {
     return {
       optionLine: {
         tooltip: {
-            trigger: 'axis'
+          trigger: "axis"
         },
         legend: {
-            data:['邮件营销','联盟广告'],
-            textStyle:{
-              color:"#ffffff"
-            }
+          data: ["邮件营销", "联盟广告"],
+          textStyle: {
+            color: "#ffffff"
+          }
         },
         grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true
         },
         xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: ['周一','周二','周三','周四','周五','周六','周日'],
-            axisLine:{
-              lineStyle:{
-                color:"#ffffff"
-              }
+          type: "category",
+          boundaryGap: false,
+          data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+          axisLine: {
+            lineStyle: {
+              color: "#ffffff"
             }
+          }
         },
         yAxis: {
-            type: 'value',
-            axisLine:{
-              lineStyle:{
-                color:"#ffffff"
-              }
+          type: "value",
+          axisLine: {
+            lineStyle: {
+              color: "#ffffff"
             }
-
+          }
         },
         series: [
-        {
-            name:'邮件营销',
-            type:'line',
-            stack: '总量',
-            data:[120, 132, 101, 134, 90, 230, 210]
-        },
-        {
-            name:'联盟广告',
-            type:'line',
-            stack: '总量',
-            data:[220, 182, 191, 234, 290, 330, 310]
-        }
+          {
+            name: "邮件营销",
+            type: "line",
+            stack: "总量",
+            data: [120, 132, 101, 134, 90, 230, 210]
+          },
+          {
+            name: "联盟广告",
+            type: "line",
+            stack: "总量",
+            data: [220, 182, 191, 234, 290, 330, 310]
+          }
         ]
       },
-     moreLine : {
-            tooltip: {
-                trigger: 'axis'
-            },
-            legend: {
-                data:['邮件营销','联盟广告','视频广告','直接访问'],
-                textStyle:{
-                  color:"#ffffff"
-                 }
-            },
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
-            },
-            xAxis: {
-                type: 'category',
-                boundaryGap: false,
-                data: ['周一','周二','周三','周四','周五','周六','周日'],
-                axisLine:{
-                lineStyle:{
-                  color:"#ffffff"
-                }
-              }
-            },
-            yAxis: {
-                type: 'value',
-                axisLine:{
-                  lineStyle:{
-                  color:"#ffffff"
-                 }
-                }
-            },
-            series: [
-                {
-                    name:'邮件营销',
-                    type:'line',
-                    stack: '总量',
-                    data:[120, 132, 101, 134, 90, 230, 210]
-                },
-                {
-                    name:'联盟广告',
-                    type:'line',
-                    stack: '总量',
-                    data:[220, 182, 191, 234, 290, 330, 310]
-                },
-                {
-                    name:'视频广告',
-                    type:'line',
-                    stack: '总量',
-                    data:[150, 232, 201, 154, 190, 330, 410]
-                },
-                {
-                    name:'直接访问',
-                    type:'line',
-                    stack: '总量',
-                    data:[320, 332, 301, 334, 390, 330, 320]
-                }
-            ]
-        },
-        risk: {
+      moreLine: {
         tooltip: {
-            trigger: 'axis'
+          trigger: "axis"
         },
         legend: {
-            data:['邮件营销'],
-            textStyle:{
-              color:"#ffffff"
-            }
+          data: ["邮件营销", "联盟广告", "视频广告", "直接访问"],
+          textStyle: {
+            color: "#ffffff"
+          }
         },
         grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true
         },
         xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: ['周一','周二','周三','周四','周五','周六','周日'],
-            axisLine:{
-              lineStyle:{
-                color:"#ffffff"
-              }
+          type: "category",
+          boundaryGap: false,
+          data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+          axisLine: {
+            lineStyle: {
+              color: "#ffffff"
             }
+          }
         },
         yAxis: {
-            type: 'value',
-            axisLine:{
-              lineStyle:{
-                color:"#ffffff"
-              }
+          type: "value",
+          axisLine: {
+            lineStyle: {
+              color: "#ffffff"
             }
-
+          }
         },
         series: [
-        {
-            name:'邮件营销',
-            type:'line',
-            stack: '总量',
-            data:[120, 132, 101, 134, 90, 230, 210]
+          {
+            name: "邮件营销",
+            type: "line",
+            stack: "总量",
+            data: [120, 132, 101, 134, 90, 230, 210]
+          },
+          {
+            name: "联盟广告",
+            type: "line",
+            stack: "总量",
+            data: [220, 182, 191, 234, 290, 330, 310]
+          },
+          {
+            name: "视频广告",
+            type: "line",
+            stack: "总量",
+            data: [150, 232, 201, 154, 190, 330, 410]
+          },
+          {
+            name: "直接访问",
+            type: "line",
+            stack: "总量",
+            data: [320, 332, 301, 334, 390, 330, 320]
+          }
+        ]
+      },
+      risk: {
+        tooltip: {
+          trigger: "axis"
         },
-        {
-            name:'联盟广告',
-            type:'line',
-            stack: '总量',
-            data:[220, 182, 191, 234, 290, 330, 310]
-        }
+        legend: {
+          data: ["邮件营销"],
+          textStyle: {
+            color: "#ffffff"
+          }
+        },
+        grid: {
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true
+        },
+        xAxis: {
+          type: "category",
+          boundaryGap: false,
+          data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+          axisLine: {
+            lineStyle: {
+              color: "#ffffff"
+            }
+          }
+        },
+        yAxis: {
+          type: "value",
+          axisLine: {
+            lineStyle: {
+              color: "#ffffff"
+            }
+          }
+        },
+        series: [
+          {
+            name: "邮件营销",
+            type: "line",
+            stack: "总量",
+            data: [120, 132, 101, 134, 90, 230, 210]
+          },
+          {
+            name: "联盟广告",
+            type: "line",
+            stack: "总量",
+            data: [220, 182, 191, 234, 290, 330, 310]
+          }
         ]
       },
       history: {
         tooltip: {
-            trigger: 'axis'
+          trigger: "axis"
         },
         legend: {
-            data:['邮件营销','联盟广告'],
-            textStyle:{
-              color:"#ffffff"
-            }
+          data: ["邮件营销", "联盟广告"],
+          textStyle: {
+            color: "#ffffff"
+          }
         },
         grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true
         },
         xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: ['周一','周二','周三','周四','周五','周六','周日'],
-            axisLine:{
-              lineStyle:{
-                color:"#ffffff"
-              }
+          type: "category",
+          boundaryGap: false,
+          data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+          axisLine: {
+            lineStyle: {
+              color: "#ffffff"
             }
+          }
         },
         yAxis: {
-            type: 'value',
-            axisLine:{
-              lineStyle:{
-                color:"#ffffff"
-              }
+          type: "value",
+          axisLine: {
+            lineStyle: {
+              color: "#ffffff"
             }
-
+          }
         },
         series: [
-        {
-            name:'邮件营销',
-            type:'line',
-            stack: '总量',
-            data:[120, 132, 101, 134, 90, 230, 210]
-        },
-        {
-            name:'联盟广告',
-            type:'line',
-            stack: '总量',
-            data:[220, 182, 191, 234, 290, 330, 310]
-        }
+          {
+            name: "邮件营销",
+            type: "line",
+            stack: "总量",
+            data: [120, 132, 101, 134, 90, 230, 210]
+          },
+          {
+            name: "联盟广告",
+            type: "line",
+            stack: "总量",
+            data: [220, 182, 191, 234, 290, 330, 310]
+          }
         ]
       },
       assetType: {
         tooltip: {
-            trigger: 'axis'
+          trigger: "axis"
         },
         legend: {
-            data:['邮件营销','联盟广告'],
-            textStyle:{
-              color:"#ffffff"
-            }
+          data: ["邮件营销", "联盟广告"],
+          textStyle: {
+            color: "#ffffff"
+          }
         },
         grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true
         },
         xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: ['周一','周二','周三','周四','周五','周六','周日'],
-            axisLine:{
-              lineStyle:{
-                color:"#ffffff"
-              }
+          type: "category",
+          boundaryGap: false,
+          data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+          axisLine: {
+            lineStyle: {
+              color: "#ffffff"
             }
+          }
         },
         yAxis: {
-            type: 'value',
-            axisLine:{
-              lineStyle:{
-                color:"#ffffff"
-              }
+          type: "value",
+          axisLine: {
+            lineStyle: {
+              color: "#ffffff"
             }
-
+          }
         },
         series: [
-        {
-            name:'邮件营销',
-            type:'line',
-            stack: '总量',
-            data:[120, 132, 101, 134, 90, 230, 210]
-        },
-        {
-            name:'联盟广告',
-            type:'line',
-            stack: '总量',
-            data:[220, 182, 191, 234, 290, 330, 310]
-        }
+          {
+            name: "邮件营销",
+            type: "line",
+            stack: "总量",
+            data: [120, 132, 101, 134, 90, 230, 210]
+          },
+          {
+            name: "联盟广告",
+            type: "line",
+            stack: "总量",
+            data: [220, 182, 191, 234, 290, 330, 310]
+          }
         ]
       },
       //top10排行榜
@@ -326,12 +322,17 @@ export default {
       assetsList: [],
       width: "800px",
       total: 0,
-      loading: false
+      loading: false,
+      defaultPage: {
+        assets_zone: 0,
+        rows: 10,
+        page: 1
+      }
     };
   },
   mounted() {
     const params = Object.assign({}, this.defaultPage);
-    this._assetsInfo(this.defaultPage);
+    this._assetsInfo(params);
     this.vulntop();
   },
 
@@ -341,9 +342,9 @@ export default {
       vulnTop(params).then(res => {
         let data = res.lists;
         this.holes = data;
-        let length = 10 - data.length
-        for (let i = 0 ; i< length; i++) {
-          this.holes.push({})
+        let length = 10 - data.length;
+        for (let i = 0; i < length; i++) {
+          this.holes.push({});
         }
       });
     },
@@ -362,11 +363,11 @@ export default {
           data.push([item.vuln_total, item.vuln_use, item.assets_name]);
         });
         this.optionLine.xAxis.data = res.rows.map(item => {
-          return item.assets_name
-        })
+          return item.assets_name;
+        });
         this.optionLine.series[0].data = res.rows.map(item => {
-          return item.vuln_total
-        })
+          return item.vuln_total;
+        });
         this.total = res.total;
         this.loading = false;
       }
@@ -417,15 +418,15 @@ export default {
   /* margin-left:100px; */
 
 }
-.asset_vulntNum div{
-   width: 95px;
-   height: 95px;
-   padding:22px 0;
-   border-radius: 50%;
-   background: red;
-   text-align: center;
-   margin: 0 auto;
-   margin-top:40px
+.asset_vulntNum div {
+  width: 95px;
+  height: 95px;
+  padding: 22px 0;
+  border-radius: 50%;
+  background: red;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 40px;
 }
 
 </style>

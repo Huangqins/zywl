@@ -18,7 +18,10 @@ const tagsView = {
           			 break
         		}
         	}
-        }
+		},
+		DEL_VISITED_ALL: (state, view) => {
+			state.visitedViews = view
+		}
     },
     actions: {
     	addVisitedViews({ commit }, view) {
@@ -29,7 +32,10 @@ const tagsView = {
     			 commit('DEL_VISITED_VIEWS', view)
     			 resolve([...state.visitedViews])
     		})
-    	}
+		},
+		delVisitedAll({ commit } ,view) {
+			commit('DEL_VISITED_ALL', view)
+		}
     }
 }
 

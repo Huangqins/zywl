@@ -359,6 +359,7 @@ export default {
   },
   methods: {
     //风险类型饼状图
+
     // vulntype() {
     //   this.$refs.vulntype.showLoading();
     //   getVulnInfo({}).then(res => {

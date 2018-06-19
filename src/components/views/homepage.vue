@@ -501,12 +501,12 @@ export default {
         let data = res.rows;
         if (data.length > 10) {
           this.vulnsData = data.slice(0, 10);
-          this.vulnsData.forEach(item => {
-            item.vuln_ftime.time=fomatterTime(new Date(item.vuln_ftime.time))
-          })
         } else {
           this.vulnsData = data;
         }
+         this.vulnsData.forEach(item => {
+            item.vuln_ftime.time=fomatterTime(new Date(item.vuln_ftime.time))
+          })
       });
     },
     //top10排行榜

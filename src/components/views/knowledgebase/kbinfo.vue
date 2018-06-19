@@ -474,10 +474,10 @@ export default {
     vulntype() {
       let params = { flag: 1 };
       // console.log(this.$refs.firstChart)
-      this.$refs.firstChart.showLoading()
+      // this.$refs.firstChart.showLoading()
       vulntype(params).then(res => {
         if (res.result === 0) {
-          this.$refs.firstChart.hideLoading()
+          // this.$refs.firstChart.hideLoading()
           let list = res.list;
           list.forEach(item => {
             this.options.legend.data.push(
@@ -496,7 +496,7 @@ export default {
     //风险级别饼状图
     vulnlevelcount() {
       let params = { flag: 2 };
-      this.$refs.secondChart.showLoading();
+      // this.$refs.secondChart.showLoading();
       vulnlevelcount(params).then(res => {
         if (res.result === 0) {
           let list = res.list;
@@ -510,7 +510,7 @@ export default {
               }
             });
           });
-          this.$refs.secondChart.hideLoading();
+          // this.$refs.secondChart.hideLoading();
         } else {
         }
       });

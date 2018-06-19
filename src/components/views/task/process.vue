@@ -794,7 +794,7 @@ export default {
             ret.push(fomatterTime(new Date(Number(item))));
           });
           this.linechart.xAxis.data = ret;
-          this.$refs.linechart.refresh();
+          // this.$refs.linechart.refresh();
           // this.$refs.completionRate.refresh();
           //域名信息
           this.domain_info.forEach(item => {
