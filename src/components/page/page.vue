@@ -1,6 +1,6 @@
 <template>
 <div class="pageTable">
- <Table  :columns="columns" :data="data"  :loading="loading" :height="tableHeight" :row-class-name="rowClassName">
+ <Table  :columns="columns" :data="data"  :loading="loading" :height="tableHeight" :row-class-name="rowClassName" @on-row-dblclick="dblclick">
  </Table>
   <Page  v-show="dataTotal >= threshold"  :total="dataTotal" size="small" :current="current" :placement="placement"  :page-size-opts="pageSizeOpts" show-total  show-sizer
   @on-change="onPageChange" @on-page-size-change="onChangehandle" show-elevator ></Page>
@@ -65,6 +65,12 @@ export default {
     threshold: {
       type: Number,
       default: 10
+    },
+    dblclick:{
+      type:Function,
+      default:() => {
+
+      }
     }
   },
   data() {

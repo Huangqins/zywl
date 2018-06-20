@@ -76,6 +76,25 @@
                       </span>
                   </li>
               </ul>
+              <ul class="scrollUl">
+                  <li v-for="(item,index) in domain_info" :key="index">                     
+                      <span v-html="item.target_info_des" style="width:100%">                        
+                      </span>
+                  </li>
+              </ul>
+              <ul class="newList" style="max-height: 151px; overflow: auto;">
+                  <li v-for="(item,index) in hostListItem" :key="index">
+                      {{ item.target_info_name }}
+                      <span style="color:#19A15F;margin-right:2px;">
+                           {{ item.target_info_des }}
+                      </span>
+                  </li>
+              </ul>
+              <!-- <ul class="scrollUl">
+                  <li v-for="(item,index) in target_port_info" :key="index">                     
+                      <div v-html="item.target_info_des"></div>
+                  </li>
+              </ul> -->
           </Card>
         </Col>
         <Col span="6" >
@@ -84,12 +103,12 @@
                   <Icon type="ios-film-outline"></Icon>
                   域名信息
               </p> -->
-              <ul class="scrollUl">
+              <!-- <ul class="scrollUl">
                   <li v-for="(item,index) in domain_info" :key="index">                     
                       <span v-html="item.target_info_des" style="width:100%">                        
                       </span>
                   </li>
-              </ul>
+              </ul> -->
           </Card>
         </Col>        
         <Col span="6" >
@@ -112,14 +131,15 @@
                   <Icon type="ios-film-outline"></Icon>
                  发现新资源
               </p> -->
-              <ul class="newList" style="max-height: 151px; overflow: auto;">
+              <!-- <ul class="newList" style="max-height: 151px; overflow: auto;">
                   <li v-for="(item,index) in hostListItem" :key="index">
                       {{ item.target_info_name }}
                       <span style="color:#19A15F;margin-right:2px;">
                            {{ item.target_info_des }}
                       </span>
                   </li>
-              </ul>
+              </ul> -->
+
             </Card>
         </Col>
       </Row>     
@@ -130,7 +150,7 @@
            <Card  style="max-height:385px;">
               <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
-                敏感信息
+                绵羊墙
               </p>
               <ul class="scrollUl" style="max-height:220px;padding:0px 12px;">
                   <li v-for="(item,index) in target_sensitive_info" :key="index">                     
@@ -156,18 +176,25 @@
                   <Icon type="ios-film-outline"></Icon>
                 利用情况
               </p>
-               <page class="vuletables" style="background:#ce3939;" :height="tableHeight" :columns="userinfo" :data="userinfoList"  :loading="loading" :width="width"></page>
+               <page :dblclick="dblclick" class="vuletables" style="background:#ce3939;" :height="tableHeight" :columns="userinfo" :data="userinfoList"  :loading="loading" :width="width"></page>
           </Card>
         </Col>
     </Row>
     </div>
+      <Modal v-model="modal1"  title="Common Modal dialog box title" >
+        <div class="socketMessage"></div>
+        <div slot="footer">
+           <div style="text-align:left">CMD <Input v-model="value1" size="small"  style="width:200px"></Input></div>   
+        </div>
+    </Modal>
   </div>
 </template>
 <script>
+import Modals from "components/Modal/modal";
 import chart from "components/chart/chart";
 import page from "components/page/page";
-// import taskTargetInfo from "api/taskTargetInfo";
-import { mapGetters } from "vuex";
+// import taskTargetInfo from "api/taskTargetInfo"; 
+import { mapGetters } from "vuex";  
 import timeLine from "api/timeLine";
 import leaksInfo from "api/leaksInfo";
 import targetProgress from "api/targetProgress";
@@ -223,7 +250,8 @@ export default {
   components: {
     chart,
     page,
-    percentChart
+    percentChart,
+    Modals
     // zhexiantu
   },
   watch: {
@@ -237,7 +265,11 @@ export default {
   },
   data() {
     return {
+      value1:'',
+      footer: false,
+      modal1:false,
       radar: true,
+      display:false,
       starttime: "",
       name: "",
       percentOption: "",
@@ -661,7 +693,10 @@ export default {
     this.getDataAll();
   },
   methods: {
-   
+    dblclick(row){
+       this.modal1=true;
+      console.log(row)
+    },
     getDataAll() {
       this._targetProgress();
       this._targetNum();
@@ -920,6 +955,9 @@ export default {
 };
 </script>
 <style scoped>
+.socketMessage{
+  margin-top:20px;
+}
 .process .ivu-table-tbody tr{
   background-color: #FCD576;
 }

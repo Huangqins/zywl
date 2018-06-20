@@ -11,20 +11,22 @@
             </Upload>
             <Button type="primary" icon="log-out">导出</Button>
         </div>
-        <div style="width:100%;overflow:hidden;margin:10px 20px;">
-          <div class="box_report aflet" >
+        <div class="secOne">
+          <section class="box_report fright" >
             <h3 style="color:white;line-height:41px">资产分布区</h3>
             <div class="assetPort">
-              <ul>
+              <ul style="height:200px;">
                 <li ><Icon type="record" style="color:pink;margin-right:8px"></Icon>资产总数:<span style="margin-left:10px;">{{ewewe}}</span></li>
-                <li><Icon type="record" style="color:pink;margin-right:8px"></Icon>操作系统</li>
-                <li><Icon type="record" style="color:pink;margin-right:8px"></Icon>设备类型</li>
-                <li><Icon type="record" style="color:pink;margin-right:8px"></Icon>端口</li>
+                <li><Tree :data="ostype" show-checkbox multiple style="height:148px;overflow:auto"></Tree></li>
+                <!-- <li><Tree :data="devtype" show-checkbox multiple></Tree></li>
+                <li><Tree :data="ports" show-checkbox multiple></Tree></li> -->
+                <!-- <li><Icon type="record" style="color:pink;margin-right:8px"></Icon>设备类型:<span style="margin-left:10px;">{{devtype}}</span></li>
+                <li><Icon type="record" style="color:pink;margin-right:8px"></Icon>端口:<span style="margin-left:10px;">{{ports}}</span></li> -->
               </ul>
             </div>
-        </div>
-        <div class="box_report box_asset">
-            <h3  style="color:white">区域资产分布区</h3>
+          </section>
+          <section class="box_report box_asset">
+            <h3  style="color:white">区域资产分布</h3>
             <div class="Portasset">
               <ul>
                 <li >
@@ -59,16 +61,19 @@
                 </li>
               </ul>
             </div>
-        </div>
+        </section>
         </div>
         <div  class="page" >
             <h3 style="color:white">资产列表</h3>
              <div class="assetRight_content">
-                  <page :columns="assets" :data="assetsList" :dataTotal="dataTotal" @dataLoad="dataLoad"  :loading="pageLoading" ></page>
+                  <page :dblclick="dblclick" :columns="assets" :data="assetsList" :dataTotal="dataTotal" @dataLoad="dataLoad"  :loading="pageLoading" ></page>
               </div>
         </div>
       <Modals :width="width" :footer="footer"  :format="formatType" :data="dataType" :title="title" ref="formValidate" :ruleValidate="rules" @asyncOK="asyncOK" :display="display"  :loading="loading"></Modals>
-      <!-- 资产导入 -->
+      <Modal v-model="seiverModal"  title="开放服务"  >
+            <page :columns="serviceHeader" :data="serviceList"  ></page>
+      </Modal>
+      <!-- 资产导入 --> 
       <!-- <Modal v-model="assetAddModal"  title="资产导入"  :loading="assetAddLoading" @on-ok="assetImport">
          <Tabs value="name2">
           <TabPane label="手动导入" name="name1"></TabPane>
@@ -103,6 +108,11 @@ import assetsInfo from "api/assetsInfo";
 import assetsDelete from "api/assetsDelete";
 import assetsUpdate from "api/assetsUpdate";
 import { getToken, getUserName } from "@/utils/auth";
+import serviceInfo from "api/serviceInfo";
+import assetclass from "api/assetClass";
+import portSum from "api/portSum";
+import assetArea from "api/assetArea";
+import getArea from "api/getArea";
 
 const host =
   process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
@@ -115,7 +125,6 @@ export default {
     Modals
   },
   data() {
-   
     const addUrlValidate = (rule, value, callback) => {
       if (!value && !this.data.assets_ip) {
         callback(new Error("url或者ip请至少填写一项"));
@@ -132,8 +141,12 @@ export default {
       }
     };
     return {
-      ewewe:"",
-      value1:'',
+      ewewe: "",
+      os: "",
+      devtype: "",
+      ports: "",
+      value1: "",
+      seiverModal: false,
       uploadStatus: false,
       file: null,
       loadingStatus: false,
@@ -144,20 +157,69 @@ export default {
       assetAddLoading: false,
       pageLoading: false,
       loading: false,
-      title: "新建",
+      title: "新增资产",
       formValidate: false,
       width: 90,
+      ostype: [
+        {
+          title: "",
+          expand: false,
+          children: [
+            {
+              title: "操作系统",
+              expand: false,
+              children: [
+                // {
+                //   title: "leaf 1-1-1"
+                // },
+                // {
+                //   title: "leaf 1-1-2"
+                // }
+              ]
+            },
+            {
+              title: "设备类型",
+              expand: false,
+              children: [
+                {
+                  title: "leaf 1-2-1"
+                },
+                {
+                  title: "leaf 1-2-1"
+                }
+              ]
+            },
+            {
+              title: "端口",
+              expand: false,
+              children: [
+                {
+                  title: "leaf 1-2-1"
+                },
+                {
+                  title: "leaf 1-2-1"
+                }
+              ]
+            }
+          ]
+        }
+      ],
       format: [
         { label: "资产名称", type: "input", prop: "assets_name" },
         { label: "资产URL", type: "input", prop: "assets_url" },
         { label: "资产IP", type: "input", prop: "assets_ip" },
-        { label: "端口", type: "input", prop: "assets_port" },
-        { label: "通讯协议", type: "input", prop: "assets_proto" },
-        { label: "开放服务信息", type: "input", prop: "assets_servers" },
-        { label: "所属区域", type: "input", prop: "assets_region" },
+        // { label: "端口", type: "input", prop: "assets_port" },
+        // { label: "通讯协议", type: "input", prop: "assets_proto" },
+        // { label: "开放服务信息", type: "input", prop: "assets_servers" },
+        {
+          label: "所属区域",
+          type: "select",
+          prop: "assets_region",
+          option: []
+        },
         { label: "资产类型", type: "input", prop: "assets_type" },
         { label: "资产重要度", type: "input", prop: "assets_important" },
-        { label: "OS类型", type: "input", prop: "assets_os" },
+        // { label: "OS类型", type: "input", prop: "assets_os" },
         { label: "负责人", type: "input", prop: "assets_manger" }
       ],
       data: {
@@ -168,6 +230,7 @@ export default {
         assets_proto: "",
         assets_servers: "",
         assets_region: "",
+        regions: [],
         assets_type: "",
         assets_important: "",
         assets_os: "",
@@ -188,16 +251,41 @@ export default {
         assets_url: [{ validator: addUrlValidate, trigger: "blur" }],
         assets_ip: [{ validator: addIpValidate, trigger: "blur" }]
       },
+      serviceHeader: [
+        {
+          title: "服务名称",
+          key: "service_name",
+          align: "center"
+        },
+        {
+          title: "端口",
+          key: "port",
+          align: "center"
+        },
+        {
+          title: "协议",
+          key: "protocol",
+          align: "center"
+        },
+
+        {
+          title: "状态",
+          key: "state",
+          align: "center"
+        },
+        {
+          title: "服务信息",
+          key: "info",
+          align: "center"
+        }
+      ],
+      serviceList: [],
       value: "",
+
       assets: [
         {
           type: "selection",
           width: 60,
-          align: "center"
-        },
-        {
-          title: "地址",
-          key: "assets_url",
           align: "center"
         },
         {
@@ -206,8 +294,24 @@ export default {
           align: "center"
         },
         {
+          title: "资产链接",
+          key: "assets_url",
+          align: "center"
+        },
+        {
+          title: "资产IP",
+          key: "assets_ip",
+          align: "center"
+        },
+
+        {
           title: "操作系统",
-          key: "",
+          key: "assets_os_type",
+          align: "center"
+        },
+        {
+          title: "虚拟机",
+          key: "assets_vm",
           align: "center"
         },
         {
@@ -215,11 +319,7 @@ export default {
           key: "",
           align: "center"
         },
-        {
-          title: "虚拟机",
-          key: "",
-          align: "center"
-        },
+
         {
           title: "设备类型",
           key: "",
@@ -227,9 +327,18 @@ export default {
         },
         {
           title: "开放服务",
-          key: "",
+          key: "service_num",
+          align: "center",
+          cellClassName: {
+            service_num: "demo-table-info-cell-age"
+          }
+        },
+        {
+          title: "负责人",
+          key: "assets_manger",
           align: "center"
         },
+
         {
           title: "操作",
           align: "center",
@@ -312,6 +421,12 @@ export default {
   created() {
     this.params = Object.assign({}, this.defaultPage);
     this._assetsInfo(this.params);
+    this._assetclass();
+    this._portSum();
+    this._assetArea();
+    this._getArea();
+
+    // this._serviceInfo()
     const temp = JSON.parse(JSON.stringify(this.format));
     const dataCopy = JSON.parse(JSON.stringify(this.data));
     this.dataCopy = Object.assign({}, dataCopy, {
@@ -333,32 +448,83 @@ export default {
           this.$refs.upload.post(file);
           setTimeout(() => {
             this.$Modal.remove();
-             this._assetsInfo(this.params);
-          },200)
+            this._assetsInfo(this.params);
+          }, 200);
         },
-        onCancel: () => {
-          
-        }
+        onCancel: () => {}
       });
       return false;
     },
-    upload() {
-      
-    },
+    upload() {},
 
     dataLoad(paramsObj) {
       this.params = Object.assign({}, this.defaultPage, paramsObj);
       this._assetsInfo(this.params);
     },
+    _assetclass() {
+      this.pageLoading = true;
+      assetclass({ flag: 1 }).then(res => {
+        this.ostype[0].children[0].children = res.lists.map(item => {
+          return {
+            title: `${item.assets_hostname}:${item.assets_os_type}`
+          };
+        });
+      });
+      assetclass({ flag: 2 }).then(res => {
+        this.ostype[0].children[1].children = res.lists.map(item => {
+          return {
+            title: `${item.assets_hostname}:${item.assets_os_type}`
+          };
+        });
+      });
+    },
+    //端口
+    _portSum() {
+      portSum({}).then(res => {
+        this.ostype[0].children[2].children = res.lists.map(item => {
+          return {
+            title: `${item.port}:${item.assets_ip}`
+          };
+        });
+      });
+    },
+    //区域资产分布
+    _assetArea() {
+      assetArea({}).then(res => {});
+    },
+    //添加资产时选择的区域
+    _getArea() {
+      getArea({}).then(res => {
+        let list = res.areas;
+        list.forEach(item => {
+          this.options.legend.data.push(item.type_name);
+          this.options.series[0].data.push({
+            value: item.target_task_num,
+            name: item.type_name
+          });
+        });
+      });
+    },
     _assetsInfo(params) {
       this.pageLoading = true;
       assetsInfo(params).then(res => {
         this.assetsList = res.rows;
-        this.ewewe=this.dataTotal = res.total;
-        
+        this.ewewe = this.dataTotal = res.total;
         this.pageLoading = false;
       });
     },
+    dblclick(row) {
+      if (row.service_num === 0) {
+        this.seiverModal = false;
+      } else {
+        this.seiverModal = true;
+        let params = row.assets_id;
+        serviceInfo({ assets_id: params }).then(res => {
+          this.serviceList = res.lists;
+        });
+      }
+    },
+
     assetsAdd() {
       this.$refs.formValidate.open();
       this.data = {};
@@ -414,31 +580,45 @@ export default {
 };
 </script>
 <style scoped>
+.demo-table-info-cell-age {
+  background-color: #ff6600;
+  color: #fff;
+}
+.secOne {
+  overflow: hidden;
+  margin: 0 20px;
+}
+.secOne section {
+  width: 49%;
+  float: left;
+  box-sizing: border-box;
+}
+.secOne .fright {
+  margin-right: 10px;
+}
 .box_report {
   background: rgba(255, 255, 255, 0.1);
-  /* margin: 10px 20px;  */
-  width: 100%; 
-  padding:10px;
+  margin: 10px 0px;
+  padding: 10px;
+  overflow: hidden;
 }
- .aflet{
-   box-sizing:border-box;
-   width:37%;
-   float:left;
-   margin-right: 36px;
-   
+.aflet {
+  box-sizing: border-box;
+  width: 37%;
+  float: left;
+  margin-right: 16px;
 }
 .box_asset {
-    width: 58%;
-    float: left;  
-    padding:20px; 
-    box-sizing:border-box;
+  width: 50%;
 }
-.assetPort ul li{
+.Portasset {
+  margin-top: 20px;
+}
+.assetPort ul li {
   list-style: none;
   color: white;
-  height: 50px;
 }
-.Portasset ul li{
+.Portasset ul li {
   list-style: none;
   color: white;
   margin-left: 10px;
@@ -447,8 +627,8 @@ export default {
   display: inline-block;
   text-align: center;
 }
-.Portasset ul li p{
-  line-height:42px;
+.Portasset ul li p {
+  line-height: 42px;
 }
 .whole {
   width: 100%;
@@ -470,8 +650,8 @@ export default {
   margin: 20px 60px;
   background: #cccccc;
 }
-.assetRight_content{
-  margin-top:10px;
+.assetRight_content {
+  margin-top: 10px;
   width: 97%;
 }
 .assetRight_header {
@@ -484,10 +664,10 @@ export default {
 .ivu-btn .ivu-btn-primary {
   margin-left: 5px;
 }
-.page{
+.page {
   width: 97%;
   background: rgba(255, 255, 255, 0.1);
-  margin: 10px 20px; 
+  margin: 10px 20px;
   padding: 15px;
   height: 420px;
 }

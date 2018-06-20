@@ -61,19 +61,19 @@
             <ul>              
               <li style="width:49%">
                 <p>平均修复率</p>
-                <div class="repaid_num">20%</div>
+                <div class="repaid_num">{{repair}}</div>
               </li>
               <li style="width:49%">
                 <p>平均修复周期</p>
-                <div class="repaid_num">40%</div>
+                <div class="repaid_num">{{cycle}}</div>
               </li>
               <li style="width:49%">
                 <p>已处理风险数</p>
-                <div class="repaid_num">20%</div>
+                <div class="repaid_num">{{handle}}</div>
               </li>
               <li style="width:49%">
                 <p>待修复风险数</p>
-                <div class="repaid_num">20%</div>
+                <div class="repaid_num">{{pending}}</div>
               </li>             
 
             </ul>
@@ -101,6 +101,8 @@ import vulnWordClouds from "api/vulnWordClouds";
 import getVulnInfo from "api/getVulnInfo";
 import fomatterTime from "@/utils/tool";
 import vulnTop from "api/vulnTop";
+import repairRate from "api/repairRate";
+import repairVuln from "api/repairVuln";
 const levelSchema = {
   "4": "极高风险",
   "3": "高风险",
@@ -115,33 +117,13 @@ export default {
     page,
     cloud
   },
-
-  computed: {
-    // options() {
-    //   setInterval(() => {
-    //     this.option.series[0].data[0].value =
-    //       (Math.random() * 100).toFixed(2) - 0;
-    //   }, 2000);
-    //   return this.option;
-    // },
-    // optionTwo() {
-    //   setInterval(() => {
-    //     this.optiontwo.series[0].data[0].value =
-    //       (Math.random() * 100).toFixed(2) - 0;
-    //   }, 2000);
-    //   return this.optiontwo;
-    // },
-    // optionThree() {
-    //   setInterval(() => {
-    //     this.optionthree.series[0].data[0].value =
-    //       (Math.random() * 100).toFixed(2) - 0;
-    //   }, 2000);
-    //   return this.optionthree;
-    // }
-  },
   data() {
     return {
       total:'',
+      repair:'',
+      cycle:'',
+      handle:'',
+      pending:'',
       most:0,
       high: 0,
       middle: 0,
@@ -303,12 +285,9 @@ export default {
                   marginRight: "5px"
                 },
                 on: {
-                  // click: () => {
-                  //   this.data = Object.assign({}, this.data, params.row);
+                  click: () => {
                    
-                  //   (this.footer = true), (this.modalStatus = 0);
-                  //   this.$refs.formValidate.open();
-                  // }
+                  }
                 }
               },"已修复"),
 
@@ -318,11 +297,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    // this.dataCopy = Object.assign({}, this.data, params.row);
-                    // this.modalStatus = 1;
-                    // this.footer = false;
-                    // this.title = "详情";
-                    // this.$refs.formValidate.open();
+                    this.ignore({assets_id: params.row.assets_id})
                    
                   }
                 }
@@ -350,6 +325,7 @@ export default {
     });
     this._leaksInfo(params);
     this._vulnTotal();
+    this._repairRate()
     // this._vulnWordClouds();
     // this._vulnLevel({taskID:})
   },
@@ -358,24 +334,23 @@ export default {
     this.vulntop();
   },
   methods: {
-    //风险类型饼状图
-
-    // vulntype() {
-    //   this.$refs.vulntype.showLoading();
-    //   getVulnInfo({}).then(res => {
-    //     if (res.result === 0) {
-    //       this.$refs.vulntype.hideLoading();
-    //       let list = res.vulns;
-    //       list.forEach(item => {
-    //         this.vulntypes.series[0].data.push({
-    //           value: item.vuln_total,
-    //           name: item.kb_vuln_class
-    //         });
-    //         this.vulntypes.legend.data.push(item.kb_vuln_class);
-    //       });
-    //     }
-    //   });
-    // },
+    //修复区域
+    _repairRate() {
+      repairRate({}).then(res => {
+         console.log(res)
+         this.repair=res.repair;
+         this.cycle=res.cycle;
+         this.handle=res.handle;
+         this.pending=res.pending
+      })
+    },
+    //风险修复
+    _repairVuln() {
+      repairVuln({}).then(res => {
+         
+         
+      })
+    },
     //top10排行榜
     vulntop() {
       const params = {};

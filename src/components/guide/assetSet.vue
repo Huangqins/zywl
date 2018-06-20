@@ -1,6 +1,26 @@
 <template>
 <div>
-  <div class="whole logs asset">
+        <div class="targetOne">
+            <ul>
+              <li>
+                <div class="bg targetSum">{{target_task_num}}</div>
+                <p>任务总量</p>
+              </li>
+              <li>
+                <div class="bg executed">{{task_over}}</div>
+                <p>已执行数</p>
+              </li>
+              <li>
+                <div class="bg waiting">{{flag}}</div>
+                <p>待执行数</p>
+              </li>
+              <li>
+                <chart width="300px" height="160px" :option="options"></chart>
+                
+              </li>
+            </ul>
+        </div>
+        <div class="whole logs asset">
           <section class="assetRight">
               <div class="assetRight_header">
                 <Input v-model="value" placeholder="区域" clearable style="width: 200px;"/>
@@ -13,15 +33,14 @@
                   <page :columns="tasks" :data="tasksList" :dataTotal="dataTotal" @dataLoad="dataLoad" :loading="pageLoading" ></page>
                 </Card>
               </div>
-               <div class="assetRight_content">
+               <!-- <div class="assetRight_content">
                 <Card>
                   <p slot="title" style="font-size:16px;">周期任务</p>
                   <page :columns="loadingtasks" :data="loadingtasksList" :dataTotal="dataTotals" @dataLoad="dataLoads" :loading="pagesLoading" ></page>
                   </Card>
-              </div>
+                </div> -->
           </section>
-          <!-- <a :href="href" download ref="download"></a> -->
-      </div>
+        </div>
       <Modals :format="format" :data="data" title="添加任务" ref="formValidate" :rules="rules" @asyncOK="asyncOK" :display="display"  :loading="loading" :ruleValidate="rules"></Modals>
       <Modal v-model="modalDeleter" width="360"  :mask-closable="false" >
         <p slot="header" style="color:#f60;text-align:center">
@@ -43,6 +62,7 @@
 import assetsInfo from "api/assetsInfo";
 import assetsSet from "api/assetsSet";
 import { getUserName } from "@/utils/auth";
+import chart from "components/chart/chart";
 import page from "components/page/page";
 import getRule from "api/getRule";
 import fomatterTime from "@/utils/tool";
@@ -51,6 +71,9 @@ import taskList from "api/taskList";
 import exportPDF from "api/exportPDF";
 import getAssetURL from "api/getAssetURL";
 import deleteTask from "api/deleteTask";
+import testType from "api/testType";
+import targetTotal from "api/targetTotal";
+
 const strategy = { flag: 1 };
 const cycle = { flag: 2 };
 const host =
@@ -74,7 +97,8 @@ const cl = {
 export default {
   components: {
     page,
-    Modals
+    Modals,
+    chart
   },
   watch: {
     "data.target_url"(val) {
@@ -98,6 +122,9 @@ export default {
       }
     };
     return {
+      flag:'',
+      task_over:"",
+      target_task_num:'',
       modalDeleter: false,
       modal_loading: false,
       fileName: "",
@@ -121,11 +148,67 @@ export default {
           prop: "target_cycle",
           option: []
         },
+        {
+          label: "测试类型",
+          type: "select",
+          prop: "area_name",
+          option: []
+        },
         { label: "开始时间", type: "datetime", prop: "target_starttime" },
-
         { label: "资产url", type: "select", prop: "target_url", option: [] },
         { label: "资产ip", type: "select", prop: "target_ip", option: [] }
       ],
+  options : {
+    title : {
+        text: '测试类型',
+        textStyle: {
+            color: "white",
+            fontSize:"16"
+          },
+         y:'bottom',
+         x:"center"
+    },
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+        x : 'right',
+        y : 'bottom',
+        orient: 'vertical',
+        data:['rose1','rose2','rose3','rose4','rose5'],
+        textStyle:{
+            color:"#fbfbfb"
+        }
+    },
+    calculable : true,
+    series : [
+        {
+            name:'半径模式',
+            type:'pie',
+            radius : [20, 60],
+            center : ['50%', '40%'],
+            roseType : 'radius',
+            label: {
+                normal: {
+                    show: false
+                },
+                emphasis: {
+                    show: false
+                }
+            },
+            lableLine: {
+                normal: {
+                    show: false
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            data:[  ]
+        },
+    ]
+  },
       data: {
         target_name: "渗透测试+" + fomatterTime(new Date()),
         target_teststra: "medium",
@@ -245,27 +328,6 @@ export default {
                   }
                 }
               }),
-              // h("Button", {
-              //   props: {
-              //     type: "primary",
-              //     size: "small",
-              //     icon: "play"
-              //   },
-              //   style: {
-              //     marginLeft: "5px"
-              //   },
-              //   on: {
-              //     click: () => {
-              //       this.$router.push({
-              //         name: "process",
-              //         params: {
-              //           targetInfo: params.row,
-              //           target_id: params.row.target_id
-              //         }
-              //       });
-              //     }
-              //   }
-              // }),
               h(
                 "a",
                 {
@@ -452,25 +514,6 @@ export default {
           width: 200,
           render: (h, params) => {
             return h("div", [
-              // h("Button", {
-              //   props: {
-              //     type: "primary",
-              //     size: "small",
-              //     icon: "pause"
-              //   },
-
-              //   on: {
-              //     click: () => {
-              //       this.$router.push({
-              //         name: "process",
-              //         params: {
-              //           targetInfo: params.row,
-              //           target_id: params.row.target_id
-              //         }
-              //       });
-              //     }
-              //   }
-              // }),
               h("Button", {
                 props: {
                   type: "primary",
@@ -674,6 +717,8 @@ export default {
     // this.data.target_ip = params.target_ip;
     this._getRule(strategy);
     this._getRule(cycle);
+    this._testType();
+    this._targetTotal();
     this.params = Object.assign({}, this.defaultPage, {
       userName: getUserName()
     });
@@ -681,9 +726,40 @@ export default {
       userName: getUserName()
     });
     this._taskList(this.params);
+   
     this._taskListLong(this.paramsTask);
   },
-  methods: {
+  methods: {   
+    //测试类型饼状图 
+     _testType() {
+      testType({}).then(res => {       
+      let list = res.targets;
+      list.forEach(item => {
+            this.options.legend.data.push(
+              item.type_name
+            )
+            this.options.series[0].data.push({
+              value: item.target_task_num,
+              name: item.type_name
+            
+            });
+          });
+      });
+    },
+    //任务总数和待执行任务数
+    _targetTotal() {
+      // this.pageLoading = true;
+      targetTotal({}).then(res => {
+        let list=res.targets
+        this.flag =list[0].flag ;
+        this.task_over=(list[0].target_task_num)-(list[0].flag);
+        this.target_task_num =list[0].target_task_num ;
+      // flag,
+      // task_over,
+      // target_task_num,
+       
+      });
+    },
     _taskList(params, next) {
       let paramsObj = Object.assign({}, params, { flag: 1 });
       this.pageLoading = true;
@@ -809,6 +885,43 @@ export default {
 };
 </script>
 <style scoped>
+.targetOne{
+  overflow: hidden;
+  padding:20px;  
+}
+.targetOne ul li{
+  width:20%;
+  text-align: center;
+  float: left;  
+  list-style: none;
+  margin: 0 auto;
+  color: black;
+}
+.targetOne ul li p{
+  color: white;
+}
+.bg{
+  width: 120px;
+  height: 120px;  
+  text-align: center;
+  border-radius: 50%;
+  margin: 0 auto;
+  font-size: 24px;
+  line-height: 120px;
+  margin-bottom: 10px;
+}
+.targetSum{
+  border:2px solid #6AD67A;
+  background: #D5FFE2;
+}
+.executed{
+  border:2px solid #FFECC1;
+  background: #FAF3CF;
+}
+.waiting{
+  border:2px solid #DFFDC3;
+  background: #E7F5DA;
+}
 .assetRight_content {
   margin-top: 30px;
 }
