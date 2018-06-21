@@ -73,6 +73,7 @@ import getAssetURL from "api/getAssetURL";
 import deleteTask from "api/deleteTask";
 import testType from "api/testType";
 import targetTotal from "api/targetTotal";
+import getTargetType from "api/getTargetType";
 
 const strategy = { flag: 1 };
 const cycle = { flag: 2 };
@@ -151,7 +152,7 @@ export default {
         {
           label: "测试类型",
           type: "select",
-          prop: "area_name",
+          prop: "type_id",
           option: []
         },
         { label: "开始时间", type: "datetime", prop: "target_starttime" },
@@ -216,6 +217,7 @@ export default {
         target_cycle: "now",
         target_url: "",
         target_ip: "",
+        type_id:"",
         userName: getUserName()
       },
       rules: {
@@ -662,7 +664,8 @@ export default {
                       name: "process",
                       params: {
                         targetInfo: params.row,
-                        target_id: params.row.target_id
+                        target_id: params.row.target_id,
+                        assets_id: params.row.assets_id
                       }
                     });
                   }
@@ -725,9 +728,9 @@ export default {
     this.paramsTask = Object.assign({}, this.defaultPageTask, {
       userName: getUserName()
     });
-    this._taskList(this.params);
-   
+    this._taskList(this.params);   
     this._taskListLong(this.paramsTask);
+    this._getTargetType()
   },
   methods: {   
     //测试类型饼状图 
@@ -740,11 +743,18 @@ export default {
             )
             this.options.series[0].data.push({
               value: item.target_task_num,
-              name: item.type_name
-            
+              name: item.type_name            
             });
           });
       });
+    },
+    //添加任务时的任务测试类型
+    _getTargetType(){
+      getTargetType({}).then(res =>{    
+         this.format[3].option=res.targetType.map(item => {
+            return { value: item.type_id, name:item.type_name  };
+          })
+      })
     },
     //任务总数和待执行任务数
     _targetTotal() {
@@ -753,11 +763,7 @@ export default {
         let list=res.targets
         this.flag =list[0].flag ;
         this.task_over=(list[0].target_task_num)-(list[0].flag);
-        this.target_task_num =list[0].target_task_num ;
-      // flag,
-      // task_over,
-      // target_task_num,
-       
+        this.target_task_num =list[0].target_task_num ;       
       });
     },
     _taskList(params, next) {
@@ -790,10 +796,12 @@ export default {
               name: "process",
               params: {
                 targetInfo: res.targets[0],
-                target_id: res.targets[0].target_id
+                target_id: res.targets[0].target_id,
+               
               }
             });
           }
+          // console.log(res.targets[0].assets_id)
           this.pagesLoading = false;
           this.loadingtasksList = res.targets;
           this.dataTotals = res.total;
@@ -836,7 +844,6 @@ export default {
         if (res.result === 0) {
           this.loading = false;
           this.$refs.formValidate.close();
-          // this.$router.push({ path: "/taskexecution" });
           this._taskList(this.params, true);
         } else if (res.result === 2) {
           this.$Message.error({
@@ -872,11 +879,11 @@ export default {
       const params = { username: getUserName() };
       getAssetURL(params).then(res => {
         this.urlIpMap = {};
-        this.format[4].option = res.lists.map(item => {
+        this.format[5].option = res.lists.map(item => {
           this.urlIpMap[item.assets_url] = item.assets_ip;
           return { value: item.assets_url, name: item.assets_url };
         });
-        this.format[5].option = res.lists.map(item => {
+        this.format[6].option = res.lists.map(item => {
           return { value: item.assets_ip, name: item.assets_ip };
         });
       });

@@ -271,3 +271,6 @@ fl {float:left;}
 .ivu-table-row-hover{
     background-color: #182434 !important;
 }
+.ivu-tree-title{
+    color:white;
+  }

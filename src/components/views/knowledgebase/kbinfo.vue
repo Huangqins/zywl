@@ -407,8 +407,6 @@ export default {
                 on: {
                   click: () => {
                     this._kbDelete(params.row);
-                    // this.remove(params.index);
-                    // console.log(params)
                   }
                 }
               }),
@@ -477,7 +475,6 @@ export default {
       // this.$refs.firstChart.showLoading()
       vulntype(params).then(res => {
         if (res.result === 0) {
-          // this.$refs.firstChart.hideLoading()
           let list = res.list;
           list.forEach(item => {
             this.options.legend.data.push(
@@ -489,7 +486,6 @@ export default {
             
             });
           });
-        } else {
         }
       });
     },

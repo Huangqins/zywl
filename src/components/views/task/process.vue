@@ -57,7 +57,7 @@
     <div class="secTwo">
        <Row>
         <Col span="6" >
-           <Card class="ym">
+           <Card class="ym" style="height:182px;overflow:auto;">
               <!-- <p slot="title">
                   <Icon type="ios-film-outline"></Icon>
                 主机信息
@@ -68,33 +68,39 @@
                       <span v-if="item.target_info_des === 'up'">
                        <Icon type="checkmark-circled" ></Icon>
                       </span>
-                      <span v-else-if="item.target_info_des === 'down'">
+                      <span v-else-if="item.target_info_des === 'down'" >
                         <Icon type="close-circled" ></Icon>
                       </span>
                       <span v-else>
                         {{ item.target_info_des }} 
                       </span>
                   </li>
-              </ul>
-              <ul class="scrollUl">
-                  <li v-for="(item,index) in domain_info" :key="index">                     
+              <!-- </ul> -->
+              <!-- <ul class="scrollUl"> -->
+                  <li v-for="(item,index) in domain_info" :key="index" style="height:168px">                     
                       <span v-html="item.target_info_des" style="width:100%">                        
                       </span>
                   </li>
-              </ul>
-              <ul class="newList" style="max-height: 151px; overflow: auto;">
-                  <li v-for="(item,index) in hostListItem" :key="index">
+              <!-- </ul> -->
+              <!-- <ul class="newList" style="max-height: 151px; overflow: auto;"> -->
+                  <li v-for="(item,index) in hostListItem" :key="index" >
                       {{ item.target_info_name }}
                       <span style="color:#19A15F;margin-right:2px;">
                            {{ item.target_info_des }}
                       </span>
                   </li>
+              <!-- </ul> -->
+              <!-- <ul class="scrollUl"> -->
+                <li>
+                <div style="overflow:hidden">
+                  <div style="width:40%;float:left;color:white;">应用服务:</div>
+                  <div style="width:60%;float:left;">
+                    <page class="vuletables"  :columns="portColums" :data="portList"  :width="Swidth" :height="Sheight"></page>
+                  </div>
+                  
+                </div>
+                </li>
               </ul>
-              <!-- <ul class="scrollUl">
-                  <li v-for="(item,index) in target_port_info" :key="index">                     
-                      <div v-html="item.target_info_des"></div>
-                  </li>
-              </ul> -->
           </Card>
         </Col>
         <Col span="6" >
@@ -117,11 +123,7 @@
                   <Icon type="ios-film-outline"></Icon>
                  端口信息
               </p> -->
-              <ul class="scrollUl">
-                  <li v-for="(item,index) in target_port_info" :key="index">                     
-                      <div v-html="item.target_info_des"></div>
-                  </li>
-              </ul>
+             
             </Card>
         </Col>        
         
@@ -193,8 +195,8 @@
 import Modals from "components/Modal/modal";
 import chart from "components/chart/chart";
 import page from "components/page/page";
-// import taskTargetInfo from "api/taskTargetInfo"; 
-import { mapGetters } from "vuex";  
+// import taskTargetInfo from "api/taskTargetInfo";
+import { mapGetters } from "vuex";
 import timeLine from "api/timeLine";
 import leaksInfo from "api/leaksInfo";
 import targetProgress from "api/targetProgress";
@@ -203,6 +205,7 @@ import vulnUseInfo from "api/VulnUseInfo";
 import urlUseRate from "api/urlUseRate";
 import fomatterTime from "@/utils/tool";
 import getAssetsHost from "api/getAssetsHost";
+import getServiceList from "api/serviceList";
 import percentChart from "./percentChart";
 import ld from "./ld.css";
 
@@ -265,20 +268,36 @@ export default {
   },
   data() {
     return {
-      value1:'',
+      value1: "",
+      Swidth:"100",
+      Sheight:'200',
       footer: false,
-      modal1:false,
+      modal1: false,
       radar: true,
-      display:false,
+      display: false,
       starttime: "",
       name: "",
       percentOption: "",
       endtime: "",
-      taskTime:'',
+      taskTime: "",
       tableHeight: "219",
       percent: 0, //伪进度最大为9
       scaning: 0, //任务阶段
-      targetlogData:[],
+      targetlogData: [],
+      portColums: [ 
+        {
+          title: "端口",
+          key: "port",
+          width:70
+        } ,      
+        {
+          title: "服务名称",
+          key: "service_name",
+          width:110
+        },
+        
+      ],
+      portList:[],
       percentOption: {
         title: {
           text: "0%",
@@ -348,12 +367,12 @@ export default {
           target_info_key: "response_info",
           target_info_name: "可响应",
           target_info_des: 0
-        },
-        {
-          target_info_key: "application_service",
-          target_info_name: "应用服务",
-          target_info_des: 0
         }
+        // {
+        //   target_info_key: "application_service",
+        //   target_info_name: "应用服务",
+        //   target_info_des: 0
+        // }
       ],
       //域名信息
       domain_info: [
@@ -366,8 +385,48 @@ export default {
       //端口信息
       target_port_info: [
         {
-          target_info_key: "port_info",
-          target_info_name: "",
+          target_info_key: "port",
+          target_info_name: "端口",
+          target_info_des: ""
+        },
+        {
+          target_info_key: "assets_ip",
+          target_info_name: "IP",
+          target_info_des: ""
+        },
+        {
+          target_info_key: "service_name",
+          target_info_name: "服务医生",
+          target_info_des: ""
+        },
+        {
+          target_info_key: "create_time",
+          target_info_name: "创建时间",
+          target_info_des: ""
+        },
+        {
+          target_info_key: "protocol",
+          target_info_name: "协议",
+          target_info_des: ""
+        },
+        {
+          target_info_key: "port",
+          target_info_name: "端口",
+          target_info_des: ""
+        },
+        {
+          target_info_key: "info",
+          target_info_name: "技术",
+          target_info_des: ""
+        },
+        {
+          target_info_key: "state",
+          target_info_name: "状态",
+          target_info_des: ""
+        },
+        {
+          target_info_key: "update_time",
+          target_info_name: "更新时间",
           target_info_des: ""
         }
       ],
@@ -423,14 +482,26 @@ export default {
         }
       ],
       assetsColums: [
-        {
-          title: "风险名称",
-          key: "vuln_name",
-          align: "left"
-        },
+        // {
+        //   title: "风险名称",
+        //   key: "vuln_name",
+        //   align: "left"
+        // },
         {
           title: "风险类型",
           key: "kb_vuln_class",
+          align: "left",
+          width: 90
+        },
+        {
+          title: "类型",
+          key: "type",
+          align: "left",
+          width: 90
+        },
+        {
+          title: "参数",
+          key: "arg",
           align: "left",
           width: 90
         },
@@ -445,7 +516,7 @@ export default {
                 src: require(`assets/${params.row.vuln_level}.png`),
                 width: "48px",
                 height: "6px"
-              }     
+              }
             });
           }
         },
@@ -489,18 +560,18 @@ export default {
           }
         }
       ],
-      userinfo:[
+      userinfo: [
         {
           title: "漏洞链接",
           key: "vuln_URL",
           align: "left"
-        },       
-         {
+        },
+        {
           title: "操作",
           align: "center",
           width: 60,
           render: (h, params) => {
-            console.log(params.row.image_path)
+            // console.log(params.row.image_path);
             return h("div", [
               h("Button", {
                 props: {
@@ -514,9 +585,12 @@ export default {
                       name: "userinfodetail",
                       params: {
                         target_id: params.row.target_id,
-                        image_path:params.row.image_path = params.row.image_path==="" ? "":host+params.row.image_path,
+                        image_path: (params.row.image_path =
+                          params.row.image_path === ""
+                            ? ""
+                            : host + params.row.image_path),
                         vuln_useInfo: params.row.vuln_useInfo,
-                        vuln_URL:params.row.vuln_URL
+                        vuln_URL: params.row.vuln_URL
                       }
                     });
                   }
@@ -526,7 +600,7 @@ export default {
           }
         }
       ],
-      userinfoList:[],
+      userinfoList: [],
       taskInfo: [],
       timer: "",
       //折线图
@@ -680,7 +754,7 @@ export default {
     // taskInfo = JSON.parse(storage.getItem("taskInfo"));
     // taskInfo.target_startTime = fomatterTime(
     //   new Date(taskInfo.target_starttime.time)
-    // );    
+    // );
     // this.starttime = fomatterTime(new Date(taskInfo.target_starttime.time));
     // this.name = taskInfo.target_name;
     // taskInfo.target_endTime = taskInfo.target_endtime
@@ -693,9 +767,9 @@ export default {
     this.getDataAll();
   },
   methods: {
-    dblclick(row){
-       this.modal1=true;
-      console.log(row)
+    dblclick(row) {
+      this.modal1 = true;
+      console.log(row);
     },
     getDataAll() {
       this._targetProgress();
@@ -704,7 +778,8 @@ export default {
       this._urlUseRate();
       this._getAssetsHost();
       this._vulnUseInfo();
-      this._getTargetLog()
+      this._getTargetLog();          
+      this._getServiceList()
       this.timer = setInterval(() => {
         // this._targetProgress();
         this._targetNum();
@@ -712,11 +787,12 @@ export default {
         this._urlUseRate();
         this._getAssetsHost();
         this._vulnUseInfo();
+        
       }, 10000);
-      this.timers=setInterval(() => {        
-        this._getTargetLog()
+      this.timers = setInterval(() => {
+        this._getTargetLog();
         this._targetProgress();
-      },1000)
+      }, 1000);
     },
     rowClassName(row) {
       return "demo-table-error-row";
@@ -725,41 +801,39 @@ export default {
       const params = Object.assign({}, this.defaultPage, paramsObj);
     },
     //任务日志列表
-    _getTargetLog(){
-     let params = 0;
+    _getTargetLog() {
+      let params = 0;
       if (this.$route.params.target_id) {
         params = { target_id: this.$route.params.target_id };
       } else {
         console.log(this.$route);
       }
-     getTargetLog(params).then(res =>{
-          let data=res.targets;
-          this.targetlogData=data
-         
-         console.log(this.targetlogData)
-     })
+      getTargetLog(params).then(res => {
+        let data = res.targets;
+        this.targetlogData = data;
+      });
     },
     //风险利用情况
-    _vulnUseInfo(params, next){
-     let param = 0;
+    _vulnUseInfo(params, next) {
+      let param = 0;
       if (this.$route.params.target_id) {
         param = { target_id: this.$route.params.target_id };
       } else {
         console.log(this.$route);
       }
-      vulnUseInfo(param).then(res =>{
-        this.userinfoList=res.vulns;       
+      vulnUseInfo(param).then(res => {
+        this.userinfoList = res.vulns;
         if (next) {
-            this.$router.push({
-              name: "userinfodetail",
-              params: {
-                image_path: res.vulns[0].image_path,
-                vuln_useInfo: res.vulns[0].vuln_useInfo,
-                vuln_id:res.vulns[0].vuln_id
-              }               
-            });
-          }
-      })
+          this.$router.push({
+            name: "userinfodetail",
+            params: {
+              image_path: res.vulns[0].image_path,
+              vuln_useInfo: res.vulns[0].vuln_useInfo,
+              vuln_id: res.vulns[0].vuln_id
+            }
+          });
+        }
+      });
     },
     /**
      * 任务执行进度
@@ -780,19 +854,23 @@ export default {
           } else {
             scaning = [];
           }
-          let s="";
+          let s = "";
           let target_struts = res.target.target_struts;
           let target_rftime = res.target.target_rftime;
           this.name = res.target.target_name;
-          this.taskTime = formatTime((res.target.target_endtime ? res.target.target_endtime.time : new Date().getTime()) - res.target.target_starttime.time);
-          this.endtime=res.target.target_endtime =
-           res.target.target_endtime ? fomatterTime(new Date(res.target.target_endtime.time)): "";
-         
-          this.starttime=res.target.target_starttime = 
-          res.target.target_starttime ? fomatterTime(new Date(res.target.target_starttime.time)):"";
+          this.taskTime = formatTime(
+            (res.target.target_endtime
+              ? res.target.target_endtime.time
+              : new Date().getTime()) - res.target.target_starttime.time
+          );
+          this.endtime = res.target.target_endtime = res.target.target_endtime
+            ? fomatterTime(new Date(res.target.target_endtime.time))
+            : "";
 
-          //console.log(this.starttime)
-           
+          this.starttime = res.target.target_starttime = res.target
+            .target_starttime
+            ? fomatterTime(new Date(res.target.target_starttime.time))
+            : "";
           if (target_struts === "1") {
             this.percentOption = `100%`;
             this.radar = false;
@@ -829,8 +907,6 @@ export default {
             ret.push(fomatterTime(new Date(Number(item))));
           });
           this.linechart.xAxis.data = ret;
-          // this.$refs.linechart.refresh();
-          // this.$refs.completionRate.refresh();
           //域名信息
           this.domain_info.forEach(item => {
             item.target_info_des = res.target[item.target_info_key];
@@ -840,29 +916,26 @@ export default {
             item.target_info_des = res.target[item.target_info_key];
           });
           //敏感信息
-          this.target_sensitive_info = res.target.sensitive_info.split('<br/>')
-          
+          this.target_sensitive_info = res.target.sensitive_info.split("<br/>");
           //端口信息
-          this.target_port_info.forEach(item => {
-            let temp = "";
-            item.target_info_des = res.target[item.target_info_key];
-            temp = item.target_info_des.split("</br>");
-            item.target_info_des = temp
-              .map(i => {
-                // i = `<span style='color:red'>${i}</span>`
-                if (i.indexOf("open") > 0) {
-                  return `<span style='background: #19A15F;display:inline-block;width:100%;margin-bottom:4px;'>${i}</span>`;
-                } else if (i.indexOf("filtered") > 0) {
-                  return `<span style='background:#FFCE43;display:inline-block;width:100%;margin-bottom:4px;'>${i}</span>`;
-                } else if(i.indexOf("close") > 0){
-                  return `<span style='background:red;display:inline-block;width:100%;margin-bottom:4px;'>${i}</span>`;
-                }
-              })
-              .join("</br>");
-          });
+          // this.target_port_info.forEach(item => {
+          //   let temp = "";
+          //   item.target_info_des = res.target[item.target_info_key];
+          //   temp = item.target_info_des.split("</br>");
+          //   item.target_info_des = temp
+          //     .map(i => {
+          //       if (i.indexOf("open") > 0) {
+          //         return `<span style='background: #19A15F;display:inline-block;width:100%;margin-bottom:4px;'>${i}</span>`;
+          //       } else if (i.indexOf("filtered") > 0) {
+          //         return `<span style='background:#FFCE43;display:inline-block;width:100%;margin-bottom:4px;'>${i}</span>`;
+          //       } else if (i.indexOf("close") > 0) {
+          //         return `<span style='background:red;display:inline-block;width:100%;margin-bottom:4px;'>${i}</span>`;
+          //       }
+          //     })
+          //     .join("</br>");
+          // });
         } else {
           this.option.series[0].data[0].value = 0;
-          // this.$refs.completionRate.refresh();
         }
       });
     },
@@ -882,6 +955,17 @@ export default {
         }
       });
     },
+
+    //服务信息
+    _getServiceList(){
+      let params={
+        assets_id:this.$route.params.assets_id
+      }
+      getServiceList(params).then(res=>{
+        let list=res.lists  
+        this.portList = list; 
+        })
+    },
     /*
   * 资产风险检测列表
   * params: targetId 来源$route.query.target_id
@@ -891,10 +975,25 @@ export default {
       leaksInfo(params).then(res => {
         if (res.result === 0) {
           this.assetsList = res.rows;
-         
-          // this.domain_info.forEach(item => {
-          //   item.target_info_des = taskInfo[item.target_info_key];
-          // });
+          this.assetsList.forEach(item => {
+            if (item.vuln_detail.indexOf('</br>') > 0) {
+               let li = item.vuln_detail.split("</br>");
+              //  console.log(li)
+               let type , arg ;
+                li.forEach(item => {
+                  // console.log(item.indexOf('类型'))
+                  if (item.indexOf('类型') > -1) {
+                    // console.log(item)
+                    type = item
+                  } else if(item.indexOf('参数')> -1) {
+                    arg = item
+                  }
+               })
+              item.type = type.slice(3);
+              item.arg = arg.slice(3);
+            }
+            // console.log(li[1],li[2])
+          });
         }
       });
     },
@@ -908,10 +1007,8 @@ export default {
       urlUseRate(params).then(res => {
         if (res.result === 0) {
           this.vuln_rate = res.rate + "%";
-          // this.$refs.holeUtilization.refresh();
         } else {
           this.vuln_rate = 0 + "%";
-          // this.$refs.holeUtilization.refresh();
         }
       });
     },
@@ -955,60 +1052,60 @@ export default {
 };
 </script>
 <style scoped>
-.socketMessage{
-  margin-top:20px;
+.socketMessage {
+  margin-top: 20px;
 }
-.process .ivu-table-tbody tr{
-  background-color: #FCD576;
+.process .ivu-table-tbody tr {
+  background-color: #fcd576;
 }
 
 /* top10排行榜样式 header*/
-#box{
+#box {
   overflow: hidden;
   padding-left: 30px;
   border: 1px solid black;
   transition: all 0.5s;
 }
-.anim{
+.anim {
   transition: all 0.5s;
 }
-#con1 li{
+#con1 li {
   list-style: none;
   line-height: 24px;
   height: 24px;
-  padding:5px  8px 5px 8px;
+  padding: 5px 8px 5px 8px;
 }
- .vulnList {
-    width: 100%;
-    height:270px;
-  }
-  .vulnList ul {
-    width: 100%;
-    height: auto;
-  }
-  .vulnList ul li {
-    list-style: none;
-    height: 23px;
-    font-size: 12px;
-    line-height: 23px;
-  }
-  .vulnList ul li:nth-child(12) {
-    border: none;
-  }
-  .vulnList ul li span{
-    text-align: center;
-    color: #fbfbfb;
-  }
-  .vulnList ul li span:nth-child(1) {
-    width: 53%;    
-  }
-  .vulnList ul li span:nth-child(2) {
-    width: 35%; 
-  }
-  .vulnList ul li span:nth-child(3) {
-    width: 10%; 
-  }
-.newdata{
+.vulnList {
+  width: 100%;
+  height: 270px;
+}
+.vulnList ul {
+  width: 100%;
+  height: auto;
+}
+.vulnList ul li {
+  list-style: none;
+  height: 23px;
+  font-size: 12px;
+  line-height: 23px;
+}
+.vulnList ul li:nth-child(12) {
+  border: none;
+}
+.vulnList ul li span {
+  text-align: center;
+  color: #fbfbfb;
+}
+.vulnList ul li span:nth-child(1) {
+  width: 53%;
+}
+.vulnList ul li span:nth-child(2) {
+  width: 35%;
+}
+.vulnList ul li span:nth-child(3) {
+  width: 10%;
+}
+.newdata {
   height: 254px;
   border: 1px solid #e4e5e5;
   margin-top: 20px;
@@ -1052,8 +1149,8 @@ export default {
 .table .holetable .newList {
   max-height: 214px;
   overflow: auto;
-  padding:0px 8px 4px 8px;
- }
+  padding: 0px 8px 4px 8px;
+}
 .taskSchedule {
   /* color: #e4e5e5; */
   display: flex;
@@ -1088,16 +1185,13 @@ export default {
 .timeProcess section {
   width: 100%;
 }
-/* .secTwo {
-  width: 100%;
-  padding: 0 40px;
-  display: flex;
-  flex-direction: row;
+.secTwo {
+  color: white;
 }
-.secTwo section {
-  flex: 1;
-  margin: 0px 20px;
-} */
+
+.secTwo  ul li {
+  list-style: none;
+}
 .clear {
   clear: both;
 }

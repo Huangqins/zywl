@@ -1,9 +1,9 @@
 import request from '@/utils/request'
 
-export default function getArea({ }){
+export default function getTargetType({}){
   return request({
     method:'post',
-    url:'/ZY/asset/getArea',
+    url:'/ZY/task/getTargetType',
     data:{}
   })
 }

@@ -26,7 +26,7 @@
             <div class="attack">
               <p></p>
                  <span class="pictrue" >
-                    <chart :option="options" height="218px"></chart>
+                    <chart :option="options" height="190px"></chart>
                  </span>
             </div>
             <div class="asset">
@@ -684,7 +684,7 @@ export default {
 }
 .attack {
   /* width: 480px; */
-  height: 329px;
+  height: 279px;
   border: 1px solid #2b4e6f;
   padding: 45px 0;
   margin: 0 0px 6px 0px;

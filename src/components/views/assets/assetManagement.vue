@@ -17,11 +17,7 @@
             <div class="assetPort">
               <ul style="height:200px;">
                 <li ><Icon type="record" style="color:pink;margin-right:8px"></Icon>资产总数:<span style="margin-left:10px;">{{ewewe}}</span></li>
-                <li><Tree :data="ostype" show-checkbox multiple style="height:148px;overflow:auto"></Tree></li>
-                <!-- <li><Tree :data="devtype" show-checkbox multiple></Tree></li>
-                <li><Tree :data="ports" show-checkbox multiple></Tree></li> -->
-                <!-- <li><Icon type="record" style="color:pink;margin-right:8px"></Icon>设备类型:<span style="margin-left:10px;">{{devtype}}</span></li>
-                <li><Icon type="record" style="color:pink;margin-right:8px"></Icon>端口:<span style="margin-left:10px;">{{ports}}</span></li> -->
+                <li><Tree :data="ostype"  multiple style="height:148px;overflow:auto"></Tree></li>                
               </ul>
             </div>
           </section>
@@ -73,29 +69,6 @@
       <Modal v-model="seiverModal"  title="开放服务"  >
             <page :columns="serviceHeader" :data="serviceList"  ></page>
       </Modal>
-      <!-- 资产导入 --> 
-      <!-- <Modal v-model="assetAddModal"  title="资产导入"  :loading="assetAddLoading" @on-ok="assetImport">
-         <Tabs value="name2">
-          <TabPane label="手动导入" name="name1"></TabPane>
-          <TabPane label="批量导入" name="name2">
-            <Upload multiple  :action="uploadUrl" :with-credentials="true" accept="" name="excelFile" :headers="headers">
-                <Button type="primary" icon="ios-cloud-upload-outline">上传资产</Button>
-            </Upload>
-            <Button type="primary" icon="iso-cloud-download-outline" >
-                <a :href="href" download="资产导入模板">资产模板下载</a>
-              </Button>
-          </TabPane>
-        </Tabs>
-      </Modal> -->
-      <!-- <Modal v-model="assetAddModal" title="资产导入">
-          <div v-if="file !== null" >
-            上传的文件: {{ file.name }}
-          </div>
-          <div slot="footer">
-            <Button type="text" size="large">取消导入</Button>
-            <Button type="primary" size="large"  :loading="assetAddLoading" @click="assetImport">确定导入</Button>
-        </div>
-      </Modal> -->
   </div>
 </template>
 <script>
@@ -113,6 +86,8 @@ import assetclass from "api/assetClass";
 import portSum from "api/portSum";
 import assetArea from "api/assetArea";
 import getArea from "api/getArea";
+import fomatterTime from "@/utils/tool";
+
 
 const host =
   process.env.NODE_ENV === "development" ? "http://192.168.10.104:8080/ZY" : "";
@@ -169,12 +144,6 @@ export default {
               title: "操作系统",
               expand: false,
               children: [
-                // {
-                //   title: "leaf 1-1-1"
-                // },
-                // {
-                //   title: "leaf 1-1-2"
-                // }
               ]
             },
             {
@@ -230,7 +199,6 @@ export default {
         assets_proto: "",
         assets_servers: "",
         assets_region: "",
-        regions: [],
         assets_type: "",
         assets_important: "",
         assets_os: "",
@@ -331,6 +299,18 @@ export default {
           align: "center",
           cellClassName: {
             service_num: "demo-table-info-cell-age"
+          }
+        },
+        {
+          title: "创建时间",
+          key: "assets_create_time",
+          align: "center",
+          width: 200,
+          render: (h, params) => {
+            return h(
+              "span",
+              fomatterTime(new Date(params.row.assets_create_time.time))
+            );
           }
         },
         {
@@ -456,7 +436,6 @@ export default {
       return false;
     },
     upload() {},
-
     dataLoad(paramsObj) {
       this.params = Object.assign({}, this.defaultPage, paramsObj);
       this._assetsInfo(this.params);
@@ -496,15 +475,15 @@ export default {
     _getArea() {
       getArea({}).then(res => {
         let list = res.areas;
-        list.forEach(item => {
-          this.options.legend.data.push(item.type_name);
-          this.options.series[0].data.push({
-            value: item.target_task_num,
-            name: item.type_name
+        list.forEach(item => {         
+          this.format[3].option.push({
+            value: item.area_id,
+            name: item.area_name
           });
         });
       });
     },
+    
     _assetsInfo(params) {
       this.pageLoading = true;
       assetsInfo(params).then(res => {
@@ -524,7 +503,6 @@ export default {
         });
       }
     },
-
     assetsAdd() {
       this.$refs.formValidate.open();
       this.data = {};
@@ -580,6 +558,7 @@ export default {
 };
 </script>
 <style scoped>
+
 .demo-table-info-cell-age {
   background-color: #ff6600;
   color: #fff;

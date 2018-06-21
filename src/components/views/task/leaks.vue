@@ -84,7 +84,21 @@
           <h3 style="color:white;margin-bottom:5px;">风险列表</h3>
            <page :columns="leaksColums" :data="leaksList" :dataTotal="total" @dataLoad="dataLoad" :loading="loading" ></page>           
         </div>
-        
+        <Modal v-model="vulndetail" width="560"  :mask-closable="false" title="风险详情">
+          <div style="text-align:left" class="vulndetail">
+            <p>风险名称:<span>{{vuln_name}}</span></p>
+            <p>风险等级:<span>{{vuln_level}}</span></p>
+            <p>链接:<span>{{vuln_URL}}</span></p>
+            <p>影响:<span>{{kb_vuln_des}}</span></p>
+            <p>加固建议:<span>{{kb_vuln_ref}}</span></p>
+            <p>修复时间:<span><DatePicker :value="repaidTime" type="datetime" placeholder="" style="width: 200px"></DatePicker></span></p>
+          </div>
+          <div slot="footer">
+              <Button    @click="cancel">取消</Button>
+              <Button type="error"  :disabled="dis" @click="ignore({ vuln_id:vuln_id,vuln_status:2,repaidTime:repaidTime})">忽略</Button>
+              <Button type="error"  :disabled="dis"  @click="ignore({ vuln_id:vuln_id,vuln_status:1,repaidTime:repaidTime})">修复</Button>
+          </div>
+      </Modal>
         
   </div>
 </template>
@@ -119,6 +133,14 @@ export default {
   },
   data() {
     return {
+      vuln_name:'',
+      vuln_level:'',
+      vuln_URL:'',
+      kb_vuln_des:'',
+      kb_vuln_ref:'',
+      repaidTime:'',
+      vuln_id:'',
+      dis: false,
       total:'',
       repair:'',
       cycle:'',
@@ -127,6 +149,7 @@ export default {
       most:0,
       high: 0,
       middle: 0,
+      vulndetail:false,
       low: 0,
       litter:0,
       image_One:require("static/top1.png"),
@@ -268,44 +291,50 @@ export default {
         },
         {
           title: "修复时间",
-          key: "",
+          key: "vuln_repairtime",
           align: "center"
+        },
+        {
+          title: "修复状态",
+          key: "vuln_status",
+          align: "center",
+          render: (h, params) => {
+            return h(
+              "span",
+             params.row.vuln_status=="2"?'忽略':"已修复"
+            );
+          }
+
         },
         {
           title: "操作",
           align: "center",
           render: (h, params) => {
-            return h("div", [
+             return h("div", [
               h("Button", {
                 props: {
                   type: "primary",
                   size: "small",
+                  icon: "social-buffer"
                 },
                 style: {
-                  marginRight: "5px"
+                  marginLeft: "5px"
                 },
                 on: {
                   click: () => {
-                   
+                    this.vuln_id=params.row.vuln_id;
+                    this.dis = params.row.vuln_status === "2"|| params.row.vuln_status === "1"? true : false ;
+                    this.vulndetail=true;
+                    this.vuln_name=params.row.vuln_name,
+                    this.vuln_level=params.row.vuln_level,
+                    this.vuln_URL=params.row.vuln_URL,
+                    this.kb_vuln_des=params.row.kb_vuln_des,
+                    this.kb_vuln_ref=params.row.kb_vuln_ref
                   }
                 }
-              },"已修复"),
-
-              h("Button", {
-                props: {
-                  size: "small",
-                },
-                on: {
-                  click: () => {
-                    this.ignore({assets_id: params.row.assets_id})
-                   
-                  }
-                }
-              },"忽略")
-            ]);
-          }
-        }
-
+              }),
+            ])
+          }}
       ],
       leaksList: [],
       total: 0,
@@ -319,15 +348,12 @@ export default {
     };
   },
   created() {
-    // this.taskID = this.$route.params.taskID;
     const params = Object.assign({}, this.defaultPage, {
       userName: getUserName()
     });
     this._leaksInfo(params);
     this._vulnTotal();
     this._repairRate()
-    // this._vulnWordClouds();
-    // this._vulnLevel({taskID:})
   },
   mounted() {
     // this.vulntype();
@@ -337,18 +363,24 @@ export default {
     //修复区域
     _repairRate() {
       repairRate({}).then(res => {
-         console.log(res)
          this.repair=res.repair;
          this.cycle=res.cycle;
          this.handle=res.handle;
          this.pending=res.pending
       })
     },
+    cancel() {
+      this.vulndetail = false;
+    },
     //风险修复
-    _repairVuln() {
-      repairVuln({}).then(res => {
-         
-         
+    ignore(row) {
+      const params = Object.assign({}, this.defaultPage, {
+         userName: getUserName()
+      }); 
+      repairVuln(row).then(res => {
+
+         this.vulndetail=false;          
+         this._leaksInfo(params);     
       })
     },
     //top10排行榜
@@ -431,6 +463,16 @@ export default {
 <style>
 .assetPic{
   height: 124px;
+}
+.vulndetail{
+  text-align: left; 
+  font-size: 14px; 
+}
+.vulndetail p{
+  line-height: 30px; 
+}
+.vulndetail p span{
+  margin-left: 6px;
 }
 .box_report {
   background: rgba(255, 255, 255, 0.1);

@@ -14,7 +14,9 @@ export default function assetAdd({
   assets_desc,
   assets_detail,
   assets_hostname,
-  assets_numbering
+  assets_numbering,
+  assets_region
+ 
 }) {
   return request({
     method: 'post',
@@ -33,7 +35,9 @@ export default function assetAdd({
       assets_desc,
       assets_detail,
       assets_hostname,
-      assets_numbering
+      assets_numbering,
+      assets_region
+
     }
   })
 }
