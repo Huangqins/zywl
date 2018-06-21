@@ -497,11 +497,11 @@ export default {
       getArea({}).then(res => {
         let list = res.areas;
         list.forEach(item => {
-          this.options.legend.data.push(item.type_name);
-          this.options.series[0].data.push({
-            value: item.target_task_num,
-            name: item.type_name
-          });
+          // this.options.legend.data.push(item.type_name);
+          // this.options.series[0].data.push({
+          //   value: item.target_task_num,
+          //   name: item.type_name
+          // });
         });
       });
     },

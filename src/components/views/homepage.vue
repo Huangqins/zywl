@@ -346,7 +346,7 @@ export default {
     this.vulntype();
     this.taskList();
     this.assetTarget();
-    this._getSystemType();
+    // this._getSystemType();
     $("#dataNums").rollNum({
       deVal: 682323
     });
